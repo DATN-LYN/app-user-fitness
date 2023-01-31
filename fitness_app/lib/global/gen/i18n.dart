@@ -32,6 +32,8 @@ class I18n implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 	/// "Fitness App"
 	String get appName => "Fitness App";
+	/// "Next"
+	String get button_Next => "Next";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -43,6 +45,9 @@ class _I18n_vi_VN extends I18n {
 	/// "App thể thao"
 	@override
 	String get appName => "App thể thao";
+	/// "Tiếp tục"
+	@override
+	String get button_Next => "Tiếp tục";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

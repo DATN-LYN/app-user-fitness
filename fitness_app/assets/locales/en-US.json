@@ -1,3 +1,6 @@
 {
-    "appName": "Fitness App"
+    "appName": "Fitness App",
+    "button_":{
+        "next": "Next"
+    }
 }
