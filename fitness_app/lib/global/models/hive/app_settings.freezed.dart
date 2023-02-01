@@ -52,16 +52,16 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? locale = freezed,
-    Object? theme = freezed,
+    Object? locale = null,
+    Object? theme = null,
     Object? isFirstLaunch = null,
   }) {
     return _then(_value.copyWith(
-      locale: freezed == locale
+      locale: null == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as AppLocale,
-      theme: freezed == theme
+      theme: null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as AppTheme,
@@ -95,16 +95,16 @@ class __$$_AppSettingsCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? locale = freezed,
-    Object? theme = freezed,
+    Object? locale = null,
+    Object? theme = null,
     Object? isFirstLaunch = null,
   }) {
     return _then(_$_AppSettings(
-      freezed == locale
+      null == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as AppLocale,
-      freezed == theme
+      null == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as AppTheme,
@@ -147,19 +147,15 @@ class _$_AppSettings implements _AppSettings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppSettings &&
-            const DeepCollectionEquality().equals(other.locale, locale) &&
-            const DeepCollectionEquality().equals(other.theme, theme) &&
+            (identical(other.locale, locale) || other.locale == locale) &&
+            (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.isFirstLaunch, isFirstLaunch) ||
                 other.isFirstLaunch == isFirstLaunch));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(locale),
-      const DeepCollectionEquality().hash(theme),
-      isFirstLaunch);
+  int get hashCode => Object.hash(runtimeType, locale, theme, isFirstLaunch);
 
   @JsonKey(ignore: true)
   @override

@@ -2,5 +2,17 @@
     "appName": "Fitness App",
     "button_":{
         "next": "Next"
-    }
+    },
+    "onboard_": {
+        "title": [
+          "JOIN US",
+          "DAILY WORKOUT",
+          "SET DIET PLAN"
+        ],
+        "description": [
+          "Our teams with iconic athletes & sport brands to build the future of fitness",
+          "Workout plans designed to  help you achieve your everyday fitness goals and plan",
+          "Before you begin designing your own diet plan, some self-reflection is in order"
+        ]
+      }
 }
