@@ -30,12 +30,9 @@ class AppThemes {
   ) {
     return ThemeData(
       brightness: brightness,
-      colorScheme: colorScheme,
       primaryColor: AppColors.primary,
-      backgroundColor: AppColors.background,
       scaffoldBackgroundColor: AppColors.white,
       indicatorColor: AppColors.primary,
-      toggleableActiveColor: AppColors.primary,
       appBarTheme: const AppBarTheme(
         color: AppColors.white,
         foregroundColor: AppColors.grey2,
@@ -90,7 +87,63 @@ class AppThemes {
           borderSide: const BorderSide(color: AppColors.primary),
         ),
       ),
-
+      colorScheme: colorScheme.copyWith(background: AppColors.background),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+        trackColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return AppColors.primary;
+          }
+          return null;
+        }),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.grey1,
+          textStyle: const TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.w600,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ),
     );
   }
 }

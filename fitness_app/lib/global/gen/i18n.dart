@@ -38,10 +38,32 @@ class I18n implements WidgetsLocalizations {
 	List<String> get onboard_Title => ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"];
 	/// ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"]
 	List<String> get onboard_Description => ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"];
-	/// ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"]
-	List<String> get title => ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"];
-	/// ["Với các vận động viên và thương hiệu thể thao hàng đầu nhằm xây dựng tương lai của tập luyện thể dục", "Các kế hoạch tập luyện được thiết kế để giúp bạn đạt được các mục tiêu của mình", "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"]
-	List<String> get description => ["Với các vận động viên và thương hiệu thể thao hàng đầu nhằm xây dựng tương lai của tập luyện thể dục", "Các kế hoạch tập luyện được thiết kế để giúp bạn đạt được các mục tiêu của mình", "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"];
+	/// "Email"
+	String get login_Email => "Email";
+	/// "Password"
+	String get login_Password => "Password";
+	/// "Enter your email"
+	String get login_EmailHint => "Enter your email";
+	/// "Enter your password"
+	String get login_PasswordHint => "Enter your password";
+	/// "Forgot password?"
+	String get login_ForgotPassword => "Forgot password?";
+	/// "Or log in with"
+	String get login_OrLogInWith => "Or log in with";
+	/// "Don't have an account? "
+	String get login_DoNotHaveAnAccount => "Don't have an account? ";
+	/// "Register now"
+	String get login_RegisterNow => "Register now";
+	/// "Log In"
+	String get login_LogIn => "Log In";
+	/// "Email is invalid"
+	String get login_EmailNotValid => "Email is invalid";
+	/// "Email is required"
+	String get login_EmailIsRequired => "Email is required";
+	/// "Password must be at least 6 characters"
+	String get login_PasswordMustBeAtLeastSixCharacters => "Password must be at least 6 characters";
+	/// "Password is required"
+	String get login_PasswordIsRequired => "Password is required";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -56,6 +78,51 @@ class _I18n_vi_VN extends I18n {
 	/// "Tiếp tục"
 	@override
 	String get button_Next => "Tiếp tục";
+	/// ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"]
+	@override
+	List<String> get onboard_Title => ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"];
+	/// ["Với các vận động viên và thương hiệu thể thao hàng đầu nhằm xây dựng tương lai của tập luyện thể dục", "Các kế hoạch tập luyện được thiết kế để giúp bạn đạt được các mục tiêu của mình", "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"]
+	@override
+	List<String> get onboard_Description => ["Với các vận động viên và thương hiệu thể thao hàng đầu nhằm xây dựng tương lai của tập luyện thể dục", "Các kế hoạch tập luyện được thiết kế để giúp bạn đạt được các mục tiêu của mình", "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"];
+	/// "Email"
+	@override
+	String get login_Email => "Email";
+	/// "Mật khẩu"
+	@override
+	String get login_Password => "Mật khẩu";
+	/// "Nhập email của bạn"
+	@override
+	String get login_EmailHint => "Nhập email của bạn";
+	/// "Nhập mật khẩu của bạn"
+	@override
+	String get login_PasswordHint => "Nhập mật khẩu của bạn";
+	/// "Quên mật khẩu?"
+	@override
+	String get login_ForgotPassword => "Quên mật khẩu?";
+	/// "Hoặc đăng nhập bằng"
+	@override
+	String get login_OrLogInWith => "Hoặc đăng nhập bằng";
+	/// "Chưa có tài khoản? "
+	@override
+	String get login_DoNotHaveAnAccount => "Chưa có tài khoản? ";
+	/// "Đăng ký"
+	@override
+	String get login_RegisterNow => "Đăng ký";
+	/// "Đăng Nhập"
+	@override
+	String get login_LogIn => "Đăng Nhập";
+	/// "Email không hợp lệ"
+	@override
+	String get login_EmailNotValid => "Email không hợp lệ";
+	/// "Email bắt buộc"
+	@override
+	String get login_EmailIsRequired => "Email bắt buộc";
+	/// "Mật khẩu phải dài tối thiểu 6 ký tự"
+	@override
+	String get login_PasswordMustBeAtLeastSixCharacters => "Mật khẩu phải dài tối thiểu 6 ký tự";
+	/// "Mật khẩu bắt buộc"
+	@override
+	String get login_PasswordIsRequired => "Mật khẩu bắt buộc";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
