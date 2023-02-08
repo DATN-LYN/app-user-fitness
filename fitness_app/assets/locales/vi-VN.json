@@ -1,3 +1,16 @@
 {
-    "appName": "App thể thao"
+    "appName": "App thể thao",
+    "button_":{
+        "next": "Tiếp tục"
+    },
+    "title": [
+        "Tham gia cùng chúng tôi",
+        "Tập luyện hàng ngày",
+        "Lập kế hoạch ăn kiêng"
+      ],
+      "description": [
+        "Với các vận động viên và thương hiệu thể thao hàng đầu nhằm xây dựng tương lai của tập luyện thể dục",
+        "Các kế hoạch tập luyện được thiết kế để giúp bạn đạt được các mục tiêu của mình",
+        "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"
+      ]
 }
