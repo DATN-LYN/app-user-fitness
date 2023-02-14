@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/assets.gen.dart';
-import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../global/gen/i18n.dart';
+import '../../global/routers/app_router.dart';
 import '../../global/themes/app_colors.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 
@@ -66,7 +66,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
                     onTap: () {
                       if (pageController.page! >= onboardImages.length - 1) {
                         AutoRouter.of(context).replaceAll(
-                          [const MainRoute()],
+                          [const LoginRoute()],
                         );
                       } else {
                         pageController.nextPage(

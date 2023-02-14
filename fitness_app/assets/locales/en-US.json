@@ -14,5 +14,38 @@
           "Workout plans designed to  help you achieve your everyday fitness goals and plan",
           "Before you begin designing your own diet plan, some self-reflection is in order"
         ]
-      }
+    },
+    "login_": {
+      "email": "Email",
+      "password": "Password",
+      "emailHint": "Enter your email",
+      "passwordHint": "Enter your password",
+      "forgotPassword": "Forgot password?",
+      "orLogInWith": "Or log in with",
+      "doNotHaveAnAccount": "Don't have an account? ",
+      "registerNow": "Register now",
+      "logIn": "Log In",
+      "emailNotValid": "Email is invalid",
+      "emailIsRequired": "Email is required",
+      "passwordMustBeAtLeastSixCharacters": "Password must be at least 6 characters",
+      "passwordIsRequired": "Password is required"
+    },
+    "signup_": {
+      "createNewAccount": "Create New Account",
+      "bySigningUpYouAgreeTo": "By signing up, you agree to our",
+      "joinUsBefore": "Join us before?",
+      "logIn": "Log in",
+      "enterYourFullName": "Enter your full name",
+      "confirmYourPassword": "Confirm your password",
+      "confirmPassword": "Confirm Password",
+      "register": "Register",
+      "privacyPolicy": "Privacy Policy",
+      "verifyCode": "Verify code",
+      "and": "and",
+      "termsAndConditions": "Terms & Conditions",
+      "fullName": "Full name",
+      "fullNameIsRequired": "Full name is required",
+      "confirmPasswordIsRequired": "Confirm password is required",
+      "passwordNotMatch": "Password not match"
+    }
 }
