@@ -64,6 +64,38 @@ class I18n implements WidgetsLocalizations {
 	String get login_PasswordMustBeAtLeastSixCharacters => "Password must be at least 6 characters";
 	/// "Password is required"
 	String get login_PasswordIsRequired => "Password is required";
+	/// "Create New Account"
+	String get signup_CreateNewAccount => "Create New Account";
+	/// "By signing up, you agree to our"
+	String get signup_BySigningUpYouAgreeTo => "By signing up, you agree to our";
+	/// "Join us before?"
+	String get signup_JoinUsBefore => "Join us before?";
+	/// "Log in"
+	String get signup_LogIn => "Log in";
+	/// "Enter your full name"
+	String get signup_EnterYourFullName => "Enter your full name";
+	/// "Confirm your password"
+	String get signup_ConfirmYourPassword => "Confirm your password";
+	/// "Confirm Password"
+	String get signup_ConfirmPassword => "Confirm Password";
+	/// "Register"
+	String get signup_Register => "Register";
+	/// "Privacy Policy"
+	String get signup_PrivacyPolicy => "Privacy Policy";
+	/// "Verify code"
+	String get signup_VerifyCode => "Verify code";
+	/// "and"
+	String get signup_And => "and";
+	/// "Terms & Conditions"
+	String get signup_TermsAndConditions => "Terms & Conditions";
+	/// "Full name"
+	String get signup_FullName => "Full name";
+	/// "Full name is required"
+	String get signup_FullNameIsRequired => "Full name is required";
+	/// "Confirm password is required"
+	String get signup_ConfirmPasswordIsRequired => "Confirm password is required";
+	/// "Password not match"
+	String get signup_PasswordNotMatch => "Password not match";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -123,6 +155,54 @@ class _I18n_vi_VN extends I18n {
 	/// "Mật khẩu bắt buộc"
 	@override
 	String get login_PasswordIsRequired => "Mật khẩu bắt buộc";
+	/// "Tạo tài khoản mới"
+	@override
+	String get signup_CreateNewAccount => "Tạo tài khoản mới";
+	/// "Để tạo tài khoản mới, bạn phải đồng ý với chúng tôi về"
+	@override
+	String get signup_BySigningUpYouAgreeTo => "Để tạo tài khoản mới, bạn phải đồng ý với chúng tôi về";
+	/// "Bạn đã có tài khoản?"
+	@override
+	String get signup_JoinUsBefore => "Bạn đã có tài khoản?";
+	/// "Đăng nhập"
+	@override
+	String get signup_LogIn => "Đăng nhập";
+	/// "Nhập tên của bạn"
+	@override
+	String get signup_EnterYourFullName => "Nhập tên của bạn";
+	/// "Xác nhận mật khẩu của bạn"
+	@override
+	String get signup_ConfirmYourPassword => "Xác nhận mật khẩu của bạn";
+	/// "Xác nhận mật khẩu"
+	@override
+	String get signup_ConfirmPassword => "Xác nhận mật khẩu";
+	/// "Đăng Ký"
+	@override
+	String get signup_Register => "Đăng Ký";
+	/// "Chính sách Bảo mật"
+	@override
+	String get signup_PrivacyPolicy => "Chính sách Bảo mật";
+	/// "Xác minh mã"
+	@override
+	String get signup_VerifyCode => "Xác minh mã";
+	/// "và"
+	@override
+	String get signup_And => "và";
+	/// "Điều Khoản & Dịch Vụ"
+	@override
+	String get signup_TermsAndConditions => "Điều Khoản & Dịch Vụ";
+	/// "Họ và tên"
+	@override
+	String get signup_FullName => "Họ và tên";
+	/// "Họ và tên bắt buộc"
+	@override
+	String get signup_FullNameIsRequired => "Họ và tên bắt buộc";
+	/// "Xác nhận mật khẩu bắt buộc"
+	@override
+	String get signup_ConfirmPasswordIsRequired => "Xác nhận mật khẩu bắt buộc";
+	/// "Mật khẩu không khớp"
+	@override
+	String get signup_PasswordNotMatch => "Mật khẩu không khớp";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

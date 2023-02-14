@@ -41,6 +41,12 @@ class _$AppRouter extends RootStackRouter {
         child: const LoginPage(),
       );
     },
+    SignUpRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SignUpPage(),
+      );
+    },
   };
 
   @override
@@ -60,6 +66,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           LoginRoute.name,
           path: '/login-page',
+        ),
+        RouteConfig(
+          SignUpRoute.name,
+          path: '/sign-up-page',
         ),
       ];
 }
@@ -110,4 +120,16 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+}
+
+/// generated route for
+/// [SignUpPage]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute()
+      : super(
+          SignUpRoute.name,
+          path: '/sign-up-page',
+        );
+
+  static const String name = 'SignUpRoute';
 }

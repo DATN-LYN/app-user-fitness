@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -157,14 +159,16 @@ class _LoginPageState extends State<LoginPage> {
                 text: i18n.login_DoNotHaveAnAccount,
                 children: [
                   TextSpan(
-                      text: i18n.login_RegisterNow,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                      //..onTap = () => context.pushRoute(const SignupRoute()),
-                      ),
+                    text: i18n.login_RegisterNow,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => AutoRouter.of(context).push(
+                            const SignUpRoute(),
+                          ),
+                  ),
                 ],
               ),
               textAlign: TextAlign.center,

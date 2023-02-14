@@ -29,5 +29,23 @@
       "emailIsRequired": "Email bắt buộc",
       "passwordMustBeAtLeastSixCharacters": "Mật khẩu phải dài tối thiểu 6 ký tự",
       "passwordIsRequired": "Mật khẩu bắt buộc"
+    },
+    "signup_": {
+      "createNewAccount": "Tạo tài khoản mới",
+      "bySigningUpYouAgreeTo": "Để tạo tài khoản mới, bạn phải đồng ý với chúng tôi về",
+      "joinUsBefore": "Bạn đã có tài khoản?",
+      "logIn": "Đăng nhập",
+      "enterYourFullName": "Nhập tên của bạn",
+      "confirmYourPassword": "Xác nhận mật khẩu của bạn",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "register": "Đăng Ký",
+      "privacyPolicy": "Chính sách Bảo mật",
+      "verifyCode": "Xác minh mã",
+      "and": "và",
+      "termsAndConditions": "Điều Khoản & Dịch Vụ",
+      "fullName": "Họ và tên",
+      "fullNameIsRequired": "Họ và tên bắt buộc",
+      "confirmPasswordIsRequired": "Xác nhận mật khẩu bắt buộc",
+      "passwordNotMatch": "Mật khẩu không khớp"
     }
 }
