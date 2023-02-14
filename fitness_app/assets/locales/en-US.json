@@ -29,5 +29,23 @@
       "emailIsRequired": "Email is required",
       "passwordMustBeAtLeastSixCharacters": "Password must be at least 6 characters",
       "passwordIsRequired": "Password is required"
+    },
+    "signup_": {
+      "createNewAccount": "Create New Account",
+      "bySigningUpYouAgreeTo": "By signing up, you agree to our",
+      "joinUsBefore": "Join us before?",
+      "logIn": "Log in",
+      "enterYourFullName": "Enter your full name",
+      "confirmYourPassword": "Confirm your password",
+      "confirmPassword": "Confirm Password",
+      "register": "Register",
+      "privacyPolicy": "Privacy Policy",
+      "verifyCode": "Verify code",
+      "and": "and",
+      "termsAndConditions": "Terms & Conditions",
+      "fullName": "Full name",
+      "fullNameIsRequired": "Full name is required",
+      "confirmPasswordIsRequired": "Confirm password is required",
+      "passwordNotMatch": "Password not match"
     }
 }
