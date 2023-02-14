@@ -47,5 +47,10 @@
       "fullNameIsRequired": "Họ và tên bắt buộc",
       "confirmPasswordIsRequired": "Xác nhận mật khẩu bắt buộc",
       "passwordNotMatch": "Mật khẩu không khớp"
+    },
+    "forgotPassword_": {
+      "title": "Quên mật khẩu",
+      "description": "Vui lòng nhập địa chỉ email của bạn để nhận mã đăng nhập",
+      "getCode": "Lấy Mã Xác Nhận"
     }
 }

@@ -47,5 +47,10 @@
       "fullNameIsRequired": "Full name is required",
       "confirmPasswordIsRequired": "Confirm password is required",
       "passwordNotMatch": "Password not match"
+    },
+    "forgotPassword_": {
+      "title": "Forgot password",
+      "description": "Please enter your email address to get login code",
+      "getCode": "Get Code"
     }
 }

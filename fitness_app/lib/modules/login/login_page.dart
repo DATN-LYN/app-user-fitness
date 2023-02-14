@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.centerLeft,
               child: TextButton(
                 onPressed: () {
-                  //TODO: forgot pass route
+                  AutoRouter.of(context).push(const ForgotPasswordRoute());
                 },
                 child: Text(i18n.login_ForgotPassword),
               ),

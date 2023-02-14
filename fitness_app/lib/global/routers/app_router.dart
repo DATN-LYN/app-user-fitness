@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/modules/forgot_password/forgot_password_page.dart';
 import 'package:fitness_app/modules/login/login_page.dart';
 import 'package:fitness_app/modules/signup/sign_up_page.dart';
 import 'package:fitness_app/modules/splash/splash_page.dart';
@@ -17,6 +18,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: MainPage),
     AutoRoute(page: LoginPage),
     AutoRoute(page: SignUpPage),
+    AutoRoute(page: ForgotPasswordPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
