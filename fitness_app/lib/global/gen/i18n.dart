@@ -96,6 +96,12 @@ class I18n implements WidgetsLocalizations {
 	String get signup_ConfirmPasswordIsRequired => "Confirm password is required";
 	/// "Password not match"
 	String get signup_PasswordNotMatch => "Password not match";
+	/// "Forgot password"
+	String get forgotPassword_Title => "Forgot password";
+	/// "Please enter your email address to get login code"
+	String get forgotPassword_Description => "Please enter your email address to get login code";
+	/// "Get Code"
+	String get forgotPassword_GetCode => "Get Code";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -203,6 +209,15 @@ class _I18n_vi_VN extends I18n {
 	/// "Mật khẩu không khớp"
 	@override
 	String get signup_PasswordNotMatch => "Mật khẩu không khớp";
+	/// "Quên mật khẩu"
+	@override
+	String get forgotPassword_Title => "Quên mật khẩu";
+	/// "Vui lòng nhập địa chỉ email của bạn để nhận mã đăng nhập"
+	@override
+	String get forgotPassword_Description => "Vui lòng nhập địa chỉ email của bạn để nhận mã đăng nhập";
+	/// "Lấy Mã Xác Nhận"
+	@override
+	String get forgotPassword_GetCode => "Lấy Mã Xác Nhận";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
