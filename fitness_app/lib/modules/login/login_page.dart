@@ -23,7 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   bool passwordObscure = true;
   bool isLoading = false;
 
-  void login() {}
+  void login() {
+    AutoRouter.of(context).push(const MainRoute());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 16),
             ElevatedButtonOpacity(
-              onTap: isLoading ? null : login,
+              onTap: login,
               loading: isLoading,
               label: i18n.login_LogIn,
             ),
