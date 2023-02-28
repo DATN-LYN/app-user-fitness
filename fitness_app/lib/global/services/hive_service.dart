@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 
 import '../enums/app_locale.dart';
 import '../enums/app_theme.dart';
+import '../models/hive/user_credentials.dart';
 import '../utils/constants.dart';
 
 abstract class HiveService {
@@ -13,6 +14,9 @@ abstract class HiveService {
   Future<void> saveLocale(AppLocale appLocale);
   Future<void> saveFirstLaunch([bool value = false]);
   Future<AppSettings> resetAppSettings();
+  UserCredentials getUserCredentials();
+  Future<void> saveUserCredentials(UserCredentials userCredentials);
+  bool get isAuthorized;
 }
 
 class HiveServiceImpl extends HiveService {
@@ -67,6 +71,27 @@ class HiveServiceImpl extends HiveService {
       jsonEncode(
         savedData.copyWith(theme: appTheme).toJson(),
       ),
+    );
+  }
+
+  @override
+  UserCredentials getUserCredentials() {
+    final savedUserCredentials =
+        _box.get(Constants.hiveUserCredentialsKey) as String?;
+    if (savedUserCredentials != null) {
+      return UserCredentials.fromJson(jsonDecode(savedUserCredentials));
+    }
+    return UserCredentials();
+  }
+
+  @override
+  bool get isAuthorized => getUserCredentials().accessToken != null;
+
+  @override
+  Future<void> saveUserCredentials(UserCredentials userCredentials) {
+    return _box.put(
+      Constants.hiveUserCredentialsKey,
+      jsonEncode(userCredentials.toJson()),
     );
   }
 }

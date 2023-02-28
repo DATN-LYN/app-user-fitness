@@ -1,13 +1,20 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:provider/provider.dart';
 
 import '../../global/gen/assets.gen.dart';
 import '../../global/gen/i18n.dart';
+import '../../global/graphql/auth/__generated__/mutation_login.req.gql.dart';
+import '../../global/models/hive/user.dart';
+import '../../global/providers/auth_provider.dart';
 import '../../global/themes/app_colors.dart';
+import '../../global/utils/dialogs.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 import '../../global/widgets/label.dart';
 
@@ -18,12 +25,49 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with ClientMixin {
   final formKey = GlobalKey<FormBuilderState>();
   bool passwordObscure = true;
   bool isLoading = false;
 
-  void login() {}
+  void login() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    if (formKey.currentState!.saveAndValidate()) {
+      final loginReq = GLoginReq(
+        (b) => b.vars.input.replace(
+          GLoginInput.fromJson(formKey.currentState!.value)!,
+        ),
+      );
+
+      setState(() => isLoading = true);
+      final response = await client.request(loginReq).first;
+      setState(() => isLoading = false);
+
+      if (response.hasErrors) {
+        DialogUtils.showError(context: context, response: response);
+      } else {
+        handleLoginSuccess(response.data!.login);
+      }
+    }
+  }
+
+  void handleLoginSuccess(dynamic response) async {
+    await context.read<AuthProvider>().login(
+          token: response.token,
+          //refreshToken: response.refreshToken,
+          user: User.fromJson(response.toJson()),
+        );
+
+    if (!mounted) return;
+
+    // if (AutoRouter.of(context).canPop()) {
+    //   AutoRouter.of(context).pop();
+    // } else {
+    //   AutoRouter.of(context).replaceAll([const MainRoute()]);
+    // }
+    AutoRouter.of(context).replaceAll([const MainRoute()]);
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,0 +1,45 @@
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
+interface IMutationResponse {
+  code: Float!
+  success: Boolean!
+  message: String
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+type Mutation {
+  register(registerInput: RegisterInput!): UserMutationResponse!
+  login(loginInput: LoginInput!): UserMutationResponse!
+  logout(userId: ID!): UserMutationResponse!
+}
+
+type Query {
+  hello: String!
+}
+
+input RegisterInput {
+  username: String!
+  password: String!
+}
+
+type User {
+  id: ID!
+  username: String!
+}
+
+type UserMutationResponse implements IMutationResponse {
+  code: Float!
+  success: Boolean!
+  message: String
+  user: User
+  accessToken: String
+}
+

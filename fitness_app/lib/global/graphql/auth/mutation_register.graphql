@@ -1,0 +1,12 @@
+mutation Register($input: RegisterInput!){
+  logout(registerInput: $input){
+    code
+    success
+    message
+    user{
+      id
+      username
+    }
+    accessToken
+  }
+}
