@@ -14,7 +14,7 @@ abstract class GLoginInput implements Built<GLoginInput, GLoginInputBuilder> {
 
   factory GLoginInput([Function(GLoginInputBuilder b) updates]) = _$GLoginInput;
 
-  String get username;
+  String get email;
   String get password;
   static Serializer<GLoginInput> get serializer => _$gLoginInputSerializer;
   Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
@@ -35,7 +35,8 @@ abstract class GRegisterInput
   factory GRegisterInput([Function(GRegisterInputBuilder b) updates]) =
       _$GRegisterInput;
 
-  String get username;
+  String get fullName;
+  String get email;
   String get password;
   static Serializer<GRegisterInput> get serializer =>
       _$gRegisterInputSerializer;

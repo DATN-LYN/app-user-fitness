@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_login.data.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:flutter/gestures.dart';
@@ -52,11 +53,12 @@ class _LoginPageState extends State<LoginPage> with ClientMixin {
     }
   }
 
-  void handleLoginSuccess(dynamic response) async {
+  void handleLoginSuccess(GLoginData_login response) async {
+    print(response.user);
     await context.read<AuthProvider>().login(
-          token: response.token,
+          token: response.accessToken!,
           //refreshToken: response.refreshToken,
-          user: User.fromJson(response.toJson()),
+          user: User.fromJson(response.user!.toJson()),
         );
 
     if (!mounted) return;

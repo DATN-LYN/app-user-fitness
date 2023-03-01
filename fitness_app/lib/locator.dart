@@ -1,4 +1,5 @@
 import 'package:ferry/ferry.dart';
+import 'package:fitness_app/global/providers/auth_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -11,6 +12,7 @@ GetIt locator = GetIt.instance;
 Future<void> setupLocator() async {
   await Hive.initFlutter();
   await Hive.openBox(Constants.hiveDataBox);
+  await Hive.openBox(Constants.hiveGraphqlBox);
 
   final appClient = AppClient();
   final client = await appClient.initClient();
@@ -18,4 +20,5 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<Client>(() => client);
 
   locator.registerLazySingleton<HiveService>(() => HiveServiceImpl());
+  locator.registerLazySingleton<AuthProvider>(() => AuthProvider());
 }

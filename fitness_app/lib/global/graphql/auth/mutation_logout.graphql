@@ -5,7 +5,7 @@ mutation Logout($userId: ID){
     message
     user{
       id
-      username
+      email
     }
     accessToken
   }

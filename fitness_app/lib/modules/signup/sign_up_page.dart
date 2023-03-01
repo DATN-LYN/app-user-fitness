@@ -31,10 +31,10 @@ class _SignUpPageState extends State<SignUpPage> with ClientMixin {
     FocusManager.instance.primaryFocus?.unfocus();
     if (formKey.currentState!.saveAndValidate()) {
       setState(() => isLoading = true);
-      final data = formKey.currentState?.value;
+      final data = formKey.currentState!.value;
       final registerReq = GRegisterReq(
         (b) => b.vars.input.replace(
-          GRegisterInput.fromJson(data!)!,
+          GRegisterInput.fromJson(data)!,
         ),
       );
       final response = await client.request(registerReq).first;
@@ -44,8 +44,10 @@ class _SignUpPageState extends State<SignUpPage> with ClientMixin {
           DialogUtils.showError(context: context, response: response);
         }
       } else {
-        if (mounted) {
-          context.popRoute();
+        if (response.data?.register.code == 200) {
+          if (mounted) {
+            context.popRoute();
+          }
         }
       }
     }

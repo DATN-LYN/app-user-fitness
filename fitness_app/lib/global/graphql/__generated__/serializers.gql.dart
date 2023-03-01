@@ -21,7 +21,7 @@ import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.re
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.var.gql.dart'
     show GLogoutVars;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_register.data.gql.dart'
-    show GRegisterData, GRegisterData_logout, GRegisterData_logout_user;
+    show GRegisterData, GRegisterData_register, GRegisterData_register_user;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_register.req.gql.dart'
     show GRegisterReq;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_register.var.gql.dart'
@@ -47,8 +47,8 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GLogoutReq,
   GLogoutVars,
   GRegisterData,
-  GRegisterData_logout,
-  GRegisterData_logout_user,
+  GRegisterData_register,
+  GRegisterData_register_user,
   GRegisterInput,
   GRegisterReq,
   GRegisterVars,

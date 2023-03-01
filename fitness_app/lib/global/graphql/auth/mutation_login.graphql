@@ -5,7 +5,8 @@ mutation Login($input: LoginInput!){
         message
         user{
             id
-            username
+            email
+            fullName
         }
         accessToken
     }

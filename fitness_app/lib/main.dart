@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:provider/provider.dart';
 
+import 'global/providers/auth_provider.dart';
 import 'global/routers/app_router.dart';
 import 'global/themes/app_themes.dart';
 
@@ -16,7 +17,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (_) => AppSettingsProvider(),
-        )
+        ),
+        ChangeNotifierProvider(create: (_) => locator.get<AuthProvider>()),
       ],
       child: const MyApp(),
     ),
