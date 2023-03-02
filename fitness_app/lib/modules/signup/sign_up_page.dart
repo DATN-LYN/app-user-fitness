@@ -1,11 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_register.req.gql.dart';
+import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../global/gen/i18n.dart';
+import '../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../global/themes/app_colors.dart';
+import '../../global/utils/dialogs.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 import '../../global/widgets/label.dart';
 
@@ -16,14 +20,38 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends State<SignUpPage> with ClientMixin {
   final formKey = GlobalKey<FormBuilderState>();
   bool isLoading = false;
   bool passwordObscure = true;
   bool confirmPasswordObscure = true;
   final focusConfirmPasswordNode = FocusNode();
 
-  void signUp() {}
+  void signUp() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (formKey.currentState!.saveAndValidate()) {
+      setState(() => isLoading = true);
+      final data = formKey.currentState!.value;
+      final registerReq = GRegisterReq(
+        (b) => b.vars.input.replace(
+          GRegisterInput.fromJson(data)!,
+        ),
+      );
+      final response = await client.request(registerReq).first;
+      setState(() => isLoading = false);
+      if (response.hasErrors) {
+        if (mounted) {
+          DialogUtils.showError(context: context, response: response);
+        }
+      } else {
+        if (response.data?.register.code == 200) {
+          if (mounted) {
+            context.popRoute();
+          }
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

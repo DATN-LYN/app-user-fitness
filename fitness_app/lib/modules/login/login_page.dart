@@ -1,13 +1,21 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_login.data.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:provider/provider.dart';
 
 import '../../global/gen/assets.gen.dart';
 import '../../global/gen/i18n.dart';
+import '../../global/graphql/auth/__generated__/mutation_login.req.gql.dart';
+import '../../global/models/hive/user.dart';
+import '../../global/providers/auth_provider.dart';
 import '../../global/themes/app_colors.dart';
+import '../../global/utils/dialogs.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 import '../../global/widgets/label.dart';
 
@@ -18,13 +26,49 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with ClientMixin {
   final formKey = GlobalKey<FormBuilderState>();
   bool passwordObscure = true;
   bool isLoading = false;
 
-  void login() {
-    AutoRouter.of(context).push(const MainRoute());
+  void login() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    if (formKey.currentState!.saveAndValidate()) {
+      final loginReq = GLoginReq(
+        (b) => b.vars.input.replace(
+          GLoginInput.fromJson(formKey.currentState!.value)!,
+        ),
+      );
+
+      setState(() => isLoading = true);
+      final response = await client.request(loginReq).first;
+      setState(() => isLoading = false);
+
+      if (response.hasErrors) {
+        DialogUtils.showError(context: context, response: response);
+      } else {
+        handleLoginSuccess(response.data!.login);
+      }
+    }
+  }
+
+  void handleLoginSuccess(GLoginData_login response) async {
+    print(response.user);
+    await context.read<AuthProvider>().login(
+          token: response.accessToken!,
+          //refreshToken: response.refreshToken,
+          user: User.fromJson(response.user!.toJson()),
+        );
+
+    if (!mounted) return;
+
+    // if (AutoRouter.of(context).canPop()) {
+    //   AutoRouter.of(context).pop();
+    // } else {
+    //   AutoRouter.of(context).replaceAll([const MainRoute()]);
+    // }
+    AutoRouter.of(context).replaceAll([const MainRoute()]);
   }
 
   @override
@@ -107,14 +151,14 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.centerLeft,
               child: TextButton(
                 onPressed: () {
-                  AutoRouter.of(context).push(const ForgotPasswordRoute());
+                  //TODO: forgot pass route
                 },
                 child: Text(i18n.login_ForgotPassword),
               ),
             ),
             const SizedBox(height: 16),
             ElevatedButtonOpacity(
-              onTap: login,
+              onTap: isLoading ? null : login,
               loading: isLoading,
               label: i18n.login_LogIn,
             ),
