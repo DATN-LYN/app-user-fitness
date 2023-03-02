@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> with ClientMixin {
               alignment: Alignment.centerLeft,
               child: TextButton(
                 onPressed: () {
-                  AutoRouter.of(context).push(const ForgotPasswordRoute());
+                  //TODO: forgot pass route
                 },
                 child: Text(i18n.login_ForgotPassword),
               ),
