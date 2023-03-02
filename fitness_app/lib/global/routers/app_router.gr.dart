@@ -53,6 +53,24 @@ class _$AppRouter extends RootStackRouter {
         child: const ForgotPasswordPage(),
       );
     },
+    HomeRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const HomePage(),
+      );
+    },
+    SettingRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SettingPage(),
+      );
+    },
+    SocialRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SocialPage(),
+      );
+    },
   };
 
   @override
@@ -68,6 +86,23 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           MainRoute.name,
           path: '/main-page',
+          children: [
+            RouteConfig(
+              HomeRoute.name,
+              path: 'home-page',
+              parent: MainRoute.name,
+            ),
+            RouteConfig(
+              SettingRoute.name,
+              path: 'setting-page',
+              parent: MainRoute.name,
+            ),
+            RouteConfig(
+              SocialRoute.name,
+              path: 'social-page',
+              parent: MainRoute.name,
+            ),
+          ],
         ),
         RouteConfig(
           LoginRoute.name,
@@ -111,10 +146,11 @@ class OnBoardRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [MainPage]
 class MainRoute extends PageRouteInfo<void> {
-  const MainRoute()
+  const MainRoute({List<PageRouteInfo>? children})
       : super(
           MainRoute.name,
           path: '/main-page',
+          initialChildren: children,
         );
 
   static const String name = 'MainRoute';
@@ -154,4 +190,40 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ForgotPasswordRoute';
+}
+
+/// generated route for
+/// [HomePage]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute()
+      : super(
+          HomeRoute.name,
+          path: 'home-page',
+        );
+
+  static const String name = 'HomeRoute';
+}
+
+/// generated route for
+/// [SettingPage]
+class SettingRoute extends PageRouteInfo<void> {
+  const SettingRoute()
+      : super(
+          SettingRoute.name,
+          path: 'setting-page',
+        );
+
+  static const String name = 'SettingRoute';
+}
+
+/// generated route for
+/// [SocialPage]
+class SocialRoute extends PageRouteInfo<void> {
+  const SocialRoute()
+      : super(
+          SocialRoute.name,
+          path: 'social-page',
+        );
+
+  static const String name = 'SocialRoute';
 }
