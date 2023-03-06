@@ -34,6 +34,12 @@ class I18n implements WidgetsLocalizations {
 	String get appName => "Fitness App";
 	/// "Next"
 	String get button_Next => "Next";
+	/// "Done"
+	String get button_Done => "Done";
+	/// "Cancel"
+	String get button_Cancel => "Cancel";
+	/// "OK"
+	String get button_Ok => "OK";
 	/// ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"]
 	List<String> get onboard_Title => ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"];
 	/// ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"]
@@ -116,6 +122,15 @@ class _I18n_vi_VN extends I18n {
 	/// "Tiếp tục"
 	@override
 	String get button_Next => "Tiếp tục";
+	/// "Xong"
+	@override
+	String get button_Done => "Xong";
+	/// "Huỷ bỏ"
+	@override
+	String get button_Cancel => "Huỷ bỏ";
+	/// "Đồng ý"
+	@override
+	String get button_Ok => "Đồng ý";
 	/// ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"]
 	@override
 	List<String> get onboard_Title => ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"];

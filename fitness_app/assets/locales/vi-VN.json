@@ -1,7 +1,10 @@
 {
     "appName": "App thể thao",
     "button_":{
-        "next": "Tiếp tục"
+        "next": "Tiếp tục",
+        "done": "Xong",
+        "cancel": "Huỷ bỏ",
+        "ok": "Đồng ý"
     },
     "onboard_":{
       "title": [

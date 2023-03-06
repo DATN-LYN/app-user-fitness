@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/assets.gen.dart';
+import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -15,8 +16,9 @@ class OnBoardPage extends StatefulWidget {
   State<OnBoardPage> createState() => _OnBoardPageState();
 }
 
-class _OnBoardPageState extends State<OnBoardPage> {
+class _OnBoardPageState extends State<OnBoardPage> with ClientMixin {
   final pageController = PageController();
+  String btnText = '';
 
   List<AssetGenImage> onboardImages = [
     Assets.images.intro1,
@@ -27,6 +29,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+    btnText = i18n.button_Next;
 
     return Scaffold(
       body: SafeArea(
@@ -57,17 +60,23 @@ class _OnBoardPageState extends State<OnBoardPage> {
                     ),
                   ),
                   ElevatedButtonOpacity(
-                    label: i18n.button_Next,
+                    label: btnText,
                     color: AppColors.neutral20,
                     height: 50,
                     radius: 30,
                     fontSize: 16,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    onTap: () {
+                    onTap: () async {
                       if (pageController.page! >= onboardImages.length - 1) {
-                        AutoRouter.of(context).replaceAll(
-                          [const LoginRoute()],
-                        );
+                        setState(() {
+                          btnText = i18n.button_Done;
+                        });
+                        await hiveService.saveFirstLaunch();
+                        if (mounted) {
+                          AutoRouter.of(context).replaceAll(
+                            [const LoginRoute()],
+                          );
+                        }
                       } else {
                         pageController.nextPage(
                           duration: const Duration(milliseconds: 300),
