@@ -53,6 +53,12 @@ class _$AppRouter extends RootStackRouter {
         child: const ForgotPasswordPage(),
       );
     },
+    ProgramDetailRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ProgramDetailPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -115,6 +121,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           ForgotPasswordRoute.name,
           path: '/forgot-password-page',
+        ),
+        RouteConfig(
+          ProgramDetailRoute.name,
+          path: '/program-detail-page',
         ),
       ];
 }
@@ -190,6 +200,18 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ForgotPasswordRoute';
+}
+
+/// generated route for
+/// [ProgramDetailPage]
+class ProgramDetailRoute extends PageRouteInfo<void> {
+  const ProgramDetailRoute()
+      : super(
+          ProgramDetailRoute.name,
+          path: '/program-detail-page',
+        );
+
+  static const String name = 'ProgramDetailRoute';
 }
 
 /// generated route for

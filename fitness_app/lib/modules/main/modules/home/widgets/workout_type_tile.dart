@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../../../../global/themes/app_colors.dart';
 
-class WorkoutType extends StatefulWidget {
-  const WorkoutType({
+class WorkoutTypeTile extends StatefulWidget {
+  const WorkoutTypeTile({
     super.key,
-    required this.workoutType,
     required this.icon,
+    required this.typeName,
   });
 
-  final String workoutType;
   final IconData icon;
+  final String typeName;
 
   @override
-  State<WorkoutType> createState() => _WorkoutTypeState();
+  State<WorkoutTypeTile> createState() => _WorkoutTypeTileState();
 }
 
-class _WorkoutTypeState extends State<WorkoutType> {
+class _WorkoutTypeTileState extends State<WorkoutTypeTile> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +43,7 @@ class _WorkoutTypeState extends State<WorkoutType> {
         ),
         const SizedBox(height: 8),
         Text(
-          widget.workoutType,
+          widget.typeName,
           style: const TextStyle(
             color: AppColors.grey2,
           ),

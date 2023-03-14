@@ -18,6 +18,7 @@ class _HomeHeaderState extends State<HomeHeader> {
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
     var user = context.watch<AuthProvider>().user;
+
     return Column(
       children: [
         Stack(
