@@ -5,6 +5,7 @@ import 'package:fitness_app/modules/main/modules/home/home_page.dart';
 import 'package:fitness_app/modules/main/modules/program/program_detail_page.dart';
 import 'package:fitness_app/modules/main/modules/settings/setting_page.dart';
 import 'package:fitness_app/modules/main/modules/social/social_page.dart';
+import 'package:fitness_app/modules/main/modules/type/type_detail_page.dart';
 import 'package:fitness_app/modules/signup/sign_up_page.dart';
 import 'package:fitness_app/modules/splash/splash_page.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: SignUpPage),
     AutoRoute(page: ForgotPasswordPage),
     AutoRoute(page: ProgramDetailPage),
+    AutoRoute(page: TypeDetailPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

@@ -3,6 +3,8 @@ import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/modules/main/modules/program/widgets/exercise_tile.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../global/widgets/program_info_tile.dart';
+
 class ProgramDetailPage extends StatefulWidget {
   const ProgramDetailPage({super.key});
 
@@ -22,20 +24,20 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
         ),
         onPressed: () {},
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              height: 120,
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: AppColors.grey1,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
               ),
+            ),
+            child: SafeArea(
+              bottom: false,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,14 +52,12 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                           },
                           icon: const Icon(
                             Icons.arrow_back,
-                            color: AppColors.white,
                           ),
                         ),
                       ),
                       const Text(
                         'Chest And Tricep',
                         style: TextStyle(
-                          color: AppColors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.w700,
                         ),
@@ -85,54 +85,21 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return const ExerciseTile();
-                },
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16),
-              ),
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ProgramInfoTile extends StatelessWidget {
-  const ProgramInfoTile({
-    super.key,
-    required this.label,
-    required this.icon,
-  });
-
-  final String label;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: AppColors.white,
-          size: 18,
-        ),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: const TextStyle(
-            color: AppColors.white,
-            fontWeight: FontWeight.w700,
           ),
-        ),
-      ],
+          const SizedBox(height: 16),
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return const ExerciseTile();
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 16),
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
     );
   }
 }

@@ -68,7 +68,8 @@ class _HomeHeaderState extends State<HomeHeader> {
                             ),
                           ),
                           child: UserAvatar(
-                            avatar: 'jfsdjfdjfi',
+                            avatar:
+                                'https://i1-vnexpress.vnecdn.net/2016/03/02/2-b1-a1-4358-1456906706.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=JEuZuiViqjODpa45ruzTtw',
                             fullName: user.fullName,
                           ),
                         ),

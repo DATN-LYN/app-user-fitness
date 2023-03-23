@@ -12,6 +12,7 @@ class _WorkoutTypesState extends State<WorkoutTypes> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      itemCount: 10,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return const WorkoutTypeTile(
@@ -22,7 +23,6 @@ class _WorkoutTypesState extends State<WorkoutTypes> {
       separatorBuilder: (context, index) {
         return const SizedBox(width: 12);
       },
-      itemCount: 10,
     );
   }
 }
