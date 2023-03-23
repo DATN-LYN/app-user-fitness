@@ -1,7 +1,10 @@
 {
     "appName": "Fitness App",
     "button_":{
-        "next": "Next"
+        "next": "Next",
+        "done": "Done",
+        "cancel": "Cancel",
+        "ok": "OK"
     },
     "onboard_": {
         "title": [
