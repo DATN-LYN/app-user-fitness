@@ -63,6 +63,7 @@ dependencies:
   cloudinary_public: ^0.20.0
   image_picker: ^0.8.6+4
   video_player: ^2.5.2
+  chewie: ^1.4.0
 
 dev_dependencies:
   flutter_test:

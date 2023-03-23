@@ -65,6 +65,12 @@ class _$AppRouter extends RootStackRouter {
         child: const TypeDetailPage(),
       );
     },
+    ExerciseDetailRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ExerciseDetailPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -135,6 +141,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           TypeDetailRoute.name,
           path: '/type-detail-page',
+        ),
+        RouteConfig(
+          ExerciseDetailRoute.name,
+          path: '/exercise-detail-page',
         ),
       ];
 }
@@ -234,6 +244,18 @@ class TypeDetailRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TypeDetailRoute';
+}
+
+/// generated route for
+/// [ExerciseDetailPage]
+class ExerciseDetailRoute extends PageRouteInfo<void> {
+  const ExerciseDetailRoute()
+      : super(
+          ExerciseDetailRoute.name,
+          path: '/exercise-detail-page',
+        );
+
+  static const String name = 'ExerciseDetailRoute';
 }
 
 /// generated route for

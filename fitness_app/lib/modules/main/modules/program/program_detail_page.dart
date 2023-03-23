@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/modules/main/modules/program/widgets/exercise_tile.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,9 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
           Icons.play_arrow,
           color: AppColors.white,
         ),
-        onPressed: () {},
+        onPressed: () {
+          context.pushRoute(const ExerciseDetailRoute());
+        },
       ),
       body: Column(
         children: [

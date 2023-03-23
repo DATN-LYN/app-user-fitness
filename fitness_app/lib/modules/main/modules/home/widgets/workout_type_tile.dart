@@ -21,7 +21,7 @@ class WorkoutTypeTile extends StatefulWidget {
 class _WorkoutTypeTileState extends State<WorkoutTypeTile> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => context.pushRoute(const TypeDetailRoute()),
       child: Column(
         mainAxisSize: MainAxisSize.min,
