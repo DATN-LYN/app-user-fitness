@@ -73,7 +73,7 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                     children: const [
                       ProgramInfoTile(
                         label: '40 Cal',
-                        icon: Icons.fire_extinguisher,
+                        icon: Icons.local_fire_department_rounded,
                       ),
                       ProgramInfoTile(
                         label: '73 Min',

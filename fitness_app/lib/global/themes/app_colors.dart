@@ -15,4 +15,6 @@ class AppColors {
   static const primary = Color(0xFF7BB3FC);
   static const primarySoft = Color(0xFFADCEFF);
   static const error = Color(0xFFF74360);
+  static const warning = Color(0xFFFF934B);
+  static const success = Color(0xFF00C48C);
 }

@@ -17,28 +17,36 @@ class _UserStatisticState extends State<UserStatistic> {
         UserStatisticTile(
           title: '809',
           subtitle: 'Calories',
-          icon: Icons.woman,
-          color: AppColors.background,
+          icon: const Icon(
+            Icons.local_fire_department,
+            size: 30,
+            color: AppColors.error,
+          ),
         ),
         UserStatisticTile(
-          title: '809',
-          subtitle: 'Calories',
-          icon: Icons.woman,
-          color: AppColors.primary,
+          title: '600',
+          subtitle: 'Minutes',
+          icon: const Icon(
+            Icons.timelapse,
+            size: 30,
+            color: AppColors.warning,
+          ),
         ),
         UserStatisticTile(
-          title: '809',
-          subtitle: 'Calories',
-          icon: Icons.woman,
-          color: AppColors.grey4,
+          title: '5',
+          subtitle: 'Programs',
+          icon: const Icon(
+            Icons.feed_rounded,
+            size: 30,
+            color: AppColors.success,
+          ),
         ),
       ],
     );
   }
 
   Widget UserStatisticTile({
-    required Color color,
-    required IconData icon,
+    required Icon icon,
     required String title,
     required String subtitle,
   }) {
@@ -47,13 +55,13 @@ class _UserStatisticState extends State<UserStatistic> {
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
-          color: color,
+          color: AppColors.grey6.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
           children: [
-            Icon(icon),
-            const SizedBox(height: 30),
+            icon,
+            const SizedBox(height: 25),
             Text(
               title,
               style: const TextStyle(

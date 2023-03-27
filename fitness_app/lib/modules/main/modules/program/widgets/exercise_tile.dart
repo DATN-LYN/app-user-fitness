@@ -40,8 +40,9 @@ class _ExerciseTileState extends State<ExerciseTile> {
             Row(
               children: const [
                 Icon(
-                  Icons.access_alarm,
-                  size: 15,
+                  Icons.bolt_outlined,
+                  size: 18,
+                  color: AppColors.grey5,
                 ),
                 SizedBox(width: 4),
                 Text('4 sets'),
@@ -51,11 +52,12 @@ class _ExerciseTileState extends State<ExerciseTile> {
             Row(
               children: const [
                 Icon(
-                  Icons.fire_extinguisher,
-                  size: 15,
+                  Icons.access_time_filled,
+                  size: 16,
+                  color: AppColors.grey5,
                 ),
                 SizedBox(width: 4),
-                Text('4 sets'),
+                Text('4 mins'),
               ],
             ),
           ],

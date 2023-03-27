@@ -20,8 +20,8 @@ class ProgramInfoTile extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: AppColors.grey1,
-          size: 18,
+          color: AppColors.grey2,
+          size: 16,
         ),
         const SizedBox(width: 4),
         Text(label, style: textStyle),
