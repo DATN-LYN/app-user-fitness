@@ -1,5 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../../../global/themes/app_colors.dart';
+
+enum PlayerState { playing, paused }
 
 class ExerciseDetailPage extends StatefulWidget {
   const ExerciseDetailPage({super.key});
@@ -14,6 +20,9 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
   bool lock = true;
   final Map<String, VideoPlayerController> controllers = {};
   final Map<int, VoidCallback> listeners = {};
+  int maxValue = 0;
+  int value = 0;
+  PlayerState playerState = PlayerState.paused;
   final Set<String> urls = {
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#4',
@@ -45,12 +54,14 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     }
   }
 
-  VoidCallback listenerSpawner(index) {
+  VoidCallback checkEndVideo(index) {
     return () {
       int dur = controller(index).value.duration.inMilliseconds;
       int pos = controller(index).value.position.inMilliseconds;
 
       setState(() {
+        maxValue = dur;
+        value = pos;
         if (dur <= pos) {
           position = 0;
           return;
@@ -89,14 +100,14 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
   void playController(int index) async {
     if (!listeners.keys.contains(index)) {
-      listeners[index] = listenerSpawner(index);
+      listeners[index] = checkEndVideo(index);
     }
     controller(index).addListener(listeners[index]!);
     await controller(index).play();
     setState(() {});
   }
 
-  void _previousVideo() {
+  void previousVideo() {
     if (lock || index == 0) {
       return;
     }
@@ -138,57 +149,98 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     }
   }
 
+  void handlerSliderChanged(double milliseconds) async {
+    await controller(index).seekTo(
+      Duration(milliseconds: milliseconds.toInt()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Video Play'),
       ),
-      body: Stack(
-        children: [
-          GestureDetector(
-            onLongPressStart: (_) => controller(index).pause(),
-            onLongPressEnd: (_) => controller(index).play(),
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: controller(index).value.aspectRatio,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onLongPressStart: (_) => controller(index).pause(),
+                onLongPressEnd: (_) => controller(index).play(),
                 child: Center(
-                  child: VideoPlayer(controller(index)),
+                  child: AspectRatio(
+                    aspectRatio: controller(index).value.aspectRatio,
+                    child: Center(
+                      child: VideoPlayer(controller(index)),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            child: Container(
-              height: 10,
-              width: MediaQuery.of(context).size.width,
-              color: Colors.grey,
+            SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: 5,
+                activeTickMarkColor: Colors.transparent,
+                inactiveTickMarkColor: Colors.transparent,
+                overlayShape: SliderComponentShape.noThumb,
+              ),
+              child: Slider(
+                max: max(maxValue.toDouble(), value.toDouble()),
+                value: value.toDouble() > 0 ? value.toDouble() : 0,
+                divisions: maxValue.toInt() > 0 ? maxValue.toInt() : 1,
+                onChanged: handlerSliderChanged,
+              ),
             ),
-          ),
-          Positioned(
-            child: Container(
-              height: 10,
-              width: MediaQuery.of(context).size.width * position,
-              color: Colors.greenAccent,
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            heroTag: 'Back',
-            onPressed: _previousVideo,
-            child: const Icon(Icons.arrow_back),
-          ),
-          const SizedBox(width: 24),
-          FloatingActionButton(
-            heroTag: 'Next',
-            onPressed: nextVideo,
-            child: const Icon(Icons.arrow_forward),
-          ),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: previousVideo,
+                  icon: const Icon(
+                    Icons.arrow_circle_left_outlined,
+                    color: AppColors.grey1,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  width: 48,
+                  height: 48,
+                  child: IconButton(
+                    onPressed: () async {
+                      if (playerState == PlayerState.playing) {
+                        setState(() {
+                          playerState = PlayerState.paused;
+                        });
+                        await controller(index).pause();
+                      } else {
+                        setState(() {
+                          playerState = PlayerState.playing;
+                        });
+                        await controller(index).play();
+                      }
+                    },
+                    icon: playerState == PlayerState.playing
+                        ? const Icon(Icons.pause)
+                        : const Icon(Icons.play_arrow),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                IconButton(
+                  onPressed: nextVideo,
+                  icon: const Icon(
+                    Icons.arrow_circle_right_outlined,
+                    color: AppColors.grey1,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
