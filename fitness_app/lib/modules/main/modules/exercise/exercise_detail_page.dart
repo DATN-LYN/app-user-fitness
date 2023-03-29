@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class ExerciseDetailPage extends StatefulWidget {
 }
 
 class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
+  Duration countdownDuration = const Duration(seconds: 3);
+
   int index = 0;
   double position = 0;
   bool lock = true;
@@ -31,6 +34,19 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
   };
 
+  void startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        final seconds = countdownDuration.inSeconds - 1;
+        if (seconds < 0) {
+          timer.cancel();
+        } else {
+          countdownDuration = Duration(seconds: seconds);
+        }
+      });
+    });
+  }
+
   @override
   void dispose() {
     controller(index).dispose();
@@ -41,7 +57,14 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
   @override
   void initState() {
+    initData();
+
     super.initState();
+  }
+
+  initData() async {
+    await Future.delayed(const Duration(seconds: 3));
+    startTimer();
 
     if (urls.isNotEmpty) {
       initController(0).then((_) {
@@ -164,6 +187,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
       body: SafeArea(
         child: Column(
           children: [
+            Text(countdownDuration.inSeconds.toString()),
             Expanded(
               child: GestureDetector(
                 onLongPressStart: (_) => controller(index).pause(),
