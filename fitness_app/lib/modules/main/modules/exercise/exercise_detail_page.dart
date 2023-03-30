@@ -16,8 +16,6 @@ class ExerciseDetailPage extends StatefulWidget {
 }
 
 class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
-  Duration countdownDuration = const Duration(seconds: 3);
-
   int index = 0;
   double position = 0;
   bool lock = true;
@@ -25,7 +23,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
   final Map<int, VoidCallback> listeners = {};
   int maxValue = 0;
   int value = 0;
-  PlayerState playerState = PlayerState.paused;
+  PlayerState playerState = PlayerState.playing;
   final Set<String> urls = {
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#4',
@@ -33,19 +31,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#6',
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
   };
-
-  void startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        final seconds = countdownDuration.inSeconds - 1;
-        if (seconds < 0) {
-          timer.cancel();
-        } else {
-          countdownDuration = Duration(seconds: seconds);
-        }
-      });
-    });
-  }
 
   @override
   void dispose() {
@@ -58,20 +43,15 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
   @override
   void initState() {
     initData();
-
     super.initState();
   }
 
-  initData() async {
-    await Future.delayed(const Duration(seconds: 3));
-    startTimer();
-
+  initData() {
     if (urls.isNotEmpty) {
       initController(0).then((_) {
         playController(0);
       });
     }
-
     if (urls.length > 1) {
       initController(1).whenComplete(() => lock = false);
     }
@@ -85,11 +65,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
       setState(() {
         maxValue = dur;
         value = pos;
-        if (dur <= pos) {
-          position = 0;
-          return;
-        }
-        position = pos / dur;
       });
       if (dur - pos < 1) {
         if (index < urls.length - 1) {
@@ -187,7 +162,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Text(countdownDuration.inSeconds.toString()),
             Expanded(
               child: GestureDetector(
                 onLongPressStart: (_) => controller(index).pause(),

@@ -71,6 +71,12 @@ class _$AppRouter extends RootStackRouter {
         child: const ExerciseDetailPage(),
       );
     },
+    CountdownTimerRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const CountdownTimerPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -145,6 +151,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           ExerciseDetailRoute.name,
           path: '/exercise-detail-page',
+        ),
+        RouteConfig(
+          CountdownTimerRoute.name,
+          path: '/countdown-timer-page',
         ),
       ];
 }
@@ -256,6 +266,18 @@ class ExerciseDetailRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ExerciseDetailRoute';
+}
+
+/// generated route for
+/// [CountdownTimerPage]
+class CountdownTimerRoute extends PageRouteInfo<void> {
+  const CountdownTimerRoute()
+      : super(
+          CountdownTimerRoute.name,
+          path: '/countdown-timer-page',
+        );
+
+  static const String name = 'CountdownTimerRoute';
 }
 
 /// generated route for

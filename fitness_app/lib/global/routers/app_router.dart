@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/widgets/countdown_timer_page.dart';
 import 'package:fitness_app/modules/forgot_password/forgot_password_page.dart';
 import 'package:fitness_app/modules/login/login_page.dart';
 import 'package:fitness_app/modules/main/modules/exercise/exercise_detail_page.dart';
@@ -38,6 +39,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: ProgramDetailPage),
     AutoRoute(page: TypeDetailPage),
     AutoRoute(page: ExerciseDetailPage),
+    AutoRoute(page: CountdownTimerPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
