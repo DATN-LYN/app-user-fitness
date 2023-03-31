@@ -55,5 +55,21 @@
       "title": "Forgot password",
       "description": "Please enter your email address to get login code",
       "getCode": "Get Code"
+    },
+    "countdown_":{
+      "readyToGo":"Ready to go",
+      "startNow":"Start Now"
+    },
+    "setting_":{
+      "title":"Setting",
+      "language":"Language",
+      "shareWithFriends":"Share with friends",
+      "privacyPolicy":"Privacy policy",
+      "termsAndConditions":"Terms and conditions",
+      "changePassword":"Change password",
+      "logout":"Log out",
+      "account":"Account",
+      "security": "Security",
+      "aboutApp":"About app"
     }
 }

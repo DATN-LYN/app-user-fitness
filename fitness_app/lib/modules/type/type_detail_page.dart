@@ -1,5 +1,7 @@
-import 'package:fitness_app/modules/main/modules/type/widgets/program_tile_large.dart';
+import 'package:fitness_app/modules/type/widgets/program_tile_large.dart';
 import 'package:flutter/material.dart';
+
+import '../../global/gen/i18n.dart';
 
 class TypeDetailPage extends StatefulWidget {
   const TypeDetailPage({super.key});
@@ -11,6 +13,8 @@ class TypeDetailPage extends StatefulWidget {
 class _TypeDetailPageState extends State<TypeDetailPage> {
   @override
   Widget build(BuildContext context) {
+    final i18n = I18n.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Gym'),

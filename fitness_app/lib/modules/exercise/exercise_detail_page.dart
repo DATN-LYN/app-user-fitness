@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../../global/themes/app_colors.dart';
+import '../../global/themes/app_colors.dart';
 
 enum PlayerState { playing, paused }
 

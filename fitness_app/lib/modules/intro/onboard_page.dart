@@ -97,15 +97,12 @@ class _OnBoardPageState extends State<OnBoardPage> with ClientMixin {
   Widget page(I18n i18n, int index) {
     return Column(
       children: [
-        const SizedBox(height: 16),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: onboardImages[index].image(
-            fit: BoxFit.contain,
-            height: 600,
-          ),
+        const Spacer(),
+        onboardImages[index].image(
+          fit: BoxFit.contain,
+          width: MediaQuery.of(context).size.width * 0.8,
         ),
-        const SizedBox(height: 20),
+        const Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 50,
@@ -119,7 +116,7 @@ class _OnBoardPageState extends State<OnBoardPage> with ClientMixin {
             ),
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36),
           child: Text(
@@ -133,6 +130,7 @@ class _OnBoardPageState extends State<OnBoardPage> with ClientMixin {
             overflow: TextOverflow.visible,
           ),
         ),
+        const Spacer(),
       ],
     );
   }

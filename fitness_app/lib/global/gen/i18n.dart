@@ -108,6 +108,30 @@ class I18n implements WidgetsLocalizations {
 	String get forgotPassword_Description => "Please enter your email address to get login code";
 	/// "Get Code"
 	String get forgotPassword_GetCode => "Get Code";
+	/// "Ready to go"
+	String get countdown_ReadyToGo => "Ready to go";
+	/// "Start Now"
+	String get countdown_StartNow => "Start Now";
+	/// "Setting"
+	String get setting_Title => "Setting";
+	/// "Language"
+	String get setting_Language => "Language";
+	/// "Share with friends"
+	String get setting_ShareWithFriends => "Share with friends";
+	/// "Privacy policy"
+	String get setting_PrivacyPolicy => "Privacy policy";
+	/// "Terms and conditions"
+	String get setting_TermsAndConditions => "Terms and conditions";
+	/// "Change password"
+	String get setting_ChangePassword => "Change password";
+	/// "Log out"
+	String get setting_Logout => "Log out";
+	/// "Account"
+	String get setting_Account => "Account";
+	/// "Security"
+	String get setting_Security => "Security";
+	/// "About app"
+	String get setting_AboutApp => "About app";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -233,6 +257,42 @@ class _I18n_vi_VN extends I18n {
 	/// "Lấy Mã Xác Nhận"
 	@override
 	String get forgotPassword_GetCode => "Lấy Mã Xác Nhận";
+	/// "Sẵn sàng tập luyện"
+	@override
+	String get countdown_ReadyToGo => "Sẵn sàng tập luyện";
+	/// "Bắt Đầu"
+	@override
+	String get countdown_StartNow => "Bắt Đầu";
+	/// "Cài đặt"
+	@override
+	String get setting_Title => "Cài đặt";
+	/// "Ngôn ngữ"
+	@override
+	String get setting_Language => "Ngôn ngữ";
+	/// "Chia sẻ với bạn bè"
+	@override
+	String get setting_ShareWithFriends => "Chia sẻ với bạn bè";
+	/// "Chính sách bảo mật"
+	@override
+	String get setting_PrivacyPolicy => "Chính sách bảo mật";
+	/// "Điều khoản và điều kiện"
+	@override
+	String get setting_TermsAndConditions => "Điều khoản và điều kiện";
+	/// "Thay đổi mật khẩu"
+	@override
+	String get setting_ChangePassword => "Thay đổi mật khẩu";
+	/// "Đăng xuất"
+	@override
+	String get setting_Logout => "Đăng xuất";
+	/// "Tài khoản"
+	@override
+	String get setting_Account => "Tài khoản";
+	/// "Bảo mật"
+	@override
+	String get setting_Security => "Bảo mật";
+	/// "Về ứng dụng"
+	@override
+	String get setting_AboutApp => "Về ứng dụng";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

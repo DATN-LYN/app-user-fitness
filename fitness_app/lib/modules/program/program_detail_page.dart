@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
-import 'package:fitness_app/modules/main/modules/program/widgets/exercise_tile.dart';
+import 'package:fitness_app/modules/program/widgets/exercise_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../global/widgets/program_info_tile.dart';
+import '../../global/widgets/program_info_tile.dart';
 
 class ProgramDetailPage extends StatefulWidget {
   const ProgramDetailPage({super.key});

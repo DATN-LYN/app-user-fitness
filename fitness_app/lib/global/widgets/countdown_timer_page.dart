@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/material.dart';
 
+import '../gen/i18n.dart';
 import '../themes/app_colors.dart';
 
 class CountdownTimerPage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
         final seconds = countdownDuration.inSeconds - 1;
         if (seconds < 0) {
           timer.cancel();
-          context.pushRoute(const ExerciseDetailRoute());
+          context.replaceRoute(const ExerciseDetailRoute());
         } else {
           countdownDuration = Duration(seconds: seconds);
         }
@@ -38,6 +39,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final i18n = I18n.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -45,9 +48,9 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Ready to go',
-                style: TextStyle(
+              Text(
+                i18n.countdown_ReadyToGo,
+                style: const TextStyle(
                   fontSize: 40,
                   color: AppColors.primaryBold,
                   fontWeight: FontWeight.w700,
@@ -70,11 +73,9 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
         child: ElevatedButton(
           onPressed: () {
-            context.pushRoute(const ExerciseDetailRoute());
+            context.replaceRoute(const ExerciseDetailRoute());
           },
-          child: const Text(
-            'START NOW',
-          ),
+          child: Text(i18n.countdown_StartNow),
         ),
       ),
     );
