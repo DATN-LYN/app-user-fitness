@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../global/themes/app_colors.dart';
+import '../../global/utils/duration_time.dart';
 
 enum PlayerState { playing, paused }
 
@@ -24,13 +25,13 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
   int maxValue = 0;
   int value = 0;
   PlayerState playerState = PlayerState.playing;
-  final Set<String> urls = {
+  final List<String> urls = [
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#4',
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#6',
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-  };
+  ];
 
   @override
   void dispose() {
@@ -113,9 +114,9 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
     stopController(index);
 
-    if (index + 1 < urls.length) {
-      removeController(index + 1);
-    }
+    // if (index + 1 < urls.length) {
+    //   removeController(index + 1);
+    // }
 
     playController(--index);
 
@@ -134,9 +135,9 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
     stopController(index);
 
-    if (index - 1 >= 0) {
-      removeController(index - 1);
-    }
+    // if (index - 1 >= 0) {
+    //   removeController(index - 1);
+    // }
 
     playController(++index);
 
@@ -155,27 +156,47 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Video Play'),
+        title: const Text('Chest And Tricep'),
+        centerTitle: false,
+        actions: [
+          TextButton(
+            onPressed: () {},
+            style: theme.textButtonTheme.style?.copyWith(
+              textStyle: const MaterialStatePropertyAll(
+                TextStyle(color: AppColors.grey1, fontWeight: FontWeight.w600),
+              ),
+            ),
+            child: Text(
+              '${index + 1} / ${urls.length}',
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child: GestureDetector(
-                onLongPressStart: (_) => controller(index).pause(),
-                onLongPressEnd: (_) => controller(index).play(),
-                child: Center(
-                  child: AspectRatio(
-                    aspectRatio: controller(index).value.aspectRatio,
-                    child: Center(
-                      child: VideoPlayer(controller(index)),
-                    ),
-                  ),
-                ),
-              ),
+              child: !isPortrait
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        videoPlayer(),
+                        remainDurationContainer(),
+                      ],
+                    )
+                  : Center(child: videoPlayer()),
             ),
+            if (isPortrait) ...[
+              const SizedBox(height: 16),
+              remainDurationContainer(),
+            ],
+            const SizedBox(height: 16),
             SliderTheme(
               data: SliderTheme.of(context).copyWith(
                 trackHeight: 5,
@@ -190,17 +211,45 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                 onChanged: handlerSliderChanged,
               ),
             ),
+            const SizedBox(height: 8),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         DurationTime.totalDurationFormat(
+            //           controller(index).value.position,
+            //         ),
+            //         style: const TextStyle(
+            //           color: AppColors.grey3,
+            //           fontSize: 12,
+            //         ),
+            //       ),
+            //       Text(
+            //         DurationTime.totalDurationFormat(
+            //           controller(index).value.duration,
+            //         ),
+            //         style: const TextStyle(
+            //           color: AppColors.grey3,
+            //           fontSize: 12,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
                   onPressed: previousVideo,
                   icon: const Icon(
-                    Icons.arrow_circle_left_outlined,
+                    Icons.skip_previous_rounded,
                     color: AppColors.grey1,
                   ),
+                  iconSize: 30,
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 16),
                 Container(
                   decoration: const BoxDecoration(
                     color: AppColors.primary,
@@ -227,17 +276,47 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                         : const Icon(Icons.play_arrow),
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 16),
                 IconButton(
                   onPressed: nextVideo,
                   icon: const Icon(
-                    Icons.arrow_circle_right_outlined,
+                    Icons.skip_next_rounded,
                     color: AppColors.grey1,
                   ),
+                  iconSize: 30,
                 ),
               ],
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  AspectRatio videoPlayer() {
+    return AspectRatio(
+      aspectRatio: controller(index).value.aspectRatio,
+      child: Center(
+        child: VideoPlayer(controller(index)),
+      ),
+    );
+  }
+
+  Container remainDurationContainer() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: AppColors.primarySoft,
+      ),
+      child: Text(
+        DurationTime.totalDurationFormat(
+          controller(index).value.duration - controller(index).value.position,
+        ),
+        style: const TextStyle(
+          fontSize: 41,
+          fontWeight: FontWeight.w700,
+          color: AppColors.primaryBold,
         ),
       ),
     );

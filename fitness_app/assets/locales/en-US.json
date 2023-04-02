@@ -18,6 +18,12 @@
           "Before you begin designing your own diet plan, some self-reflection is in order"
         ]
     },
+    "language": ["English (US)", "Tiếng Việt"],
+    "main_":{
+      "social":"Social",
+      "home":"Home",
+      "setting":"Setting"
+    },
     "login_": {
       "email": "Email",
       "password": "Password",

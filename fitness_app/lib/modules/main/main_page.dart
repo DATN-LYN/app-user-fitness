@@ -38,21 +38,21 @@ class _MainPageState extends State<MainPage> {
             selectedItemColor: AppColors.grey1,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                label: 'Social',
-                icon: Icon(Icons.chat),
-                activeIcon: Icon(Icons.chat),
+                label: i18n.main_Social,
+                icon: const Icon(Icons.chat),
+                activeIcon: const Icon(Icons.chat),
               ),
               BottomNavigationBarItem(
-                label: 'Home',
-                icon: Icon(Icons.home),
-                activeIcon: Icon(Icons.home),
+                label: i18n.main_Home,
+                icon: const Icon(Icons.home),
+                activeIcon: const Icon(Icons.home),
               ),
               BottomNavigationBarItem(
-                label: 'Setting',
-                icon: Icon(Icons.settings),
-                activeIcon: Icon(Icons.settings),
+                label: i18n.main_Setting,
+                icon: const Icon(Icons.settings),
+                activeIcon: const Icon(Icons.settings),
               ),
             ],
           ),

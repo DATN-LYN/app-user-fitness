@@ -138,7 +138,6 @@ class AppThemes {
         style: TextButton.styleFrom(
           foregroundColor: AppColors.grey1,
           textStyle: const TextStyle(
-            color: Colors.red,
             fontWeight: FontWeight.w600,
             decoration: TextDecoration.underline,
           ),

@@ -44,6 +44,14 @@ class I18n implements WidgetsLocalizations {
 	List<String> get onboard_Title => ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"];
 	/// ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"]
 	List<String> get onboard_Description => ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"];
+	/// ["English (US)", "Tiếng Việt"]
+	List<String> get language => ["English (US)", "Tiếng Việt"];
+	/// "Social"
+	String get main_Social => "Social";
+	/// "Home"
+	String get main_Home => "Home";
+	/// "Setting"
+	String get main_Setting => "Setting";
 	/// "Email"
 	String get login_Email => "Email";
 	/// "Password"
@@ -161,6 +169,18 @@ class _I18n_vi_VN extends I18n {
 	/// ["Với các vận động viên và thương hiệu thể thao hàng đầu nhằm xây dựng tương lai của tập luyện thể dục", "Các kế hoạch tập luyện được thiết kế để giúp bạn đạt được các mục tiêu của mình", "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"]
 	@override
 	List<String> get onboard_Description => ["Với các vận động viên và thương hiệu thể thao hàng đầu nhằm xây dựng tương lai của tập luyện thể dục", "Các kế hoạch tập luyện được thiết kế để giúp bạn đạt được các mục tiêu của mình", "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"];
+	/// ["English (US)", "Tiếng Việt"]
+	@override
+	List<String> get language => ["English (US)", "Tiếng Việt"];
+	/// "Cộng đồng"
+	@override
+	String get main_Social => "Cộng đồng";
+	/// "Trang chủ"
+	@override
+	String get main_Home => "Trang chủ";
+	/// "Cài đặt"
+	@override
+	String get main_Setting => "Cài đặt";
 	/// "Email"
 	@override
 	String get login_Email => "Email";

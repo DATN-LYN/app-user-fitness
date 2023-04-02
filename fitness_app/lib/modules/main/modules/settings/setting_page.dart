@@ -1,9 +1,13 @@
+import 'package:fitness_app/global/providers/app_settings_provider.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/setting_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../global/enums/app_locale.dart';
 import '../../../../global/gen/i18n.dart';
 import '../../../../global/widgets/avatar.dart';
+import '../../../../global/widgets/dialogs/radio_selector_dialog.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -13,6 +17,27 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  void changeLanguage(AppSettingsProvider provider, I18n i18n) async {
+    final data = await showDialog(
+      context: context,
+      builder: (_) => RadioSelectorDialog(
+        currentValue: provider.appSettings.locale.getLabel(i18n),
+        itemLabelBuilder: (item) => item,
+        title: i18n.setting_Language,
+        values: i18n.language,
+      ),
+    );
+    if (data != provider.appSettings.locale.getLabel(i18n)) {
+      if (mounted) {
+        if (data == i18n.language[1]) {
+          provider.changeLocale(AppLocale.viVN);
+        } else {
+          provider.changeLocale(AppLocale.enUs);
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
@@ -57,10 +82,14 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                SettingTile(
-                  icon: Icons.language,
-                  title: i18n.setting_Language,
-                ),
+                Consumer<AppSettingsProvider>(
+                    builder: (context, provider, child) {
+                  return SettingTile(
+                    icon: Icons.language,
+                    title: i18n.setting_Language,
+                    onTap: () => changeLanguage(provider, i18n),
+                  );
+                }),
                 const Divider(height: 12),
                 SettingTile(
                   icon: Icons.share,

@@ -18,6 +18,12 @@
         "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"
       ]
     },
+    "language": ["English (US)", "Tiếng Việt"],
+    "main_":{
+      "social":"Cộng đồng",
+      "home":"Trang chủ",
+      "setting":"Cài đặt"
+    },
     "login_": {
       "email": "Email",
       "password": "Mật khẩu",
