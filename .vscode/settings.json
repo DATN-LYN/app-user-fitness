@@ -5,5 +5,10 @@
         "**/*.data.gql.dart": true,
         "**/*.var.gql.dart": true,
         "**/*.gql.g.dart": true
-    }
+    },
+    "cSpell.words": [
+        "autocorrect",
+        "Autovalidate",
+        "unfocus"
+    ]
 }

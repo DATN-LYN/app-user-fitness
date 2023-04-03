@@ -1,12 +1,20 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/providers/app_settings_provider.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
+import 'package:fitness_app/modules/main/modules/settings/widgets/change_password_bottom_sheet.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/setting_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../global/enums/app_locale.dart';
 import '../../../../global/gen/i18n.dart';
+import '../../../../global/providers/auth_provider.dart';
+import '../../../../global/routers/app_router.dart';
+import '../../../../global/utils/constants.dart';
 import '../../../../global/widgets/avatar.dart';
+import '../../../../global/widgets/dialogs/confirmation_dialog.dart';
 import '../../../../global/widgets/dialogs/radio_selector_dialog.dart';
 
 class SettingPage extends StatefulWidget {
@@ -36,6 +44,58 @@ class _SettingPageState extends State<SettingPage> {
         }
       }
     }
+  }
+
+  Future<void> changePasswordHandler() async {
+    final data = await showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
+      builder: (_) => const ChangePasswordBottomSheet(),
+    );
+
+    if (data != null) {}
+  }
+
+  void logOut() {
+    final i18n = I18n.of(context)!;
+    showDialog(
+      context: context,
+      builder: (context) => ConfirmationDialog(
+        titleText: i18n.setting_ConfirmLogout,
+        contentText: i18n.setting_ConfirmLogoutDes,
+        positiveButtonText: i18n.button_Ok,
+        onTapPositiveButton: () async {
+          context.read<AuthProvider>().logout();
+          Navigator.pop(context);
+          AutoRouter.of(context).push(const LoginRoute());
+        },
+      ),
+    );
+  }
+
+  void openPrivacyPolicyUrl() async {
+    if (await canLaunchUrlString(Constants.privacyPolicyUrl)) {
+      await launchUrlString(Constants.privacyPolicyUrl);
+    }
+  }
+
+  void openTermsAndConditionsUrl() async {
+    if (await canLaunchUrlString(Constants.termsAndConditionsUrl)) {
+      await launchUrlString(Constants.termsAndConditionsUrl);
+    }
+  }
+
+  void shareIntroUrl() {
+    Share.share(
+      Constants.introductionUrl,
+      subject: I18n.of(context)!.setting_ShareWithFriends,
+    );
   }
 
   @override
@@ -94,6 +154,7 @@ class _SettingPageState extends State<SettingPage> {
                 SettingTile(
                   icon: Icons.share,
                   title: i18n.setting_ShareWithFriends,
+                  onTap: shareIntroUrl,
                 ),
               ],
             ),
@@ -118,11 +179,13 @@ class _SettingPageState extends State<SettingPage> {
                 SettingTile(
                   icon: Icons.privacy_tip_outlined,
                   title: i18n.setting_PrivacyPolicy,
+                  onTap: openPrivacyPolicyUrl,
                 ),
                 const Divider(height: 12),
                 SettingTile(
                   icon: Icons.note_outlined,
                   title: i18n.setting_TermsAndConditions,
+                  onTap: openTermsAndConditionsUrl,
                 ),
               ],
             ),
@@ -147,11 +210,13 @@ class _SettingPageState extends State<SettingPage> {
                 SettingTile(
                   icon: Icons.password,
                   title: i18n.setting_ChangePassword,
+                  onTap: changePasswordHandler,
                 ),
                 const Divider(height: 12),
                 SettingTile(
                   icon: Icons.logout,
                   title: i18n.setting_Logout,
+                  onTap: logOut,
                 ),
               ],
             ),

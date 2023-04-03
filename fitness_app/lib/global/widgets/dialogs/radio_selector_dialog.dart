@@ -30,7 +30,11 @@ class _RadioSelectorDialogState<T> extends State<RadioSelectorDialog<T>> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+
     return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

@@ -24,7 +24,7 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
           color: AppColors.white,
         ),
         onPressed: () {
-          context.pushRoute(const CountdownTimerRoute());
+          context.pushRoute(CountdownTimerRoute());
         },
       ),
       body: Column(

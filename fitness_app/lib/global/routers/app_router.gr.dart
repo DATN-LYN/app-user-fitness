@@ -72,9 +72,15 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     CountdownTimerRoute.name: (routeData) {
+      final args = routeData.argsAs<CountdownTimerRouteArgs>(
+          orElse: () => const CountdownTimerRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const CountdownTimerPage(),
+        child: CountdownTimerPage(
+          key: args.key,
+          initialDuration: args.initialDuration,
+          isBreak: args.isBreak,
+        ),
       );
     },
     HomeRoute.name: (routeData) {
@@ -270,14 +276,41 @@ class ExerciseDetailRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CountdownTimerPage]
-class CountdownTimerRoute extends PageRouteInfo<void> {
-  const CountdownTimerRoute()
-      : super(
+class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
+  CountdownTimerRoute({
+    Key? key,
+    Duration initialDuration = const Duration(seconds: 3),
+    bool isBreak = false,
+  }) : super(
           CountdownTimerRoute.name,
           path: '/countdown-timer-page',
+          args: CountdownTimerRouteArgs(
+            key: key,
+            initialDuration: initialDuration,
+            isBreak: isBreak,
+          ),
         );
 
   static const String name = 'CountdownTimerRoute';
+}
+
+class CountdownTimerRouteArgs {
+  const CountdownTimerRouteArgs({
+    this.key,
+    this.initialDuration = const Duration(seconds: 3),
+    this.isBreak = false,
+  });
+
+  final Key? key;
+
+  final Duration initialDuration;
+
+  final bool isBreak;
+
+  @override
+  String toString() {
+    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak}';
+  }
 }
 
 /// generated route for

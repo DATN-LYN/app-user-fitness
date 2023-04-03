@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -135,9 +137,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
     stopController(index);
 
-    // if (index - 1 >= 0) {
-    //   removeController(index - 1);
-    // }
+    await context.pushRoute(
+      CountdownTimerRoute(
+        isBreak: true,
+        initialDuration: const Duration(seconds: 20),
+      ),
+    );
 
     playController(++index);
 
@@ -169,7 +174,10 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
             onPressed: () {},
             style: theme.textButtonTheme.style?.copyWith(
               textStyle: const MaterialStatePropertyAll(
-                TextStyle(color: AppColors.grey1, fontWeight: FontWeight.w600),
+                TextStyle(
+                  color: AppColors.grey1,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             child: Text(
@@ -212,32 +220,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
               ),
             ),
             const SizedBox(height: 8),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 10),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         DurationTime.totalDurationFormat(
-            //           controller(index).value.position,
-            //         ),
-            //         style: const TextStyle(
-            //           color: AppColors.grey3,
-            //           fontSize: 12,
-            //         ),
-            //       ),
-            //       Text(
-            //         DurationTime.totalDurationFormat(
-            //           controller(index).value.duration,
-            //         ),
-            //         style: const TextStyle(
-            //           color: AppColors.grey3,
-            //           fontSize: 12,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

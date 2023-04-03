@@ -120,6 +120,8 @@ class I18n implements WidgetsLocalizations {
 	String get countdown_ReadyToGo => "Ready to go";
 	/// "Start Now"
 	String get countdown_StartNow => "Start Now";
+	/// "Break time"
+	String get countdown_BreakTime => "Break time";
 	/// "Setting"
 	String get setting_Title => "Setting";
 	/// "Language"
@@ -140,6 +142,34 @@ class I18n implements WidgetsLocalizations {
 	String get setting_Security => "Security";
 	/// "About app"
 	String get setting_AboutApp => "About app";
+	/// "Please enter your old password, then enter the new password to proceed with the password change"
+	String get setting_ChangePasswordDes => "Please enter your old password, then enter the new password to proceed with the password change";
+	/// "Old password"
+	String get setting_OldPassword => "Old password";
+	/// "Enter your old password"
+	String get setting_OldPasswordHint => "Enter your old password";
+	/// "Old password is required"
+	String get setting_OldPasswordRequired => "Old password is required";
+	/// "New password"
+	String get setting_NewPassword => "New password";
+	/// "Enter your new password"
+	String get setting_NewPasswordHint => "Enter your new password";
+	/// "New password is required"
+	String get setting_NewPasswordRequired => "New password is required";
+	/// "Confirm new password"
+	String get setting_ConfirmNewPassword => "Confirm new password";
+	/// "Enter your confirm new password"
+	String get setting_ConfirmNewPasswordHint => "Enter your confirm new password";
+	/// "Confirm new password is required"
+	String get setting_ConfirmNewPasswordRequired => "Confirm new password is required";
+	/// "Password not match"
+	String get setting_PasswordNotMatch => "Password not match";
+	/// "Confirm logout"
+	String get setting_ConfirmLogout => "Confirm logout";
+	/// "You need confirm to logout from this app"
+	String get setting_ConfirmLogoutDes => "You need confirm to logout from this app";
+	/// "Xác nhận thay đổi"
+	String get setting_ConfirmChange => "Xác nhận thay đổi";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -283,6 +313,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Bắt Đầu"
 	@override
 	String get countdown_StartNow => "Bắt Đầu";
+	/// "Giải lao"
+	@override
+	String get countdown_BreakTime => "Giải lao";
 	/// "Cài đặt"
 	@override
 	String get setting_Title => "Cài đặt";
@@ -313,6 +346,45 @@ class _I18n_vi_VN extends I18n {
 	/// "Về ứng dụng"
 	@override
 	String get setting_AboutApp => "Về ứng dụng";
+	/// "Vui lòng nhập mật khẩu cũ của bạn, sau đó nhập mật khẩu mới để tiến hành thay đổi mật khẩu"
+	@override
+	String get setting_ChangePasswordDes => "Vui lòng nhập mật khẩu cũ của bạn, sau đó nhập mật khẩu mới để tiến hành thay đổi mật khẩu";
+	/// "Mật khẩu cũ"
+	@override
+	String get setting_OldPassword => "Mật khẩu cũ";
+	/// "Nhập mật khẩu cũ của bạn"
+	@override
+	String get setting_OldPasswordHint => "Nhập mật khẩu cũ của bạn";
+	/// "Mật khẩu cũ bắt buộc"
+	@override
+	String get setting_OldPasswordRequired => "Mật khẩu cũ bắt buộc";
+	/// "Mật khẩu mới"
+	@override
+	String get setting_NewPassword => "Mật khẩu mới";
+	/// "Nhập mật khẩu mới của bạn"
+	@override
+	String get setting_NewPasswordHint => "Nhập mật khẩu mới của bạn";
+	/// "Mật khẩu mới bắt buộc"
+	@override
+	String get setting_NewPasswordRequired => "Mật khẩu mới bắt buộc";
+	/// "Xác nhận mật khẩu mới"
+	@override
+	String get setting_ConfirmNewPassword => "Xác nhận mật khẩu mới";
+	/// "Nhập xác nhận mật khẩu mới"
+	@override
+	String get setting_ConfirmNewPasswordHint => "Nhập xác nhận mật khẩu mới";
+	/// "Xác nhận mật khẩu mới bắt buộc"
+	@override
+	String get setting_ConfirmNewPasswordRequired => "Xác nhận mật khẩu mới bắt buộc";
+	/// "Mật khẩu không khớp"
+	@override
+	String get setting_PasswordNotMatch => "Mật khẩu không khớp";
+	/// "Xác nhận đăng xuất"
+	@override
+	String get setting_ConfirmLogout => "Xác nhận đăng xuất";
+	/// "Bạn cần xác nhận để đăng xuất khỏi ứng dụng"
+	@override
+	String get setting_ConfirmLogoutDes => "Bạn cần xác nhận để đăng xuất khỏi ứng dụng";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

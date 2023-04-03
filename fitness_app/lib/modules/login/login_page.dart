@@ -46,7 +46,9 @@ class _LoginPageState extends State<LoginPage> with ClientMixin {
       setState(() => isLoading = false);
 
       if (response.hasErrors) {
-        DialogUtils.showError(context: context, response: response);
+        if (mounted) {
+          DialogUtils.showError(context: context, response: response);
+        }
       } else {
         handleLoginSuccess(response.data!.login);
       }
@@ -82,7 +84,7 @@ class _LoginPageState extends State<LoginPage> with ClientMixin {
         child: GestureDetector(
           onTapDown: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           child: ListView(padding: const EdgeInsets.all(16), children: [
-            Assets.images.running.image(width: 120, height: 120),
+            Assets.images.logo.image(width: 100, height: 100),
             const SizedBox(height: 18),
             Label(i18n.login_Email),
             FormBuilderTextField(

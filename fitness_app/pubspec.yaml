@@ -65,6 +65,8 @@ dependencies:
   video_player: ^2.5.2
   chewie: ^1.4.0
   riverpod: ^2.3.2
+  url_launcher: ^6.1.6
+  share_plus: ^6.3.0
 
 dev_dependencies:
   flutter_test:

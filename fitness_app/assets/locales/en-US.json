@@ -64,7 +64,8 @@
     },
     "countdown_":{
       "readyToGo":"Ready to go",
-      "startNow":"Start Now"
+      "startNow":"Start Now",
+      "breakTime":"Break time"
     },
     "setting_":{
       "title":"Setting",
@@ -76,6 +77,19 @@
       "logout":"Log out",
       "account":"Account",
       "security": "Security",
-      "aboutApp":"About app"
+      "aboutApp":"About app",
+      "changePasswordDes": "Please enter your old password, then enter the new password to proceed with the password change",
+      "oldPassword": "Old password",
+      "oldPasswordHint": "Enter your old password",
+      "oldPasswordRequired": "Old password is required",
+      "newPassword": "New password",
+      "newPasswordHint": "Enter your new password",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPassword": "Confirm new password",
+      "confirmNewPasswordHint": "Enter your confirm new password",
+      "confirmNewPasswordRequired": "Confirm new password is required",
+      "passwordNotMatch": "Password not match",
+      "confirmLogout": "Confirm logout",
+      "confirmLogoutDes": "You need confirm to logout from this app"
     }
 }

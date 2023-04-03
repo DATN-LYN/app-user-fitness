@@ -8,14 +8,21 @@ import '../gen/i18n.dart';
 import '../themes/app_colors.dart';
 
 class CountdownTimerPage extends StatefulWidget {
-  const CountdownTimerPage({super.key});
+  const CountdownTimerPage({
+    super.key,
+    this.initialDuration = const Duration(seconds: 3),
+    this.isBreak = false,
+  });
+
+  final Duration initialDuration;
+  final bool isBreak;
 
   @override
   State<CountdownTimerPage> createState() => _CountdownTimerPageState();
 }
 
 class _CountdownTimerPageState extends State<CountdownTimerPage> {
-  Duration countdownDuration = const Duration(seconds: 3);
+  late Duration countdownDuration = widget.initialDuration;
 
   void startTimer() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -23,7 +30,11 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
         final seconds = countdownDuration.inSeconds - 1;
         if (seconds < 0) {
           timer.cancel();
-          context.replaceRoute(const ExerciseDetailRoute());
+          if (widget.isBreak) {
+            context.popRoute();
+          } else {
+            context.replaceRoute(const ExerciseDetailRoute());
+          }
         } else {
           countdownDuration = Duration(seconds: seconds);
         }
@@ -49,7 +60,9 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                i18n.countdown_ReadyToGo,
+                widget.isBreak
+                    ? i18n.countdown_BreakTime
+                    : i18n.countdown_ReadyToGo,
                 style: const TextStyle(
                   fontSize: 40,
                   color: AppColors.primaryBold,
@@ -73,9 +86,14 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
         child: ElevatedButton(
           onPressed: () {
-            context.replaceRoute(const ExerciseDetailRoute());
+            if (widget.isBreak) {
+              context.popRoute();
+            } else {
+              context.replaceRoute(const ExerciseDetailRoute());
+            }
           },
-          child: Text(i18n.countdown_StartNow),
+          child:
+              Text(widget.isBreak ? i18n.button_Next : i18n.countdown_StartNow),
         ),
       ),
     );
