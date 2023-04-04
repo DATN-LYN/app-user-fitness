@@ -10,6 +10,7 @@ class ShadowWrapper extends StatelessWidget {
     this.padding,
     this.borderRadius,
     this.secondaryBoxShadow,
+    this.color = AppColors.white,
   });
 
   final Widget child;
@@ -17,6 +18,7 @@ class ShadowWrapper extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
   final BoxShadow? secondaryBoxShadow;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class ShadowWrapper extends StatelessWidget {
       padding:
           padding ?? const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: color,
         borderRadius: borderRadius ?? BorderRadius.circular(8),
         boxShadow: [
           const BoxShadow(
