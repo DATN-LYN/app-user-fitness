@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -159,6 +161,26 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     );
   }
 
+  void showDialogConfirmQuit() {
+    final i18n = I18n.of(context)!;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ConfirmationDialog(
+          image: const Icon(Icons.warning_rounded),
+          titleText: i18n.exerciseDetail_QuitWorkout,
+          contentText: i18n.exerciseDetail_QuitWorkoutDes,
+          onTapPositiveButton: () =>
+              AutoRouter.of(context).popUntilRouteWithName(
+            ProgramDetailRoute.name,
+          ),
+          onTapNegativeButton: () => context.popRoute(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isPortrait =
@@ -169,6 +191,10 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
       appBar: AppBar(
         title: const Text('Chest And Tricep'),
         centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_sharp),
+          onPressed: showDialogConfirmQuit,
+        ),
         actions: [
           TextButton(
             onPressed: () {},
@@ -180,9 +206,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                 ),
               ),
             ),
-            child: Text(
-              '${index + 1} / ${urls.length}',
-            ),
+            child: Text('${index + 1} / ${urls.length}'),
           ),
         ],
       ),

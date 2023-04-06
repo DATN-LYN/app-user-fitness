@@ -17,13 +17,14 @@ class MessageInputWidget extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     color: AppColors.grey5,
                   ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(
+                contentPadding: const EdgeInsets.symmetric(
                   vertical: 13,
                   horizontal: 16,
                 ),

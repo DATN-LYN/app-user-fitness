@@ -168,6 +168,10 @@ class I18n implements WidgetsLocalizations {
 	String get setting_ConfirmLogout => "Confirm logout";
 	/// "You need confirm to logout from this app"
 	String get setting_ConfirmLogoutDes => "You need confirm to logout from this app";
+	/// "Confirm quit"
+	String get exerciseDetail_QuitWorkout => "Confirm quit";
+	/// "Are you sure you want to quit workout?"
+	String get exerciseDetail_QuitWorkoutDes => "Are you sure you want to quit workout?";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 }
@@ -385,6 +389,12 @@ class _I18n_vi_VN extends I18n {
 	/// "Bạn cần xác nhận để đăng xuất khỏi ứng dụng"
 	@override
 	String get setting_ConfirmLogoutDes => "Bạn cần xác nhận để đăng xuất khỏi ứng dụng";
+	/// "Confirm quit"
+	@override
+	String get exerciseDetail_QuitWorkout => "Confirm quit";
+	/// "Are you sure you want to quit workout?"
+	@override
+	String get exerciseDetail_QuitWorkoutDes => "Are you sure you want to quit workout?";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

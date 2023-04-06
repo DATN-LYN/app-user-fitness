@@ -91,5 +91,9 @@
       "passwordNotMatch": "Password not match",
       "confirmLogout": "Confirm logout",
       "confirmLogoutDes": "You need confirm to logout from this app"
+    },
+    "exerciseDetail_":{
+      "quitWorkout":"Confirm quit",
+      "quitWorkoutDes":"Are you sure you want to quit workout?"
     }
 }

@@ -23,11 +23,12 @@ class CountdownTimerPage extends StatefulWidget {
 
 class _CountdownTimerPageState extends State<CountdownTimerPage> {
   late Duration countdownDuration = widget.initialDuration;
+  late int seconds = widget.initialDuration.inSeconds;
 
   void startTimer() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        final seconds = countdownDuration.inSeconds - 1;
+        seconds = countdownDuration.inSeconds - 1;
         if (seconds < 0) {
           timer.cancel();
           if (widget.isBreak) {
@@ -70,13 +71,31 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                 ),
               ),
               const SizedBox(height: 50),
-              Text(
-                countdownDuration.inSeconds.toString(),
-                style: const TextStyle(
-                  fontSize: 100,
-                  color: AppColors.primaryBold,
-                  fontWeight: FontWeight.bold,
-                ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox.square(
+                    dimension: 200,
+                    child: CircularProgressIndicator(
+                      value: ((widget.initialDuration.inSeconds - seconds) /
+                              widget.initialDuration.inSeconds)
+                          .toDouble(),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColors.primaryBold,
+                      ),
+                      backgroundColor: AppColors.primarySoft,
+                      strokeWidth: 6,
+                    ),
+                  ),
+                  Text(
+                    countdownDuration.inSeconds.toString(),
+                    style: const TextStyle(
+                      fontSize: 100,
+                      color: AppColors.primaryBold,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

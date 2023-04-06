@@ -46,17 +46,15 @@ class ConfirmationDialog extends StatelessWidget {
               children: [
                 const SizedBox(height: 24),
                 Center(
-                  child: SizedBox.square(
-                    dimension: 70,
-                    child: ClipRRect(
+                  child: Container(
+                    width: 70,
+                    height: 70,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(1000),
-                      child: Container(
-                        color: AppColors.primary,
-                        alignment: Alignment.center,
-                        child:
-                            image ?? const Icon(Icons.question_answer_outlined),
-                      ),
+                      color: AppColors.primary.withOpacity(0.7),
                     ),
+                    child: image ?? const Icon(Icons.question_answer_outlined),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -87,7 +85,7 @@ class ConfirmationDialog extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: onTapNegativeButton ?? context.popRoute,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.grey4.withOpacity(0.6),
+                          backgroundColor: AppColors.grey6,
                         ),
                         child: Text(negativeButtonText ?? i18n.button_Cancel),
                       ),

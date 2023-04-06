@@ -79,18 +79,22 @@
       "security": "Bảo mật",
       "aboutApp":"Về ứng dụng",
       "changePasswordDes": "Vui lòng nhập mật khẩu cũ của bạn, sau đó nhập mật khẩu mới để tiến hành thay đổi mật khẩu",
-    "oldPassword": "Mật khẩu cũ",
-    "oldPasswordHint": "Nhập mật khẩu cũ của bạn",
-    "oldPasswordRequired": "Mật khẩu cũ bắt buộc",
-    "newPassword": "Mật khẩu mới",
-    "newPasswordHint": "Nhập mật khẩu mới của bạn",
-    "newPasswordRequired": "Mật khẩu mới bắt buộc",
-    "confirmNewPassword": "Xác nhận mật khẩu mới",
-    "confirmNewPasswordHint": "Nhập xác nhận mật khẩu mới",
-    "confirmNewPasswordRequired": "Xác nhận mật khẩu mới bắt buộc",
-    "passwordNotMatch": "Mật khẩu không khớp",
-    "confirmChange": "Xác nhận thay đổi",
-    "confirmLogout": "Xác nhận đăng xuất",
-    "confirmLogoutDes": "Bạn cần xác nhận để đăng xuất khỏi ứng dụng"
+      "oldPassword": "Mật khẩu cũ",
+      "oldPasswordHint": "Nhập mật khẩu cũ của bạn",
+      "oldPasswordRequired": "Mật khẩu cũ bắt buộc",
+      "newPassword": "Mật khẩu mới",
+      "newPasswordHint": "Nhập mật khẩu mới của bạn",
+      "newPasswordRequired": "Mật khẩu mới bắt buộc",
+      "confirmNewPassword": "Xác nhận mật khẩu mới",
+      "confirmNewPasswordHint": "Nhập xác nhận mật khẩu mới",
+      "confirmNewPasswordRequired": "Xác nhận mật khẩu mới bắt buộc",
+      "passwordNotMatch": "Mật khẩu không khớp",
+      "confirmChange": "Xác nhận thay đổi",
+      "confirmLogout": "Xác nhận đăng xuất",
+      "confirmLogoutDes": "Bạn cần xác nhận để đăng xuất khỏi ứng dụng"
+    },
+    "exerciseDetail_":{
+      "quitWorkout":"Confirm quit",
+      "quitWorkoutDes":"Are you sure you want to quit workout?"
     }
 }
