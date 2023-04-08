@@ -65,7 +65,10 @@
     "countdown_":{
       "readyToGo":"Ready to go",
       "startNow":"Start Now",
-      "breakTime":"Break time"
+      "breakTime":"Break time",
+      "youHaveFinishCountEx":"You have finished {count} exercises. Keep continue!",
+      "doNotForgetToDrinkWater":"Do not forget to drink water.",
+      "walkAround":"Walk around"
     },
     "setting_":{
       "title":"Setting",
@@ -95,5 +98,9 @@
     "exerciseDetail_":{
       "quitWorkout":"Confirm quit",
       "quitWorkoutDes":"Are you sure you want to quit workout?"
+    },
+    "finish_":{
+      "hooray": "Hooray!\n You have finished your workout.",
+      "goBackToHome": "Go back to home"
     }
 }

@@ -112,12 +112,11 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  ListView.separated(
+                  ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 10,
                     itemBuilder: (_, __) => const ExerciseTile(),
-                    separatorBuilder: (_, __) => const SizedBox(height: 16),
                   ),
                 ],
               ),

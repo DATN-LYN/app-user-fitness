@@ -35,7 +35,7 @@ class _SettingPageState extends State<SettingPage> {
         values: i18n.language,
       ),
     );
-    if (data != provider.appSettings.locale.getLabel(i18n)) {
+    if (data != null && data != provider.appSettings.locale.getLabel(i18n)) {
       if (mounted) {
         if (data == i18n.language[1]) {
           provider.changeLocale(AppLocale.viVN);

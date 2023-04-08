@@ -12,10 +12,12 @@ class CountdownTimerPage extends StatefulWidget {
     super.key,
     this.initialDuration = const Duration(seconds: 3),
     this.isBreak = false,
+    this.exerciseCount,
   });
 
   final Duration initialDuration;
   final bool isBreak;
+  final String? exerciseCount;
 
   @override
   State<CountdownTimerPage> createState() => _CountdownTimerPageState();
@@ -56,47 +58,92 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
-        child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: widget.isBreak
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.center,
             children: [
+              const SizedBox(height: 30),
               Text(
                 widget.isBreak
-                    ? i18n.countdown_BreakTime
+                    ? '${i18n.countdown_BreakTime},'
                     : i18n.countdown_ReadyToGo,
                 style: const TextStyle(
-                  fontSize: 40,
+                  fontSize: 35,
                   color: AppColors.primaryBold,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 50),
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  SizedBox.square(
-                    dimension: 200,
-                    child: CircularProgressIndicator(
-                      value: ((widget.initialDuration.inSeconds - seconds) /
-                              widget.initialDuration.inSeconds)
-                          .toDouble(),
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        AppColors.primaryBold,
+              if (widget.isBreak) ...[
+                const SizedBox(height: 8),
+                Text(
+                  i18n.countdown_WalkAround,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    color: AppColors.primaryBold,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+              const Spacer(),
+              Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox.square(
+                      dimension: 200,
+                      child: CircularProgressIndicator(
+                        value: ((widget.initialDuration.inSeconds - seconds) /
+                                widget.initialDuration.inSeconds)
+                            .toDouble(),
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          AppColors.primaryBold,
+                        ),
+                        backgroundColor: AppColors.primarySoft,
+                        strokeWidth: 6,
                       ),
-                      backgroundColor: AppColors.primarySoft,
-                      strokeWidth: 6,
                     ),
-                  ),
-                  Text(
-                    countdownDuration.inSeconds.toString(),
-                    style: const TextStyle(
-                      fontSize: 100,
-                      color: AppColors.primaryBold,
-                      fontWeight: FontWeight.bold,
+                    Text(
+                      countdownDuration.inSeconds.toString(),
+                      style: const TextStyle(
+                        fontSize: 100,
+                        color: AppColors.primaryBold,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              if (widget.isBreak) ...[
+                const SizedBox(height: 32),
+                Center(
+                  child: Text(
+                    i18n.countdown_YouHaveFinishCountEx(
+                      widget.exerciseCount.toString(),
+                    ),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: AppColors.primaryBold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    i18n.countdown_DoNotForgetToDrinkWater,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: AppColors.primaryBold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+              const Spacer(),
             ],
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
+import 'package:fitness_app/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -36,6 +37,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#6',
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
   ];
+  bool loading = false;
 
   @override
   void dispose() {
@@ -52,13 +54,18 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
   }
 
   initData() {
+    loading = true;
     if (urls.isNotEmpty) {
       initController(0).then((_) {
         playController(0);
+        loading = false;
       });
     }
     if (urls.length > 1) {
-      initController(1).whenComplete(() => lock = false);
+      initController(1).whenComplete(() {
+        lock = false;
+        loading = false;
+      });
     }
   }
 
@@ -74,6 +81,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
       if (dur - pos < 1) {
         if (index < urls.length - 1) {
           nextVideo();
+        } else {
+          context.pushRoute(const FinishRoute());
         }
       }
     };
@@ -89,11 +98,11 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     await controller.initialize();
   }
 
-  void removeController(int index) {
-    controller(index).dispose();
-    controllers.remove(urls.elementAt(index));
-    listeners.remove(index);
-  }
+  // void removeController(int index) {
+  //   controller(index).dispose();
+  //   controllers.remove(urls.elementAt(index));
+  //   listeners.remove(index);
+  // }
 
   void stopController(int index) {
     controller(index).removeListener(listeners[index]!);
@@ -107,7 +116,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     }
     controller(index).addListener(listeners[index]!);
     await controller(index).play();
-    setState(() {});
   }
 
   void previousVideo() {
@@ -117,10 +125,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     lock = true;
 
     stopController(index);
-
-    // if (index + 1 < urls.length) {
-    //   removeController(index + 1);
-    // }
 
     playController(--index);
 
@@ -143,6 +147,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
       CountdownTimerRoute(
         isBreak: true,
         initialDuration: const Duration(seconds: 20),
+        exerciseCount: '${index + 1} / ${urls.length}',
       ),
     );
 
@@ -150,6 +155,10 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
     if (index == urls.length - 1) {
       lock = false;
+      if (mounted) {
+        context.pushRoute(const FinishRoute());
+        return;
+      }
     } else {
       initController(index + 1).whenComplete(() => lock = false);
     }
@@ -163,6 +172,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
   void showDialogConfirmQuit() {
     final i18n = I18n.of(context)!;
+    controller(index).pause();
+    setState(() => playerState = PlayerState.paused);
 
     showDialog(
       context: context,
@@ -175,7 +186,11 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
               AutoRouter.of(context).popUntilRouteWithName(
             ProgramDetailRoute.name,
           ),
-          onTapNegativeButton: () => context.popRoute(),
+          onTapNegativeButton: () {
+            context.popRoute();
+            controller(index).play();
+            setState(() => playerState = PlayerState.playing);
+          },
         );
       },
     );
@@ -187,113 +202,116 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
         MediaQuery.of(context).orientation == Orientation.portrait;
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chest And Tricep'),
-        centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_sharp),
-          onPressed: showDialogConfirmQuit,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {},
-            style: theme.textButtonTheme.style?.copyWith(
-              textStyle: const MaterialStatePropertyAll(
-                TextStyle(
-                  color: AppColors.grey1,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            child: Text('${index + 1} / ${urls.length}'),
+    return LoadingOverlay(
+      loading: loading,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Chest And Tricep'),
+          centerTitle: false,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_sharp),
+            onPressed: showDialogConfirmQuit,
           ),
-        ],
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: !isPortrait
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        videoPlayer(),
-                        remainDurationContainer(),
-                      ],
-                    )
-                  : Center(child: videoPlayer()),
-            ),
-            if (isPortrait) ...[
-              const SizedBox(height: 16),
-              remainDurationContainer(),
-            ],
-            const SizedBox(height: 16),
-            SliderTheme(
-              data: SliderTheme.of(context).copyWith(
-                trackHeight: 5,
-                activeTickMarkColor: Colors.transparent,
-                inactiveTickMarkColor: Colors.transparent,
-                overlayShape: SliderComponentShape.noThumb,
-              ),
-              child: Slider(
-                max: max(maxValue.toDouble(), value.toDouble()),
-                value: value.toDouble() > 0 ? value.toDouble() : 0,
-                divisions: maxValue.toInt() > 0 ? maxValue.toInt() : 1,
-                onChanged: handlerSliderChanged,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: previousVideo,
-                  icon: const Icon(
-                    Icons.skip_previous_rounded,
+          actions: [
+            TextButton(
+              onPressed: () {},
+              style: theme.textButtonTheme.style?.copyWith(
+                textStyle: const MaterialStatePropertyAll(
+                  TextStyle(
                     color: AppColors.grey1,
-                  ),
-                  iconSize: 30,
-                ),
-                const SizedBox(width: 16),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                  ),
-                  width: 48,
-                  height: 48,
-                  child: IconButton(
-                    onPressed: () async {
-                      if (playerState == PlayerState.playing) {
-                        setState(() {
-                          playerState = PlayerState.paused;
-                        });
-                        await controller(index).pause();
-                      } else {
-                        setState(() {
-                          playerState = PlayerState.playing;
-                        });
-                        await controller(index).play();
-                      }
-                    },
-                    icon: playerState == PlayerState.playing
-                        ? const Icon(Icons.pause)
-                        : const Icon(Icons.play_arrow),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(width: 16),
-                IconButton(
-                  onPressed: nextVideo,
-                  icon: const Icon(
-                    Icons.skip_next_rounded,
-                    color: AppColors.grey1,
-                  ),
-                  iconSize: 30,
-                ),
-              ],
-            )
+              ),
+              child: Text('${index + 1} / ${urls.length}'),
+            ),
           ],
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: !isPortrait
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          videoPlayer(),
+                          remainDurationContainer(),
+                        ],
+                      )
+                    : Center(child: videoPlayer()),
+              ),
+              if (isPortrait) ...[
+                const SizedBox(height: 16),
+                remainDurationContainer(),
+              ],
+              const SizedBox(height: 16),
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  trackHeight: 5,
+                  activeTickMarkColor: Colors.transparent,
+                  inactiveTickMarkColor: Colors.transparent,
+                  overlayShape: SliderComponentShape.noThumb,
+                ),
+                child: Slider(
+                  max: max(maxValue.toDouble(), value.toDouble()),
+                  value: value.toDouble() > 0 ? value.toDouble() : 0,
+                  divisions: maxValue.toInt() > 0 ? maxValue.toInt() : 1,
+                  onChanged: handlerSliderChanged,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: previousVideo,
+                    icon: const Icon(
+                      Icons.skip_previous_rounded,
+                      color: AppColors.grey1,
+                    ),
+                    iconSize: 30,
+                  ),
+                  const SizedBox(width: 16),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    width: 48,
+                    height: 48,
+                    child: IconButton(
+                      onPressed: () async {
+                        if (playerState == PlayerState.playing) {
+                          setState(() {
+                            playerState = PlayerState.paused;
+                          });
+                          await controller(index).pause();
+                        } else {
+                          setState(() {
+                            playerState = PlayerState.playing;
+                          });
+                          await controller(index).play();
+                        }
+                      },
+                      icon: playerState == PlayerState.playing
+                          ? const Icon(Icons.pause)
+                          : const Icon(Icons.play_arrow),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  IconButton(
+                    onPressed: nextVideo,
+                    icon: const Icon(
+                      Icons.skip_next_rounded,
+                      color: AppColors.grey1,
+                    ),
+                    iconSize: 30,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -80,7 +80,14 @@ class _$AppRouter extends RootStackRouter {
           key: args.key,
           initialDuration: args.initialDuration,
           isBreak: args.isBreak,
+          exerciseCount: args.exerciseCount,
         ),
+      );
+    },
+    FinishRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const FinishPage(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -161,6 +168,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           CountdownTimerRoute.name,
           path: '/countdown-timer-page',
+        ),
+        RouteConfig(
+          FinishRoute.name,
+          path: '/finish-page',
         ),
       ];
 }
@@ -281,6 +292,7 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
     Key? key,
     Duration initialDuration = const Duration(seconds: 3),
     bool isBreak = false,
+    String? exerciseCount,
   }) : super(
           CountdownTimerRoute.name,
           path: '/countdown-timer-page',
@@ -288,6 +300,7 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
             key: key,
             initialDuration: initialDuration,
             isBreak: isBreak,
+            exerciseCount: exerciseCount,
           ),
         );
 
@@ -299,6 +312,7 @@ class CountdownTimerRouteArgs {
     this.key,
     this.initialDuration = const Duration(seconds: 3),
     this.isBreak = false,
+    this.exerciseCount,
   });
 
   final Key? key;
@@ -307,10 +321,24 @@ class CountdownTimerRouteArgs {
 
   final bool isBreak;
 
+  final String? exerciseCount;
+
   @override
   String toString() {
-    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak}';
+    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak, exerciseCount: $exerciseCount}';
   }
+}
+
+/// generated route for
+/// [FinishPage]
+class FinishRoute extends PageRouteInfo<void> {
+  const FinishRoute()
+      : super(
+          FinishRoute.name,
+          path: '/finish-page',
+        );
+
+  static const String name = 'FinishRoute';
 }
 
 /// generated route for

@@ -20,7 +20,7 @@ class MessageWidget extends StatelessWidget {
       alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isSender) ...[
             const SizedBox(width: 8),

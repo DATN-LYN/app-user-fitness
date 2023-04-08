@@ -65,7 +65,10 @@
     "countdown_":{
       "readyToGo":"Sẵn sàng tập luyện",
       "startNow":"Bắt Đầu",
-      "breakTime":"Giải lao"
+      "breakTime":"Giải lao",
+      "youHaveFinishCountEx":"Bạn đã hoàn thành {count} bài tập. Hãy tiếp tục!",
+      "doNotForgetToDrinkWater":"Đừng quên uống nước nhé.",
+      "walkAround":"Đi lại nhẹ nhàng"
     },
     "setting_":{
       "title":"Cài đặt",
@@ -96,5 +99,9 @@
     "exerciseDetail_":{
       "quitWorkout":"Confirm quit",
       "quitWorkoutDes":"Are you sure you want to quit workout?"
+    },
+    "finish_":{
+      "hooray": "Hooray!\n Bạn đã hoàn thành tất cả bài tập.",
+      "goBackToHome": "Trở về trang chủ"
     }
 }

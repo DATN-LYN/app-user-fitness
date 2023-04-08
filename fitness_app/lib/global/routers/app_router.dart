@@ -12,6 +12,7 @@ import 'package:fitness_app/modules/splash/splash_page.dart';
 import 'package:fitness_app/modules/type/type_detail_page.dart';
 import 'package:flutter/material.dart';
 
+import '../../modules/exercise/finish_page.dart';
 import '../../modules/intro/onboard_page.dart';
 import '../../modules/main/main_page.dart';
 
@@ -40,6 +41,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: TypeDetailPage),
     AutoRoute(page: ExerciseDetailPage),
     AutoRoute(page: CountdownTimerPage),
+    AutoRoute(page: FinishPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

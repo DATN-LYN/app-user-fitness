@@ -122,6 +122,12 @@ class I18n implements WidgetsLocalizations {
 	String get countdown_StartNow => "Start Now";
 	/// "Break time"
 	String get countdown_BreakTime => "Break time";
+	/// "You have finished ${count} exercises. Keep continue!"
+	String countdown_YouHaveFinishCountEx(String count) => "You have finished ${count} exercises. Keep continue!";
+	/// "Do not forget to drink water."
+	String get countdown_DoNotForgetToDrinkWater => "Do not forget to drink water.";
+	/// "Walk around"
+	String get countdown_WalkAround => "Walk around";
 	/// "Setting"
 	String get setting_Title => "Setting";
 	/// "Language"
@@ -172,6 +178,10 @@ class I18n implements WidgetsLocalizations {
 	String get exerciseDetail_QuitWorkout => "Confirm quit";
 	/// "Are you sure you want to quit workout?"
 	String get exerciseDetail_QuitWorkoutDes => "Are you sure you want to quit workout?";
+	/// "Hooray!\n You have finished your workout."
+	String get finish_Hooray => "Hooray!\n You have finished your workout.";
+	/// "Go back to home"
+	String get finish_GoBackToHome => "Go back to home";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 }
@@ -320,6 +330,15 @@ class _I18n_vi_VN extends I18n {
 	/// "Giải lao"
 	@override
 	String get countdown_BreakTime => "Giải lao";
+	/// "Bạn đã hoàn thành ${count} bài tập. Hãy tiếp tục!"
+	@override
+	String countdown_YouHaveFinishCountEx(String count) => "Bạn đã hoàn thành ${count} bài tập. Hãy tiếp tục!";
+	/// "Đừng quên uống nước nhé."
+	@override
+	String get countdown_DoNotForgetToDrinkWater => "Đừng quên uống nước nhé.";
+	/// "Đi lại nhẹ nhàng"
+	@override
+	String get countdown_WalkAround => "Đi lại nhẹ nhàng";
 	/// "Cài đặt"
 	@override
 	String get setting_Title => "Cài đặt";
@@ -395,6 +414,12 @@ class _I18n_vi_VN extends I18n {
 	/// "Are you sure you want to quit workout?"
 	@override
 	String get exerciseDetail_QuitWorkoutDes => "Are you sure you want to quit workout?";
+	/// "Hooray!\n Bạn đã hoàn thành tất cả bài tập."
+	@override
+	String get finish_Hooray => "Hooray!\n Bạn đã hoàn thành tất cả bài tập.";
+	/// "Trở về trang chủ"
+	@override
+	String get finish_GoBackToHome => "Trở về trang chủ";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
