@@ -52,6 +52,8 @@ class I18n implements WidgetsLocalizations {
 	String get main_Home => "Home";
 	/// "Setting"
 	String get main_Setting => "Setting";
+	/// "Statistics"
+	String get main_Statistics => "Statistics";
 	/// "Email"
 	String get login_Email => "Email";
 	/// "Password"
@@ -225,6 +227,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Cài đặt"
 	@override
 	String get main_Setting => "Cài đặt";
+	/// "Thống kê"
+	@override
+	String get main_Statistics => "Thống kê";
 	/// "Email"
 	@override
 	String get login_Email => "Email";
@@ -336,9 +341,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Đừng quên uống nước nhé."
 	@override
 	String get countdown_DoNotForgetToDrinkWater => "Đừng quên uống nước nhé.";
-	/// "Đi lại nhẹ nhàng"
+	/// "Hãy di chuyển nhẹ nhàng"
 	@override
-	String get countdown_WalkAround => "Đi lại nhẹ nhàng";
+	String get countdown_WalkAround => "Hãy di chuyển nhẹ nhàng";
 	/// "Cài đặt"
 	@override
 	String get setting_Title => "Cài đặt";

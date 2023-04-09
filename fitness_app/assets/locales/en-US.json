@@ -22,7 +22,8 @@
     "main_":{
       "social":"Social",
       "home":"Home",
-      "setting":"Setting"
+      "setting":"Setting",
+      "statistics":"Statistics"
     },
     "login_": {
       "email": "Email",

@@ -22,7 +22,8 @@
     "main_":{
       "social":"Cộng đồng",
       "home":"Trang chủ",
-      "setting":"Cài đặt"
+      "setting":"Cài đặt",
+      "statistics":"Thống kê"
     },
     "login_": {
       "email": "Email",
@@ -68,7 +69,7 @@
       "breakTime":"Giải lao",
       "youHaveFinishCountEx":"Bạn đã hoàn thành {count} bài tập. Hãy tiếp tục!",
       "doNotForgetToDrinkWater":"Đừng quên uống nước nhé.",
-      "walkAround":"Đi lại nhẹ nhàng"
+      "walkAround":"Hãy di chuyển nhẹ nhàng"
     },
     "setting_":{
       "title":"Cài đặt",

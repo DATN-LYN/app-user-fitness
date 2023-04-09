@@ -17,6 +17,9 @@ class _FinishPageState extends State<FinishPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       body: SafeArea(
         child: ListView(

@@ -108,6 +108,12 @@ class _$AppRouter extends RootStackRouter {
         child: const SocialPage(),
       );
     },
+    StatisticsRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const StatisticsPage(),
+      );
+    },
   };
 
   @override
@@ -137,6 +143,11 @@ class _$AppRouter extends RootStackRouter {
             RouteConfig(
               SocialRoute.name,
               path: 'social-page',
+              parent: MainRoute.name,
+            ),
+            RouteConfig(
+              StatisticsRoute.name,
+              path: 'statistics-page',
               parent: MainRoute.name,
             ),
           ],
@@ -375,4 +386,16 @@ class SocialRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SocialRoute';
+}
+
+/// generated route for
+/// [StatisticsPage]
+class StatisticsRoute extends PageRouteInfo<void> {
+  const StatisticsRoute()
+      : super(
+          StatisticsRoute.name,
+          path: 'statistics-page',
+        );
+
+  static const String name = 'StatisticsRoute';
 }

@@ -54,6 +54,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -70,8 +72,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                 widget.isBreak
                     ? '${i18n.countdown_BreakTime},'
                     : i18n.countdown_ReadyToGo,
-                style: const TextStyle(
-                  fontSize: 35,
+                style: TextStyle(
+                  fontSize: isPortrait ? 35 : 30,
                   color: AppColors.primaryBold,
                   fontWeight: FontWeight.w700,
                 ),
@@ -80,8 +82,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                 const SizedBox(height: 8),
                 Text(
                   i18n.countdown_WalkAround,
-                  style: const TextStyle(
-                    fontSize: 30,
+                  style: TextStyle(
+                    fontSize: isPortrait ? 25 : 20,
                     color: AppColors.primaryBold,
                     fontWeight: FontWeight.w500,
                   ),
@@ -93,7 +95,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox.square(
-                      dimension: 200,
+                      dimension: isPortrait ? 200 : 110,
                       child: CircularProgressIndicator(
                         value: ((widget.initialDuration.inSeconds - seconds) /
                                 widget.initialDuration.inSeconds)
@@ -107,8 +109,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                     ),
                     Text(
                       countdownDuration.inSeconds.toString(),
-                      style: const TextStyle(
-                        fontSize: 100,
+                      style: TextStyle(
+                        fontSize: isPortrait ? 100 : 50,
                         color: AppColors.primaryBold,
                         fontWeight: FontWeight.bold,
                       ),
@@ -117,7 +119,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                 ),
               ),
               if (widget.isBreak) ...[
-                const SizedBox(height: 32),
+                SizedBox(height: isPortrait ? 48 : 22),
                 Center(
                   child: Text(
                     i18n.countdown_YouHaveFinishCountEx(
@@ -126,18 +128,19 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: AppColors.primaryBold,
-                      fontSize: 16,
+                      fontSize: 17,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
+                const SizedBox(height: 8),
                 Center(
                   child: Text(
                     i18n.countdown_DoNotForgetToDrinkWater,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: AppColors.primaryBold,
-                      fontSize: 16,
+                      fontSize: 17,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

@@ -15,6 +15,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
   Widget build(BuildContext context) {
     return ShadowWrapper(
       margin: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.all(16),
       child: Row(
         children: [
           ClipRRect(

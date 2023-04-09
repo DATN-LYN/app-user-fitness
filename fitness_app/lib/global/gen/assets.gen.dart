@@ -31,12 +31,15 @@ class $AssetsImagesGen {
   AssetGenImage get logoContainer =>
       const AssetGenImage('assets/images/logo_container.png');
 
+  /// File path: assets/images/relax.png
+  AssetGenImage get relax => const AssetGenImage('assets/images/relax.png');
+
   /// File path: assets/images/running.png
   AssetGenImage get running => const AssetGenImage('assets/images/running.png');
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [finish, intro1, intro2, intro3, logo, logoContainer, running];
+      [finish, intro1, intro2, intro3, logo, logoContainer, relax, running];
 }
 
 class Assets {

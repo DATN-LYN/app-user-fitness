@@ -21,6 +21,7 @@ class _MainPageState extends State<MainPage> {
       routes: const [
         SocialRoute(),
         HomeRoute(),
+        StatisticsRoute(),
         SettingRoute(),
       ],
       builder: (context, child, animation) {
@@ -48,6 +49,11 @@ class _MainPageState extends State<MainPage> {
                 label: i18n.main_Home,
                 icon: const Icon(Icons.home),
                 activeIcon: const Icon(Icons.home),
+              ),
+              BottomNavigationBarItem(
+                label: i18n.main_Statistics,
+                icon: const Icon(Icons.sports_gymnastics),
+                activeIcon: const Icon(Icons.sports_gymnastics),
               ),
               BottomNavigationBarItem(
                 label: i18n.main_Setting,

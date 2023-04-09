@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
+import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/modules/program/widgets/exercise_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -90,7 +91,7 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
           Expanded(
             child: SafeArea(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.all(16),
                 children: [
                   const Text(
                     'Description',
@@ -100,12 +101,15 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'dajsdhajkshdjashdjashdajshdajsdhajshdajsdhjashdajshdajhsdjahsdjashdjashdajdhajshdjasdhajsdhjkahdjkahdjakhdajkshdjaskhd',
+                  const ShadowWrapper(
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      'dajsdhajkshdjashdjashdajshdajsdhajshdajsdhjashdajshdajhsdjahsdjashdjashdajdhajshdjasdhajsdhjkahdjkahdjakhdajkshdjaskhd',
+                    ),
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'Exercise',
+                    'Exercises',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,

@@ -81,7 +81,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
       if (dur - pos < 1) {
         if (index < urls.length - 1) {
           nextVideo();
-        } else {
+        } else if (index == urls.length - 1) {
           context.pushRoute(const FinishRoute());
         }
       }
@@ -97,12 +97,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     controllers[urls.elementAt(index)] = controller;
     await controller.initialize();
   }
-
-  // void removeController(int index) {
-  //   controller(index).dispose();
-  //   controllers.remove(urls.elementAt(index));
-  //   listeners.remove(index);
-  // }
 
   void stopController(int index) {
     controller(index).removeListener(listeners[index]!);
@@ -155,10 +149,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
 
     if (index == urls.length - 1) {
       lock = false;
-      if (mounted) {
-        context.pushRoute(const FinishRoute());
-        return;
-      }
     } else {
       initController(index + 1).whenComplete(() => lock = false);
     }
@@ -233,7 +223,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
               Expanded(
                 child: !isPortrait
                     ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           videoPlayer(),
                           remainDurationContainer(),
@@ -301,7 +291,13 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                   ),
                   const SizedBox(width: 16),
                   IconButton(
-                    onPressed: nextVideo,
+                    onPressed: () {
+                      if (index == urls.length - 1) {
+                        context.pushRoute(const FinishRoute());
+                      } else {
+                        nextVideo();
+                      }
+                    },
                     icon: const Icon(
                       Icons.skip_next_rounded,
                       color: AppColors.grey1,
