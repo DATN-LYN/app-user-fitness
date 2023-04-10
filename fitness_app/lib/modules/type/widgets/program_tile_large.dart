@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/program_info_tile.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/global/widgets/shimmer_image.dart';
@@ -13,11 +14,14 @@ class ProgramTileLarge extends StatefulWidget {
 }
 
 class _ProgramTileLargeState extends State<ProgramTileLarge> {
-  final textStyle = const TextStyle(fontWeight: FontWeight.w400);
+  final textStyle = const TextStyle(
+    color: AppColors.grey2,
+  );
   @override
   Widget build(BuildContext context) {
     return ShadowWrapper(
       padding: EdgeInsets.zero,
+      borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () => context.pushRoute(const ProgramDetailRoute()),
         child: Column(
@@ -42,21 +46,21 @@ class _ProgramTileLargeState extends State<ProgramTileLarge> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
                   ProgramInfoTile(
-                    icon: Icons.abc,
+                    icon: Icons.local_fire_department_rounded,
                     label: '40 Calories',
                     textStyle: textStyle,
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
                   ProgramInfoTile(
-                    icon: Icons.abc,
+                    icon: Icons.timelapse,
                     label: '73 Min',
                     textStyle: textStyle,
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
                   ProgramInfoTile(
-                    icon: Icons.abc,
+                    icon: Icons.fitness_center,
                     label: 'Any equipment',
                     textStyle: textStyle,
                   ),

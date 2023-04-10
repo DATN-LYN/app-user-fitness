@@ -1,4 +1,4 @@
-import 'package:cloudinary_flutter/cld_image.dart';
+import 'package:cloudinary_flutter/image/cld_image.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

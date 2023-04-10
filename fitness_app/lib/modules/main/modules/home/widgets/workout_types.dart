@@ -20,9 +20,7 @@ class _WorkoutTypesState extends State<WorkoutTypes> {
           icon: Icons.sports_gymnastics,
         );
       },
-      separatorBuilder: (context, index) {
-        return const SizedBox(width: 12);
-      },
+      separatorBuilder: (_, __) => const SizedBox(width: 12),
     );
   }
 }

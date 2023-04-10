@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
-import 'package:fitness_app/modules/main/modules/program/widgets/exercise_tile.dart';
+import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
+import 'package:fitness_app/modules/program/widgets/exercise_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../global/widgets/program_info_tile.dart';
+import '../../global/widgets/program_info_tile.dart';
 
 class ProgramDetailPage extends StatefulWidget {
   const ProgramDetailPage({super.key});
@@ -22,12 +24,13 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
           Icons.play_arrow,
           color: AppColors.white,
         ),
-        onPressed: () {},
+        onPressed: () {
+          context.pushRoute(CountdownTimerRoute());
+        },
       ),
       body: Column(
         children: [
           Container(
-            width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
               color: AppColors.primary,
@@ -41,7 +44,6 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 8),
                   Row(
                     children: [
                       SizedBox.square(
@@ -70,7 +72,7 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                     children: const [
                       ProgramInfoTile(
                         label: '40 Cal',
-                        icon: Icons.fire_extinguisher,
+                        icon: Icons.local_fire_department_rounded,
                       ),
                       ProgramInfoTile(
                         label: '73 Min',
@@ -86,18 +88,44 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
               ),
             ),
           ),
-          const SizedBox(height: 16),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return const ExerciseTile();
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  const Text(
+                    'Description',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const ShadowWrapper(
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      'dajsdhajkshdjashdjashdajshdajsdhajshdajsdhjashdajshdajhsdjahsdjashdjashdajdhajshdjasdhajsdhjkahdjkahdjakhdajkshdjaskhd',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Exercises',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 10,
+                    itemBuilder: (_, __) => const ExerciseTile(),
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 8),
         ],
       ),
     );

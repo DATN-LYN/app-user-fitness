@@ -24,10 +24,9 @@ class _WorkoutTypeTileState extends State<WorkoutTypeTile> {
     return InkWell(
       onTap: () => context.pushRoute(const TypeDetailRoute()),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
               border: Border.all(
@@ -35,14 +34,9 @@ class _WorkoutTypeTileState extends State<WorkoutTypeTile> {
                 color: AppColors.grey5,
               ),
             ),
-            child: IconButton(
-              padding: const EdgeInsets.all(0),
-              splashRadius: 30,
-              onPressed: () {},
-              icon: Icon(
-                widget.icon,
-                color: AppColors.grey2,
-              ),
+            child: Icon(
+              widget.icon,
+              color: AppColors.grey2,
             ),
           ),
           const SizedBox(height: 8),

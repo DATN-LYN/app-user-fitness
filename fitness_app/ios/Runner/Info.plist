@@ -53,5 +53,7 @@
 	<string>Allow access to camera to capture photos</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow access to microphone to record videos</string>
+	<key>NSAppTransportSecurity</key>
+	<true/>
 </dict>
 </plist>

@@ -65,6 +65,31 @@ class _$AppRouter extends RootStackRouter {
         child: const TypeDetailPage(),
       );
     },
+    ExerciseDetailRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ExerciseDetailPage(),
+      );
+    },
+    CountdownTimerRoute.name: (routeData) {
+      final args = routeData.argsAs<CountdownTimerRouteArgs>(
+          orElse: () => const CountdownTimerRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: CountdownTimerPage(
+          key: args.key,
+          initialDuration: args.initialDuration,
+          isBreak: args.isBreak,
+          exerciseCount: args.exerciseCount,
+        ),
+      );
+    },
+    FinishRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const FinishPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -81,6 +106,12 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const SocialPage(),
+      );
+    },
+    StatisticsRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const StatisticsPage(),
       );
     },
   };
@@ -114,6 +145,11 @@ class _$AppRouter extends RootStackRouter {
               path: 'social-page',
               parent: MainRoute.name,
             ),
+            RouteConfig(
+              StatisticsRoute.name,
+              path: 'statistics-page',
+              parent: MainRoute.name,
+            ),
           ],
         ),
         RouteConfig(
@@ -135,6 +171,18 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           TypeDetailRoute.name,
           path: '/type-detail-page',
+        ),
+        RouteConfig(
+          ExerciseDetailRoute.name,
+          path: '/exercise-detail-page',
+        ),
+        RouteConfig(
+          CountdownTimerRoute.name,
+          path: '/countdown-timer-page',
+        ),
+        RouteConfig(
+          FinishRoute.name,
+          path: '/finish-page',
         ),
       ];
 }
@@ -237,6 +285,74 @@ class TypeDetailRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ExerciseDetailPage]
+class ExerciseDetailRoute extends PageRouteInfo<void> {
+  const ExerciseDetailRoute()
+      : super(
+          ExerciseDetailRoute.name,
+          path: '/exercise-detail-page',
+        );
+
+  static const String name = 'ExerciseDetailRoute';
+}
+
+/// generated route for
+/// [CountdownTimerPage]
+class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
+  CountdownTimerRoute({
+    Key? key,
+    Duration initialDuration = const Duration(seconds: 3),
+    bool isBreak = false,
+    String? exerciseCount,
+  }) : super(
+          CountdownTimerRoute.name,
+          path: '/countdown-timer-page',
+          args: CountdownTimerRouteArgs(
+            key: key,
+            initialDuration: initialDuration,
+            isBreak: isBreak,
+            exerciseCount: exerciseCount,
+          ),
+        );
+
+  static const String name = 'CountdownTimerRoute';
+}
+
+class CountdownTimerRouteArgs {
+  const CountdownTimerRouteArgs({
+    this.key,
+    this.initialDuration = const Duration(seconds: 3),
+    this.isBreak = false,
+    this.exerciseCount,
+  });
+
+  final Key? key;
+
+  final Duration initialDuration;
+
+  final bool isBreak;
+
+  final String? exerciseCount;
+
+  @override
+  String toString() {
+    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak, exerciseCount: $exerciseCount}';
+  }
+}
+
+/// generated route for
+/// [FinishPage]
+class FinishRoute extends PageRouteInfo<void> {
+  const FinishRoute()
+      : super(
+          FinishRoute.name,
+          path: '/finish-page',
+        );
+
+  static const String name = 'FinishRoute';
+}
+
+/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute()
@@ -270,4 +386,16 @@ class SocialRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SocialRoute';
+}
+
+/// generated route for
+/// [StatisticsPage]
+class StatisticsRoute extends PageRouteInfo<void> {
+  const StatisticsRoute()
+      : super(
+          StatisticsRoute.name,
+          path: 'statistics-page',
+        );
+
+  static const String name = 'StatisticsRoute';
 }

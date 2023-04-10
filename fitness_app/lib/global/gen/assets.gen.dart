@@ -12,20 +12,34 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/intro1.jpg
-  AssetGenImage get intro1 => const AssetGenImage('assets/images/intro1.jpg');
+  /// File path: assets/images/finish.png
+  AssetGenImage get finish => const AssetGenImage('assets/images/finish.png');
 
-  /// File path: assets/images/intro2.jpg
-  AssetGenImage get intro2 => const AssetGenImage('assets/images/intro2.jpg');
+  /// File path: assets/images/intro1.png
+  AssetGenImage get intro1 => const AssetGenImage('assets/images/intro1.png');
 
-  /// File path: assets/images/intro3.jpg
-  AssetGenImage get intro3 => const AssetGenImage('assets/images/intro3.jpg');
+  /// File path: assets/images/intro2.png
+  AssetGenImage get intro2 => const AssetGenImage('assets/images/intro2.png');
+
+  /// File path: assets/images/intro3.png
+  AssetGenImage get intro3 => const AssetGenImage('assets/images/intro3.png');
+
+  /// File path: assets/images/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
+
+  /// File path: assets/images/logo_container.png
+  AssetGenImage get logoContainer =>
+      const AssetGenImage('assets/images/logo_container.png');
+
+  /// File path: assets/images/relax.png
+  AssetGenImage get relax => const AssetGenImage('assets/images/relax.png');
 
   /// File path: assets/images/running.png
   AssetGenImage get running => const AssetGenImage('assets/images/running.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [intro1, intro2, intro3, running];
+  List<AssetGenImage> get values =>
+      [finish, intro1, intro2, intro3, logo, logoContainer, relax, running];
 }
 
 class Assets {

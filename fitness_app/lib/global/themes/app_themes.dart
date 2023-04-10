@@ -138,10 +138,25 @@ class AppThemes {
         style: TextButton.styleFrom(
           foregroundColor: AppColors.grey1,
           textStyle: const TextStyle(
-            color: Colors.red,
             fontWeight: FontWeight.w600,
             decoration: TextDecoration.underline,
           ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          foregroundColor: AppColors.grey1,
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: AppColors.grey1,
+          ),
+          minimumSize: const Size(48, 48),
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/gen/assets.gen.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/services/hive_service.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
-import 'package:fitness_app/global/widgets/indicator_loading.dart';
 import 'package:fitness_app/locator.dart';
 import 'package:flutter/material.dart';
 
@@ -36,12 +36,11 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.primary,
+    return Scaffold(
+      backgroundColor: AppColors.primarySoft,
       body: Center(
-          child: IndicatorLoading(
-        color: AppColors.white,
-      )),
+        child: Assets.images.logoContainer.image(width: 130, height: 130),
+      ),
     );
   }
 }
