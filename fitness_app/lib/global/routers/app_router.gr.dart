@@ -102,10 +102,10 @@ class _$AppRouter extends RootStackRouter {
         child: const SettingPage(),
       );
     },
-    SocialRoute.name: (routeData) {
+    ChatRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const SocialPage(),
+        child: const ChatPage(),
       );
     },
     StatisticsRoute.name: (routeData) {
@@ -141,8 +141,8 @@ class _$AppRouter extends RootStackRouter {
               parent: MainRoute.name,
             ),
             RouteConfig(
-              SocialRoute.name,
-              path: 'social-page',
+              ChatRoute.name,
+              path: 'chat-page',
               parent: MainRoute.name,
             ),
             RouteConfig(
@@ -377,15 +377,15 @@ class SettingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SocialPage]
-class SocialRoute extends PageRouteInfo<void> {
-  const SocialRoute()
+/// [ChatPage]
+class ChatRoute extends PageRouteInfo<void> {
+  const ChatRoute()
       : super(
-          SocialRoute.name,
-          path: 'social-page',
+          ChatRoute.name,
+          path: 'chat-page',
         );
 
-  static const String name = 'SocialRoute';
+  static const String name = 'ChatRoute';
 }
 
 /// generated route for

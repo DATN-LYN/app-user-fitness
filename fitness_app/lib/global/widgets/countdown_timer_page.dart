@@ -26,9 +26,10 @@ class CountdownTimerPage extends StatefulWidget {
 class _CountdownTimerPageState extends State<CountdownTimerPage> {
   late Duration countdownDuration = widget.initialDuration;
   late int seconds = widget.initialDuration.inSeconds;
+  Timer? countdownTimer;
 
   void startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         seconds = countdownDuration.inSeconds - 1;
         if (seconds < 0) {
@@ -155,6 +156,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
         child: ElevatedButton(
           onPressed: () {
+            countdownTimer?.cancel();
             if (widget.isBreak) {
               context.popRoute();
             } else {

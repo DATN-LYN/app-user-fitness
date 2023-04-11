@@ -6,7 +6,7 @@ class Constants {
   static const String hiveGraphqlBox = '@graphql_box';
   static const String hiveUserCredentialsKey = '@hive_user_credentials_key';
   static const String graphQLEndpoint = 'http://localhost:4000/graphql';
-  static const String privacyPolicyUrl = 'http://localhost:4000/graphql';
-  static const String termsAndConditionsUrl = 'http://localhost:4000/graphql';
-  static const String introductionUrl = 'http://localhost:4000/graphql';
+  static const String privacyPolicyUrl = 'https://www.google.com/';
+  static const String termsAndConditionsUrl = 'https://www.google.com/';
+  static const String introductionUrl = 'https://www.google.com/';
 }

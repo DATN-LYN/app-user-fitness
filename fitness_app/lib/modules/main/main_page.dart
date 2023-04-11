@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
 
     return AutoTabsRouter(
       routes: const [
-        SocialRoute(),
+        ChatRoute(),
         HomeRoute(),
         StatisticsRoute(),
         SettingRoute(),
@@ -36,12 +36,12 @@ class _MainPageState extends State<MainPage> {
             onTap: (index) {
               tabsRouter.setActiveIndex(index);
             },
-            selectedItemColor: AppColors.grey1,
+            selectedItemColor: AppColors.primaryBold,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
-                label: i18n.main_Social,
+                label: i18n.main_Chat,
                 icon: const Icon(Icons.chat),
                 activeIcon: const Icon(Icons.chat),
               ),

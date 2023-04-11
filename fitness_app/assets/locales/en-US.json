@@ -20,7 +20,7 @@
     },
     "language": ["English (US)", "Tiếng Việt"],
     "main_":{
-      "social":"Social",
+      "chat":"Chat",
       "home":"Home",
       "setting":"Setting",
       "statistics":"Statistics"
@@ -103,5 +103,17 @@
     "finish_":{
       "hooray": "Hooray!\n You have finished your workout.",
       "goBackToHome": "Go back to home"
+    },
+    "chat_":{
+      "title":"Health Care Chat"
+    },
+    "statistics":{
+      "recentWorkout": "Recent Workout",
+      "youHaveBurnt":"You have burnt",
+      "thisWeek": "this week",
+      "thisMonth": "this month",
+      "calories": "calories",
+      "whatAGreatValue":"What a great value!",
+      "bodyCountHistory":"Body Count History"
     }
 }

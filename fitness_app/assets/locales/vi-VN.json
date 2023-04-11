@@ -20,7 +20,7 @@
     },
     "language": ["English (US)", "Tiếng Việt"],
     "main_":{
-      "social":"Cộng đồng",
+      "chat":"Tư vấn",
       "home":"Trang chủ",
       "setting":"Cài đặt",
       "statistics":"Thống kê"
@@ -104,5 +104,17 @@
     "finish_":{
       "hooray": "Hooray!\n Bạn đã hoàn thành tất cả bài tập.",
       "goBackToHome": "Trở về trang chủ"
+    },
+    "chat_":{
+      "title":"Tư Vấn Sức Khoẻ"
+    },
+    "statistics":{
+      "recentWorkout": "Chương trình tập gần đây",
+      "youHaveBurnt":"Bạn đã đốt",
+      "thisWeek": "tuần này",
+      "thisMonth": "tháng này",
+      "calories": "calories",
+      "whatAGreatValue":"Thật tuyệt vời",
+      "bodyCountHistory":"Lịch sử chỉ số cơ thể"
     }
 }
