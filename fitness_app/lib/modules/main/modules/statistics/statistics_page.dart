@@ -25,30 +25,30 @@ class _StatisticsPageState extends State<StatisticsPage> {
         padding: const EdgeInsets.all(16),
         children: [
           RichText(
-            text: const TextSpan(
-              text: 'You have burnt ',
-              style: TextStyle(
+            text: TextSpan(
+              text: '${i18n.statistics_YouHaveBurnt} ',
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppColors.grey1,
               ),
               children: [
                 TextSpan(
-                  text: '1290 calories ',
-                  style: TextStyle(
+                  text: '1290 ${i18n.statistics_Calories} ',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColors.primaryBold,
                   ),
                 ),
-                TextSpan(text: 'this month.'),
+                TextSpan(text: '${i18n.statistics_ThisMonth}.'),
               ],
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
-            'What a great value!',
-            style: TextStyle(
+          Text(
+            i18n.statistics_WhatAGreatValue,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
