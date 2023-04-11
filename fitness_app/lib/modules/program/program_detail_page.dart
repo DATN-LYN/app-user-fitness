@@ -89,41 +89,41 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
             ),
           ),
           Expanded(
-            child: SafeArea(
-              child: ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
-                  const Text(
-                    'Description',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+            child: ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(16),
+              children: [
+                const Text(
+                  'Description',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
-                  const SizedBox(height: 16),
-                  const ShadowWrapper(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
-                      'dajsdhajkshdjashdjashdajshdajsdhajshdajsdhjashdajshdajhsdjahsdjashdjashdajdhajshdjasdhajsdhjkahdjkahdjakhdajkshdjaskhd',
-                    ),
+                ),
+                const SizedBox(height: 16),
+                const ShadowWrapper(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    'dajsdhajkshdjashdjashdajshdajsdhajshdajsdhjashdajshdajhsdjahsdjashdjashdajdhajshdjasdhajsdhjkahdjkahdjakhdajkshdjaskhd',
                   ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Exercises',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Exercises',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
-                  const SizedBox(height: 16),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 10,
-                    itemBuilder: (_, __) => const ExerciseTile(),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 16),
+                ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 5,
+                  itemBuilder: (_, __) => const ExerciseTile(),
+                ),
+              ],
             ),
           ),
         ],

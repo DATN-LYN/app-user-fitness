@@ -46,8 +46,8 @@ class I18n implements WidgetsLocalizations {
 	List<String> get onboard_Description => ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"];
 	/// ["English (US)", "Tiếng Việt"]
 	List<String> get language => ["English (US)", "Tiếng Việt"];
-	/// "Social"
-	String get main_Social => "Social";
+	/// "Chat"
+	String get main_Chat => "Chat";
 	/// "Home"
 	String get main_Home => "Home";
 	/// "Setting"
@@ -184,6 +184,22 @@ class I18n implements WidgetsLocalizations {
 	String get finish_Hooray => "Hooray!\n You have finished your workout.";
 	/// "Go back to home"
 	String get finish_GoBackToHome => "Go back to home";
+	/// "Health Care Chat"
+	String get chat_Title => "Health Care Chat";
+	/// "Recent Workout"
+	String get statisticsRecentWorkout => "Recent Workout";
+	/// "You have burnt"
+	String get statisticsYouHaveBurnt => "You have burnt";
+	/// "this week"
+	String get statisticsThisWeek => "this week";
+	/// "this month"
+	String get statisticsThisMonth => "this month";
+	/// "calories"
+	String get statisticsCalories => "calories";
+	/// "What a great value!"
+	String get statisticsWhatAGreatValue => "What a great value!";
+	/// "Body Count History"
+	String get statisticsBodyCountHistory => "Body Count History";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 }
@@ -218,9 +234,9 @@ class _I18n_vi_VN extends I18n {
 	/// ["English (US)", "Tiếng Việt"]
 	@override
 	List<String> get language => ["English (US)", "Tiếng Việt"];
-	/// "Cộng đồng"
+	/// "Tư vấn"
 	@override
-	String get main_Social => "Cộng đồng";
+	String get main_Chat => "Tư vấn";
 	/// "Trang chủ"
 	@override
 	String get main_Home => "Trang chủ";
@@ -425,6 +441,30 @@ class _I18n_vi_VN extends I18n {
 	/// "Trở về trang chủ"
 	@override
 	String get finish_GoBackToHome => "Trở về trang chủ";
+	/// "Tư Vấn Sức Khoẻ"
+	@override
+	String get chat_Title => "Tư Vấn Sức Khoẻ";
+	/// "Chương trình tập gần đây"
+	@override
+	String get statisticsRecentWorkout => "Chương trình tập gần đây";
+	/// "Bạn đã đốt"
+	@override
+	String get statisticsYouHaveBurnt => "Bạn đã đốt";
+	/// "tuần này"
+	@override
+	String get statisticsThisWeek => "tuần này";
+	/// "tháng này"
+	@override
+	String get statisticsThisMonth => "tháng này";
+	/// "calories"
+	@override
+	String get statisticsCalories => "calories";
+	/// "Thật tuyệt vời"
+	@override
+	String get statisticsWhatAGreatValue => "Thật tuyệt vời";
+	/// "Lịch sử chỉ số cơ thể"
+	@override
+	String get statisticsBodyCountHistory => "Lịch sử chỉ số cơ thể";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

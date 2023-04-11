@@ -23,12 +23,12 @@ class ExerciseDetailPage extends StatefulWidget {
 
 class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
   int index = 0;
-  double position = 0;
   bool lock = true;
-  final Map<String, VideoPlayerController> controllers = {};
-  final Map<int, VoidCallback> listeners = {};
   int maxValue = 0;
   int value = 0;
+  bool loading = false;
+  final Map<String, VideoPlayerController> controllers = {};
+  final Map<int, VoidCallback> listeners = {};
   PlayerState playerState = PlayerState.playing;
   final List<String> urls = [
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
@@ -37,7 +37,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#6',
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
   ];
-  bool loading = false;
 
   @override
   void dispose() {
@@ -186,6 +185,20 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
     );
   }
 
+  void onPlayPauseVideo() async {
+    if (playerState == PlayerState.playing) {
+      setState(() {
+        playerState = PlayerState.paused;
+      });
+      await controller(index).pause();
+    } else {
+      setState(() {
+        playerState = PlayerState.playing;
+      });
+      await controller(index).play();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isPortrait =
@@ -271,19 +284,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
                     width: 48,
                     height: 48,
                     child: IconButton(
-                      onPressed: () async {
-                        if (playerState == PlayerState.playing) {
-                          setState(() {
-                            playerState = PlayerState.paused;
-                          });
-                          await controller(index).pause();
-                        } else {
-                          setState(() {
-                            playerState = PlayerState.playing;
-                          });
-                          await controller(index).play();
-                        }
-                      },
+                      onPressed: onPlayPauseVideo,
                       icon: playerState == PlayerState.playing
                           ? const Icon(Icons.pause)
                           : const Icon(Icons.play_arrow),

@@ -1,10 +1,10 @@
 import 'package:fitness_app/global/gen/i18n.dart';
-import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
+import 'package:fitness_app/modules/main/modules/statistics/statistics_body_data.dart';
+import 'package:fitness_app/modules/main/modules/statistics/statistics_chart.dart';
+import 'package:fitness_app/modules/main/modules/statistics/statistics_recently_workout.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../global/themes/app_colors.dart';
-import '../../../type/widgets/program_tile_large.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({super.key});
@@ -24,42 +24,40 @@ class _StatisticsPageState extends State<StatisticsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          ShadowWrapper(
-            child: Column(
+          RichText(
+            text: const TextSpan(
+              text: 'You have burnt ',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: AppColors.grey1,
+              ),
               children: [
-                const Text(
-                  '1290 Calories Burnt',
+                TextSpan(
+                  text: '1290 calories ',
                   style: TextStyle(
-                    color: AppColors.grey1,
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w600,
+                    color: AppColors.primaryBold,
                   ),
                 ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  height: 300,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: SfCartesianChart(
-                    primaryXAxis: CategoryAxis(),
-                    series: <SplineSeries<SalesData, String>>[
-                      SplineSeries<SalesData, String>(
-                          dataSource: <SalesData>[
-                            SalesData('Jan', 35),
-                            SalesData('Feb', 28),
-                            SalesData('Mar', 34),
-                            SalesData('Apr', 32),
-                            SalesData('May', 40)
-                          ],
-                          splineType: SplineType.cardinal,
-                          xValueMapper: (SalesData sales, _) => sales.year,
-                          yValueMapper: (SalesData sales, _) => sales.sales)
-                    ],
-                  ),
-                ),
+                TextSpan(text: 'this month.'),
               ],
             ),
           ),
+          const SizedBox(height: 4),
+          const Text(
+            'What a great value!',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 16),
+          const StatisticsChart(),
           const SizedBox(height: 32),
+          const StatisticsBodyData(),
+          const SizedBox(height: 16),
           const Text(
             'Recently Workout',
             style: TextStyle(
@@ -67,24 +65,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 16),
-          ListView.separated(
-            itemCount: 10,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return const ProgramTileLarge();
-            },
-            separatorBuilder: (_, __) => const SizedBox(height: 16),
-          ),
+          const SizedBox(height: 32),
+          const StatisticsRecentlyWorkout(),
         ],
       ),
     );
   }
-}
-
-class SalesData {
-  SalesData(this.year, this.sales);
-  final String year;
-  final double sales;
 }
