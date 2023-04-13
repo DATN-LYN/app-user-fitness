@@ -42,13 +42,14 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ),
       ],
     );
+
     stream.listen((event) {
+      setState(() {
+        loading = false;
+      });
       ref.watch(messageResponseProvider.notifier).update(
             (state) => [...state, event.choices.first.delta.content ?? ''],
           );
-    });
-    setState(() {
-      loading = false;
     });
   }
 
@@ -69,24 +70,21 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           MessageWidget(
             isSender: false,
             content: ref.watch(messageResponseProvider).join(''),
+            contentLoading: loading
+                ? const SizedBox(
+                    height: 20,
+                    child: LoadingIndicator(
+                      indicatorType: Indicator.ballPulse,
+                      colors: [Colors.black],
+                      strokeWidth: 2,
+                    ),
+                  )
+                : null,
           ),
           MessageWidget(
             isSender: true,
             content: textController.text,
           ),
-          if (loading)
-            const MessageWidget(
-              content: '',
-              contentLoading: SizedBox(
-                height: 20,
-                child: LoadingIndicator(
-                  indicatorType: Indicator.ballPulse,
-                  colors: [Colors.black],
-                  strokeWidth: 2,
-                ),
-              ),
-              isSender: false,
-            )
         ],
       ),
       bottomNavigationBar: Container(

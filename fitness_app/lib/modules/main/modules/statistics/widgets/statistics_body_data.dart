@@ -1,16 +1,13 @@
-import 'package:fitness_app/global/widgets/user_statistic_item.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../global/themes/app_colors.dart';
+import '../../../../../global/widgets/user_statistic_item.dart';
 
-class UserStatistic extends StatefulWidget {
-  const UserStatistic({super.key});
+class StatisticsBodyData extends StatelessWidget {
+  const StatisticsBodyData({
+    super.key,
+  });
 
-  @override
-  State<UserStatistic> createState() => _UserStatisticState();
-}
-
-class _UserStatisticState extends State<UserStatistic> {
   @override
   Widget build(BuildContext context) {
     return Row(

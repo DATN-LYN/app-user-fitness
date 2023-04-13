@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../type/widgets/program_tile_large.dart';
+import '../../../../type/widgets/program_tile_large.dart';
 
 class StatisticsRecentlyWorkout extends StatelessWidget {
   const StatisticsRecentlyWorkout({super.key});
