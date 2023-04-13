@@ -3,17 +3,20 @@ import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/modules/main/modules/chat/widgets/message_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
-class ChatPage extends StatefulWidget {
+final messageResponseProvider = StateProvider<List<String>>((ref) => []);
+
+class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({super.key});
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  ConsumerState<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends ConsumerState<ChatPage> {
   String messagReplied = '';
   final textController = TextEditingController();
   bool loading = false;
@@ -25,12 +28,12 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void chat(String message) async {
+    ref.read(messageResponseProvider.notifier).update((state) => []);
     setState(() {
       loading = true;
     });
     textController.text = '';
-    OpenAIChatCompletionModel chatCompletion =
-        await OpenAI.instance.chat.create(
+    final stream = OpenAI.instance.chat.createStream(
       model: "gpt-3.5-turbo",
       messages: [
         OpenAIChatCompletionChoiceMessageModel(
@@ -39,10 +42,10 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ],
     );
-    print(chatCompletion);
-    final data = chatCompletion.choices.first.message.content;
-    setState(() {
-      messagReplied = data;
+    stream.listen((event) {
+      ref.watch(messageResponseProvider.notifier).update(
+            (state) => [...state, event.choices.first.delta.content ?? ''],
+          );
     });
     setState(() {
       loading = false;
@@ -65,7 +68,7 @@ class _ChatPageState extends State<ChatPage> {
           const SizedBox(height: 16),
           MessageWidget(
             isSender: false,
-            content: messagReplied,
+            content: ref.watch(messageResponseProvider).join(''),
           ),
           MessageWidget(
             isSender: true,
