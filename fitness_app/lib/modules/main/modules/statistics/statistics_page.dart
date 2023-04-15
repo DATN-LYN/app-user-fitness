@@ -1,6 +1,8 @@
 import 'package:fitness_app/global/enums/schedule_filter.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/modules/main/modules/statistics/widgets/month_picker_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../global/themes/app_colors.dart';
 import 'widgets/statistics_body_data.dart';
@@ -15,11 +17,12 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
-  ScheduleFilter selectedSchedule = ScheduleFilter.daily;
+  ScheduleFilter selectedFilter = ScheduleFilter.weekly;
 
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(i18n.main_Statistics),
@@ -30,12 +33,33 @@ class _StatisticsPageState extends State<StatisticsPage> {
           const SizedBox(height: 8),
           Row(
             children: [
-              _filterItem(schedule: ScheduleFilter.daily),
               _filterItem(schedule: ScheduleFilter.weekly),
               _filterItem(schedule: ScheduleFilter.monthly),
               _filterItem(schedule: ScheduleFilter.yearly),
             ],
           ),
+          if (selectedFilter == ScheduleFilter.monthly)
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: FormBuilderField<DateTime>(
+                name: 'month',
+                decoration: const InputDecoration(
+                  suffixIcon: Icon(
+                    Icons.arrow_drop_down_sharp,
+                    size: 30,
+                  ),
+                ),
+                builder: (field) {
+                  return MonthPickerDialog(
+                    onChanged: (selectedMonth) {
+                      if (selectedMonth != null) {
+                        field.didChange(selectedMonth);
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
           const SizedBox(height: 32),
           const StatisticsBodyData(),
           const SizedBox(height: 32),
@@ -71,9 +95,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
           const SizedBox(height: 16),
           const StatisticsChart(),
           const SizedBox(height: 32),
-          const Text(
-            'Recently Workout',
-            style: TextStyle(
+          Text(
+            i18n.statistics_RecentWorkout,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -86,14 +110,14 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   Widget _filterItem({required ScheduleFilter schedule}) {
-    final isSelected = selectedSchedule == schedule;
+    final isSelected = selectedFilter == schedule;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: FilledButton(
           onPressed: () {
             setState(() {
-              selectedSchedule = schedule;
+              selectedFilter = schedule;
             });
           },
           style: FilledButton.styleFrom(

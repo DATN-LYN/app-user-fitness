@@ -114,6 +114,7 @@
       "thisMonth": "this month",
       "calories": "calories",
       "whatAGreatValue":"What a great value!",
-      "bodyCountHistory":"Body Count History"
+      "bodyCountHistory":"Body Count History",
+      "selectMonth": "Select month"
     }
 }

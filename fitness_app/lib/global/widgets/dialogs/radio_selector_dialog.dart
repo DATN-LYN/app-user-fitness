@@ -52,6 +52,7 @@ class _RadioSelectorDialogState<T> extends State<RadioSelectorDialog<T>> {
             ...widget.values.map(
               (element) {
                 bool isChecked = _currentValue == element;
+
                 return RadioBox(
                   onTap: () {
                     setState(() {
@@ -63,13 +64,14 @@ class _RadioSelectorDialogState<T> extends State<RadioSelectorDialog<T>> {
                 );
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 4),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
                   child: ElevatedButtonOpacity(
                     onTap: AutoRouter.of(context).pop,
-                    color: AppColors.neutral20,
+                    color: AppColors.grey6,
                     label: i18n.button_Cancel,
                   ),
                 ),

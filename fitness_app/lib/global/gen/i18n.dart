@@ -200,6 +200,8 @@ class I18n implements WidgetsLocalizations {
 	String get statistics_WhatAGreatValue => "What a great value!";
 	/// "Body Count History"
 	String get statistics_BodyCountHistory => "Body Count History";
+	/// "Select month"
+	String get statistics_SelectMonth => "Select month";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 }
@@ -465,6 +467,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Lịch sử chỉ số cơ thể"
 	@override
 	String get statistics_BodyCountHistory => "Lịch sử chỉ số cơ thể";
+	/// "Chọn tháng"
+	@override
+	String get statistics_SelectMonth => "Chọn tháng";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
