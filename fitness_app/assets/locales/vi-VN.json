@@ -108,13 +108,14 @@
     "chat_":{
       "title":"Tư Vấn Sức Khoẻ"
     },
-    "statistics":{
+    "statistics_":{
       "recentWorkout": "Chương trình tập gần đây",
       "youHaveBurnt":"Bạn đã đốt",
       "thisWeek": "tuần này",
       "thisMonth": "tháng này",
       "calories": "calories",
-      "whatAGreatValue":"Thật tuyệt vời",
-      "bodyCountHistory":"Lịch sử chỉ số cơ thể"
+      "whatAGreatValue":"Thật tuyệt vời!",
+      "bodyCountHistory":"Lịch sử chỉ số cơ thể",
+      "selectMonth": "Chọn tháng"
     }
 }

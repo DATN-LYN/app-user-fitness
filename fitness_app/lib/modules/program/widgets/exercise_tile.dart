@@ -29,42 +29,48 @@ class _ExerciseTileState extends State<ExerciseTile> {
             ),
           ),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Dumbell Fly',
-                style: TextStyle(
-                  color: AppColors.grey1,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Dumbell Fly',
+                  style: TextStyle(
+                    color: AppColors.grey1,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: const [
-                  Icon(
-                    Icons.bolt_outlined,
-                    size: 18,
-                    color: AppColors.grey5,
-                  ),
-                  SizedBox(width: 4),
-                  Text('4 sets'),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: const [
-                  Icon(
-                    Icons.access_time_filled,
-                    size: 18,
-                    color: AppColors.grey5,
-                  ),
-                  SizedBox(width: 4),
-                  Text('4 mins'),
-                ],
-              ),
-            ],
+                const SizedBox(height: 8),
+                Row(
+                  children: const [
+                    Icon(
+                      Icons.bolt_outlined,
+                      size: 18,
+                      color: AppColors.grey5,
+                    ),
+                    SizedBox(width: 4),
+                    Text('4 sets'),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: const [
+                    Icon(
+                      Icons.access_time_filled,
+                      size: 18,
+                      color: AppColors.grey5,
+                    ),
+                    SizedBox(width: 4),
+                    Text('4 mins'),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.check_circle_outline,
+            color: AppColors.success,
           )
         ],
       ),

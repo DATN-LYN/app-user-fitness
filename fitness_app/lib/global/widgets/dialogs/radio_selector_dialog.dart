@@ -26,6 +26,7 @@ class RadioSelectorDialog<T> extends StatefulWidget {
 
 class _RadioSelectorDialogState<T> extends State<RadioSelectorDialog<T>> {
   late T _currentValue = widget.currentValue;
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,9 @@ class _RadioSelectorDialogState<T> extends State<RadioSelectorDialog<T>> {
             const SizedBox(height: 12),
             ...widget.values.map(
               (element) {
-                bool isChecked = _currentValue == element;
+                setState(() {
+                  isChecked = _currentValue == element;
+                });
                 return RadioBox(
                   onTap: () {
                     setState(() {
@@ -63,7 +66,9 @@ class _RadioSelectorDialogState<T> extends State<RadioSelectorDialog<T>> {
                 );
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 4),
+            if (isChecked) TextFormField(),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(

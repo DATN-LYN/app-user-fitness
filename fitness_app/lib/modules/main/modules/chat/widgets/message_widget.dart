@@ -8,9 +8,13 @@ class MessageWidget extends StatelessWidget {
   const MessageWidget({
     super.key,
     required this.isSender,
+    required this.content,
+    this.contentLoading,
   });
 
   final bool isSender;
+  final String content;
+  final Widget? contentLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +42,13 @@ class MessageWidget extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 borderRadius: BorderRadius.circular(8),
                 color: isSender ? AppColors.white : AppColors.primarySoft,
-                child: const Text(
-                  'jdjahfjhfjadhfjdhfjdhfjdhfjdhfjdhfjdhfdjhfjdhfjdhfjdhfjdhfjdhfjdhfjdhfdjhfjdhfdjfhdjfhjdfhjdfhjfhjdfdjhfjdhfjdhfjdhfjdhfjdfhjdhfjdhfjd',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                child: contentLoading ??
+                    Text(
+                      content,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
               ),
             ),
           ],

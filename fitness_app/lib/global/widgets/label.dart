@@ -7,15 +7,17 @@ class Label extends StatelessWidget {
     this.data, {
     Key? key,
     this.isRequired = false,
+    this.padding = const EdgeInsets.only(bottom: 8, top: 16),
   }) : super(key: key);
 
   final String data;
   final bool isRequired;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 7, top: 18),
+      padding: padding,
       child: Text.rich(
         TextSpan(
           text: data,

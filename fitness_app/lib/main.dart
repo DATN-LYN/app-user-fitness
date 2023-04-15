@@ -3,8 +3,9 @@ import 'package:fitness_app/global/providers/app_settings_provider.dart';
 import 'package:fitness_app/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as provider;
 
 import 'global/providers/auth_provider.dart';
 import 'global/routers/app_router.dart';
@@ -13,14 +14,15 @@ import 'global/themes/app_themes.dart';
 void main() async {
   await setupLocator();
   runApp(
-    MultiProvider(
+    provider.MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        provider.ChangeNotifierProvider(
           create: (_) => AppSettingsProvider(),
         ),
-        ChangeNotifierProvider(create: (_) => locator.get<AuthProvider>()),
+        provider.ChangeNotifierProvider(
+            create: (_) => locator.get<AuthProvider>()),
       ],
-      child: const MyApp(),
+      child: const ProviderScope(child: MyApp()),
     ),
   );
 }
@@ -39,7 +41,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     FormBuilderLocalizations.delegate.load(const Locale('en', 'US'));
 
-    return Consumer<AppSettingsProvider>(
+    return provider.Consumer<AppSettingsProvider>(
       builder: (context, provider, child) {
         return MaterialApp.router(
           title: 'My App',
