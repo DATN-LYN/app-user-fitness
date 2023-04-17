@@ -1,3 +1,5 @@
+import 'package:dart_openai/openai.dart';
+import 'package:fitness_app/env.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/providers/app_settings_provider.dart';
 import 'package:fitness_app/locator.dart';
@@ -13,6 +15,7 @@ import 'global/themes/app_themes.dart';
 
 void main() async {
   await setupLocator();
+  OpenAI.apiKey = Env.API_KEY_OPENAI;
   runApp(
     provider.MultiProvider(
       providers: [

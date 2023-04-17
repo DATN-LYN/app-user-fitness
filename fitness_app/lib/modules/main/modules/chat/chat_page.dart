@@ -23,7 +23,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   void initState() {
-    OpenAI.apiKey = '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';
     super.initState();
   }
 
