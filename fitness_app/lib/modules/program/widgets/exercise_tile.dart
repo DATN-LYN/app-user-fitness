@@ -45,12 +45,12 @@ class _ExerciseTileState extends State<ExerciseTile> {
                 Row(
                   children: const [
                     Icon(
-                      Icons.bolt_outlined,
+                      Icons.local_fire_department_sharp,
                       size: 18,
                       color: AppColors.grey5,
                     ),
                     SizedBox(width: 4),
-                    Text('4 sets'),
+                    Text('40 calories'),
                   ],
                 ),
                 const SizedBox(height: 8),

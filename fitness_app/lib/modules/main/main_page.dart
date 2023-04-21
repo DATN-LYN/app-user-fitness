@@ -19,9 +19,9 @@ class _MainPageState extends State<MainPage> {
 
     return AutoTabsRouter(
       routes: const [
-        ChatRoute(),
         HomeRoute(),
         StatisticsRoute(),
+        ChatRoute(),
         SettingRoute(),
       ],
       builder: (context, child, animation) {
@@ -41,11 +41,6 @@ class _MainPageState extends State<MainPage> {
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
-                label: i18n.main_Chat,
-                icon: const Icon(Icons.chat),
-                activeIcon: const Icon(Icons.chat),
-              ),
-              BottomNavigationBarItem(
                 label: i18n.main_Home,
                 icon: const Icon(Icons.home),
                 activeIcon: const Icon(Icons.home),
@@ -54,6 +49,11 @@ class _MainPageState extends State<MainPage> {
                 label: i18n.main_Statistics,
                 icon: const Icon(Icons.sports_gymnastics),
                 activeIcon: const Icon(Icons.sports_gymnastics),
+              ),
+              BottomNavigationBarItem(
+                label: i18n.main_Chat,
+                icon: const Icon(Icons.chat),
+                activeIcon: const Icon(Icons.chat),
               ),
               BottomNavigationBarItem(
                 label: i18n.main_Setting,

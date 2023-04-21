@@ -72,6 +72,8 @@ dependencies:
   loading_indicator: ^3.1.0
   dio: ^4.0.0
   flutter_riverpod: ^2.3.4
+  syncfusion_flutter_calendar: ^21.1.39
+  syncfusion_flutter_datepicker: ^21.1.39
 
 dev_dependencies:
   flutter_test:

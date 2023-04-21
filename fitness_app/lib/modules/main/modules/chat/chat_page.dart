@@ -29,7 +29,6 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
 
   @override
   void initState() {
-    OpenAI.apiKey = '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';
     super.initState();
   }
 
@@ -46,7 +45,11 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
         ),
       ],
     );
+
     stream.listen((event) {
+      setState(() {
+        loading = false;
+      });
       ref.watch(messageResponseProvider.notifier).update(
             (state) => [
               ...state,
@@ -92,24 +95,21 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
           MessageWidget(
             isSender: false,
             content: ref.watch(messageResponseProvider).join(''),
+            contentLoading: loading
+                ? const SizedBox(
+                    height: 20,
+                    child: LoadingIndicator(
+                      indicatorType: Indicator.ballPulse,
+                      colors: [Colors.black],
+                      strokeWidth: 2,
+                    ),
+                  )
+                : null,
           ),
           MessageWidget(
             isSender: true,
             content: textController.text,
           ),
-          if (loading)
-            const MessageWidget(
-              content: '',
-              contentLoading: SizedBox(
-                height: 20,
-                child: LoadingIndicator(
-                  indicatorType: Indicator.ballPulse,
-                  colors: [Colors.black],
-                  strokeWidth: 2,
-                ),
-              ),
-              isSender: false,
-            )
         ],
       ),
       bottomNavigationBar: Container(

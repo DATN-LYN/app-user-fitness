@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../type/widgets/program_tile_large.dart';
+import '../../../../type/widgets/program_tile_large.dart';
 
 class StatisticsRecentlyWorkout extends StatelessWidget {
   const StatisticsRecentlyWorkout({super.key});
@@ -8,7 +8,7 @@ class StatisticsRecentlyWorkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: 10,
+      itemCount: 5,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {

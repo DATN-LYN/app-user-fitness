@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../global/widgets/shadow_wrapper.dart';
+import '../../../../../global/widgets/shadow_wrapper.dart';
 
 class StatisticsChart extends StatelessWidget {
   const StatisticsChart({
@@ -17,8 +17,8 @@ class StatisticsChart extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         child: SfCartesianChart(
           primaryXAxis: CategoryAxis(),
-          series: <SplineSeries<SalesData, String>>[
-            SplineSeries<SalesData, String>(
+          series: <ColumnSeries<SalesData, String>>[
+            ColumnSeries<SalesData, String>(
               dataSource: <SalesData>[
                 SalesData('Jan', 35),
                 SalesData('Feb', 28),
@@ -26,7 +26,7 @@ class StatisticsChart extends StatelessWidget {
                 SalesData('Apr', 32),
                 SalesData('May', 40)
               ],
-              splineType: SplineType.cardinal,
+              borderRadius: BorderRadius.circular(10),
               xValueMapper: (SalesData sales, _) => sales.year,
               yValueMapper: (SalesData sales, _) => sales.sales,
             )
