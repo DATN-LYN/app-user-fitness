@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../locator.dart';
+import '../graphql/auth/__generated__/query_login.data.gql.dart';
 import '../models/hive/user.dart';
 import '../models/hive/user_credentials.dart';
 import '../services/hive_service.dart';
@@ -19,17 +20,9 @@ class AuthProvider extends ChangeNotifier {
 
   User? get user => _hiveService.getUserCredentials().user;
 
-  Future login({
-    required String token,
-    //required String refreshToken,
-    required User user,
-  }) async {
+  Future login(GLoginData data) async {
     await _hiveService.saveUserCredentials(
-      _credentials.copyWith(
-        accessToken: token,
-        //refreshToken: refreshToken,
-        user: user,
-      ),
+      UserCredentials.fromJson(data.login.toJson()),
     );
     _credentials = _hiveService.getUserCredentials();
     notifyListeners();

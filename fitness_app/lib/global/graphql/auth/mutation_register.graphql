@@ -1,12 +1,6 @@
-mutation Register($input: RegisterInput!){
-  register(registerInput: $input){
-    code
+mutation Register($input: RegisterInputDto!) {
+  register(input: $input) {
     success
     message
-    user{
-      id
-      email
-    }
-    accessToken
   }
 }

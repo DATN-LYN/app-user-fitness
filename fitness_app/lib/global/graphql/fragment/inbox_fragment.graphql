@@ -1,0 +1,12 @@
+fragment Inbox on Inbox {
+  id
+  message
+  userId
+  user {
+    id
+    email
+    avatar
+  }
+  createdAt
+  updatedAt
+}

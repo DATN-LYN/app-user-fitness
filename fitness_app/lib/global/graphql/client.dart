@@ -1,5 +1,6 @@
 import 'package:ferry/ferry.dart';
 import 'package:ferry_hive_store/ferry_hive_store.dart';
+import 'package:fitness_app/global/graphql/auth/__generated__/query_refresh_token.req.gql.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../locator.dart';
@@ -32,24 +33,24 @@ class AppClient {
         return 'Bearer $token';
       },
       getNewToken: () async {
-        // final hiveService = locator.get<HiveService>();
-        // final userCredentials = hiveService.getUserCredentials();
-        // String? refreshToken = userCredentials.refreshToken;
+        final hiveService = locator.get<HiveService>();
+        final userCredentials = hiveService.getUserCredentials();
+        String? refreshToken = userCredentials.refreshToken;
 
-        // final result = await client
-        //     .request(
-        //       GRefreshTokenReq(
-        //         (b) => b..vars.input.refreshToken = refreshToken,
-        //       ),
-        //     )
-        //     .first;
+        final result = await client
+            .request(
+              GRefreshTokenReq(
+                (b) => b..vars.refreshToken = refreshToken,
+              ),
+            )
+            .first;
 
-        // if (!result.hasErrors) {
-        //   final newToken = result.data?.refreshToken.token;
-        //   await hiveService.saveUserCredentials(
-        //     userCredentials.copyWith(accessToken: newToken),
-        //   );
-        // }
+        if (!result.hasErrors) {
+          final newToken = result.data?.refreshToken.token;
+          await hiveService.saveUserCredentials(
+            userCredentials.copyWith(accessToken: newToken),
+          );
+        }
       },
     );
 

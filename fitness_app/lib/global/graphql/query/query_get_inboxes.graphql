@@ -1,0 +1,13 @@
+#import '../fragment/meta_fragment.graphql'
+#import '../fragment/inbox_fragment.graphql'
+
+query GetInboxes($input: QueryFilterDto!) {
+  getInboxes(input: $input) {
+    meta {
+      ...Meta
+    }
+    items {
+      ...Inbox
+    }
+  }
+}

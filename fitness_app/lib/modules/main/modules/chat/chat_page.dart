@@ -1,11 +1,17 @@
 import 'package:dart_openai/openai.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
+import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:fitness_app/modules/main/modules/chat/widgets/message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
+
+import '../../../../global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart';
+import '../../../../global/providers/auth_provider.dart';
+import '../../../../global/utils/dialogs.dart';
 
 final messageResponseProvider = StateProvider<List<String>>((ref) => []);
 
@@ -16,7 +22,7 @@ class ChatPage extends ConsumerStatefulWidget {
   ConsumerState<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends ConsumerState<ChatPage> {
+class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
   String messagReplied = '';
   final textController = TextEditingController();
   bool loading = false;
@@ -29,9 +35,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   void chat(String message) async {
     ref.read(messageResponseProvider.notifier).update((state) => []);
-    setState(() {
-      loading = true;
-    });
+    setState(() => loading = true);
     textController.text = '';
     final stream = OpenAI.instance.chat.createStream(
       model: "gpt-3.5-turbo",
@@ -44,12 +48,31 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     );
     stream.listen((event) {
       ref.watch(messageResponseProvider.notifier).update(
-            (state) => [...state, event.choices.first.delta.content ?? ''],
+            (state) => [
+              ...state,
+              event.choices.first.delta.content ?? '',
+            ],
           );
-    });
-    setState(() {
-      loading = false;
-    });
+    }).onDone(
+      () async {
+        final user = context.read<AuthProvider>().user;
+        var req = GUpsertInboxReq(
+          (b) => b
+            ..vars.input.isSender = false
+            ..vars.input.message = ref.read(messageResponseProvider).join('')
+            ..vars.input.userId =
+                user?.id ?? '4b216e9d-9af8-4e13-bde7-df1b8cef02b5',
+        );
+        final response = await client.request(req).first;
+        if (response.hasErrors) {
+          print(response.linkException);
+          if (mounted) {
+            DialogUtils.showError(context: context, response: response);
+          }
+        }
+      },
+    );
+    setState(() => loading = false);
   }
 
   @override

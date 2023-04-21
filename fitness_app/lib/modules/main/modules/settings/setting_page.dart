@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.req.gql.dart';
 import 'package:fitness_app/global/providers/app_settings_provider.dart';
+import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/change_password_bottom_sheet.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/setting_tile.dart';
@@ -10,6 +12,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../global/enums/app_locale.dart';
 import '../../../../global/gen/i18n.dart';
+import '../../../../global/models/hive/user.dart';
 import '../../../../global/providers/auth_provider.dart';
 import '../../../../global/routers/app_router.dart';
 import '../../../../global/utils/constants.dart';
@@ -24,7 +27,8 @@ class SettingPage extends StatefulWidget {
   State<SettingPage> createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends State<SettingPage> with ClientMixin {
+  bool isLoading = false;
   void changeLanguage(AppSettingsProvider provider, I18n i18n) async {
     final data = await showDialog(
       context: context,
@@ -62,7 +66,7 @@ class _SettingPageState extends State<SettingPage> {
     if (data != null) {}
   }
 
-  void logOut() {
+  void logOut(User? user) {
     final i18n = I18n.of(context)!;
     showDialog(
       context: context,
@@ -71,9 +75,21 @@ class _SettingPageState extends State<SettingPage> {
         contentText: i18n.setting_ConfirmLogoutDes,
         positiveButtonText: i18n.button_Ok,
         onTapPositiveButton: () async {
-          context.read<AuthProvider>().logout();
-          Navigator.pop(context);
-          AutoRouter.of(context).push(const LoginRoute());
+          if (user != null) {
+            final loginReq = GLogoutReq((b) => b.vars.userId = user.id);
+
+            setState(() => isLoading = true);
+            final response = await client.request(loginReq).first;
+            setState(() => isLoading = false);
+
+            if (response.data?.logout.success == true) {
+              if (mounted) {
+                context.read<AuthProvider>().logout();
+                Navigator.pop(context);
+                AutoRouter.of(context).push(const LoginRoute());
+              }
+            }
+          }
         },
       ),
     );
@@ -101,6 +117,8 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+    var user = context.watch<AuthProvider>().user;
+    bool isLogedIn = user?.id != null;
 
     return Scaffold(
       appBar: AppBar(
@@ -109,17 +127,17 @@ class _SettingPageState extends State<SettingPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Center(
+          Center(
             child: Avatar(
               size: 80,
-              name: 'Nhi',
+              name: isLogedIn ? 'Nhi' : null,
             ),
           ),
           const SizedBox(height: 16),
-          const Center(
+          Center(
             child: Text(
-              'Nhi',
-              style: TextStyle(
+              isLogedIn ? 'Nhi' : 'Guest User',
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 20,
               ),
@@ -207,17 +225,25 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                SettingTile(
-                  icon: Icons.password,
-                  title: i18n.setting_ChangePassword,
-                  onTap: changePasswordHandler,
-                ),
+                if (isLogedIn)
+                  SettingTile(
+                    icon: Icons.password,
+                    title: i18n.setting_ChangePassword,
+                    onTap: changePasswordHandler,
+                  ),
                 const Divider(height: 12),
-                SettingTile(
-                  icon: Icons.logout,
-                  title: i18n.setting_Logout,
-                  onTap: logOut,
-                ),
+                if (!isLogedIn)
+                  SettingTile(
+                    icon: Icons.login,
+                    title: i18n.login_LogIn,
+                    onTap: () => context.pushRoute(const LoginRoute()),
+                  )
+                else
+                  SettingTile(
+                    icon: Icons.logout,
+                    title: i18n.setting_Logout,
+                    onTap: () => logOut(user),
+                  ),
               ],
             ),
           ),

@@ -25,9 +25,7 @@ class _SplashPageState extends State<SplashPage> {
             const OnBoardRoute(),
           ]);
         } else {
-          AutoRouter.of(context).replaceAll(
-            [const MainRoute()],
-          );
+          AutoRouter.of(context).replaceAll([const MainRoute()]);
         }
       });
     });
