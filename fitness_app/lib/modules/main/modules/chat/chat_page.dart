@@ -1,17 +1,24 @@
 import 'package:dart_openai/openai.dart';
+import 'package:ferry/ferry.dart';
+import 'package:fitness_app/global/gen/assets.gen.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/client_mixin.dart';
+import 'package:fitness_app/global/widgets/infinity_list.dart';
+import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/chat/widgets/message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
 import '../../../../global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart';
 import '../../../../global/providers/auth_provider.dart';
+import '../../../../global/utils/constants.dart';
 import '../../../../global/utils/dialogs.dart';
+import '../../../../global/widgets/fitness_empty.dart';
+import '../../../../global/widgets/fitness_error.dart';
 
 final messageResponseProvider = StateProvider<List<String>>((ref) => []);
 
@@ -23,13 +30,30 @@ class ChatPage extends ConsumerStatefulWidget {
 }
 
 class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
-  String messagReplied = '';
   final textController = TextEditingController();
   bool loading = false;
+  late var getMyInboxesReq = GGetMyInboxesReq(
+    (b) => b
+      ..requestId = '@getMyInboxesRequestId'
+      ..fetchPolicy = FetchPolicy.CacheAndNetwork
+      ..vars.queryParams.page = 1
+      ..vars.queryParams.limit = Constants.defaultLimit
+      ..vars.queryParams.orderBy = 'Remote.createdAt:DESC',
+  );
 
   @override
   void initState() {
     super.initState();
+  }
+
+  void refreshHandler() {
+    setState(
+      () => getMyInboxesReq = getMyInboxesReq.rebuild(
+        (b) => b
+          ..vars.queryParams.page = 1
+          ..updateResult = ((previous, result) => result),
+      ),
+    );
   }
 
   void chat(String message) async {
@@ -88,29 +112,98 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
         title: Text(i18n.chat_Title),
         elevation: 0,
       ),
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const SizedBox(height: 16),
-          MessageWidget(
-            isSender: false,
-            content: ref.watch(messageResponseProvider).join(''),
-            contentLoading: loading
-                ? const SizedBox(
-                    height: 20,
-                    child: LoadingIndicator(
-                      indicatorType: Indicator.ballPulse,
-                      colors: [Colors.black],
-                      strokeWidth: 2,
-                    ),
-                  )
-                : null,
-          ),
-          MessageWidget(
-            isSender: true,
-            content: textController.text,
-          ),
-        ],
+      body: InfinityList(
+        client: client,
+        request: GGetMyInboxesReq(),
+        loadMoreRequest: (response) {
+          final data = response?.data?.getMyInboxes;
+          if (data != null &&
+              data.meta!.currentPage!.toDouble() <
+                  data.meta!.totalPages!.toDouble()) {
+            getMyInboxesReq = getMyInboxesReq.rebuild(
+              (b) => b
+                ..vars.queryParams.page = (b.vars.queryParams.page! + 1)
+                ..updateResult = (previous, result) =>
+                    previous?.rebuild(
+                      (b) => b.getMyInboxes
+                        ..meta = (result?.getMyInboxes.meta ??
+                                previous.getMyInboxes.meta)!
+                            .toBuilder()
+                        ..items.addAll(result?.getMyInboxes.items ?? []),
+                    ) ??
+                    result,
+            );
+            return getMyInboxesReq;
+          }
+          return null;
+        },
+        refreshRequest: () {
+          getMyInboxesReq = getMyInboxesReq.rebuild(
+            (b) => b
+              ..vars.queryParams.page = 1
+              ..updateResult = ((previous, result) => result),
+          );
+          return getMyInboxesReq;
+        },
+        builder: (context, response, error) {
+          if ((response?.hasErrors == true ||
+                  response?.data?.getMyInboxes.meta?.itemCount == 0) &&
+              getMyInboxesReq.vars.queryParams.page != 1) {
+            getMyInboxesReq = getMyInboxesReq.rebuild(
+              (b) => b..vars.queryParams.page = b.vars.queryParams.page! - 1,
+            );
+          }
+
+          if (response?.loading ?? false) {
+            // WidgetsBinding.instance.addPostFrameCallback((_) {
+            //   setState(() {
+            //     loading = true;
+            //   });
+            // });
+            return const ShimmerInbox();
+          }
+
+          if (response?.hasErrors == true || response?.data == null) {
+            return FitnessError(response: response);
+          }
+
+          print(response?.data?.getMyInboxes);
+
+          final data = response!.data!.getMyInboxes;
+          final hasMoreData = data.meta!.currentPage!.toDouble() <
+              data.meta!.totalPages!.toDouble();
+          final inboxes = data.items;
+
+          if (inboxes?.isEmpty == true) {
+            return FitnessEmpty(
+              title: 'Empty',
+              message: 'Inbox is empty',
+              textButton: 'Refresh',
+              image: Assets.images.sadFace.image(height: 100),
+              onPressed: refreshHandler,
+            );
+          }
+
+          return ListView.separated(
+            itemCount: inboxes!.length + (hasMoreData ? 1 : 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            itemBuilder: (_, index) {
+              final item = inboxes[index];
+
+              if (index == inboxes.length) {
+                return Container(
+                  height: 64,
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(),
+                );
+              }
+              return MessageWidget(
+                item: item,
+              );
+            },
+            separatorBuilder: (_, __) => const SizedBox(height: 12),
+          );
+        },
       ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(8),
@@ -150,6 +243,160 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
                   color: AppColors.grey1,
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ShimmerInbox extends StatelessWidget {
+  const ShimmerInbox({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ShimmerWrapper(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  margin: const EdgeInsets.only(right: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 200,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                Container(
+                  width: 40,
+                  height: 40,
+                  margin: const EdgeInsets.only(left: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  margin: const EdgeInsets.only(right: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 200,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                Container(
+                  width: 40,
+                  height: 40,
+                  margin: const EdgeInsets.only(left: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  margin: const EdgeInsets.only(right: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 200,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                Container(
+                  width: 40,
+                  height: 40,
+                  margin: const EdgeInsets.only(left: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral20,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

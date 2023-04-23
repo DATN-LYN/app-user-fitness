@@ -9,4 +9,5 @@ class Constants {
   static const String privacyPolicyUrl = 'https://www.google.com/';
   static const String termsAndConditionsUrl = 'https://www.google.com/';
   static const String introductionUrl = 'https://www.google.com/';
+  static const double defaultLimit = 10;
 }

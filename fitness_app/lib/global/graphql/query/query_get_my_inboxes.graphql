@@ -1,8 +1,8 @@
 #import '../fragment/meta_fragment.graphql'
 #import '../fragment/inbox_fragment.graphql'
 
-query GetMyInboxes($input: QueryFilterDto!) {
-  getMyInboxes(input: $input) {
+query GetMyInboxes($queryParams: QueryFilterDto!) {
+  getMyInboxes(queryParams: $queryParams) {
     meta {
       ...Meta
     }

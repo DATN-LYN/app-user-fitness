@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../global/gen/assets.gen.dart';
+import '../../../../../global/graphql/query/__generated__/query_get_my_inboxes.data.gql.dart';
 import '../../../../../global/themes/app_colors.dart';
 import '../../../../../global/widgets/shadow_wrapper.dart';
 
 class MessageWidget extends StatelessWidget {
   const MessageWidget({
     super.key,
-    required this.isSender,
-    required this.content,
-    this.contentLoading,
+    required this.item,
   });
 
-  final bool isSender;
-  final String content;
-  final Widget? contentLoading;
+  final GGetMyInboxesData_getMyInboxes_items item;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +20,13 @@ class MessageWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Align(
-        alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
+        alignment:
+            item.id != null ? Alignment.centerRight : Alignment.centerLeft,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!isSender) ...[
+            if (item.id != null) ...[
               const SizedBox(width: 8),
               Assets.images.logoContainer.image(width: 40, height: 40),
             ],
@@ -41,14 +39,14 @@ class MessageWidget extends StatelessWidget {
                 ),
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 borderRadius: BorderRadius.circular(8),
-                color: isSender ? AppColors.white : AppColors.primarySoft,
-                child: contentLoading ??
-                    Text(
-                      content,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                color:
+                    item.id != null ? AppColors.white : AppColors.primarySoft,
+                child: Text(
+                  item.message ?? '_',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
           ],
