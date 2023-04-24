@@ -9,6 +9,7 @@ class WorkoutPrograms extends StatefulWidget {
 }
 
 class _WorkoutProgramsState extends State<WorkoutPrograms> {
+  // var req =  GGetProgram
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -17,7 +18,7 @@ class _WorkoutProgramsState extends State<WorkoutPrograms> {
       itemBuilder: (context, index) {
         return const WorkoutProgramTile(
           title: 'Upper Body',
-          duration: '50 mins',
+          level: 'Beginner',
           imageUrl:
               'https://duhocthanhcong.vn/wp-content/uploads/school-photos/IMG%20Academy/IMG-Academy-Album1.jpg',
         );

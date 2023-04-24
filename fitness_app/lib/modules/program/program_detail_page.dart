@@ -79,7 +79,7 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                         icon: Icons.timelapse,
                       ),
                       ProgramInfoTile(
-                        label: 'Any equipment',
+                        label: 'Beginner',
                         icon: Icons.fitness_center,
                       ),
                     ],

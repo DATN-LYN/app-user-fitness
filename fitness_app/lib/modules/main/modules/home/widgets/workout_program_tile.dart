@@ -9,12 +9,12 @@ class WorkoutProgramTile extends StatefulWidget {
   const WorkoutProgramTile({
     super.key,
     required this.title,
-    required this.duration,
+    required this.level,
     required this.imageUrl,
   });
 
   final String title;
-  final String duration;
+  final String level;
   final String imageUrl;
 
   @override
@@ -65,7 +65,7 @@ class _WorkoutProgramTileState extends State<WorkoutProgramTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.duration,
+                          widget.level,
                           style: const TextStyle(
                             color: AppColors.grey1,
                             fontSize: 14,

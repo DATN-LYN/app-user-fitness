@@ -40,6 +40,18 @@ import 'package:fitness_app/global/graphql/auth/__generated__/query_refresh_toke
     show GRefreshTokenReq;
 import 'package:fitness_app/global/graphql/auth/__generated__/query_refresh_token.var.gql.dart'
     show GRefreshTokenVars;
+import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragment.data.gql.dart'
+    show GCategoryData;
+import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragment.req.gql.dart'
+    show GCategoryReq;
+import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragment.var.gql.dart'
+    show GCategoryVars;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_program_fragment.data.gql.dart'
+    show GIProgramData;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_program_fragment.req.gql.dart'
+    show GIProgramReq;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_program_fragment.var.gql.dart'
+    show GIProgramVars;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.data.gql.dart'
     show GInboxData, GInboxData_user;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.req.gql.dart'
@@ -58,6 +70,22 @@ import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upser
     show GUpsertInboxReq;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_inbox.var.gql.dart'
     show GUpsertInboxVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.data.gql.dart'
+    show
+        GGetCateforiesData,
+        GGetCateforiesData_getCategories,
+        GGetCateforiesData_getCategories_items,
+        GGetCateforiesData_getCategories_meta;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.req.gql.dart'
+    show GGetCateforiesReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.var.gql.dart'
+    show GGetCateforiesVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_category.data.gql.dart'
+    show GGetCategoryData, GGetCategoryData_getCategory;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_category.req.gql.dart'
+    show GGetCategoryReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_category.var.gql.dart'
+    show GGetCategoryVars;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_inbox.data.gql.dart'
     show GGetInboxData, GGetInboxData_getInbox, GGetInboxData_getInbox_user;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_inbox.req.gql.dart'
@@ -86,6 +114,21 @@ import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inbo
     show GGetMyInboxesReq;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.var.gql.dart'
     show GGetMyInboxesVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.data.gql.dart'
+    show GGetProgramData, GGetProgramData_getProgram;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.req.gql.dart'
+    show GGetProgramReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.var.gql.dart'
+    show GGetProgramVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.data.gql.dart'
+    show
+        GGetProgramsData,
+        GGetProgramsData_getPrograms,
+        GGetProgramsData_getPrograms_items;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart'
+    show GGetProgramsReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.var.gql.dart'
+    show GGetProgramsVars;
 import 'package:gql_code_builder/src/serializers/operation_serializer.dart'
     show OperationSerializer;
 
@@ -95,8 +138,21 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   ..add(OperationSerializer())
   ..addPlugin(StandardJsonPlugin());
 @SerializersFor([
+  GCategoryData,
+  GCategoryReq,
+  GCategoryVars,
   GFILTER_OPERATOR,
   GFilterDto,
+  GGetCateforiesData,
+  GGetCateforiesData_getCategories,
+  GGetCateforiesData_getCategories_items,
+  GGetCateforiesData_getCategories_meta,
+  GGetCateforiesReq,
+  GGetCateforiesVars,
+  GGetCategoryData,
+  GGetCategoryData_getCategory,
+  GGetCategoryReq,
+  GGetCategoryVars,
   GGetInboxData,
   GGetInboxData_getInbox,
   GGetInboxData_getInbox_user,
@@ -116,6 +172,18 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GGetMyInboxesData_getMyInboxes_meta,
   GGetMyInboxesReq,
   GGetMyInboxesVars,
+  GGetProgramData,
+  GGetProgramData_getProgram,
+  GGetProgramReq,
+  GGetProgramVars,
+  GGetProgramsData,
+  GGetProgramsData_getPrograms,
+  GGetProgramsData_getPrograms_items,
+  GGetProgramsReq,
+  GGetProgramsVars,
+  GIProgramData,
+  GIProgramReq,
+  GIProgramVars,
   GInboxData,
   GInboxData_user,
   GInboxReq,

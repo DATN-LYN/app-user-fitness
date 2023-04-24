@@ -2,11 +2,11 @@ import 'package:dart_openai/openai.dart';
 import 'package:ferry/ferry.dart';
 import 'package:fitness_app/global/gen/assets.gen.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.data.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
-import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/chat/widgets/message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,10 +15,10 @@ import 'package:touchable_opacity/touchable_opacity.dart';
 
 import '../../../../global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart';
 import '../../../../global/providers/auth_provider.dart';
-import '../../../../global/utils/constants.dart';
 import '../../../../global/utils/dialogs.dart';
 import '../../../../global/widgets/fitness_empty.dart';
 import '../../../../global/widgets/fitness_error.dart';
+import 'widgets/shimmer_inbox.dart';
 
 final messageResponseProvider = StateProvider<List<String>>((ref) => []);
 
@@ -35,11 +35,11 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
   late var getMyInboxesReq = GGetMyInboxesReq(
     (b) => b
       ..requestId = '@getMyInboxesRequestId'
-      ..fetchPolicy = FetchPolicy.CacheAndNetwork
       ..vars.queryParams.page = 1
-      ..vars.queryParams.limit = Constants.defaultLimit
-      ..vars.queryParams.orderBy = 'Remote.createdAt:DESC',
+      ..vars.queryParams.limit = 22
+      ..vars.queryParams.orderBy = 'Inbox.createdAt:DESC',
   );
+  final scrollController = ScrollController();
 
   @override
   void initState() {
@@ -48,18 +48,27 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
 
   void refreshHandler() {
     setState(
-      () => getMyInboxesReq = getMyInboxesReq.rebuild(
-        (b) => b
-          ..vars.queryParams.page = 1
-          ..updateResult = ((previous, result) => result),
-      ),
+      () => getMyInboxesReq = getMyInboxesReq.rebuild((b) => b
+          // (b) => b
+          //   ..vars.queryParams.page = 1
+          //   ..updateResult = ((previous, result) => result),
+          ),
     );
   }
 
   void chat(String message) async {
-    ref.read(messageResponseProvider.notifier).update((state) => []);
-    setState(() => loading = true);
-    textController.text = '';
+    if (message.isNotEmpty) {
+      ref.read(messageResponseProvider.notifier).update((state) => []);
+      setState(() => loading = true);
+      await upsertChat(
+        message: textController.text.trim(),
+        isSender: true,
+      );
+      onCallOpenAI(message);
+    }
+  }
+
+  void onCallOpenAI(String message) {
     final stream = OpenAI.instance.chat.createStream(
       model: "gpt-3.5-turbo",
       messages: [
@@ -71,35 +80,59 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
     );
 
     stream.listen((event) {
-      setState(() {
-        loading = false;
-      });
       ref.watch(messageResponseProvider.notifier).update(
             (state) => [
               ...state,
               event.choices.first.delta.content ?? '',
             ],
           );
-    }).onDone(
-      () async {
-        final user = context.read<AuthProvider>().user;
-        var req = GUpsertInboxReq(
-          (b) => b
-            ..vars.input.isSender = false
-            ..vars.input.message = ref.read(messageResponseProvider).join('')
-            ..vars.input.userId =
-                user?.id ?? '4b216e9d-9af8-4e13-bde7-df1b8cef02b5',
+    }).onDone(() async {
+      await upsertChat(
+        message: ref.read(messageResponseProvider).join(''),
+        isSender: false,
+      );
+      setState(() {
+        loading = false;
+        getMyInboxesReq = getMyInboxesReq.rebuild(
+          (b) => b..vars.queryParams.page = 1,
         );
-        final response = await client.request(req).first;
-        if (response.hasErrors) {
-          print(response.linkException);
-          if (mounted) {
-            DialogUtils.showError(context: context, response: response);
-          }
-        }
-      },
-    );
-    setState(() => loading = false);
+      });
+    });
+  }
+
+  Future upsertChat({
+    required String message,
+    required bool isSender,
+  }) async {
+    final user = context.read<AuthProvider>().user;
+    var req = GUpsertInboxReq((b) => b
+          ..fetchPolicy = FetchPolicy.CacheAndNetwork
+          ..vars.input.isSender = isSender
+          ..vars.input.message = message
+          ..vars.input.userId =
+              user?.id ?? '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
+        // ..updateCacheHandlerKey = UpsertInboxHandler.key
+        // ..updateCacheHandlerContext = {
+        //   "inboxData": GGetMyInboxesData_getMyInboxes_items(
+        //     (b) => b
+        //       ..isSender = isSen der
+        //       ..message = message
+        //       ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5',
+        //   ),
+        // },
+        );
+    final response = await client.request(req).first;
+    if (response.hasErrors) {
+      if (mounted) {
+        DialogUtils.showError(context: context, response: response);
+      }
+    }
+
+    // refreshHandler();
+  }
+
+  void _scrollDown() {
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
   }
 
   @override
@@ -114,7 +147,7 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
       ),
       body: InfinityList(
         client: client,
-        request: GGetMyInboxesReq(),
+        request: getMyInboxesReq,
         loadMoreRequest: (response) {
           final data = response?.data?.getMyInboxes;
           if (data != null &&
@@ -129,7 +162,9 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
                         ..meta = (result?.getMyInboxes.meta ??
                                 previous.getMyInboxes.meta)!
                             .toBuilder()
-                        ..items.addAll(result?.getMyInboxes.items ?? []),
+                        ..items.addAll(
+                          result?.getMyInboxes.items ?? [],
+                        ),
                     ) ??
                     result,
             );
@@ -154,20 +189,13 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
             );
           }
 
-          if (response?.loading ?? false) {
-            // WidgetsBinding.instance.addPostFrameCallback((_) {
-            //   setState(() {
-            //     loading = true;
-            //   });
-            // });
+          if (response?.loading == true) {
             return const ShimmerInbox();
           }
 
           if (response?.hasErrors == true || response?.data == null) {
             return FitnessError(response: response);
           }
-
-          print(response?.data?.getMyInboxes);
 
           final data = response!.data!.getMyInboxes;
           final hasMoreData = data.meta!.currentPage!.toDouble() <
@@ -185,23 +213,47 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
           }
 
           return ListView.separated(
-            itemCount: inboxes!.length + (hasMoreData ? 1 : 0),
+            itemCount: inboxes!.length + 2,
+            reverse: true,
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             itemBuilder: (_, index) {
-              final item = inboxes[index];
-
-              if (index == inboxes.length) {
-                return Container(
-                  height: 64,
-                  alignment: Alignment.center,
-                  child: const CircularProgressIndicator(),
-                );
+              if (index == 1) {
+                if (loading) {
+                  return MessageWidget(
+                    item: GGetMyInboxesData_getMyInboxes_items(
+                      (b) => b
+                        ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
+                        ..isSender = true
+                        ..message = textController.text,
+                    ),
+                  );
+                } else {
+                  return const SizedBox();
+                }
               }
+              if (index == 0) {
+                if (loading) {
+                  return MessageWidget(
+                    item: GGetMyInboxesData_getMyInboxes_items(
+                      (b) => b
+                        ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
+                        ..isSender = false
+                        ..message = ref.watch(messageResponseProvider).join(''),
+                    ),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              }
+
+              final item = inboxes[index - 2];
+
               return MessageWidget(
                 item: item,
               );
             },
             separatorBuilder: (_, __) => const SizedBox(height: 12),
+            controller: scrollController,
           );
         },
       ),
@@ -231,7 +283,7 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
             ),
             const SizedBox(width: 12),
             TouchableOpacity(
-              onTap: () => chat(textController.text),
+              onTap: !loading ? () => chat(textController.text) : null,
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -243,160 +295,6 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
                   color: AppColors.grey1,
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ShimmerInbox extends StatelessWidget {
-  const ShimmerInbox({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ShimmerWrapper(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  margin: const EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-                Container(
-                  width: 200,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  margin: const EdgeInsets.only(left: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  margin: const EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-                Container(
-                  width: 200,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  margin: const EdgeInsets.only(left: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  margin: const EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-                Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 200,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  margin: const EdgeInsets.only(left: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-              ],
             ),
           ],
         ),

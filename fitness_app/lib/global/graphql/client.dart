@@ -1,11 +1,12 @@
 import 'package:ferry/ferry.dart';
 import 'package:ferry_hive_store/ferry_hive_store.dart';
-import 'package:fitness_app/global/graphql/auth/__generated__/query_refresh_token.req.gql.dart';
+import 'package:fitness_app/global/graphql/cache_handler/upsert_inbox_cache_hanlder.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../locator.dart';
 import '../services/hive_service.dart';
 import '../utils/constants.dart';
+import 'auth/__generated__/query_refresh_token.req.gql.dart';
 import 'http_auth_link.dart';
 
 class AppClient {
@@ -57,8 +58,12 @@ class AppClient {
     client = Client(
       link: link,
       cache: cache,
+      defaultFetchPolicies: {
+        OperationType.query: FetchPolicy.CacheAndNetwork,
+        OperationType.mutation: FetchPolicy.NoCache,
+      },
       updateCacheHandlers: {
-        // ToggleFavoriteServiceHandler.key: ToggleFavoriteServiceHandler.handler,
+        UpsertInboxHandler.key: UpsertInboxHandler.handler,
         // ToggleFavoriteLocationHandler.key:
         //     ToggleFavoriteLocationHandler.handler,
         // MarkReadNotificationHandler.key: MarkReadNotificationHandler.handler,

@@ -44,7 +44,6 @@ class FitnessError extends StatelessWidget {
                     : response?.graphqlErrors?.isNotEmpty ?? false
                         ? response?.graphqlErrors?.first.message ?? ''
                         : response?.linkException.toString() ?? '',
-                maxLines: 5,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 16,
