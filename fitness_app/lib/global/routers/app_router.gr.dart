@@ -59,10 +59,10 @@ class _$AppRouter extends RootStackRouter {
         child: const ProgramDetailPage(),
       );
     },
-    TypeDetailRoute.name: (routeData) {
+    CategoryDetailRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const TypeDetailPage(),
+        child: const CategoryDetailPage(),
       );
     },
     ExerciseDetailRoute.name: (routeData) {
@@ -169,8 +169,8 @@ class _$AppRouter extends RootStackRouter {
           path: '/program-detail-page',
         ),
         RouteConfig(
-          TypeDetailRoute.name,
-          path: '/type-detail-page',
+          CategoryDetailRoute.name,
+          path: '/category-detail-page',
         ),
         RouteConfig(
           ExerciseDetailRoute.name,
@@ -273,15 +273,15 @@ class ProgramDetailRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [TypeDetailPage]
-class TypeDetailRoute extends PageRouteInfo<void> {
-  const TypeDetailRoute()
+/// [CategoryDetailPage]
+class CategoryDetailRoute extends PageRouteInfo<void> {
+  const CategoryDetailRoute()
       : super(
-          TypeDetailRoute.name,
-          path: '/type-detail-page',
+          CategoryDetailRoute.name,
+          path: '/category-detail-page',
         );
 
-  static const String name = 'TypeDetailRoute';
+  static const String name = 'CategoryDetailRoute';
 }
 
 /// generated route for

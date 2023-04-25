@@ -1,36 +1,37 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
-import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:provider/provider.dart';
 
 import '../../global/gen/assets.gen.dart';
 import '../../global/gen/i18n.dart';
 import '../../global/graphql/auth/__generated__/query_login.data.gql.dart';
 import '../../global/graphql/auth/__generated__/query_login.req.gql.dart';
+import '../../global/graphql/client.dart';
 import '../../global/providers/auth_provider.dart';
 import '../../global/themes/app_colors.dart';
 import '../../global/utils/dialogs.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 import '../../global/widgets/label.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with ClientMixin {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final formKey = GlobalKey<FormBuilderState>();
   bool passwordObscure = true;
   bool isLoading = false;
 
   void login() async {
+    final client = ref.read(appClientProvider);
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (formKey.currentState!.saveAndValidate()) {
@@ -55,7 +56,7 @@ class _LoginPageState extends State<LoginPage> with ClientMixin {
   }
 
   void handleLoginSuccess(GLoginData? response) async {
-    await context.read<AuthProvider>().login(response!);
+    ref.watch(authProvider.notifier).logIn(response!);
 
     if (!mounted) return;
 

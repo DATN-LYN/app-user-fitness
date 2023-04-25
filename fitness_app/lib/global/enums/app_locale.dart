@@ -20,6 +20,7 @@ enum AppLocale {
   }
 
   Locale toLocale() {
+    return const Locale('en', 'US');
     switch (this) {
       case enUs:
         return const Locale('en', 'US');

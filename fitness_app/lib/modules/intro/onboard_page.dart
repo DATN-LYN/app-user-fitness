@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/assets.gen.dart';
-import 'package:fitness_app/global/utils/client_mixin.dart';
+import 'package:fitness_app/global/providers/app_settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../global/gen/i18n.dart';
@@ -9,14 +10,14 @@ import '../../global/routers/app_router.dart';
 import '../../global/themes/app_colors.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 
-class OnBoardPage extends StatefulWidget {
+class OnBoardPage extends ConsumerStatefulWidget {
   const OnBoardPage({super.key});
 
   @override
-  State<OnBoardPage> createState() => _OnBoardPageState();
+  ConsumerState<OnBoardPage> createState() => _OnBoardPageState();
 }
 
-class _OnBoardPageState extends State<OnBoardPage> with ClientMixin {
+class _OnBoardPageState extends ConsumerState<OnBoardPage> {
   final pageController = PageController();
   String btnText = '';
 
@@ -30,7 +31,7 @@ class _OnBoardPageState extends State<OnBoardPage> with ClientMixin {
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
     btnText = i18n.button_Next;
-
+    final appSettings = ref.watch(appSettingProvider.notifier);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -71,7 +72,7 @@ class _OnBoardPageState extends State<OnBoardPage> with ClientMixin {
                         setState(() {
                           btnText = i18n.button_Done;
                         });
-                        await hiveService.saveFirstLaunch();
+                        appSettings.saveFirstLaunch();
                         if (mounted) {
                           AutoRouter.of(context).replaceAll(
                             [const LoginRoute()],

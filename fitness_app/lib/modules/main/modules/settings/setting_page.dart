@@ -1,46 +1,50 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.req.gql.dart';
+import 'package:fitness_app/global/graphql/client.dart';
 import 'package:fitness_app/global/providers/app_settings_provider.dart';
-import 'package:fitness_app/global/utils/client_mixin.dart';
+import 'package:fitness_app/global/providers/auth_provider.dart';
+import 'package:fitness_app/global/providers/me_provider.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/change_password_bottom_sheet.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/setting_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../global/enums/app_locale.dart';
 import '../../../../global/gen/i18n.dart';
-import '../../../../global/models/hive/user.dart';
-import '../../../../global/providers/auth_provider.dart';
 import '../../../../global/routers/app_router.dart';
 import '../../../../global/utils/constants.dart';
 import '../../../../global/widgets/avatar.dart';
 import '../../../../global/widgets/dialogs/confirmation_dialog.dart';
 import '../../../../global/widgets/dialogs/radio_selector_dialog.dart';
 
-class SettingPage extends StatefulWidget {
+class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
+  ConsumerState<SettingPage> createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> with ClientMixin {
+class _SettingPageState extends ConsumerState<SettingPage> {
   bool isLoading = false;
-  void changeLanguage(AppSettingsProvider provider, I18n i18n) async {
+  void changeLanguage() async {
+    final i18n = I18n.of(context)!;
+
+    final state = ref.read(appSettingProvider);
     final data = await showDialog(
       context: context,
       builder: (_) => RadioSelectorDialog(
-        currentValue: provider.appSettings.locale.getLabel(i18n),
+        currentValue: state.locale.getLabel(i18n),
         itemLabelBuilder: (item) => item,
         title: i18n.setting_Language,
         values: i18n.language,
       ),
     );
-    if (data != null && data != provider.appSettings.locale.getLabel(i18n)) {
+    if (data != null && data != state.locale.getLabel(i18n)) {
       if (mounted) {
+        final provider = ref.read(appSettingProvider.notifier);
         if (data == i18n.language[1]) {
           provider.changeLocale(AppLocale.viVN);
         } else {
@@ -66,8 +70,11 @@ class _SettingPageState extends State<SettingPage> with ClientMixin {
     if (data != null) {}
   }
 
-  void logOut(User? user) {
+  void logOut() {
     final i18n = I18n.of(context)!;
+    final user = ref.read(meProvider)?.user;
+    final client = ref.read(appClientProvider);
+
     showDialog(
       context: context,
       builder: (context) => ConfirmationDialog(
@@ -84,7 +91,7 @@ class _SettingPageState extends State<SettingPage> with ClientMixin {
 
             if (response.data?.logout.success == true) {
               if (mounted) {
-                context.read<AuthProvider>().logout();
+                ref.read(authProvider.notifier).logOut();
                 Navigator.pop(context);
                 AutoRouter.of(context).push(const LoginRoute());
               }
@@ -117,7 +124,7 @@ class _SettingPageState extends State<SettingPage> with ClientMixin {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
-    var user = context.watch<AuthProvider>().user;
+    var user = ref.watch(meProvider);
     bool isLogedIn = user?.id != null;
 
     return Scaffold(
@@ -160,14 +167,11 @@ class _SettingPageState extends State<SettingPage> with ClientMixin {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Consumer<AppSettingsProvider>(
-                    builder: (context, provider, child) {
-                  return SettingTile(
-                    icon: Icons.language,
-                    title: i18n.setting_Language,
-                    onTap: () => changeLanguage(provider, i18n),
-                  );
-                }),
+                SettingTile(
+                  icon: Icons.language,
+                  title: i18n.setting_Language,
+                  onTap: () => changeLanguage(),
+                ),
                 const Divider(height: 12),
                 SettingTile(
                   icon: Icons.share,
@@ -242,7 +246,7 @@ class _SettingPageState extends State<SettingPage> with ClientMixin {
                   SettingTile(
                     icon: Icons.logout,
                     title: i18n.setting_Logout,
-                    onTap: () => logOut(user),
+                    onTap: () => logOut(),
                   ),
               ],
             ),

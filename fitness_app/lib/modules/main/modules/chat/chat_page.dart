@@ -1,26 +1,26 @@
 import 'package:dart_openai/openai.dart';
 import 'package:ferry/ferry.dart';
-import 'package:fitness_app/global/gen/assets.gen.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
-import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.data.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.req.gql.dart';
-import 'package:fitness_app/global/themes/app_colors.dart';
-import 'package:fitness_app/global/utils/client_mixin.dart';
-import 'package:fitness_app/global/widgets/infinity_list.dart';
-import 'package:fitness_app/modules/main/modules/chat/widgets/message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
+import '../../../../global/gen/assets.gen.dart';
+import '../../../../global/graphql/client.dart';
 import '../../../../global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart';
-import '../../../../global/providers/auth_provider.dart';
+import '../../../../global/graphql/query/__generated__/query_get_my_inboxes.data.gql.dart';
+import '../../../../global/themes/app_colors.dart';
 import '../../../../global/utils/dialogs.dart';
 import '../../../../global/widgets/fitness_empty.dart';
 import '../../../../global/widgets/fitness_error.dart';
+import '../../../../global/widgets/infinity_list.dart';
+import 'widgets/message_widget.dart';
 import 'widgets/shimmer_inbox.dart';
 
 final messageResponseProvider = StateProvider<List<String>>((ref) => []);
+
+// final messageSendProvider = StateProvider<String>((ref) => '');
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({super.key});
@@ -29,7 +29,7 @@ class ChatPage extends ConsumerStatefulWidget {
   ConsumerState<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
+class _ChatPageState extends ConsumerState<ChatPage> {
   final textController = TextEditingController();
   bool loading = false;
   late var getMyInboxesReq = GGetMyInboxesReq(
@@ -48,27 +48,29 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
 
   void refreshHandler() {
     setState(
-      () => getMyInboxesReq = getMyInboxesReq.rebuild((b) => b
-          // (b) => b
-          //   ..vars.queryParams.page = 1
-          //   ..updateResult = ((previous, result) => result),
-          ),
+      () => getMyInboxesReq = getMyInboxesReq.rebuild(
+        (b) => b
+          ..vars.queryParams.page = 1
+          ..updateResult = ((previous, result) => result),
+      ),
     );
   }
 
-  void chat(String message) async {
+  void chat() async {
+    final message = textController.text.trim();
     if (message.isNotEmpty) {
-      ref.read(messageResponseProvider.notifier).update((state) => []);
       setState(() => loading = true);
+      ref.read(messageResponseProvider.notifier).update((state) => []);
       await upsertChat(
-        message: textController.text.trim(),
+        message: message,
         isSender: true,
       );
+      textController.clear();
       onCallOpenAI(message);
     }
   }
 
-  void onCallOpenAI(String message) {
+  Future onCallOpenAI(String message) async {
     final stream = OpenAI.instance.chat.createStream(
       model: "gpt-3.5-turbo",
       messages: [
@@ -78,7 +80,6 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
         ),
       ],
     );
-
     stream.listen((event) {
       ref.watch(messageResponseProvider.notifier).update(
             (state) => [
@@ -86,17 +87,27 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
               event.choices.first.delta.content ?? '',
             ],
           );
-    }).onDone(() async {
+    }, onDone: () async {
       await upsertChat(
         message: ref.read(messageResponseProvider).join(''),
         isSender: false,
       );
+      final client = ref.watch(appClientProvider);
+
       setState(() {
-        loading = false;
         getMyInboxesReq = getMyInboxesReq.rebuild(
-          (b) => b..vars.queryParams.page = 1,
+          (b) => b
+            ..vars.queryParams.page = 1
+            ..updateResult = ((previous, result) => result),
         );
+        client.requestController.add(getMyInboxesReq);
+        loading = false;
       });
+    }, onError: (err) {
+      print(err);
+      setState(() => loading = false);
+
+      return;
     });
   }
 
@@ -104,31 +115,22 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
     required String message,
     required bool isSender,
   }) async {
-    final user = context.read<AuthProvider>().user;
-    var req = GUpsertInboxReq((b) => b
-          ..fetchPolicy = FetchPolicy.CacheAndNetwork
-          ..vars.input.isSender = isSender
-          ..vars.input.message = message
-          ..vars.input.userId =
-              user?.id ?? '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
-        // ..updateCacheHandlerKey = UpsertInboxHandler.key
-        // ..updateCacheHandlerContext = {
-        //   "inboxData": GGetMyInboxesData_getMyInboxes_items(
-        //     (b) => b
-        //       ..isSender = isSen der
-        //       ..message = message
-        //       ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5',
-        //   ),
-        // },
-        );
+    final client = ref.read(appClientProvider);
+
+    var req = GUpsertInboxReq(
+      (b) => b
+        ..fetchPolicy = FetchPolicy.CacheAndNetwork
+        ..vars.input.isSender = isSender
+        ..vars.input.message = message
+        ..vars.input.userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5',
+    );
     final response = await client.request(req).first;
+
     if (response.hasErrors) {
       if (mounted) {
         DialogUtils.showError(context: context, response: response);
       }
     }
-
-    // refreshHandler();
   }
 
   void _scrollDown() {
@@ -138,6 +140,7 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+    final client = ref.watch(appClientProvider);
 
     return Scaffold(
       backgroundColor: AppColors.grey6.withOpacity(0.1),
@@ -190,6 +193,7 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
           }
 
           if (response?.loading == true) {
+            print('LOADING....');
             return const ShimmerInbox();
           }
 
@@ -219,27 +223,34 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
             itemBuilder: (_, index) {
               if (index == 1) {
                 if (loading) {
+                  final message = textController.text;
                   return MessageWidget(
                     item: GGetMyInboxesData_getMyInboxes_items(
                       (b) => b
                         ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
                         ..isSender = true
-                        ..message = textController.text,
+                        ..message = message,
                     ),
                   );
                 } else {
                   return const SizedBox();
                 }
               }
+
               if (index == 0) {
                 if (loading) {
-                  return MessageWidget(
-                    item: GGetMyInboxesData_getMyInboxes_items(
-                      (b) => b
-                        ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
-                        ..isSender = false
-                        ..message = ref.watch(messageResponseProvider).join(''),
-                    ),
+                  return Consumer(
+                    builder: (context, ref, child) {
+                      return MessageWidget(
+                        item: GGetMyInboxesData_getMyInboxes_items(
+                          (b) => b
+                            ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
+                            ..isSender = false
+                            ..message =
+                                ref.watch(messageResponseProvider).join(''),
+                        ),
+                      );
+                    },
                   );
                 } else {
                   return const SizedBox();
@@ -283,7 +294,7 @@ class _ChatPageState extends ConsumerState<ChatPage> with ClientMixin {
             ),
             const SizedBox(width: 12),
             TouchableOpacity(
-              onTap: !loading ? () => chat(textController.text) : null,
+              onTap: !loading ? () => chat() : null,
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'user.dart';
+import '../../models/hive/user.dart';
 
 part 'user_credentials.freezed.dart';
 part 'user_credentials.g.dart';

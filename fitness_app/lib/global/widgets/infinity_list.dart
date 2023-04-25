@@ -47,11 +47,9 @@ class _InfinityListState<TData, TVars>
 
   @override
   void didUpdateWidget(covariant InfinityList<TData, TVars> oldWidget) {
-    print('1212321');
     if (!identical(request, widget.request)) {
       final oldRequestId = request.requestId;
       request = widget.request;
-      print('jdjdjdjdjdjdj');
 
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         setState(() {
@@ -63,10 +61,8 @@ class _InfinityListState<TData, TVars>
               });
             });
           } else {
-            print('requestController');
             widget.client.requestController.add(widget.request);
           }
-          key = GlobalKey();
         });
       });
     }

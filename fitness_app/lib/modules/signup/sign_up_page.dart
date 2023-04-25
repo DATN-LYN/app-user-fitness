@@ -1,26 +1,27 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../global/gen/i18n.dart';
 import '../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../global/graphql/auth/__generated__/mutation_register.req.gql.dart';
+import '../../global/graphql/client.dart';
 import '../../global/themes/app_colors.dart';
 import '../../global/utils/dialogs.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 import '../../global/widgets/label.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  ConsumerState<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> with ClientMixin {
+class _SignUpPageState extends ConsumerState<SignUpPage> {
   final formKey = GlobalKey<FormBuilderState>();
   bool isLoading = false;
   bool passwordObscure = true;
@@ -28,6 +29,8 @@ class _SignUpPageState extends State<SignUpPage> with ClientMixin {
   final focusConfirmPasswordNode = FocusNode();
 
   void signUp() async {
+    final client = ref.read(appClientProvider);
+
     FocusManager.instance.primaryFocus?.unfocus();
     if (formKey.currentState!.saveAndValidate()) {
       setState(() => isLoading = true);

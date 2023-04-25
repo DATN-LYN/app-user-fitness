@@ -3,22 +3,20 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:ferry/ferry.dart';
+import 'package:fitness_app/global/providers/auth_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gql_error_link/gql_error_link.dart';
 import 'package:gql_exec/gql_exec.dart';
 import 'package:gql_http_link/gql_http_link.dart';
 import 'package:gql_link/gql_link.dart';
 import 'package:gql_transform_link/gql_transform_link.dart';
 
-import '../../locator.dart';
-import '../enums/app_locale.dart';
-import '../providers/auth_provider.dart';
-import '../services/hive_service.dart';
-
 class HttpAuthLink extends Link {
   HttpAuthLink({
     required this.getToken,
     required this.getNewToken,
     required this.graphQLEndpoint,
+    required this.ref,
   }) {
     _link = Link.from([
       ErrorLink(
@@ -28,6 +26,8 @@ class HttpAuthLink extends Link {
       TransformLink(requestTransformer: transformRequest),
     ]);
   }
+
+  final Ref ref;
 
   final String graphQLEndpoint;
   final String Function() getToken;
@@ -61,7 +61,7 @@ class HttpAuthLink extends Link {
       if (statusCode == 400 &&
           (messageCode == 'INVALID_REFRESH_TOKEN' ||
               messageCode == 'REFRESH_TOKEN_EXPIRE')) {
-        await locator.get<AuthProvider>().logout();
+        ref.watch(authProvider.notifier).logOut();
         //locator.get<EventBus>().fire(const LoadHomeListLocationBusEvent());
       }
     } catch (_) {}
@@ -110,11 +110,7 @@ class HttpAuthLink extends Link {
           HttpLink(
             graphQLEndpoint,
             defaultHeaders: {
-              'Accept-Language':
-                  locator.get<HiveService>().getAppSettings().locale ==
-                          AppLocale.viVN
-                      ? 'vi'
-                      : 'en',
+              'Accept-Language': 'en',
               'appdevice': Platform.operatingSystem.toUpperCase(),
               'appversion': '1.0.0',
             },

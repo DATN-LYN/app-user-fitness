@@ -1,37 +1,57 @@
-import 'package:flutter/cupertino.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:fitness_app/global/providers/user_credential_provider.dart';
+import 'package:fitness_app/global/utils/riverpod/app_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../locator.dart';
+import '../data/models/user_credentials.dart';
 import '../graphql/auth/__generated__/query_login.data.gql.dart';
-import '../models/hive/user.dart';
-import '../models/hive/user_credentials.dart';
-import '../services/hive_service.dart';
-import '../utils/constants.dart';
 
-class AuthProvider extends ChangeNotifier {
-  AuthProvider() {
-    _credentials = _hiveService.getUserCredentials();
-  }
+enum AuthProviderLoading {
+  logIn,
+  logOut,
+}
 
-  final _hiveService = locator.get<HiveService>();
-  late UserCredentials _credentials;
+final authProvider =
+    StateNotifierProvider<AuthNotifier, AppState<UserCredentials>>(
+  (ref) {
+    return AuthNotifier(
+      ref: ref,
+      userCredentialProvider: ref.watch(userCredentialProvider),
+    );
+  },
+);
 
-  bool get isAuth => _credentials.accessToken != null;
+class AuthNotifier extends StateNotifier<AppState<UserCredentials>> {
+  AuthNotifier({
+    required this.ref,
+    required this.userCredentialProvider,
+  }) : super(AppState.initial());
 
-  User? get user => _hiveService.getUserCredentials().user;
+  final Ref ref;
+  final UserCredential userCredentialProvider;
 
-  Future login(GLoginData data) async {
-    await _hiveService.saveUserCredentials(
+  //   void getUser(UserCredentials user) {
+  //   state = AppState.loading(AuthProviderLoading.getUser.name);
+  //   if (user.accessToken != null) {
+  //     authRepository.getUser(user).then(
+  //           (either) => either.fold(
+  //             (l) => state = AppState.error(l),
+  //             (r) => state = AppState.data(r),
+  //           ),
+  //         );
+  //   }
+  // }
+
+  void logIn(GLoginData data) {
+    state = AppState.loading(AuthProviderLoading.logIn.name);
+    userCredentialProvider.saveUserCredential(
       UserCredentials.fromJson(data.login.toJson()),
     );
-    _credentials = _hiveService.getUserCredentials();
-    notifyListeners();
+    state = AppState.data(userCredentialProvider.getUserCredential());
   }
 
-  Future logout() async {
-    await _hiveService.saveUserCredentials(UserCredentials());
-    _credentials = _hiveService.getUserCredentials();
-    Hive.box(Constants.hiveGraphqlBox).clear();
-    notifyListeners();
+  void logOut() {
+    state = AppState.loading(AuthProviderLoading.logOut.name);
+    userCredentialProvider.saveUserCredential(UserCredentials());
+    state = AppState.data(userCredentialProvider.getUserCredential());
   }
 }

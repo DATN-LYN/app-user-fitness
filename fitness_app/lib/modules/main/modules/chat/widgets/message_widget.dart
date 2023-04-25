@@ -50,7 +50,7 @@ class MessageWidget extends StatelessWidget {
                         height: 20,
                         child: LoadingIndicator(
                           indicatorType: Indicator.ballPulse,
-                          colors: [Colors.black],
+                          colors: [AppColors.primaryBold],
                           strokeWidth: 2,
                         ),
                       )

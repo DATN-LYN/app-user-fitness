@@ -5,8 +5,6 @@ import 'package:fitness_app/modules/main/modules/home/widgets/workout_programs.d
 import 'package:fitness_app/modules/main/modules/home/widgets/workout_types.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../global/utils/client_mixin.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -14,7 +12,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with ClientMixin {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -22,7 +22,7 @@ class _WorkoutTypeTileState extends State<WorkoutTypeTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.pushRoute(const TypeDetailRoute()),
+      onTap: () => context.pushRoute(const CategoryDetailRoute()),
       child: Column(
         children: [
           Container(
