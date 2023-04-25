@@ -32,17 +32,17 @@ class _SettingPageState extends ConsumerState<SettingPage> {
   void changeLanguage() async {
     final i18n = I18n.of(context)!;
 
-    final state = ref.read(appSettingProvider);
+    final currentLocale = ref.watch(appSettingProvider).locale.getLabel(i18n);
     final data = await showDialog(
       context: context,
       builder: (_) => RadioSelectorDialog(
-        currentValue: state.locale.getLabel(i18n),
+        currentValue: currentLocale,
         itemLabelBuilder: (item) => item,
         title: i18n.setting_Language,
         values: i18n.language,
       ),
     );
-    if (data != null && data != state.locale.getLabel(i18n)) {
+    if (data != null && data != currentLocale) {
       if (mounted) {
         final provider = ref.read(appSettingProvider.notifier);
         if (data == i18n.language[1]) {
@@ -170,7 +170,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 SettingTile(
                   icon: Icons.language,
                   title: i18n.setting_Language,
-                  onTap: () => changeLanguage(),
+                  onTap: changeLanguage,
                 ),
                 const Divider(height: 12),
                 SettingTile(

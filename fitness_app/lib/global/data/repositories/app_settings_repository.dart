@@ -89,7 +89,7 @@ class _AppSettingRepositoryImpl extends BaseRepository
               r.copyWith(locale: appLocale).toJson(),
             ),
           );
-          return r;
+          return r.copyWith(locale: appLocale);
         },
       );
     });

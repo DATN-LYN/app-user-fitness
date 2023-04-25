@@ -10,7 +10,7 @@ import '../gen/i18n.dart';
 final appSettingProvider =
     StateNotifierProvider<AppSettingsProvider, AppSettings>(
   (ref) => AppSettingsProvider(
-    ref.read(appSettingsRepositoryProvider),
+    ref.watch(appSettingsRepositoryProvider),
   ),
 );
 
