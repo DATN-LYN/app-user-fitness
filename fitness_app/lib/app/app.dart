@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
 
 import '../global/gen/i18n.dart';
+import '../global/providers/app_settings_provider.dart';
 import '../global/routers/app_router.dart';
 import '../global/themes/app_themes.dart';
 
@@ -31,7 +32,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: I18n.delegate.supportedLocales,
-      // locale: ref.watch(appSettingProvider).locale.toLocale(),
+      locale: ref.watch(appSettingProvider).locale.toLocale(),
       localeResolutionCallback: I18n.delegate.resolution(
         fallback: const Locale('en', 'US'),
       ),
