@@ -43,9 +43,8 @@ class MessageWidget extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 borderRadius: BorderRadius.circular(8),
                 color: isSender ? AppColors.white : AppColors.primarySoft,
-                child: loading == true ||
-                        item?.message?.isEmpty == true ||
-                        item == null
+                child: (loading == true || item?.message?.isEmpty == true) &&
+                        !isSender
                     ? const SizedBox(
                         height: 20,
                         child: LoadingIndicator(

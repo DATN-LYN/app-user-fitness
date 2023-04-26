@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dart_openai/openai.dart';
 import 'package:ferry/ferry.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
@@ -41,11 +43,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   );
   final scrollController = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void refreshHandler() {
     setState(
       () => getMyInboxesReq = getMyInboxesReq.rebuild(
@@ -59,7 +56,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   void chat() async {
     final message = textController.text.trim();
     if (message.isNotEmpty) {
-      setState(() => loading = true);
       ref.read(messageResponseProvider.notifier).update((state) => []);
       await upsertChat(
         message: message,
@@ -71,44 +67,63 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 
   Future onCallOpenAI(String message) async {
-    final stream = OpenAI.instance.chat.createStream(
-      model: "gpt-3.5-turbo",
-      messages: [
-        OpenAIChatCompletionChoiceMessageModel(
-          content: message,
-          role: OpenAIChatMessageRole.user,
-        ),
-      ],
-    );
-    stream.listen((event) {
-      ref.watch(messageResponseProvider.notifier).update(
-            (state) => [
-              ...state,
-              event.choices.first.delta.content ?? '',
-            ],
-          );
-    }, onDone: () async {
-      await upsertChat(
-        message: ref.read(messageResponseProvider).join(''),
-        isSender: false,
+    try {
+      late StreamSubscription<OpenAIStreamChatCompletionModel> subscription;
+      final stream = OpenAI.instance.chat.createStream(
+        model: "gpt-3.5-turbo",
+        messages: [
+          OpenAIChatCompletionChoiceMessageModel(
+            content: message,
+            role: OpenAIChatMessageRole.user,
+          ),
+        ],
       );
-      final client = ref.watch(appClientProvider);
+      setState(() => loading = true);
 
-      setState(() {
-        getMyInboxesReq = getMyInboxesReq.rebuild(
-          (b) => b
-            ..vars.queryParams.page = 1
-            ..updateResult = ((previous, result) => result),
-        );
-        client.requestController.add(getMyInboxesReq);
-        loading = false;
-      });
-    }, onError: (err) {
-      print(err);
+      subscription = stream.listen(
+        (event) {
+          print('DATA');
+
+          ref.watch(messageResponseProvider.notifier).update(
+                (state) => [
+                  ...state,
+                  event.choices.first.delta.content ?? '',
+                ],
+              );
+        },
+        onDone: () async {
+          if (ref.read(messageResponseProvider).isEmpty) {
+            print('EMPTY');
+            Future.delayed(const Duration(seconds: 1), () {
+              subscription.cancel();
+              setState(() => loading = false);
+              return;
+            });
+          } else {
+            await upsertChat(
+              message: ref.read(messageResponseProvider).join(''),
+              isSender: false,
+            );
+            // final client = ref.watch(appClientProvider);
+            refreshHandler();
+
+            setState(() {
+              loading = false;
+            });
+          }
+        },
+        onError: (err) {
+          print('ERRRRR 1');
+          setState(() => loading = false);
+          return;
+        },
+        cancelOnError: true,
+      );
+    } catch (err) {
+      print('ERRRRR 2');
+      // subscription.cancel();
       setState(() => loading = false);
-
-      return;
-    });
+    }
   }
 
   Future upsertChat({
@@ -116,6 +131,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     required bool isSender,
   }) async {
     final client = ref.read(appClientProvider);
+    setState(() => loading = true);
 
     var req = GUpsertInboxReq(
       (b) => b
@@ -130,6 +146,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       if (mounted) {
         DialogUtils.showError(context: context, response: response);
       }
+    } else {
+      refreshHandler();
+      setState(() => loading = false);
     }
   }
 
@@ -217,25 +236,25 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           }
 
           return ListView.separated(
-            itemCount: inboxes!.length + 2,
+            itemCount: inboxes!.length + 1,
             reverse: true,
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             itemBuilder: (_, index) {
-              if (index == 1) {
-                if (loading) {
-                  final message = textController.text;
-                  return MessageWidget(
-                    item: GGetMyInboxesData_getMyInboxes_items(
-                      (b) => b
-                        ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
-                        ..isSender = true
-                        ..message = message,
-                    ),
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              }
+              // if (index == 1) {
+              //   if (loading) {
+              //     final message = textController.text;
+              //     return MessageWidget(
+              //       item: GGetMyInboxesData_getMyInboxes_items(
+              //         (b) => b
+              //           ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
+              //           ..isSender = true
+              //           ..message = message,
+              //       ),
+              //     );
+              //   } else {
+              //     return const SizedBox();
+              //   }
+              // }
 
               if (index == 0) {
                 if (loading) {
@@ -257,7 +276,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 }
               }
 
-              final item = inboxes[index - 2];
+              final item = inboxes[index - 1];
 
               return MessageWidget(
                 item: item,

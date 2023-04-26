@@ -46,12 +46,6 @@ import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragm
     show GCategoryReq;
 import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragment.var.gql.dart'
     show GCategoryVars;
-import 'package:fitness_app/global/graphql/fragment/__generated__/i_program_fragment.data.gql.dart'
-    show GIProgramData;
-import 'package:fitness_app/global/graphql/fragment/__generated__/i_program_fragment.req.gql.dart'
-    show GIProgramReq;
-import 'package:fitness_app/global/graphql/fragment/__generated__/i_program_fragment.var.gql.dart'
-    show GIProgramVars;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.data.gql.dart'
     show GInboxData, GInboxData_user;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.req.gql.dart'
@@ -64,6 +58,12 @@ import 'package:fitness_app/global/graphql/fragment/__generated__/meta_fragment.
     show GMetaReq;
 import 'package:fitness_app/global/graphql/fragment/__generated__/meta_fragment.var.gql.dart'
     show GMetaVars;
+import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart'
+    show GProgramData;
+import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.req.gql.dart'
+    show GProgramReq;
+import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.var.gql.dart'
+    show GProgramVars;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_inbox.data.gql.dart'
     show GUpsertInboxData, GUpsertInboxData_upsertInbox;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart'
@@ -124,7 +124,8 @@ import 'package:fitness_app/global/graphql/query/__generated__/query_get_program
     show
         GGetProgramsData,
         GGetProgramsData_getPrograms,
-        GGetProgramsData_getPrograms_items;
+        GGetProgramsData_getPrograms_items,
+        GGetProgramsData_getPrograms_meta;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart'
     show GGetProgramsReq;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.var.gql.dart'
@@ -179,11 +180,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GGetProgramsData,
   GGetProgramsData_getPrograms,
   GGetProgramsData_getPrograms_items,
+  GGetProgramsData_getPrograms_meta,
   GGetProgramsReq,
   GGetProgramsVars,
-  GIProgramData,
-  GIProgramReq,
-  GIProgramVars,
   GInboxData,
   GInboxData_user,
   GInboxReq,
@@ -201,6 +200,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GMetaData,
   GMetaReq,
   GMetaVars,
+  GProgramData,
+  GProgramReq,
+  GProgramVars,
   GQueryFilterDto,
   GRefreshTokenData,
   GRefreshTokenData_refreshToken,

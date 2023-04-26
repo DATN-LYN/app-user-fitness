@@ -1,4 +1,4 @@
-fragment IProgram on Program {
+fragment Program on Program {
   id
   name
   duration
@@ -7,6 +7,6 @@ fragment IProgram on Program {
   bodyPart
   description
   imgUrl
-  createdAt
-  updatedAt
+  # createdAt
+  # updatedAt
 }

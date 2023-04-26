@@ -19,6 +19,7 @@
       ]
     },
     "language": ["English (US)", "Tiếng Việt"],
+    "workoutLevel": ["Dễ", "Trung bình", "Khó"],
     "main_":{
       "chat":"Tư vấn",
       "home":"Trang chủ",
