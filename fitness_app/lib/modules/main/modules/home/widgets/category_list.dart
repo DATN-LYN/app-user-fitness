@@ -1,7 +1,7 @@
-import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.req.gql.dart';
 import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/workout_program_tile.dart';
+import 'package:fitness_app/modules/main/modules/home/widgets/category_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,24 +9,22 @@ import '../../../../../global/gen/assets.gen.dart';
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/widgets/fitness_empty.dart';
 
-class WorkoutPrograms extends ConsumerStatefulWidget {
-  const WorkoutPrograms({super.key});
+class CategoryList extends ConsumerStatefulWidget {
+  const CategoryList({super.key});
 
   @override
-  ConsumerState<WorkoutPrograms> createState() => _WorkoutProgramsState();
+  ConsumerState<CategoryList> createState() => _CategoryListState();
 }
 
-class _WorkoutProgramsState extends ConsumerState<WorkoutPrograms> {
-  var getProgramsReq = GGetProgramsReq(
+class _CategoryListState extends ConsumerState<CategoryList> {
+  var getCategoriesReq = GGetCateforiesReq(
     (b) => b
       ..vars.queryParams.limit = Constants.defaultLimit
-      ..vars.queryParams.page = 1
-      ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
+      ..vars.queryParams.page = 1,
   );
-
   void refreshHandler() {
     setState(
-      () => getProgramsReq = getProgramsReq.rebuild(
+      () => getCategoriesReq = getCategoriesReq.rebuild(
         (b) => b
           ..vars.queryParams.page = 1
           ..updateResult = ((previous, result) => result),
@@ -40,44 +38,44 @@ class _WorkoutProgramsState extends ConsumerState<WorkoutPrograms> {
 
     return InfinityList(
       client: client,
-      request: getProgramsReq,
+      request: getCategoriesReq,
       loadMoreRequest: (response) {
-        final data = response?.data?.getPrograms;
+        final data = response?.data?.getCategories;
         if (data != null &&
             data.meta!.currentPage!.toDouble() <
                 data.meta!.totalPages!.toDouble()) {
-          getProgramsReq = getProgramsReq.rebuild(
+          getCategoriesReq = getCategoriesReq.rebuild(
             (b) => b
               ..vars.queryParams.page = (b.vars.queryParams.page! + 1)
               ..updateResult = (previous, result) =>
                   previous?.rebuild(
-                    (b) => b.getPrograms
-                      ..meta = (result?.getPrograms.meta ??
-                              previous.getPrograms.meta)!
+                    (b) => b.getCategories
+                      ..meta = (result?.getCategories.meta ??
+                              previous.getCategories.meta)!
                           .toBuilder()
                       ..items.addAll(
-                        result?.getPrograms.items ?? [],
+                        result?.getCategories.items ?? [],
                       ),
                   ) ??
                   result,
           );
-          return getProgramsReq;
+          return getCategoriesReq;
         }
         return null;
       },
       refreshRequest: () {
-        getProgramsReq = getProgramsReq.rebuild(
+        getCategoriesReq = getCategoriesReq.rebuild(
           (b) => b
             ..vars.queryParams.page = 1
             ..updateResult = ((previous, result) => result),
         );
-        return getProgramsReq;
+        return getCategoriesReq;
       },
       builder: (context, response, error) {
         if ((response?.hasErrors == true ||
-                response?.data?.getPrograms.meta?.itemCount == 0) &&
-            getProgramsReq.vars.queryParams.page != 1) {
-          getProgramsReq = getProgramsReq.rebuild(
+                response?.data?.getCategories.meta?.itemCount == 0) &&
+            getCategoriesReq.vars.queryParams.page != 1) {
+          getCategoriesReq = getCategoriesReq.rebuild(
             (b) => b..vars.queryParams.page = b.vars.queryParams.page! - 1,
           );
         }
@@ -89,16 +87,16 @@ class _WorkoutProgramsState extends ConsumerState<WorkoutPrograms> {
 
         if (response?.hasErrors == true || response?.data == null) {
           // return FitnessError(response: response);
-          print(response?.linkException.toString());
+          print(response?.graphqlErrors?.first);
           return const SizedBox();
         }
 
-        final data = response!.data!.getPrograms;
+        final data = response!.data!.getCategories;
         final hasMoreData = data.meta!.currentPage!.toDouble() <
             data.meta!.totalPages!.toDouble();
-        final programs = data.items;
+        final categories = data.items;
 
-        if (programs?.isEmpty == true) {
+        if (categories?.isEmpty == true) {
           return FitnessEmpty(
             title: 'Empty',
             message: 'Inbox is empty',
@@ -109,17 +107,15 @@ class _WorkoutProgramsState extends ConsumerState<WorkoutPrograms> {
         }
 
         return ListView.separated(
-          itemCount: programs!.length,
+          itemCount: categories!.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            final item = programs[index];
-            return WorkoutProgramTile(
-              program: item,
+            final item = categories[index];
+            return CategoryItemWidget(
+              category: item,
             );
           },
-          separatorBuilder: (context, index) {
-            return const SizedBox(width: 12);
-          },
+          separatorBuilder: (_, __) => const SizedBox(width: 12),
         );
       },
     );

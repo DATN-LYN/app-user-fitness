@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../category/widgets/program_tile_large.dart';
-
 class StatisticsRecentlyWorkout extends StatelessWidget {
   const StatisticsRecentlyWorkout({super.key});
 
@@ -12,7 +10,9 @@ class StatisticsRecentlyWorkout extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return const ProgramTileLarge();
+        return const SizedBox(
+          height: 200,
+        );
       },
       separatorBuilder: (_, __) => const SizedBox(height: 16),
     );

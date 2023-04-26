@@ -8,8 +8,8 @@ import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/graphql/query/__generated__/query_get_programs.data.gql.dart';
 import '../../../../../global/themes/app_colors.dart';
 
-class WorkoutProgramTile extends StatefulWidget {
-  const WorkoutProgramTile({
+class ProgramItemWidget extends StatefulWidget {
+  const ProgramItemWidget({
     super.key,
     required this.program,
   });
@@ -17,17 +17,17 @@ class WorkoutProgramTile extends StatefulWidget {
   final GGetProgramsData_getPrograms_items program;
 
   @override
-  State<WorkoutProgramTile> createState() => _WorkoutProgramTileState();
+  State<ProgramItemWidget> createState() => _ProgramItemWidgetState();
 }
 
-class _WorkoutProgramTileState extends State<WorkoutProgramTile> {
+class _ProgramItemWidgetState extends State<ProgramItemWidget> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
 
     return InkWell(
       onTap: () {
-        context.pushRoute(const ProgramDetailRoute());
+        context.pushRoute(ProgramDetailRoute(program: widget.program));
       },
       child: Container(
         width: 180,

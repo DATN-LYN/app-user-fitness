@@ -1,8 +1,8 @@
 import 'package:fitness_app/global/widgets/label.dart';
+import 'package:fitness_app/modules/main/modules/home/widgets/category_list.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/home_header.dart';
+import 'package:fitness_app/modules/main/modules/home/widgets/program_list.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/user_statistic.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/workout_programs.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/workout_types.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,17 +26,17 @@ class _HomePageState extends State<HomePage> {
               Label('Your Plan'),
               SizedBox(
                 height: 170,
-                child: WorkoutPrograms(),
+                child: ProgramList(),
               ),
               Label('Select Plan'),
               SizedBox(
                 height: 100,
-                child: WorkoutTypes(),
+                child: CategoryList(),
               ),
               Label('Trending Now'),
               SizedBox(
                 height: 170,
-                child: WorkoutPrograms(),
+                child: ProgramList(),
               ),
             ],
           ),

@@ -3,7 +3,7 @@ query GetCategory($categoryId: String!) {
     id
     name
     imgUrl
-    createdAt
-    updatedAt
+    # createdAt
+    # updatedAt
   }
 }

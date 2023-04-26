@@ -1,14 +1,22 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/enums/workout_level.dart';
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/modules/program/widgets/exercise_tile.dart';
 import 'package:flutter/material.dart';
 
+import '../../global/graphql/query/__generated__/query_get_programs.data.gql.dart';
 import '../../global/widgets/program_info_tile.dart';
 
 class ProgramDetailPage extends StatefulWidget {
-  const ProgramDetailPage({super.key});
+  const ProgramDetailPage({
+    super.key,
+    required this.program,
+  });
+
+  final GGetProgramsData_getPrograms_items program;
 
   @override
   State<ProgramDetailPage> createState() => _ProgramDetailPageState();
@@ -17,6 +25,8 @@ class ProgramDetailPage extends StatefulWidget {
 class _ProgramDetailPageState extends State<ProgramDetailPage> {
   @override
   Widget build(BuildContext context) {
+    final i18n = I18n.of(context)!;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.grey1,
@@ -57,9 +67,9 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                           ),
                         ),
                       ),
-                      const Text(
-                        'Chest And Tricep',
-                        style: TextStyle(
+                      Text(
+                        widget.program.name ?? '_',
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w700,
                         ),
@@ -69,17 +79,20 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
+                    children: [
                       ProgramInfoTile(
-                        label: '40 Cal',
+                        label: '${widget.program.calo} Calories',
                         icon: Icons.local_fire_department_rounded,
                       ),
                       ProgramInfoTile(
-                        label: '73 Min',
+                        label: '${widget.program.duration} Mins',
                         icon: Icons.timelapse,
                       ),
                       ProgramInfoTile(
-                        label: 'Beginner',
+                        label: WorkoutLevel.getLabel(
+                          widget.program.level ?? 0,
+                          i18n,
+                        ),
                         icon: Icons.fitness_center,
                       ),
                     ],
@@ -101,10 +114,10 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const ShadowWrapper(
-                  padding: EdgeInsets.all(16),
+                ShadowWrapper(
+                  padding: const EdgeInsets.all(16),
                   child: Text(
-                    'dajsdhajkshdjashdjashdajshdajsdhajshdajsdhjashdajshdajhsdjahsdjashdjashdajdhajshdjasdhajsdhjkahdjkahdjakhdajkshdjaskhd',
+                    widget.program.description ?? '_',
                   ),
                 ),
                 const SizedBox(height: 16),

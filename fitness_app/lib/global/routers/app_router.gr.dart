@@ -54,9 +54,13 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     ProgramDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<ProgramDetailRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const ProgramDetailPage(),
+        child: ProgramDetailPage(
+          key: args.key,
+          program: args.program,
+        ),
       );
     },
     CategoryDetailRoute.name: (routeData) {
@@ -262,14 +266,36 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProgramDetailPage]
-class ProgramDetailRoute extends PageRouteInfo<void> {
-  const ProgramDetailRoute()
-      : super(
+class ProgramDetailRoute extends PageRouteInfo<ProgramDetailRouteArgs> {
+  ProgramDetailRoute({
+    Key? key,
+    required GGetProgramsData_getPrograms_items program,
+  }) : super(
           ProgramDetailRoute.name,
           path: '/program-detail-page',
+          args: ProgramDetailRouteArgs(
+            key: key,
+            program: program,
+          ),
         );
 
   static const String name = 'ProgramDetailRoute';
+}
+
+class ProgramDetailRouteArgs {
+  const ProgramDetailRouteArgs({
+    this.key,
+    required this.program,
+  });
+
+  final Key? key;
+
+  final GGetProgramsData_getPrograms_items program;
+
+  @override
+  String toString() {
+    return 'ProgramDetailRouteArgs{key: $key, program: $program}';
+  }
 }
 
 /// generated route for
