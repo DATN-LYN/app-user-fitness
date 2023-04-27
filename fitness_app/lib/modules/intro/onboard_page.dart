@@ -75,7 +75,7 @@ class _OnBoardPageState extends ConsumerState<OnBoardPage> {
                         appSettings.saveFirstLaunch();
                         if (mounted) {
                           AutoRouter.of(context).replaceAll(
-                            [const LoginRoute()],
+                            [const MainRoute()],
                           );
                         }
                       } else {

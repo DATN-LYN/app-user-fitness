@@ -41,7 +41,7 @@ class _ProgramItemLargeState extends State<ProgramItemLarge> {
           children: [
             ShimmerImage(
               imageUrl: widget.program.imgUrl ?? '_',
-              height: 170,
+              height: 150,
               width: double.infinity,
               fit: BoxFit.fill,
               borderRadius: const BorderRadius.only(
@@ -50,7 +50,7 @@ class _ProgramItemLargeState extends State<ProgramItemLarge> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -61,7 +61,7 @@ class _ProgramItemLargeState extends State<ProgramItemLarge> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
                   ProgramInfoTile(
                     icon: Icons.local_fire_department_rounded,
                     label: '${widget.program.calo} Calories',

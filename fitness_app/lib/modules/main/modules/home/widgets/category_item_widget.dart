@@ -21,7 +21,7 @@ class CategoryItemWidget extends StatefulWidget {
 class _CategoryItemWidgetState extends State<CategoryItemWidget> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => context.pushRoute(const CategoryDetailRoute()),
       child: Column(
         mainAxisSize: MainAxisSize.min,

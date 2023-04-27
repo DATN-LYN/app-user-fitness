@@ -357,10 +357,10 @@ packages:
     dependency: "direct main"
     description:
       name: ferry
-      sha256: a04d49b526fc92d5af2599509b9d4b0e449f67a1b354718087e77b1bc1956e08
+      sha256: a95dfa5a8fc32c8d2e4364b912182751c2fb16374813b4fd710ef3d275e4633b
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.0+1"
+    version: "0.13.0"
   ferry_cache:
     dependency: transitive
     description:
@@ -381,18 +381,18 @@ packages:
     dependency: "direct main"
     description:
       name: ferry_flutter
-      sha256: c4483cd33068131773f157224c484e96a3db9dd969d45d56a454ba56834e6569
+      sha256: "5691a0d62fe7417b5dc4765b72f631bae8bfd23d8d7fc32ae97fbe2635ba1b88"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.0+1"
+    version: "0.8.0"
   ferry_generator:
     dependency: "direct dev"
     description:
       name: ferry_generator
-      sha256: "45afa3b1482ac8dde331f80d8d55ba26ad04de1accbd7fd88738abd415d6abfb"
+      sha256: "6229a433b0af1a33f847fe6a7f5f1796ef6b608ecdbdaadf316b9c9d96214bac"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.0+1"
+    version: "0.7.0"
   ferry_hive_store:
     dependency: "direct main"
     description:

@@ -94,6 +94,12 @@ class _$AppRouter extends RootStackRouter {
         child: const FinishPage(),
       );
     },
+    SearchRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SearchPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -187,6 +193,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           FinishRoute.name,
           path: '/finish-page',
+        ),
+        RouteConfig(
+          SearchRoute.name,
+          path: '/search-page',
         ),
       ];
 }
@@ -376,6 +386,18 @@ class FinishRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'FinishRoute';
+}
+
+/// generated route for
+/// [SearchPage]
+class SearchRoute extends PageRouteInfo<void> {
+  const SearchRoute()
+      : super(
+          SearchRoute.name,
+          path: '/search-page',
+        );
+
+  static const String name = 'SearchRoute';
 }
 
 /// generated route for

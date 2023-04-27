@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import '../../modules/exercise/finish_page.dart';
 import '../../modules/intro/onboard_page.dart';
 import '../../modules/main/main_page.dart';
+import '../../modules/main/modules/search/search_page.dart';
 import '../graphql/query/__generated__/query_get_programs.data.gql.dart';
 
 part 'app_router.gr.dart';
@@ -45,6 +46,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: ExerciseDetailPage),
     AutoRoute(page: CountdownTimerPage),
     AutoRoute(page: FinishPage),
+    AutoRoute(page: SearchPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

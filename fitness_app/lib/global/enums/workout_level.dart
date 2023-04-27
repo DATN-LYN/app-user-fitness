@@ -8,7 +8,7 @@ enum WorkoutLevel {
   final double value;
   const WorkoutLevel(this.value);
 
-  static String getLabel(double level, I18n i18n) {
+  static String label(double level, I18n i18n) {
     final levelIndex =
         WorkoutLevel.values.firstWhere((item) => item.value == level).index;
     return i18n.workoutLevel[levelIndex];

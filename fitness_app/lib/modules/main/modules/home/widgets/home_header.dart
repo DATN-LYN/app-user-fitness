@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/providers/me_provider.dart';
+import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -78,37 +80,40 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                 ),
               ),
             ),
-            Container(
-              height: 48,
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.grey6,
-                    offset: Offset(0, 4),
-                    blurRadius: 20,
-                    spreadRadius: -2,
-                  ),
-                ],
-              ),
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  //context.pushRoute(const SearchPlaceRoute());
-                },
-                icon: const Icon(
-                  Icons.search,
-                  size: 18,
+            Hero(
+              tag: 'HomeAppBar',
+              child: Container(
+                height: 48,
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.grey6,
+                      offset: Offset(0, 4),
+                      blurRadius: 20,
+                      spreadRadius: -2,
+                    ),
+                  ],
                 ),
-                label: const Text('Search'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.white,
-                  foregroundColor: AppColors.grey4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    context.pushRoute(const SearchRoute());
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    size: 18,
                   ),
-                  textStyle: const TextStyle(fontSize: 16),
-                  alignment: Alignment.centerLeft,
+                  label: const Text('Search'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.white,
+                    foregroundColor: AppColors.grey4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    textStyle: const TextStyle(fontSize: 16),
+                    alignment: Alignment.centerLeft,
+                  ),
                 ),
               ),
             ),

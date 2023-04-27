@@ -20,6 +20,7 @@ class CategoryDetailPage extends ConsumerStatefulWidget {
 class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
   var getProgramsReq = GGetProgramsReq(
     (b) => b
+      ..requestId = '@getProgramsByDetailReq'
       ..vars.queryParams.limit = Constants.defaultLimit
       ..vars.queryParams.page = 1
       ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
@@ -78,8 +79,17 @@ class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
               ..updateResult = ((previous, result) => result),
           );
           return getProgramsReq;
+
+          // return GGetProgramsReq(
+          //   (b) => b
+          //     ..vars.queryParams.limit = Constants.defaultLimit
+          //     ..vars.queryParams.page = 1
+          //     ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
+          // );
         },
         builder: (context, response, err) {
+          print(response);
+
           if ((response?.hasErrors == true ||
                   response?.data?.getPrograms.meta?.itemCount == 0) &&
               getProgramsReq.vars.queryParams.page != 1) {
@@ -95,7 +105,6 @@ class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
 
           if (response?.hasErrors == true || response?.data == null) {
             // return FitnessError(response: response);
-            print(response?.linkException.toString());
             return const SizedBox();
           }
 
