@@ -30,7 +30,7 @@ class FitnessEmpty extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (image != null) image!,
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             if (title != null)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
@@ -56,7 +56,7 @@ class FitnessEmpty extends StatelessWidget {
               ),
             if (onPressed != null)
               Padding(
-                padding: const EdgeInsets.only(top: 24),
+                padding: const EdgeInsets.only(top: 16),
                 child: ElevatedButton(
                   onPressed: onPressed,
                   child: Text(

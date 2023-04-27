@@ -1,13 +1,15 @@
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.req.gql.dart';
+import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
+import 'package:fitness_app/global/widgets/fitness_empty.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
+import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/category_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../global/gen/assets.gen.dart';
 import '../../../../../global/graphql/client.dart';
-import '../../../../../global/widgets/fitness_empty.dart';
+import '../../../../../global/widgets/fitness_error.dart';
 
 class CategoryList extends ConsumerStatefulWidget {
   const CategoryList({super.key});
@@ -81,14 +83,16 @@ class _CategoryListState extends ConsumerState<CategoryList> {
         }
 
         if (response?.loading == true) {
-          print('LOADING....');
-          // return const ShimmerInbox();
+          return const ShimmerWrapper(
+            child: ShimmerCategoryList(),
+          );
         }
 
         if (response?.hasErrors == true || response?.data == null) {
-          // return FitnessError(response: response);
-          print(response?.graphqlErrors?.first);
-          return const SizedBox();
+          return FitnessError(
+            response: response,
+            showImage: false,
+          );
         }
 
         final data = response!.data!.getCategories;
@@ -97,12 +101,9 @@ class _CategoryListState extends ConsumerState<CategoryList> {
         final categories = data.items;
 
         if (categories?.isEmpty == true) {
-          return FitnessEmpty(
-            title: 'Empty',
-            message: 'Inbox is empty',
-            textButton: 'Refresh',
-            image: Assets.images.sadFace.image(height: 100),
-            onPressed: refreshHandler,
+          return const FitnessEmpty(
+            title: 'No Data',
+            message: 'Please pull to refresh to try again.',
           );
         }
 
@@ -118,6 +119,45 @@ class _CategoryListState extends ConsumerState<CategoryList> {
           separatorBuilder: (_, __) => const SizedBox(width: 12),
         );
       },
+    );
+  }
+}
+
+class ShimmerCategoryList extends StatelessWidget {
+  const ShimmerCategoryList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ShimmerWrapper(
+      child: ListView.separated(
+        itemCount: 5,
+        scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Container(
+                height: 70,
+                width: 70,
+                margin: const EdgeInsets.only(bottom: 10),
+                decoration: BoxDecoration(
+                  color: AppColors.grey6,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+              Container(
+                height: 20,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: AppColors.grey6,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ],
+          );
+        },
+        separatorBuilder: (_, __) => const SizedBox(width: 12),
+      ),
     );
   }
 }

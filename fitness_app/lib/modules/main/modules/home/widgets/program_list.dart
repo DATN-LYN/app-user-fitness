@@ -1,13 +1,15 @@
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
+import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/program_item_widget.dart';
+import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../global/gen/assets.gen.dart';
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/widgets/fitness_empty.dart';
+import '../../../../../global/widgets/fitness_error.dart';
+import 'program_item_widget.dart';
 
 class ProgramList extends ConsumerStatefulWidget {
   const ProgramList({super.key});
@@ -83,14 +85,14 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
         }
 
         if (response?.loading == true) {
-          print('LOADING....');
-          // return const ShimmerInbox();
+          return const ShimmerProgramList();
         }
 
         if (response?.hasErrors == true || response?.data == null) {
-          // return FitnessError(response: response);
-          print(response?.linkException.toString());
-          return const SizedBox();
+          return FitnessError(
+            response: response,
+            showImage: false,
+          );
         }
 
         final data = response!.data!.getPrograms;
@@ -99,12 +101,9 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
         final programs = data.items;
 
         if (programs?.isEmpty == true) {
-          return FitnessEmpty(
-            title: 'Empty',
-            message: 'Inbox is empty',
-            textButton: 'Refresh',
-            image: Assets.images.sadFace.image(height: 100),
-            onPressed: refreshHandler,
+          return const FitnessEmpty(
+            title: 'No Data',
+            message: 'Please pull to refresh to try again',
           );
         }
 
@@ -117,11 +116,73 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
               program: item,
             );
           },
-          separatorBuilder: (context, index) {
-            return const SizedBox(width: 12);
-          },
+          separatorBuilder: (_, __) => const SizedBox(width: 12),
         );
       },
+    );
+  }
+}
+
+class ShimmerProgramList extends StatelessWidget {
+  const ShimmerProgramList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: 4,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return Container(
+          height: 170,
+          decoration: BoxDecoration(
+            color: AppColors.neutral20,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ShimmerWrapper(
+                child: Container(
+                  height: 100,
+                  width: 160,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(12),
+                    ),
+                    color: AppColors.neutral20,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ShimmerWrapper(
+                child: Container(
+                  height: 10,
+                  width: 60,
+                  margin: const EdgeInsets.only(left: 16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: AppColors.neutral20,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ShimmerWrapper(
+                child: Container(
+                  height: 10,
+                  width: 100,
+                  margin: const EdgeInsets.only(left: 16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: AppColors.neutral20,
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+      separatorBuilder: (_, __) => const SizedBox(width: 12),
     );
   }
 }

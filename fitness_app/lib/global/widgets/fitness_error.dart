@@ -8,9 +8,11 @@ class FitnessError extends StatelessWidget {
   const FitnessError({
     Key? key,
     this.response,
+    this.showImage = true,
   }) : super(key: key);
 
   final OperationResponse? response;
+  final bool showImage;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +29,11 @@ class FitnessError extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Assets.images.sadFace.image(width: 207, height: 140),
+              if (showImage)
+                Assets.images.sadFace.image(width: 207, height: 140),
               const SizedBox(height: 24),
               const Text(
-                'sad',
+                'Oops!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
@@ -40,7 +43,7 @@ class FitnessError extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 response == null
-                    ? 'error'
+                    ? 'Some errors happened. Please try again.'
                     : response?.graphqlErrors?.isNotEmpty ?? false
                         ? response?.graphqlErrors?.first.message ?? ''
                         : response?.linkException.toString() ?? '',

@@ -76,8 +76,7 @@ class _ProgramItemLargeState extends State<ProgramItemLarge> {
                   const SizedBox(height: 8),
                   ProgramInfoTile(
                     icon: Icons.fitness_center,
-                    label:
-                        WorkoutLevel.getLabel(widget.program.level ?? 0, i18n),
+                    label: WorkoutLevel.label(widget.program.level ?? 0, i18n),
                     textStyle: textStyle,
                   ),
                 ],

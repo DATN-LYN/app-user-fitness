@@ -13,35 +13,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var key = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const HomeHeader(),
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.all(16),
-            children: const [
-              UserStatistic(),
-              Label('Your Plan'),
-              SizedBox(
-                height: 170,
-                child: ProgramList(),
-              ),
-              Label('Select Plan'),
-              SizedBox(
-                height: 100,
-                child: CategoryList(),
-              ),
-              Label('Trending Now'),
-              SizedBox(
-                height: 170,
-                child: ProgramList(),
-              ),
-            ],
-          ),
-        )
-      ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        setState(() {
+          key = GlobalKey();
+        });
+      },
+      child: Column(
+        key: key,
+        children: [
+          const HomeHeader(),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: const [
+                UserStatistic(),
+                Label('Your Plan'),
+                SizedBox(
+                  height: 170,
+                  child: ProgramList(),
+                ),
+                Label('Select Plan'),
+                SizedBox(
+                  height: 100,
+                  child: CategoryList(),
+                ),
+                Label('Trending Now'),
+                SizedBox(
+                  height: 170,
+                  child: ProgramList(),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -89,7 +89,7 @@ class _ProgramDetailPageState extends State<ProgramDetailPage> {
                         icon: Icons.timelapse,
                       ),
                       ProgramInfoTile(
-                        label: WorkoutLevel.getLabel(
+                        label: WorkoutLevel.label(
                           widget.program.level ?? 0,
                           i18n,
                         ),
