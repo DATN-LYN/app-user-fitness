@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/widgets/countdown_timer_page.dart';
 import 'package:fitness_app/modules/category/category_detail_page.dart';
-import 'package:fitness_app/modules/exercise/exercise_detail_page.dart';
+import 'package:fitness_app/modules/exercise/play_exercise_page.dart';
 import 'package:fitness_app/modules/forgot_password/forgot_password_page.dart';
 import 'package:fitness_app/modules/login/login_page.dart';
 import 'package:fitness_app/modules/main/modules/chat/chat_page.dart';
@@ -43,7 +43,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: ForgotPasswordPage),
     AutoRoute(page: ProgramDetailPage),
     AutoRoute(page: CategoryDetailPage),
-    AutoRoute(page: ExerciseDetailPage),
+    AutoRoute(page: PlayExercisePage),
     AutoRoute(page: CountdownTimerPage),
     AutoRoute(page: FinishPage),
     AutoRoute(page: SearchPage),

@@ -69,10 +69,10 @@ class _$AppRouter extends RootStackRouter {
         child: const CategoryDetailPage(),
       );
     },
-    ExerciseDetailRoute.name: (routeData) {
+    PlayExerciseRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const ExerciseDetailPage(),
+        child: const PlayExercisePage(),
       );
     },
     CountdownTimerRoute.name: (routeData) {
@@ -183,8 +183,8 @@ class _$AppRouter extends RootStackRouter {
           path: '/category-detail-page',
         ),
         RouteConfig(
-          ExerciseDetailRoute.name,
-          path: '/exercise-detail-page',
+          PlayExerciseRoute.name,
+          path: '/play-exercise-page',
         ),
         RouteConfig(
           CountdownTimerRoute.name,
@@ -321,15 +321,15 @@ class CategoryDetailRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ExerciseDetailPage]
-class ExerciseDetailRoute extends PageRouteInfo<void> {
-  const ExerciseDetailRoute()
+/// [PlayExercisePage]
+class PlayExerciseRoute extends PageRouteInfo<void> {
+  const PlayExerciseRoute()
       : super(
-          ExerciseDetailRoute.name,
-          path: '/exercise-detail-page',
+          PlayExerciseRoute.name,
+          path: '/play-exercise-page',
         );
 
-  static const String name = 'ExerciseDetailRoute';
+  static const String name = 'PlayExerciseRoute';
 }
 
 /// generated route for

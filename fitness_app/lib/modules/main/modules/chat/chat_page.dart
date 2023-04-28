@@ -97,9 +97,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             message: ref.read(messageResponseProvider).join(''),
             isSender: false,
           );
-          // final client = ref.watch(appClientProvider);
           refreshHandler();
-
           setState(() {
             loading = false;
           });
@@ -199,7 +197,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           }
 
           if (response?.loading == true) {
-            print('LOADING....');
             return const ShimmerInbox();
           }
 

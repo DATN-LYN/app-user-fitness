@@ -14,14 +14,14 @@ import '../../global/utils/duration_time.dart';
 
 enum PlayerState { playing, paused }
 
-class ExerciseDetailPage extends StatefulWidget {
-  const ExerciseDetailPage({super.key});
+class PlayExercisePage extends StatefulWidget {
+  const PlayExercisePage({super.key});
 
   @override
-  State<ExerciseDetailPage> createState() => _ExerciseDetailPageState();
+  State<PlayExercisePage> createState() => _PlayExercisePageState();
 }
 
-class _ExerciseDetailPageState extends State<ExerciseDetailPage> {
+class _PlayExercisePageState extends State<PlayExercisePage> {
   int index = 0;
   bool lock = true;
   int maxValue = 0;

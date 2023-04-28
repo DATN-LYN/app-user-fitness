@@ -7,18 +7,15 @@ import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/utils/dialogs.dart';
-import 'package:fitness_app/global/widgets/infinity_list.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
-import 'package:fitness_app/modules/program/widgets/exercise_tile.dart';
+import 'package:fitness_app/modules/program/widgets/exercise_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../global/graphql/client.dart';
 import '../../global/graphql/query/__generated__/query_get_program.data.gql.dart';
 import '../../global/graphql/query/__generated__/query_get_programs.data.gql.dart';
-import '../../global/widgets/fitness_empty.dart';
-import '../../global/widgets/fitness_error.dart';
 import '../../global/widgets/program_info_tile.dart';
 
 class ProgramDetailPage extends ConsumerStatefulWidget {
@@ -42,6 +39,7 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
       ..vars.queryParams.limit = Constants.defaultLimit
       ..vars.queryParams.page = 1,
   );
+  var key = GlobalKey();
 
   @override
   void initState() {
@@ -141,11 +139,11 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ProgramInfoTile(
-                          label: '${program?.calo} Calories',
+                          label: '${program?.calo ?? '_'} Calories',
                           icon: Icons.local_fire_department_rounded,
                         ),
                         ProgramInfoTile(
-                          label: '${program?.duration} Mins',
+                          label: '${program?.duration ?? '_'} Mins',
                           icon: Icons.timelapse,
                         ),
                         ProgramInfoTile(
@@ -162,14 +160,11 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
               child: RefreshIndicator(
                 onRefresh: () async {
                   setState(() {
-                    getExercisesReq = getExercisesReq.rebuild(
-                      (b) => b
-                        ..vars.queryParams.page = 1
-                        ..updateResult = ((previous, result) => result),
-                    );
+                    key = GlobalKey();
                   });
                 },
                 child: ListView(
+                  key: key,
                   padding: const EdgeInsets.all(16),
                   children: [
                     const Text(
@@ -195,88 +190,9 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    InfinityList(
-                      client: client,
-                      request: getExercisesReq,
-                      loadMoreRequest: (response) {
-                        final data = response?.data?.getExercises;
-                        if (data != null &&
-                            data.meta!.currentPage!.toDouble() <
-                                data.meta!.totalPages!.toDouble()) {
-                          getExercisesReq = getExercisesReq.rebuild(
-                            (b) => b
-                              ..vars.queryParams.page =
-                                  (b.vars.queryParams.page! + 1)
-                              ..updateResult = (previous, result) =>
-                                  previous?.rebuild(
-                                    (b) => b.getExercises
-                                      ..meta = (result?.getExercises.meta ??
-                                              previous.getExercises.meta)!
-                                          .toBuilder()
-                                      ..items.addAll(
-                                        result?.getExercises.items ?? [],
-                                      ),
-                                  ) ??
-                                  result,
-                          );
-                          return getExercisesReq;
-                        }
-                        return null;
-                      },
-                      refreshRequest: () {
-                        getExercisesReq = getExercisesReq.rebuild(
-                          (b) => b
-                            ..vars.queryParams.page = 1
-                            ..updateResult = ((previous, result) => result),
-                        );
-                        return getExercisesReq;
-                      },
-                      builder: (context, response, error) {
-                        if ((response?.hasErrors == true ||
-                                response?.data?.getExercises.meta?.itemCount ==
-                                    0) &&
-                            getExercisesReq.vars.queryParams.page != 1) {
-                          getExercisesReq = getExercisesReq.rebuild(
-                            (b) => b
-                              ..vars.queryParams.page =
-                                  b.vars.queryParams.page! - 1,
-                          );
-                        }
-
-                        if (response?.loading == true) {
-                          return const SizedBox();
-                        }
-
-                        if (response?.hasErrors == true ||
-                            response?.data == null) {
-                          return FitnessError(
-                            response: response,
-                            showImage: true,
-                          );
-                        }
-
-                        final data = response!.data!.getExercises;
-                        final hasMoreData = data.meta!.currentPage!.toDouble() <
-                            data.meta!.totalPages!.toDouble();
-                        final programs = data.items;
-
-                        if (programs?.isEmpty == true) {
-                          return const FitnessEmpty(
-                            showImage: true,
-                            title: 'No Data',
-                            message: 'Please pull to refresh to try again',
-                          );
-                        }
-
-                        return ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 5,
-                          itemBuilder: (_, __) => const ExerciseTile(),
-                        );
-                      },
-                    )
+                    const Expanded(
+                      child: ExerciseList(),
+                    ),
                   ],
                 ),
               ),
