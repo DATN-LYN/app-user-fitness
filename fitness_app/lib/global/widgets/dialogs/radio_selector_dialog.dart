@@ -26,6 +26,7 @@ class RadioSelectorDialog<T> extends StatefulWidget {
 
 class _RadioSelectorDialogState<T> extends State<RadioSelectorDialog<T>> {
   late T _currentValue = widget.currentValue;
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {

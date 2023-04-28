@@ -1,10 +1,10 @@
 import 'package:fitness_app/global/enums/schedule_filter.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
-import 'package:fitness_app/modules/main/modules/statistics/widgets/month_picker_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../global/themes/app_colors.dart';
+import 'widgets/month_picker_dialog.dart';
 import 'widgets/statistics_body_data.dart';
 import 'widgets/statistics_chart.dart';
 import 'widgets/statistics_recently_workout.dart';

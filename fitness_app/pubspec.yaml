@@ -73,7 +73,6 @@ dependencies:
   syncfusion_flutter_calendar: ^21.1.39
   syncfusion_flutter_datepicker: ^21.1.39
   dartz: ^0.10.1
-  stack_trace: ^1.11.0
 
 dev_dependencies:
   flutter_test:
