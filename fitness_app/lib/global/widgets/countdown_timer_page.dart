@@ -37,7 +37,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
           if (widget.isBreak) {
             context.popRoute();
           } else {
-            context.replaceRoute(const ExerciseDetailRoute());
+            context.replaceRoute(const PlayExerciseRoute());
           }
         } else {
           countdownDuration = Duration(seconds: seconds);
@@ -160,7 +160,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
             if (widget.isBreak) {
               context.popRoute();
             } else {
-              context.replaceRoute(const ExerciseDetailRoute());
+              context.replaceRoute(const PlayExerciseRoute());
             }
           },
           child:

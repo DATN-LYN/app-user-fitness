@@ -1,42 +1,50 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.req.gql.dart';
+import 'package:fitness_app/global/graphql/client.dart';
 import 'package:fitness_app/global/providers/app_settings_provider.dart';
+import 'package:fitness_app/global/providers/auth_provider.dart';
+import 'package:fitness_app/global/providers/me_provider.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/change_password_bottom_sheet.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/setting_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../global/enums/app_locale.dart';
 import '../../../../global/gen/i18n.dart';
-import '../../../../global/providers/auth_provider.dart';
 import '../../../../global/routers/app_router.dart';
 import '../../../../global/utils/constants.dart';
 import '../../../../global/widgets/avatar.dart';
 import '../../../../global/widgets/dialogs/confirmation_dialog.dart';
 import '../../../../global/widgets/dialogs/radio_selector_dialog.dart';
 
-class SettingPage extends StatefulWidget {
+class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
+  ConsumerState<SettingPage> createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
-  void changeLanguage(AppSettingsProvider provider, I18n i18n) async {
+class _SettingPageState extends ConsumerState<SettingPage> {
+  bool isLoading = false;
+  void changeLanguage() async {
+    final i18n = I18n.of(context)!;
+
+    final currentLocale = ref.watch(appSettingProvider).locale.getLabel(i18n);
     final data = await showDialog(
       context: context,
       builder: (_) => RadioSelectorDialog(
-        currentValue: provider.appSettings.locale.getLabel(i18n),
+        currentValue: currentLocale,
         itemLabelBuilder: (item) => item,
         title: i18n.setting_Language,
         values: i18n.language,
       ),
     );
-    if (data != null && data != provider.appSettings.locale.getLabel(i18n)) {
+    if (data != null && data != currentLocale) {
       if (mounted) {
+        final provider = ref.read(appSettingProvider.notifier);
         if (data == i18n.language[1]) {
           provider.changeLocale(AppLocale.viVN);
         } else {
@@ -64,6 +72,9 @@ class _SettingPageState extends State<SettingPage> {
 
   void logOut() {
     final i18n = I18n.of(context)!;
+    final user = ref.read(meProvider)?.user;
+    final client = ref.read(appClientProvider);
+
     showDialog(
       context: context,
       builder: (context) => ConfirmationDialog(
@@ -71,9 +82,21 @@ class _SettingPageState extends State<SettingPage> {
         contentText: i18n.setting_ConfirmLogoutDes,
         positiveButtonText: i18n.button_Ok,
         onTapPositiveButton: () async {
-          context.read<AuthProvider>().logout();
-          Navigator.pop(context);
-          AutoRouter.of(context).push(const LoginRoute());
+          if (user != null) {
+            final loginReq = GLogoutReq((b) => b.vars.userId = user.id);
+
+            setState(() => isLoading = true);
+            final response = await client.request(loginReq).first;
+            setState(() => isLoading = false);
+
+            if (response.data?.logout.success == true) {
+              if (mounted) {
+                ref.read(authProvider.notifier).logOut();
+                Navigator.pop(context);
+                AutoRouter.of(context).push(const LoginRoute());
+              }
+            }
+          }
         },
       ),
     );
@@ -101,6 +124,8 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+    var user = ref.watch(meProvider);
+    bool isLogedIn = user?.id != null;
 
     return Scaffold(
       appBar: AppBar(
@@ -109,17 +134,17 @@ class _SettingPageState extends State<SettingPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Center(
+          Center(
             child: Avatar(
               size: 80,
-              name: 'Nhi',
+              name: isLogedIn ? 'Nhi' : null,
             ),
           ),
           const SizedBox(height: 16),
-          const Center(
+          Center(
             child: Text(
-              'Nhi',
-              style: TextStyle(
+              isLogedIn ? 'Nhi' : 'Guest User',
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 20,
               ),
@@ -142,14 +167,11 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Consumer<AppSettingsProvider>(
-                    builder: (context, provider, child) {
-                  return SettingTile(
-                    icon: Icons.language,
-                    title: i18n.setting_Language,
-                    onTap: () => changeLanguage(provider, i18n),
-                  );
-                }),
+                SettingTile(
+                  icon: Icons.language,
+                  title: i18n.setting_Language,
+                  onTap: changeLanguage,
+                ),
                 const Divider(height: 12),
                 SettingTile(
                   icon: Icons.share,
@@ -207,17 +229,25 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                SettingTile(
-                  icon: Icons.password,
-                  title: i18n.setting_ChangePassword,
-                  onTap: changePasswordHandler,
-                ),
+                if (isLogedIn)
+                  SettingTile(
+                    icon: Icons.password,
+                    title: i18n.setting_ChangePassword,
+                    onTap: changePasswordHandler,
+                  ),
                 const Divider(height: 12),
-                SettingTile(
-                  icon: Icons.logout,
-                  title: i18n.setting_Logout,
-                  onTap: logOut,
-                ),
+                if (!isLogedIn)
+                  SettingTile(
+                    icon: Icons.login,
+                    title: i18n.login_LogIn,
+                    onTap: () => context.pushRoute(const LoginRoute()),
+                  )
+                else
+                  SettingTile(
+                    icon: Icons.logout,
+                    title: i18n.setting_Logout,
+                    onTap: () => logOut(),
+                  ),
               ],
             ),
           ),

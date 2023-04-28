@@ -46,6 +46,8 @@ class I18n implements WidgetsLocalizations {
 	List<String> get onboard_Description => ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"];
 	/// ["English (US)", "Tiếng Việt"]
 	List<String> get language => ["English (US)", "Tiếng Việt"];
+	/// ["Beginner", "Intermediate", "Advanced"]
+	List<String> get workoutLevel => ["Beginner", "Intermediate", "Advanced"];
 	/// "Chat"
 	String get main_Chat => "Chat";
 	/// "Home"
@@ -236,6 +238,9 @@ class _I18n_vi_VN extends I18n {
 	/// ["English (US)", "Tiếng Việt"]
 	@override
 	List<String> get language => ["English (US)", "Tiếng Việt"];
+	/// ["Dễ", "Trung bình", "Khó"]
+	@override
+	List<String> get workoutLevel => ["Dễ", "Trung bình", "Khó"];
 	/// "Tư vấn"
 	@override
 	String get main_Chat => "Tư vấn";

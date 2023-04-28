@@ -3,8 +3,15 @@ import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:flutter/material.dart';
 
+import '../../../global/graphql/query/__generated__/query_get_excercises.data.gql.dart';
+
 class ExerciseTile extends StatefulWidget {
-  const ExerciseTile({super.key});
+  const ExerciseTile({
+    super.key,
+    required this.exercise,
+  });
+
+  final GGetExercisesData_getExercises_items exercise;
 
   @override
   State<ExerciseTile> createState() => _ExerciseTileState();
@@ -24,8 +31,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
               width: 120,
               height: 80,
               fit: BoxFit.cover,
-              imageUrl:
-                  'https://duhocthanhcong.vn/wp-content/uploads/school-photos/IMG%20Academy/IMG-Academy-Album1.jpg',
+              imageUrl: widget.exercise.imgUrl ?? '_',
             ),
           ),
           const SizedBox(width: 16),
@@ -33,9 +39,9 @@ class _ExerciseTileState extends State<ExerciseTile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Dumbell Fly',
-                  style: TextStyle(
+                Text(
+                  widget.exercise.name ?? '_',
+                  style: const TextStyle(
                     color: AppColors.grey1,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -43,26 +49,26 @@ class _ExerciseTileState extends State<ExerciseTile> {
                 ),
                 const SizedBox(height: 8),
                 Row(
-                  children: const [
-                    Icon(
-                      Icons.bolt_outlined,
+                  children: [
+                    const Icon(
+                      Icons.local_fire_department_sharp,
                       size: 18,
                       color: AppColors.grey5,
                     ),
-                    SizedBox(width: 4),
-                    Text('4 sets'),
+                    const SizedBox(width: 4),
+                    Text(' ${widget.exercise.calo} calories'),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                       Icons.access_time_filled,
                       size: 18,
                       color: AppColors.grey5,
                     ),
-                    SizedBox(width: 4),
-                    Text('4 mins'),
+                    const SizedBox(width: 4),
+                    Text('${widget.exercise.duration} mins'),
                   ],
                 ),
               ],

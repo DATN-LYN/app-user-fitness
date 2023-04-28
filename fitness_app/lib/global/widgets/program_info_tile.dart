@@ -5,12 +5,12 @@ import '../themes/app_colors.dart';
 class ProgramInfoTile extends StatelessWidget {
   const ProgramInfoTile({
     super.key,
-    required this.label,
+    this.label,
     required this.icon,
     this.textStyle = const TextStyle(fontWeight: FontWeight.w700),
   });
 
-  final String label;
+  final String? label;
   final IconData icon;
   final TextStyle textStyle;
 
@@ -24,7 +24,7 @@ class ProgramInfoTile extends StatelessWidget {
           size: 16,
         ),
         const SizedBox(width: 4),
-        Text(label, style: textStyle),
+        Text(label ?? '_', style: textStyle),
       ],
     );
   }

@@ -1,11 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/enums/schedule_filter.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../global/themes/app_colors.dart';
+import 'widgets/month_picker_dialog.dart';
 import 'widgets/statistics_body_data.dart';
 import 'widgets/statistics_chart.dart';
 import 'widgets/statistics_recently_workout.dart';
@@ -18,7 +17,7 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
-  ScheduleFilter selectedSchedule = ScheduleFilter.weekly;
+  ScheduleFilter selectedFilter = ScheduleFilter.weekly;
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +38,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
               _filterItem(schedule: ScheduleFilter.yearly),
             ],
           ),
-          if (selectedSchedule == ScheduleFilter.monthly)
+          if (selectedFilter == ScheduleFilter.monthly)
             Padding(
               padding: const EdgeInsets.only(top: 16),
-              child: FormBuilderField(
+              child: FormBuilderField<DateTime>(
                 name: 'month',
                 decoration: const InputDecoration(
                   suffixIcon: Icon(
@@ -51,7 +50,13 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   ),
                 ),
                 builder: (field) {
-                  return const MonthPickerDialog();
+                  return MonthPickerDialog(
+                    onChanged: (selectedMonth) {
+                      if (selectedMonth != null) {
+                        field.didChange(selectedMonth);
+                      }
+                    },
+                  );
                 },
               ),
             ),
@@ -105,14 +110,14 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   Widget _filterItem({required ScheduleFilter schedule}) {
-    final isSelected = selectedSchedule == schedule;
+    final isSelected = selectedFilter == schedule;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: FilledButton(
           onPressed: () {
             setState(() {
-              selectedSchedule = schedule;
+              selectedFilter = schedule;
             });
           },
           style: FilledButton.styleFrom(
@@ -128,90 +133,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class MonthPickerDialog extends StatelessWidget {
-  const MonthPickerDialog({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final i18n = I18n.of(context)!;
-
-    void showDialogPicker() {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SfDateRangePicker(
-                      view: DateRangePickerView.year,
-                      initialSelectedRange: PickerDateRange(
-                        DateTime.now(),
-                        DateTime.now(),
-                      ),
-                      selectionColor: AppColors.primaryBold,
-                      todayHighlightColor: AppColors.primaryBold,
-                      allowViewNavigation: false,
-                      // minDate: widget.minDate,
-                      // maxDate: widget.maxDate,
-                      onSelectionChanged: (selectedDate) {
-                        if (selectedDate.value is PickerDateRange) {
-                          final dateRange =
-                              selectedDate.value as PickerDateRange;
-                          // setState(
-                          //   () {
-                          //     startDate =
-                          //         dateRange.startDate?.combineTime(startDate) ??
-                          //             startDate;
-                          //     endDate = dateRange.endDate?.combineTime(endDate) ??
-                          //         startDate.combineTime(endDate);
-                          //   },
-                          // );
-                        }
-                      },
-                      // selectableDayPredicate: (DateTime val) =>
-                      //     !widget.excludeWeekDay.contains(val.weekday),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: context.popRoute,
-                            child: Text(i18n.button_Cancel),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: Text(i18n.button_Done),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            );
-          });
-    }
-
-    return InputDecorator(
-      decoration: const InputDecoration(),
-      child: InkWell(
-        child: Text(i18n.statistics_SelectMonth),
-        onTap: () => showDialogPicker(),
       ),
     );
   }

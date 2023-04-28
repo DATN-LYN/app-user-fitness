@@ -1,23 +1,25 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/providers/me_provider.dart';
+import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../global/gen/i18n.dart';
-import '../../../../../global/providers/auth_provider.dart';
 import '../../../../../global/themes/app_colors.dart';
 import '../../../../../global/widgets/user_avatar.dart';
 
-class HomeHeader extends StatefulWidget {
+class HomeHeader extends ConsumerStatefulWidget {
   const HomeHeader({super.key});
 
   @override
-  State<HomeHeader> createState() => _HomeHeaderState();
+  ConsumerState<HomeHeader> createState() => _HomeHeaderState();
 }
 
-class _HomeHeaderState extends State<HomeHeader> {
+class _HomeHeaderState extends ConsumerState<HomeHeader> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
-    var user = context.watch<AuthProvider>().user;
+    var user = ref.watch(meProvider)?.user;
 
     return Column(
       children: [
@@ -78,37 +80,40 @@ class _HomeHeaderState extends State<HomeHeader> {
                 ),
               ),
             ),
-            Container(
-              height: 48,
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.grey6,
-                    offset: Offset(0, 4),
-                    blurRadius: 20,
-                    spreadRadius: -2,
-                  ),
-                ],
-              ),
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  //context.pushRoute(const SearchPlaceRoute());
-                },
-                icon: const Icon(
-                  Icons.search,
-                  size: 18,
+            Hero(
+              tag: 'HomeAppBar',
+              child: Container(
+                height: 48,
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.grey6,
+                      offset: Offset(0, 4),
+                      blurRadius: 20,
+                      spreadRadius: -2,
+                    ),
+                  ],
                 ),
-                label: const Text('Search'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.white,
-                  foregroundColor: AppColors.grey4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    context.pushRoute(const SearchRoute());
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    size: 18,
                   ),
-                  textStyle: const TextStyle(fontSize: 16),
-                  alignment: Alignment.centerLeft,
+                  label: const Text('Search'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.white,
+                    foregroundColor: AppColors.grey4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    textStyle: const TextStyle(fontSize: 16),
+                    alignment: Alignment.centerLeft,
+                  ),
                 ),
               ),
             ),

@@ -54,21 +54,25 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     ProgramDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<ProgramDetailRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const ProgramDetailPage(),
+        child: ProgramDetailPage(
+          key: args.key,
+          program: args.program,
+        ),
       );
     },
-    TypeDetailRoute.name: (routeData) {
+    CategoryDetailRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const TypeDetailPage(),
+        child: const CategoryDetailPage(),
       );
     },
-    ExerciseDetailRoute.name: (routeData) {
+    PlayExerciseRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const ExerciseDetailPage(),
+        child: const PlayExercisePage(),
       );
     },
     CountdownTimerRoute.name: (routeData) {
@@ -88,6 +92,12 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const FinishPage(),
+      );
+    },
+    SearchRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SearchPage(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -169,12 +179,12 @@ class _$AppRouter extends RootStackRouter {
           path: '/program-detail-page',
         ),
         RouteConfig(
-          TypeDetailRoute.name,
-          path: '/type-detail-page',
+          CategoryDetailRoute.name,
+          path: '/category-detail-page',
         ),
         RouteConfig(
-          ExerciseDetailRoute.name,
-          path: '/exercise-detail-page',
+          PlayExerciseRoute.name,
+          path: '/play-exercise-page',
         ),
         RouteConfig(
           CountdownTimerRoute.name,
@@ -183,6 +193,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           FinishRoute.name,
           path: '/finish-page',
+        ),
+        RouteConfig(
+          SearchRoute.name,
+          path: '/search-page',
         ),
       ];
 }
@@ -262,38 +276,60 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProgramDetailPage]
-class ProgramDetailRoute extends PageRouteInfo<void> {
-  const ProgramDetailRoute()
-      : super(
+class ProgramDetailRoute extends PageRouteInfo<ProgramDetailRouteArgs> {
+  ProgramDetailRoute({
+    Key? key,
+    required GGetProgramsData_getPrograms_items program,
+  }) : super(
           ProgramDetailRoute.name,
           path: '/program-detail-page',
+          args: ProgramDetailRouteArgs(
+            key: key,
+            program: program,
+          ),
         );
 
   static const String name = 'ProgramDetailRoute';
 }
 
-/// generated route for
-/// [TypeDetailPage]
-class TypeDetailRoute extends PageRouteInfo<void> {
-  const TypeDetailRoute()
-      : super(
-          TypeDetailRoute.name,
-          path: '/type-detail-page',
-        );
+class ProgramDetailRouteArgs {
+  const ProgramDetailRouteArgs({
+    this.key,
+    required this.program,
+  });
 
-  static const String name = 'TypeDetailRoute';
+  final Key? key;
+
+  final GGetProgramsData_getPrograms_items program;
+
+  @override
+  String toString() {
+    return 'ProgramDetailRouteArgs{key: $key, program: $program}';
+  }
 }
 
 /// generated route for
-/// [ExerciseDetailPage]
-class ExerciseDetailRoute extends PageRouteInfo<void> {
-  const ExerciseDetailRoute()
+/// [CategoryDetailPage]
+class CategoryDetailRoute extends PageRouteInfo<void> {
+  const CategoryDetailRoute()
       : super(
-          ExerciseDetailRoute.name,
-          path: '/exercise-detail-page',
+          CategoryDetailRoute.name,
+          path: '/category-detail-page',
         );
 
-  static const String name = 'ExerciseDetailRoute';
+  static const String name = 'CategoryDetailRoute';
+}
+
+/// generated route for
+/// [PlayExercisePage]
+class PlayExerciseRoute extends PageRouteInfo<void> {
+  const PlayExerciseRoute()
+      : super(
+          PlayExerciseRoute.name,
+          path: '/play-exercise-page',
+        );
+
+  static const String name = 'PlayExerciseRoute';
 }
 
 /// generated route for
@@ -350,6 +386,18 @@ class FinishRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'FinishRoute';
+}
+
+/// generated route for
+/// [SearchPage]
+class SearchRoute extends PageRouteInfo<void> {
+  const SearchRoute()
+      : super(
+          SearchRoute.name,
+          path: '/search-page',
+        );
+
+  static const String name = 'SearchRoute';
 }
 
 /// generated route for

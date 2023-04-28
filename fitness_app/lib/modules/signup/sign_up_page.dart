@@ -1,26 +1,27 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fitness_app/global/graphql/auth/__generated__/mutation_register.req.gql.dart';
-import 'package:fitness_app/global/utils/client_mixin.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../global/gen/i18n.dart';
 import '../../global/graphql/__generated__/schema.schema.gql.dart';
+import '../../global/graphql/auth/__generated__/mutation_register.req.gql.dart';
+import '../../global/graphql/client.dart';
 import '../../global/themes/app_colors.dart';
 import '../../global/utils/dialogs.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 import '../../global/widgets/label.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  ConsumerState<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> with ClientMixin {
+class _SignUpPageState extends ConsumerState<SignUpPage> {
   final formKey = GlobalKey<FormBuilderState>();
   bool isLoading = false;
   bool passwordObscure = true;
@@ -28,13 +29,15 @@ class _SignUpPageState extends State<SignUpPage> with ClientMixin {
   final focusConfirmPasswordNode = FocusNode();
 
   void signUp() async {
+    final client = ref.read(appClientProvider);
+
     FocusManager.instance.primaryFocus?.unfocus();
     if (formKey.currentState!.saveAndValidate()) {
       setState(() => isLoading = true);
       final data = formKey.currentState!.value;
       final registerReq = GRegisterReq(
         (b) => b.vars.input.replace(
-          GRegisterInput.fromJson(data)!,
+          GRegisterInputDto.fromJson(data)!,
         ),
       );
       final response = await client.request(registerReq).first;
@@ -44,7 +47,7 @@ class _SignUpPageState extends State<SignUpPage> with ClientMixin {
           DialogUtils.showError(context: context, response: response);
         }
       } else {
-        if (response.data?.register.code == 200) {
+        if (response.data?.register.success == true) {
           if (mounted) {
             context.popRoute();
           }
@@ -72,23 +75,23 @@ class _SignUpPageState extends State<SignUpPage> with ClientMixin {
                 style: theme.textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
-              Label(i18n.signup_FullName),
-              FormBuilderTextField(
-                name: 'fullName',
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  filled: true,
-                  hintText: i18n.signup_EnterYourFullName,
-                ),
-                validator: FormBuilderValidators.required(
-                  errorText: i18n.signup_FullNameIsRequired,
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.visiblePassword,
-              ),
+              // Label(i18n.signup_FullName),
+              // FormBuilderTextField(
+              //   name: 'fullName',
+              //   enabled: !isLoading,
+              //   decoration: InputDecoration(
+              //     fillColor: isLoading ? AppColors.grey6 : AppColors.white,
+              //     filled: true,
+              //     hintText: i18n.signup_EnterYourFullName,
+              //   ),
+              //   validator: FormBuilderValidators.required(
+              //     errorText: i18n.signup_FullNameIsRequired,
+              //   ),
+              //   autovalidateMode: AutovalidateMode.onUserInteraction,
+              //   autocorrect: false,
+              //   textInputAction: TextInputAction.next,
+              //   keyboardType: TextInputType.visiblePassword,
+              // ),
               Label(i18n.login_Email),
               FormBuilderTextField(
                 name: 'email',

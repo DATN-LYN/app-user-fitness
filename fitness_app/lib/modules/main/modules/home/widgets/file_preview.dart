@@ -1,10 +1,7 @@
 import 'package:cloudinary_flutter/image/cld_image.dart';
-import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
-
-import '../../../../../locator.dart';
 
 class FilePreviewPage extends StatefulWidget {
   const FilePreviewPage({super.key});
@@ -14,7 +11,7 @@ class FilePreviewPage extends StatefulWidget {
 }
 
 class _FilePreviewPageState extends State<FilePreviewPage> {
-  final cloudinary = locator.get<CloudinaryPublic>();
+  // final cloudinary = locator.get<CloudinaryPublic>();
   late VideoPlayerController _controller;
 
   // upload() async {
@@ -47,12 +44,12 @@ class _FilePreviewPageState extends State<FilePreviewPage> {
       // var data = json.decode(resp.body);
       //print(data);
 
-      cloudinary.uploadFile(
-        CloudinaryFile.fromFile(
-          image!.path,
-          folder: 'samples/people',
-        ),
-      );
+      // cloudinary.uploadFile(
+      //   CloudinaryFile.fromFile(
+      //     image!.path,
+      //     folder: 'samples/people',
+      //   ),
+      // );
     }
   }
 
@@ -64,12 +61,12 @@ class _FilePreviewPageState extends State<FilePreviewPage> {
       // var data = json.decode(resp.body);
       //print(data);
 
-      cloudinary.uploadFile(
-        CloudinaryFile.fromFile(
-          video!.path,
-          folder: 'samples/people',
-        ),
-      );
+      // cloudinary.uploadFile(
+      //   CloudinaryFile.fromFile(
+      //     video!.path,
+      //     folder: 'samples/people',
+      //   ),
+      // );
     }
   }
 

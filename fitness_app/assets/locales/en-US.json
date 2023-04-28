@@ -19,6 +19,7 @@
         ]
     },
     "language": ["English (US)", "Tiếng Việt"],
+    "workoutLevel": ["Beginner", "Intermediate", "Advanced"],
     "main_":{
       "chat":"Chat",
       "home":"Home",

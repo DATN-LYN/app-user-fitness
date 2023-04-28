@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/widgets/countdown_timer_page.dart';
-import 'package:fitness_app/modules/exercise/exercise_detail_page.dart';
+import 'package:fitness_app/modules/category/category_detail_page.dart';
+import 'package:fitness_app/modules/exercise/play_exercise_page.dart';
 import 'package:fitness_app/modules/forgot_password/forgot_password_page.dart';
 import 'package:fitness_app/modules/login/login_page.dart';
 import 'package:fitness_app/modules/main/modules/chat/chat_page.dart';
@@ -10,12 +11,13 @@ import 'package:fitness_app/modules/main/modules/statistics/statistics_page.dart
 import 'package:fitness_app/modules/program/program_detail_page.dart';
 import 'package:fitness_app/modules/signup/sign_up_page.dart';
 import 'package:fitness_app/modules/splash/splash_page.dart';
-import 'package:fitness_app/modules/type/type_detail_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../modules/exercise/finish_page.dart';
 import '../../modules/intro/onboard_page.dart';
 import '../../modules/main/main_page.dart';
+import '../../modules/main/modules/search/search_page.dart';
+import '../graphql/query/__generated__/query_get_programs.data.gql.dart';
 
 part 'app_router.gr.dart';
 
@@ -40,10 +42,11 @@ part 'app_router.gr.dart';
     AutoRoute(page: SignUpPage),
     AutoRoute(page: ForgotPasswordPage),
     AutoRoute(page: ProgramDetailPage),
-    AutoRoute(page: TypeDetailPage),
-    AutoRoute(page: ExerciseDetailPage),
+    AutoRoute(page: CategoryDetailPage),
+    AutoRoute(page: PlayExercisePage),
     AutoRoute(page: CountdownTimerPage),
     AutoRoute(page: FinishPage),
+    AutoRoute(page: SearchPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
