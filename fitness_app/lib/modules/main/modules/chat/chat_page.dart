@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
-import '../../../../global/gen/assets.gen.dart';
 import '../../../../global/graphql/client.dart';
 import '../../../../global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart';
 import '../../../../global/graphql/query/__generated__/query_get_my_inboxes.data.gql.dart';
@@ -21,8 +20,6 @@ import 'widgets/message_widget.dart';
 import 'widgets/shimmer_inbox.dart';
 
 final messageResponseProvider = StateProvider<List<String>>((ref) => []);
-
-// final messageSendProvider = StateProvider<String>((ref) => '');
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({super.key});
@@ -67,63 +64,53 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 
   Future onCallOpenAI(String message) async {
-    try {
-      late StreamSubscription<OpenAIStreamChatCompletionModel> subscription;
-      final stream = OpenAI.instance.chat.createStream(
-        model: "gpt-3.5-turbo",
-        messages: [
-          OpenAIChatCompletionChoiceMessageModel(
-            content: message,
-            role: OpenAIChatMessageRole.user,
-          ),
-        ],
-      );
-      setState(() => loading = true);
+    late StreamSubscription<OpenAIStreamChatCompletionModel> subscription;
+    final stream = OpenAI.instance.chat.createStream(
+      model: "gpt-3.5-turbo",
+      messages: [
+        OpenAIChatCompletionChoiceMessageModel(
+          content: message,
+          role: OpenAIChatMessageRole.user,
+        ),
+      ],
+    );
+    setState(() => loading = true);
 
-      subscription = stream.listen(
-        (event) {
-          print('DATA');
-
-          ref.watch(messageResponseProvider.notifier).update(
-                (state) => [
-                  ...state,
-                  event.choices.first.delta.content ?? '',
-                ],
-              );
-        },
-        onDone: () async {
-          if (ref.read(messageResponseProvider).isEmpty) {
-            print('EMPTY');
-            Future.delayed(const Duration(seconds: 1), () {
-              subscription.cancel();
-              setState(() => loading = false);
-              return;
-            });
-          } else {
-            await upsertChat(
-              message: ref.read(messageResponseProvider).join(''),
-              isSender: false,
+    subscription = stream.listen(
+      (event) {
+        ref.watch(messageResponseProvider.notifier).update(
+              (state) => [
+                ...state,
+                event.choices.first.delta.content ?? '',
+              ],
             );
-            // final client = ref.watch(appClientProvider);
-            refreshHandler();
+      },
+      onDone: () async {
+        if (ref.read(messageResponseProvider).isEmpty) {
+          Future.delayed(const Duration(seconds: 1), () {
+            subscription.cancel();
+            setState(() => loading = false);
+            return;
+          });
+        } else {
+          await upsertChat(
+            message: ref.read(messageResponseProvider).join(''),
+            isSender: false,
+          );
+          // final client = ref.watch(appClientProvider);
+          refreshHandler();
 
-            setState(() {
-              loading = false;
-            });
-          }
-        },
-        onError: (err) {
-          print('ERRRRR 1');
-          setState(() => loading = false);
-          return;
-        },
-        cancelOnError: true,
-      );
-    } catch (err) {
-      print('ERRRRR 2');
-      // subscription.cancel();
-      setState(() => loading = false);
-    }
+          setState(() {
+            loading = false;
+          });
+        }
+      },
+      onError: (err) {
+        setState(() => loading = false);
+        return;
+      },
+      cancelOnError: true,
+    );
   }
 
   Future upsertChat({
@@ -152,9 +139,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     }
   }
 
-  void _scrollDown() {
-    scrollController.jumpTo(scrollController.position.maxScrollExtent);
-  }
+  // void _scrollDown() {
+  //   scrollController.jumpTo(scrollController.position.maxScrollExtent);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +217,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               title: 'Empty',
               message: 'Inbox is empty',
               textButton: 'Refresh',
-              image: Assets.images.sadFace.image(height: 100),
               onPressed: refreshHandler,
             );
           }
@@ -240,22 +226,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             reverse: true,
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             itemBuilder: (_, index) {
-              // if (index == 1) {
-              //   if (loading) {
-              //     final message = textController.text;
-              //     return MessageWidget(
-              //       item: GGetMyInboxesData_getMyInboxes_items(
-              //         (b) => b
-              //           ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
-              //           ..isSender = true
-              //           ..message = message,
-              //       ),
-              //     );
-              //   } else {
-              //     return const SizedBox();
-              //   }
-              // }
-
               if (index == 0) {
                 if (loading) {
                   return Consumer(

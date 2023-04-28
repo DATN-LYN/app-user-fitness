@@ -32,3 +32,6 @@ targets:
               name: DateTime
             DateTime:
               name: DateTime
+          custom_serializers:
+            - import: "package:fitness_app/global/utils/date_serializer.dart"
+              name: DateSerializer

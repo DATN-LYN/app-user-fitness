@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import '../gen/i18n.dart';
 
 enum WorkoutLevel {
@@ -8,9 +10,11 @@ enum WorkoutLevel {
   final double value;
   const WorkoutLevel(this.value);
 
-  static String label(double level, I18n i18n) {
-    final levelIndex =
-        WorkoutLevel.values.firstWhere((item) => item.value == level).index;
-    return i18n.workoutLevel[levelIndex];
+  static String? label(double levelNumber, I18n i18n) {
+    final level = WorkoutLevel.values.firstWhereOrNull(
+      (item) => item.value == levelNumber,
+    );
+    if (level != null) return i18n.workoutLevel[level.index];
+    return null;
   }
 }

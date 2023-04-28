@@ -96,8 +96,6 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
         }
 
         final data = response!.data!.getPrograms;
-        final hasMoreData = data.meta!.currentPage!.toDouble() <
-            data.meta!.totalPages!.toDouble();
         final programs = data.items;
 
         if (programs?.isEmpty == true) {

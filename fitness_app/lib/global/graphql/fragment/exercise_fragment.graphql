@@ -1,0 +1,12 @@
+fragment Exercise on Exercise {
+  id
+  name
+  imgUrl
+  videoUrl
+  duration
+  set
+  calo
+  programId
+  # createdAt
+  # updatedAt
+}

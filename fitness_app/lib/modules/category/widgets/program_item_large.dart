@@ -32,7 +32,7 @@ class _ProgramItemLargeState extends State<ProgramItemLarge> {
     final i18n = I18n.of(context)!;
     return ShadowWrapper(
       padding: EdgeInsets.zero,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(20),
       child: InkWell(
         onTap: () => context.pushRoute(
           ProgramDetailRoute(program: widget.program),
@@ -45,8 +45,8 @@ class _ProgramItemLargeState extends State<ProgramItemLarge> {
               width: double.infinity,
               fit: BoxFit.fill,
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                bottomRight: Radius.circular(12),
+                topLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
               ),
             ),
             Padding(

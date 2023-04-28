@@ -4,7 +4,6 @@ import 'package:fitness_app/modules/category/widgets/program_item_large.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../global/gen/assets.gen.dart';
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/widgets/fitness_empty.dart';
 
@@ -81,7 +80,6 @@ class SearchResult extends ConsumerWidget {
             title: 'Empty',
             message: 'Not Found',
             textButton: 'Refresh',
-            image: Assets.images.sadFace.image(height: 100),
             onPressed: () {
               searchProgramsReq = searchProgramsReq.rebuild(
                 (b) => b
@@ -94,7 +92,7 @@ class SearchResult extends ConsumerWidget {
 
         return ListView.separated(
           padding: const EdgeInsets.all(16),
-          itemCount: programs!.length,
+          itemCount: programs!.length + (hasMoreData ? 1 : 0),
           itemBuilder: (context, index) {
             final item = programs[index];
             return ProgramItemLarge(

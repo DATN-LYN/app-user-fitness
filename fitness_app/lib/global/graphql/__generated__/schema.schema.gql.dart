@@ -138,6 +138,34 @@ abstract class GUpsertCategoryInputDto
       );
 }
 
+abstract class GUpsertExerciseInputDto
+    implements Built<GUpsertExerciseInputDto, GUpsertExerciseInputDtoBuilder> {
+  GUpsertExerciseInputDto._();
+
+  factory GUpsertExerciseInputDto(
+          [Function(GUpsertExerciseInputDtoBuilder b) updates]) =
+      _$GUpsertExerciseInputDto;
+
+  String? get id;
+  String get name;
+  String get imgUrl;
+  double get duration;
+  String get videoUrl;
+  double get set;
+  double get calo;
+  static Serializer<GUpsertExerciseInputDto> get serializer =>
+      _$gUpsertExerciseInputDtoSerializer;
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GUpsertExerciseInputDto.serializer,
+        this,
+      ) as Map<String, dynamic>);
+  static GUpsertExerciseInputDto? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GUpsertExerciseInputDto.serializer,
+        json,
+      );
+}
+
 abstract class GUpsertInboxInputDto
     implements Built<GUpsertInboxInputDto, GUpsertInboxInputDtoBuilder> {
   GUpsertInboxInputDto._();
@@ -173,6 +201,12 @@ abstract class GUpsertProgramInputDto
 
   String? get id;
   String get name;
+  String get duration;
+  double get calo;
+  double get level;
+  String get bodyPart;
+  String get description;
+  String get imgUrl;
   static Serializer<GUpsertProgramInputDto> get serializer =>
       _$gUpsertProgramInputDtoSerializer;
   Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(

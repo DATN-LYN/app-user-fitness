@@ -14,6 +14,7 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
         GQueryFilterDto,
         GRegisterInputDto,
         GUpsertCategoryInputDto,
+        GUpsertExerciseInputDto,
         GUpsertInboxInputDto,
         GUpsertProgramInputDto;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.data.gql.dart'
@@ -46,6 +47,12 @@ import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragm
     show GCategoryReq;
 import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragment.var.gql.dart'
     show GCategoryVars;
+import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart'
+    show GExerciseData;
+import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.req.gql.dart'
+    show GExerciseReq;
+import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.var.gql.dart'
+    show GExerciseVars;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.data.gql.dart'
     show GInboxData, GInboxData_user;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.req.gql.dart'
@@ -86,6 +93,22 @@ import 'package:fitness_app/global/graphql/query/__generated__/query_get_categor
     show GGetCategoryReq;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_category.var.gql.dart'
     show GGetCategoryVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_excercises.data.gql.dart'
+    show
+        GGetExercisesData,
+        GGetExercisesData_getExercises,
+        GGetExercisesData_getExercises_items,
+        GGetExercisesData_getExercises_meta;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_excercises.req.gql.dart'
+    show GGetExercisesReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_excercises.var.gql.dart'
+    show GGetExercisesVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercise.data.gql.dart'
+    show GGetExerciseData, GGetExerciseData_getExercise;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercise.req.gql.dart'
+    show GGetExerciseReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercise.var.gql.dart'
+    show GGetExerciseVars;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_inbox.data.gql.dart'
     show GGetInboxData, GGetInboxData_getInbox, GGetInboxData_getInbox_user;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_inbox.req.gql.dart'
@@ -130,6 +153,8 @@ import 'package:fitness_app/global/graphql/query/__generated__/query_get_program
     show GGetProgramsReq;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.var.gql.dart'
     show GGetProgramsVars;
+import 'package:fitness_app/global/utils/date_serializer.dart'
+    show DateSerializer;
 import 'package:gql_code_builder/src/serializers/operation_serializer.dart'
     show OperationSerializer;
 
@@ -137,11 +162,15 @@ part 'serializers.gql.g.dart';
 
 final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   ..add(OperationSerializer())
+  ..add(DateSerializer())
   ..addPlugin(StandardJsonPlugin());
 @SerializersFor([
   GCategoryData,
   GCategoryReq,
   GCategoryVars,
+  GExerciseData,
+  GExerciseReq,
+  GExerciseVars,
   GFILTER_OPERATOR,
   GFilterDto,
   GGetCateforiesData,
@@ -154,6 +183,16 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GGetCategoryData_getCategory,
   GGetCategoryReq,
   GGetCategoryVars,
+  GGetExerciseData,
+  GGetExerciseData_getExercise,
+  GGetExerciseReq,
+  GGetExerciseVars,
+  GGetExercisesData,
+  GGetExercisesData_getExercises,
+  GGetExercisesData_getExercises_items,
+  GGetExercisesData_getExercises_meta,
+  GGetExercisesReq,
+  GGetExercisesVars,
   GGetInboxData,
   GGetInboxData_getInbox,
   GGetInboxData_getInbox_user,
@@ -214,6 +253,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GRegisterReq,
   GRegisterVars,
   GUpsertCategoryInputDto,
+  GUpsertExerciseInputDto,
   GUpsertInboxData,
   GUpsertInboxData_upsertInbox,
   GUpsertInboxInputDto,

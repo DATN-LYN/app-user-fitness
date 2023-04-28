@@ -96,8 +96,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
         }
 
         final data = response!.data!.getCategories;
-        final hasMoreData = data.meta!.currentPage!.toDouble() <
-            data.meta!.totalPages!.toDouble();
+        data.meta!.totalPages!.toDouble();
         final categories = data.items;
 
         if (categories?.isEmpty == true) {

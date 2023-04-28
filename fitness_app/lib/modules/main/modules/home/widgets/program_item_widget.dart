@@ -67,7 +67,8 @@ class _ProgramItemWidgetState extends State<ProgramItemWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          WorkoutLevel.label(widget.program.level ?? 0, i18n),
+                          WorkoutLevel.label(widget.program.level ?? 0, i18n) ??
+                              '_',
                           style: const TextStyle(
                             color: AppColors.grey1,
                             fontSize: 14,
