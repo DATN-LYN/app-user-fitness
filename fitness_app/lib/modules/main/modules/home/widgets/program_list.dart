@@ -102,6 +102,7 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
           return const FitnessEmpty(
             title: 'No Data',
             message: 'Please pull to refresh to try again',
+            showImage: false,
           );
         }
 

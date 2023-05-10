@@ -8,24 +8,40 @@ class ProgramInfoTile extends StatelessWidget {
     this.label,
     required this.icon,
     this.textStyle = const TextStyle(fontWeight: FontWeight.w700),
+    this.iconColor = AppColors.grey1,
   });
 
   final String? label;
   final IconData icon;
   final TextStyle textStyle;
+  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: AppColors.grey2,
-          size: 16,
-        ),
-        const SizedBox(width: 4),
-        Text(label ?? '_', style: textStyle),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        color: AppColors.grey6,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: iconColor,
+            size: 20,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label ?? '_',
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

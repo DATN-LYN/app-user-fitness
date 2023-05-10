@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragment.data.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/widgets/shimmer_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../global/graphql/query/__generated__/query_get_categories.data.gql.dart';
 import '../../../../../global/themes/app_colors.dart';
 
 class CategoryItemWidget extends StatefulWidget {
@@ -12,7 +12,7 @@ class CategoryItemWidget extends StatefulWidget {
     required this.category,
   });
 
-  final GGetCateforiesData_getCategories_items category;
+  final GCategory category;
 
   @override
   State<CategoryItemWidget> createState() => _CategoryItemWidgetState();

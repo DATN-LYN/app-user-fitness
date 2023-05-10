@@ -6,8 +6,9 @@ fragment Inbox on Inbox {
     id
     email
     avatar
+    fullName
   }
   isSender
-  # createdAt
-  # updatedAt
+  createdAt
+  updatedAt
 }

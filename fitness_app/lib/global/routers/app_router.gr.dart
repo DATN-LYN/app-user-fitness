@@ -279,7 +279,7 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
 class ProgramDetailRoute extends PageRouteInfo<ProgramDetailRouteArgs> {
   ProgramDetailRoute({
     Key? key,
-    required GGetProgramsData_getPrograms_items program,
+    required GProgram program,
   }) : super(
           ProgramDetailRoute.name,
           path: '/program-detail-page',
@@ -300,7 +300,7 @@ class ProgramDetailRouteArgs {
 
   final Key? key;
 
-  final GGetProgramsData_getPrograms_items program;
+  final GProgram program;
 
   @override
   String toString() {

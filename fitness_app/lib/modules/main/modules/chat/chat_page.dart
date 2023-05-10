@@ -123,7 +123,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ..fetchPolicy = FetchPolicy.CacheAndNetwork
         ..vars.input.isSender = isSender
         ..vars.input.message = message
-        ..vars.input.userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5',
+        ..vars.input.userId = 'f80200e4-b36b-4803-b5c0-dd0c0ef8cb89',
     );
     final response = await client.request(req).first;
 
