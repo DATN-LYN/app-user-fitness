@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../../global/themes/app_colors.dart';
 
-class CategoryItemWidget extends StatelessWidget {
-  const CategoryItemWidget({
+class CategoryItem extends StatelessWidget {
+  const CategoryItem({
     super.key,
     required this.category,
   });

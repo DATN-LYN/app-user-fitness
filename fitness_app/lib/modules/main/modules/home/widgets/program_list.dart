@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../global/widgets/fitness_error.dart';
-import 'program_item_widget.dart';
+import 'program_item.dart';
 
 class ProgramList extends ConsumerStatefulWidget {
   const ProgramList({super.key});
@@ -113,7 +113,7 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             final item = programs[index];
-            return ProgramItemWidget(
+            return ProgramItem(
               program: item,
             );
           },

@@ -104,6 +104,18 @@ class _$AppRouter extends RootStackRouter {
         child: const SearchPage(),
       );
     },
+    CategoryListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const CategoryListPage(),
+      );
+    },
+    ProgramListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ProgramListPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -201,6 +213,14 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           SearchRoute.name,
           path: '/search-page',
+        ),
+        RouteConfig(
+          CategoryListRoute.name,
+          path: '/category-list-page',
+        ),
+        RouteConfig(
+          ProgramListRoute.name,
+          path: '/program-list-page',
         ),
       ];
 }
@@ -424,6 +444,30 @@ class SearchRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SearchRoute';
+}
+
+/// generated route for
+/// [CategoryListPage]
+class CategoryListRoute extends PageRouteInfo<void> {
+  const CategoryListRoute()
+      : super(
+          CategoryListRoute.name,
+          path: '/category-list-page',
+        );
+
+  static const String name = 'CategoryListRoute';
+}
+
+/// generated route for
+/// [ProgramListPage]
+class ProgramListRoute extends PageRouteInfo<void> {
+  const ProgramListRoute()
+      : super(
+          ProgramListRoute.name,
+          path: '/program-list-page',
+        );
+
+  static const String name = 'ProgramListRoute';
 }
 
 /// generated route for

@@ -139,7 +139,6 @@ class AppThemes {
           foregroundColor: AppColors.grey1,
           textStyle: const TextStyle(
             fontWeight: FontWeight.w600,
-            decoration: TextDecoration.underline,
           ),
         ),
       ),

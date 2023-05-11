@@ -154,11 +154,11 @@
       "minutes": "Phút",
       "calories": "Calo",
       "description": "Mô Tả"
-
     },
     "home_":{
       "Hello": "Xin chào!",
-      "haveANiceDay": "Chúc bạn một ngày vui vẻ"
+      "haveANiceDay": "Chúc bạn một ngày vui vẻ",
+      "viewAll": "Xem tất cả"
     },
     "search_":{
       "recentSearches": "Tìm kiếm gần đây",

@@ -128,8 +128,8 @@ class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
 
           if (programs?.isEmpty == true) {
             return FitnessEmpty(
-              title: 'Empty',
-              message: 'Inbox is empty',
+              title: i18n.common_EmptyData,
+              message: i18n.programs_ProgramNotFound,
               textButton: 'Refresh',
               showImage: true,
               onPressed: refreshHandler,

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/widgets/countdown_timer_page.dart';
 import 'package:fitness_app/modules/category/category_detail_page.dart';
+import 'package:fitness_app/modules/category/category_list_page.dart';
 import 'package:fitness_app/modules/exercise/play_exercise_page.dart';
 import 'package:fitness_app/modules/forgot_password/forgot_password_page.dart';
 import 'package:fitness_app/modules/login/login_page.dart';
@@ -9,6 +10,7 @@ import 'package:fitness_app/modules/main/modules/home/home_page.dart';
 import 'package:fitness_app/modules/main/modules/settings/setting_page.dart';
 import 'package:fitness_app/modules/main/modules/statistics/statistics_page.dart';
 import 'package:fitness_app/modules/program/program_detail_page.dart';
+import 'package:fitness_app/modules/program/program_list_page.dart';
 import 'package:fitness_app/modules/signup/sign_up_page.dart';
 import 'package:fitness_app/modules/splash/splash_page.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,8 @@ part 'app_router.gr.dart';
     AutoRoute(page: CountdownTimerPage),
     AutoRoute(page: FinishPage),
     AutoRoute(page: SearchPage),
+    AutoRoute(page: CategoryListPage),
+    AutoRoute(page: ProgramListPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

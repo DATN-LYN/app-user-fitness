@@ -154,7 +154,8 @@
     },
     "home_":{
       "Hello": "Hello!",
-      "haveANiceDay": "Have a nice day"
+      "haveANiceDay": "Have a nice day",
+      "viewAll": "View all"
     },
     "search_":{
       "recentSearches": "Recent Searches",

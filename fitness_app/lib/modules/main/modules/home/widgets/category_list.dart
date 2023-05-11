@@ -5,12 +5,12 @@ import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/widgets/fitness_empty.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/category_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/widgets/fitness_error.dart';
+import 'category_item.dart';
 
 class CategoryList extends ConsumerStatefulWidget {
   const CategoryList({super.key});
@@ -114,7 +114,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             final item = categories[index];
-            return CategoryItemWidget(
+            return CategoryItem(
               category: item,
             );
           },

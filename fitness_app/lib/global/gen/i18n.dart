@@ -246,6 +246,8 @@ class I18n implements WidgetsLocalizations {
 	String get home_Hello => "Hello!";
 	/// "Have a nice day"
 	String get home_HaveANiceDay => "Have a nice day";
+	/// "View all"
+	String get home_ViewAll => "View all";
 	/// "Recent Searches"
 	String get search_RecentSearches => "Recent Searches";
 	/// "Clear All"
@@ -583,6 +585,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Chúc bạn một ngày vui vẻ"
 	@override
 	String get home_HaveANiceDay => "Chúc bạn một ngày vui vẻ";
+	/// "Xem tất cả"
+	@override
+	String get home_ViewAll => "Xem tất cả";
 	/// "Tìm kiếm gần đây"
 	@override
 	String get search_RecentSearches => "Tìm kiếm gần đây";
