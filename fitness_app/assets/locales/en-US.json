@@ -117,5 +117,11 @@
       "whatAGreatValue":"What a great value!",
       "bodyCountHistory":"Body Count History",
       "selectMonth": "Select month"
-    }
+    },
+    "workoutBodyPart": [
+      "Upper", 
+      "Downer", 
+      "Abs", 
+      "Full Body"
+    ]
 }

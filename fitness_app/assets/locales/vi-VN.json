@@ -118,5 +118,11 @@
       "whatAGreatValue":"Thật tuyệt vời!",
       "bodyCountHistory":"Lịch sử chỉ số cơ thể",
       "selectMonth": "Chọn tháng"
-    }
+    },
+    "workoutBodyPart": [
+      "Thân trên", 
+      "Thân dưới", 
+      "Bụng", 
+      "Toàn thân"
+    ]
 }

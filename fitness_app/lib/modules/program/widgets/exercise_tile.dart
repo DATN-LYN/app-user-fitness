@@ -1,23 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
+import 'package:fitness_app/global/utils/duration_time.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:flutter/material.dart';
 
-import '../../../global/graphql/query/__generated__/query_get_excercises.data.gql.dart';
-
-class ExerciseTile extends StatefulWidget {
+class ExerciseTile extends StatelessWidget {
   const ExerciseTile({
     super.key,
     required this.exercise,
   });
 
-  final GGetExercisesData_getExercises_items exercise;
+  final GExercise exercise;
 
-  @override
-  State<ExerciseTile> createState() => _ExerciseTileState();
-}
-
-class _ExerciseTileState extends State<ExerciseTile> {
   @override
   Widget build(BuildContext context) {
     return ShadowWrapper(
@@ -31,7 +26,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
               width: 120,
               height: 80,
               fit: BoxFit.cover,
-              imageUrl: widget.exercise.imgUrl ?? '_',
+              imageUrl: exercise.imgUrl ?? '_',
             ),
           ),
           const SizedBox(width: 16),
@@ -40,7 +35,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.exercise.name ?? '_',
+                  exercise.name ?? '_',
                   style: const TextStyle(
                     color: AppColors.grey1,
                     fontSize: 16,
@@ -56,7 +51,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
                       color: AppColors.grey5,
                     ),
                     const SizedBox(width: 4),
-                    Text(' ${widget.exercise.calo} calories'),
+                    Text(' ${exercise.calo ?? 0} calories'),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -68,7 +63,11 @@ class _ExerciseTileState extends State<ExerciseTile> {
                       color: AppColors.grey5,
                     ),
                     const SizedBox(width: 4),
-                    Text('${widget.exercise.duration} mins'),
+                    Text(
+                      DurationTime.totalDurationFormat(
+                        Duration(seconds: exercise.duration!.toInt()),
+                      ),
+                    ),
                   ],
                 ),
               ],

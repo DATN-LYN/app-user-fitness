@@ -1,22 +1,20 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fitness_app/global/enums/workout_level.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
-import 'package:fitness_app/global/graphql/query/__generated__/query_get_excercises.req.gql.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercises.req.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.req.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/utils/dialogs.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
-import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
-import 'package:fitness_app/modules/program/widgets/exercise_list.dart';
+import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
+import 'package:fitness_app/modules/program/widgets/program_detail_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../global/graphql/client.dart';
 import '../../global/graphql/query/__generated__/query_get_program.data.gql.dart';
-import '../../global/graphql/query/__generated__/query_get_programs.data.gql.dart';
-import '../../global/widgets/program_info_tile.dart';
 
 class ProgramDetailPage extends ConsumerStatefulWidget {
   const ProgramDetailPage({
@@ -24,7 +22,7 @@ class ProgramDetailPage extends ConsumerStatefulWidget {
     required this.program,
   });
 
-  final GGetProgramsData_getPrograms_items program;
+  final GProgram program;
 
   @override
   ConsumerState<ProgramDetailPage> createState() => _ProgramDetailPageState();
@@ -33,13 +31,14 @@ class ProgramDetailPage extends ConsumerStatefulWidget {
 class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
   GGetProgramData_getProgram? program;
   bool loading = false;
+  var key = GlobalKey();
+
   var getExercisesReq = GGetExercisesReq(
     (b) => b
       ..requestId = '@getExercisesByProgramRequestIs'
       ..vars.queryParams.limit = Constants.defaultLimit
       ..vars.queryParams.page = 1,
   );
-  var key = GlobalKey();
 
   @override
   void initState() {
@@ -72,9 +71,7 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
         DialogUtils.showError(context: context, response: res);
       }
     } else {
-      setState(() {
-        program = res.data!.getProgram;
-      });
+      setState(() => program = res.data!.getProgram);
     }
   }
 
@@ -125,76 +122,40 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
                             ),
                           ),
                         ),
-                        Text(
-                          program?.name ?? '_',
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
+                        if (loading)
+                          ShimmerWrapper(
+                            child: Container(
+                              width: 120,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          )
+                        else
+                          Text(
+                            program?.name ?? '_',
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ProgramInfoTile(
-                          label: '${program?.calo ?? '_'} Calories',
-                          icon: Icons.local_fire_department_rounded,
-                        ),
-                        ProgramInfoTile(
-                          label: '${program?.duration ?? '_'} Mins',
-                          icon: Icons.timelapse,
-                        ),
-                        ProgramInfoTile(
-                          label: WorkoutLevel.label(program?.level ?? 0, i18n),
-                          icon: Icons.fitness_center,
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),
             ),
             Expanded(
               child: RefreshIndicator(
+                key: key,
                 onRefresh: () async {
                   setState(() {
                     key = GlobalKey();
                   });
                 },
-                child: ListView(
-                  key: key,
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    const Text(
-                      'Description',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ShadowWrapper(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        program?.description ?? '_',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Exercises',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Expanded(
-                      child: ExerciseList(),
-                    ),
-                  ],
-                ),
+                child: ProgramDetailBody(program: program),
               ),
             ),
           ],

@@ -23,7 +23,6 @@ type Exercise {
   duration: Float
   videoUrl: String
   imgUrl: String
-  set: Float
   calo: Float
   programId: String!
   program: Program
@@ -61,7 +60,6 @@ type IExercise {
   duration: Float
   videoUrl: String
   imgUrl: String
-  set: Float
   calo: Float
   programId: String!
   program: Program
@@ -102,12 +100,13 @@ type Inbox {
 type IProgram {
   id: ID
   name: String
-  duration: String
-  calo: Float
   level: Float
-  bodyPart: String
+  view: Float
+  bodyPart: Float
   description: String
   imgUrl: String
+  categoryId: String!
+  category: Category
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -115,6 +114,25 @@ type IProgram {
 type IPrograms {
   meta: Meta
   items: [Program!]
+}
+
+type IUser {
+  id: String
+  email: String!
+  fullName: String
+  password: String!
+  googleId: String
+  avatar: String
+  age: Float
+  refreshToken: String
+  roleId: String
+  role: Role
+  inboxes: [Inbox!]
+}
+
+type IUsers {
+  meta: Meta
+  items: [User!]
 }
 
 input LoginInputDto {
@@ -141,43 +159,49 @@ type Meta {
 }
 
 type Mutation {
+  upsertExercise(input: UpsertExerciseInputDto!): IExercise!
+  deleteExercise(exerciseId: String!): ResponseMessageBase!
   register(input: RegisterInputDto!): ResponseMessageBase!
   logout(userId: String!): ResponseMessageBase!
   upsertInbox(input: UpsertInboxInputDto!): IInbox!
-  deleteInbox(categoryId: String!): ResponseMessageBase!
+  deleteInbox(inboxId: String!): ResponseMessageBase!
   upsertCategory(input: UpsertCategoryInputDto!): ICategory!
   deleteCategory(categoryId: String!): ResponseMessageBase!
   upsertProgram(input: UpsertProgramInputDto!): IProgram!
-  upsertExercise(input: UpsertExerciseInputDto!): IExercise!
+  deleteProgram(programId: String!): ResponseMessageBase!
+  deleteUser(userId: String!): ResponseMessageBase!
+  upsertUser(input: UpsertUserInputDto!): IUser!
 }
 
 type Program {
   id: ID
   name: String
-  duration: String
-  calo: Float
   level: Float
-  bodyPart: String
+  view: Float
+  bodyPart: Float
   description: String
   imgUrl: String
+  categoryId: String!
+  category: Category
   createdAt: DateTime
   updatedAt: DateTime
 }
 
 type Query {
+  getExercise(programId: String!): IExercise!
+  getExercises(queryParams: QueryFilterDto!): IExercises!
   loginGoogle(input: LoginInputDto!): LoginResponseDto!
   login(input: LoginInputDto!): LoginResponseDto!
   refreshToken(refreshToken: String!): RefreshTokenResponseDto!
   getInbox(categoryId: String!): IInbox!
   getInboxes(queryParams: QueryFilterDto!): IInboxes!
   getMyInboxes(queryParams: QueryFilterDto!): IInboxes!
-  getCategory(categoryId: String!): ICategory!
+  getCategory(categoryId: String!): Category!
   getCategories(queryParams: QueryFilterDto!): ICategories!
-  getProgram(programId: String!): IProgram!
+  getProgram(programId: String!): Program!
   getPrograms(queryParams: QueryFilterDto!): IPrograms!
-  getABC: Float!
-  getExercise(programId: String!): IExercise!
-  getExercises(queryParams: QueryFilterDto!): IExercises!
+  getUser(userId: String!): IUser!
+  getUsers(queryParams: QueryFilterDto!): IUsers!
 }
 
 input QueryFilterDto {
@@ -192,8 +216,11 @@ type RefreshTokenResponseDto {
 }
 
 input RegisterInputDto {
-  email: String
-  password: String
+  email: String!
+  password: String!
+  avatar: String
+  age: Float!
+  fullName: String!
 }
 
 type ResponseMessageBase {
@@ -208,6 +235,7 @@ type Role {
 input UpsertCategoryInputDto {
   id: ID
   name: String!
+  imgUrl: String!
 }
 
 input UpsertExerciseInputDto {
@@ -216,8 +244,8 @@ input UpsertExerciseInputDto {
   imgUrl: String!
   duration: Float!
   videoUrl: String!
-  set: Float!
   calo: Float!
+  programId: String!
 }
 
 input UpsertInboxInputDto {
@@ -230,20 +258,29 @@ input UpsertInboxInputDto {
 input UpsertProgramInputDto {
   id: ID
   name: String!
-  duration: String!
-  calo: Float!
   level: Float!
-  bodyPart: String!
+  bodyPart: Float!
   description: String!
   imgUrl: String!
+  categoryId: String!
+}
+
+input UpsertUserInputDto {
+  id: ID
+  fullName: String!
+  avatar: String!
+  email: String!
+  age: Float!
 }
 
 type User {
   id: String
   email: String!
+  fullName: String
   password: String!
   googleId: String
   avatar: String
+  age: Float
   refreshToken: String
   roleId: String
   role: Role

@@ -204,6 +204,8 @@ class I18n implements WidgetsLocalizations {
 	String get statistics_BodyCountHistory => "Body Count History";
 	/// "Select month"
 	String get statistics_SelectMonth => "Select month";
+	/// ["Upper", "Downer", "Abs", "Full Body"]
+	List<String> get workoutBodyPart => ["Upper", "Downer", "Abs", "Full Body"];
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 }
@@ -475,6 +477,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Chọn tháng"
 	@override
 	String get statistics_SelectMonth => "Chọn tháng";
+	/// ["Thân trên", "Thân dưới", "Bụng", "Toàn thân"]
+	@override
+	List<String> get workoutBodyPart => ["Thân trên", "Thân dưới", "Bụng", "Toàn thân"];
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

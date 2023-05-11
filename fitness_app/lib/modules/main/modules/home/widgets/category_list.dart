@@ -19,7 +19,7 @@ class CategoryList extends ConsumerStatefulWidget {
 }
 
 class _CategoryListState extends ConsumerState<CategoryList> {
-  var getCategoriesReq = GGetCateforiesReq(
+  var getCategoriesReq = GGetCategoriesReq(
     (b) => b
       ..vars.queryParams.limit = Constants.defaultLimit
       ..vars.queryParams.page = 1,

@@ -5,10 +5,9 @@ query GetExercise($programId: String!) {
     imgUrl
     videoUrl
     duration
-    set
     calo
     programId
-    # createdAt
-    # updatedAt
+    createdAt
+    updatedAt
   }
 }
