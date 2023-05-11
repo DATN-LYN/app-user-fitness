@@ -1,3 +1,4 @@
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
@@ -37,6 +38,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
   @override
   Widget build(BuildContext context) {
     final client = ref.watch(appClientProvider);
+    final i18n = I18n.of(context)!;
 
     return InfinityList(
       client: client,
@@ -100,9 +102,9 @@ class _CategoryListState extends ConsumerState<CategoryList> {
         final categories = data.items;
 
         if (categories?.isEmpty == true) {
-          return const FitnessEmpty(
-            title: 'No Data',
-            message: 'Please pull to refresh to try again.',
+          return FitnessEmpty(
+            title: i18n.categories_CategoryNotFound,
+            message: i18n.common_PleasePullToTryAgain,
           );
         }
 

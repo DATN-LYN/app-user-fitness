@@ -45,14 +45,16 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            user?.fullName == null ? 'Hello User !' : 'Hello!',
+                            user?.fullName == null
+                                ? i18n.home_Hello
+                                : '${i18n.home_Hello} ${user?.fullName}',
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text('Have a nice day')
+                          Text(i18n.home_HaveANiceDay),
                         ],
                       ),
                     ),
@@ -65,7 +67,6 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(
                               width: 1.5,
-                              //strokeAlign: StrokeAlign.outside,
                               color: AppColors.white,
                             ),
                           ),
@@ -104,7 +105,7 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                     Icons.search,
                     size: 18,
                   ),
-                  label: const Text('Search'),
+                  label: Text(i18n.common_Search),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.white,
                     foregroundColor: AppColors.grey4,

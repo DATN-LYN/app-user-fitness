@@ -4,7 +4,9 @@
         "next": "Tiếp tục",
         "done": "Xong",
         "cancel": "Huỷ bỏ",
-        "ok": "Đồng ý"
+        "ok": "Đồng ý",
+        "tryAgain": "Thử lại"
+
     },
     "onboard_":{
       "title": [
@@ -124,5 +126,42 @@
       "Thân dưới", 
       "Bụng", 
       "Toàn thân"
-    ]
+    ],
+    "categories_":{
+      "categories": "Thể Loại",
+      "categoryNotFound": "Không tìm thấy thể loại"
+    },
+    "exercises_":{
+      "exercises": "Bài Tập",
+      "exerciseNotFound": "Không tìm thấy bài tập"
+    },
+    "programs_":{
+      "programs": "Chương trình",
+      "programNotFound": "Không tìm thấy chương trình",
+      "trendingPrograms": "Chương trình nổi bật",
+      "mostViewedPrograms": "Chương trình nhiều lượt xem",
+      "searchHint": "Nhập tên chương trình"
+
+    },
+    "inboxes_":{
+      "inboxes":"Tin nhắn",
+      "inboxNotFound": "Không tìm thấy tin nhắn"
+    },
+    "common_":{
+      "emptyData": "Không có dữ liệu",
+      "pleasePullToTryAgain": "Hãy kéo xuống để làm mới dữ liệu",
+      "search": "Tìm kiếm",
+      "minutes": "Phút",
+      "calories": "Calo",
+      "description": "Mô Tả"
+
+    },
+    "home_":{
+      "Hello": "Xin chào!",
+      "haveANiceDay": "Chúc bạn một ngày vui vẻ"
+    },
+    "search_":{
+      "recentSearches": "Tìm kiếm gần đây",
+      "clearAll": "Xoá hết"
+    }
 }

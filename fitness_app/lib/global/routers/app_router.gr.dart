@@ -64,9 +64,13 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     CategoryDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<CategoryDetailRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const CategoryDetailPage(),
+        child: CategoryDetailPage(
+          category: args.category,
+          key: args.key,
+        ),
       );
     },
     PlayExerciseRoute.name: (routeData) {
@@ -310,14 +314,36 @@ class ProgramDetailRouteArgs {
 
 /// generated route for
 /// [CategoryDetailPage]
-class CategoryDetailRoute extends PageRouteInfo<void> {
-  const CategoryDetailRoute()
-      : super(
+class CategoryDetailRoute extends PageRouteInfo<CategoryDetailRouteArgs> {
+  CategoryDetailRoute({
+    required GCategory category,
+    Key? key,
+  }) : super(
           CategoryDetailRoute.name,
           path: '/category-detail-page',
+          args: CategoryDetailRouteArgs(
+            category: category,
+            key: key,
+          ),
         );
 
   static const String name = 'CategoryDetailRoute';
+}
+
+class CategoryDetailRouteArgs {
+  const CategoryDetailRouteArgs({
+    required this.category,
+    this.key,
+  });
+
+  final GCategory category;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CategoryDetailRouteArgs{category: $category, key: $key}';
+  }
 }
 
 /// generated route for

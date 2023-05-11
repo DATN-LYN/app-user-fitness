@@ -1,3 +1,4 @@
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/widgets/label.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/category_list.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/home_header.dart';
@@ -16,6 +17,8 @@ class _HomePageState extends State<HomePage> {
   var key = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    final i18n = I18n.of(context)!;
+
     return RefreshIndicator(
       onRefresh: () async {
         setState(() {
@@ -29,20 +32,20 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(16),
-              children: const [
-                UserStatistic(),
-                Label('Your Plan'),
-                SizedBox(
+              children: [
+                const UserStatistic(),
+                Label(i18n.programs_TrendingPrograms),
+                const SizedBox(
                   height: 170,
                   child: ProgramList(),
                 ),
-                Label('Select Plan'),
-                SizedBox(
+                Label(i18n.categories_Categories),
+                const SizedBox(
                   height: 100,
                   child: CategoryList(),
                 ),
-                Label('Trending Now'),
-                SizedBox(
+                Label(i18n.programs_MostViewedPrograms),
+                const SizedBox(
                   height: 170,
                   child: ProgramList(),
                 ),

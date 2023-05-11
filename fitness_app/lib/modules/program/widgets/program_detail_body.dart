@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercises.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../global/graphql/client.dart';
-import '../../../global/graphql/query/__generated__/query_get_program.data.gql.dart';
 import '../../../global/utils/constants.dart';
 import '../../../global/widgets/fitness_empty.dart';
 import '../../../global/widgets/fitness_error.dart';
@@ -25,7 +25,7 @@ class ProgramDetailBody extends ConsumerStatefulWidget {
     this.loading,
   });
 
-  final GGetProgramData_getProgram? program;
+  final GProgram? program;
   final bool? loading;
 
   @override
@@ -35,12 +35,27 @@ class ProgramDetailBody extends ConsumerStatefulWidget {
 class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
   double totalDuration = 0;
   double totalCalo = 0;
-  bool? loading = true;
-  late String? programId = widget.program?.id;
+  bool? loading = false;
   var getExercisesReq = GGetExercisesReq();
 
   @override
   void initState() {
+    getExercisesReq = GGetExercisesReq(
+      (b) => b
+        ..requestId = '@getExercisesByProgramRequestId'
+        ..vars.queryParams.limit = Constants.defaultLimit
+        ..vars.queryParams.page = 1
+        ..vars.queryParams.filters = ListBuilder(
+          [
+            GFilterDto(
+              (b) => b
+                ..data = widget.program?.id
+                ..field = 'Exercise.programId'
+                ..operator = GFILTER_OPERATOR.eq,
+            ),
+          ],
+        ),
+    );
     super.initState();
   }
 
@@ -49,24 +64,7 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
   }
 
   Future initReq() async {
-    setState(() {
-      getExercisesReq = GGetExercisesReq(
-        (b) => b
-          ..requestId = '@getExercisesByProgramRequestId'
-          ..vars.queryParams.limit = Constants.defaultLimit
-          ..vars.queryParams.page = 1
-          ..vars.queryParams.filters = ListBuilder(
-            [
-              GFilterDto(
-                (b) => b
-                  ..data = programId
-                  ..field = 'Exercise.programId'
-                  ..operator = GFILTER_OPERATOR.eq,
-              ),
-            ],
-          ),
-      );
-    });
+    setState(() {});
   }
 
   void refreshHandler() {
@@ -148,13 +146,13 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
             return getExercisesReq;
           },
           builder: (context, response, error) {
-            if ((response?.hasErrors == true ||
-                    response?.data?.getExercises.meta?.itemCount == 0) &&
-                getExercisesReq.vars.queryParams.page != 1) {
-              getExercisesReq = getExercisesReq.rebuild(
-                (b) => b..vars.queryParams.page = b.vars.queryParams.page! - 1,
-              );
-            }
+            // if ((response?.hasErrors == true ||
+            //         response?.data?.getExercises.meta?.itemCount == 0) &&
+            //     getExercisesReq.vars.queryParams.page != 1) {
+            //   getExercisesReq = getExercisesReq.rebuild(
+            //     (b) => b..vars.queryParams.page = b.vars.queryParams.page! - 1,
+            //   );
+            // }
 
             if (response?.loading == true) {
               return const ShimmerExerciseList();
@@ -175,9 +173,9 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
             if (exercises?.isEmpty == true) {
               return FitnessEmpty(
                 showImage: true,
-                title: 'No Data',
-                message: 'Please pull to refresh to try again',
-                textButton: 'Try Again',
+                title: i18n.common_EmptyData,
+                message: i18n.exercises_ExerciseNotFound,
+                textButton: i18n.button_TryAgain,
                 onPressed: refreshHandler,
               );
             }
@@ -225,13 +223,15 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
   }
 
   Widget _programDescription() {
+    final i18n = I18n.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 24),
-        const Text(
-          'Description',
-          style: TextStyle(
+        Text(
+          i18n.common_Description,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
           ),

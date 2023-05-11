@@ -4,7 +4,8 @@
         "next": "Next",
         "done": "Done",
         "cancel": "Cancel",
-        "ok": "OK"
+        "ok": "OK",
+        "tryAgain": "Try Again"
     },
     "onboard_": {
         "title": [
@@ -123,5 +124,40 @@
       "Downer", 
       "Abs", 
       "Full Body"
-    ]
+    ],
+    "categories_":{
+      "categories": "Categories",
+      "categoryNotFound": "Category Not Found"
+    },
+    "exercises_":{
+      "exercises": "Exercise",
+      "exerciseNotFound": "Exercise Not Found"
+    },
+    "programs_":{
+      "programs": "Programs",
+      "programNotFound": "Program Not Found",
+      "trendingPrograms": "Trending Programs",
+      "mostViewedPrograms": "Most Viewed Programs",
+      "searchHint": "Input program name",
+      "description": "Description"
+    },
+    "inboxes_":{
+      "inboxes":"Inboxes",
+      "inboxNotFound": "Inbox Not Found"
+    },
+    "common_":{
+      "emptyData": "Empty Data",
+      "pleasePullToTryAgain": "Please pull to refresh data",
+      "search": "Search",
+      "minutes": "Minutes",
+      "calories": "Calories"
+    },
+    "home_":{
+      "Hello": "Hello!",
+      "haveANiceDay": "Have a nice day"
+    },
+    "search_":{
+      "recentSearches": "Recent Searches",
+      "clearAll": "Clear All"
+    }
 }
