@@ -125,10 +125,10 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
                         if (loading)
                           ShimmerWrapper(
                             child: Container(
-                              width: 120,
-                              height: 20,
+                              width: 200,
+                              height: 25,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(4),
                                 color: AppColors.primary,
                               ),
                             ),
@@ -155,7 +155,10 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
                     key = GlobalKey();
                   });
                 },
-                child: ProgramDetailBody(program: program),
+                child: ProgramDetailBody(
+                  program: program,
+                  loading: loading,
+                ),
               ),
             ),
           ],

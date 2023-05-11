@@ -1,14 +1,13 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercises.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
-import 'package:fitness_app/global/utils/duration_time.dart';
-import 'package:fitness_app/global/widgets/program_info_tile.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
+import 'package:fitness_app/modules/program/widgets/program_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../global/enums/workout_body_part.dart';
-import '../../../global/enums/workout_level.dart';
 import '../../../global/graphql/client.dart';
 import '../../../global/graphql/query/__generated__/query_get_program.data.gql.dart';
 import '../../../global/utils/constants.dart';
@@ -17,14 +16,17 @@ import '../../../global/widgets/fitness_error.dart';
 import '../../../global/widgets/infinity_list.dart';
 import '../../../global/widgets/shadow_wrapper.dart';
 import 'exercise_tile.dart';
+import 'shimmer_exercise_list.dart';
 
 class ProgramDetailBody extends ConsumerStatefulWidget {
   const ProgramDetailBody({
     super.key,
     this.program,
+    this.loading,
   });
 
   final GGetProgramData_getProgram? program;
+  final bool? loading;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ExerciseListState();
@@ -33,13 +35,39 @@ class ProgramDetailBody extends ConsumerStatefulWidget {
 class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
   double totalDuration = 0;
   double totalCalo = 0;
+  bool? loading = true;
+  late String? programId = widget.program?.id;
+  var getExercisesReq = GGetExercisesReq();
 
-  var getExercisesReq = GGetExercisesReq(
-    (b) => b
-      ..requestId = '@getExercisesByProgramRequestIs'
-      ..vars.queryParams.limit = Constants.defaultLimit
-      ..vars.queryParams.page = 1,
-  );
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void initData() async {
+    await initReq();
+  }
+
+  Future initReq() async {
+    setState(() {
+      getExercisesReq = GGetExercisesReq(
+        (b) => b
+          ..requestId = '@getExercisesByProgramRequestId'
+          ..vars.queryParams.limit = Constants.defaultLimit
+          ..vars.queryParams.page = 1
+          ..vars.queryParams.filters = ListBuilder(
+            [
+              GFilterDto(
+                (b) => b
+                  ..data = programId
+                  ..field = 'Exercise.programId'
+                  ..operator = GFILTER_OPERATOR.eq,
+              ),
+            ],
+          ),
+      );
+    });
+  }
 
   void refreshHandler() {
     setState(() {
@@ -52,61 +80,30 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
   }
 
   @override
+  void didUpdateWidget(covariant ProgramDetailBody oldWidget) {
+    if (widget.loading != oldWidget.loading) {
+      loading = widget.loading;
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final client = ref.watch(appClientProvider);
     final i18n = I18n.of(context)!;
-    final level = WorkoutLevel.getLevel(widget.program?.level ?? 1);
-    final bodyPart = WorkoutBodyPart.getBodyPart(widget.program?.bodyPart ?? 1);
 
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: ProgramInfoTile(
-                icon: Icons.macro_off,
-                label: level.label(i18n),
-              ),
-            ),
-            Expanded(
-              child: ProgramInfoTile(
-                icon: Icons.macro_off,
-                label: DurationTime.totalDurationFormat(
-                    Duration(seconds: totalDuration.toInt())),
-              ),
-            ),
-            Expanded(
-              child: ProgramInfoTile(
-                icon: Icons.macro_off,
-                label: totalCalo.toString(),
-              ),
-            ),
-            Expanded(
-              child: ProgramInfoTile(
-                icon: Icons.macro_off,
-                label: bodyPart.label(i18n),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
-        const Text(
-          'Description',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+        if (loading == true)
+          const ShimmerProgramOverview()
+        else
+          ProgramOverview(
+            program: widget.program!,
+            totalDuration: totalDuration,
+            totalCalo: totalCalo,
           ),
-        ),
-        const SizedBox(height: 16),
-        ShadowWrapper(
-          padding: const EdgeInsets.all(16),
-          child: Text(
-            widget.program?.description ?? '_',
-          ),
-        ),
-        const SizedBox(height: 24),
+        _programDescription(),
         const Text(
           'Exercises',
           style: TextStyle(
@@ -190,11 +187,11 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
                 totalDuration = exercises!
                     .map((p0) => p0.duration)
                     .toList()
-                    .reduce((a, b) => a! + b!)!;
+                    .reduce((a, b) => a ?? 0 + (b ?? 0))!;
                 totalCalo = exercises
                     .map((p0) => p0.calo)
                     .toList()
-                    .reduce((a, b) => a! + b!)!;
+                    .reduce((a, b) => a ?? 0 + (b ?? 0))!;
               });
             });
 
@@ -214,76 +211,42 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
       ],
     );
   }
-}
 
-class ShimmerExerciseList extends StatelessWidget {
-  const ShimmerExerciseList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget shimmerDescription() {
     return ShimmerWrapper(
-      child: ListView.separated(
-        shrinkWrap: true,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Container(
-            height: 120,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: AppColors.neutral20,
-              ),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 120,
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 200,
-                        height: 15,
-                        margin: const EdgeInsets.only(bottom: 16),
-                        decoration: BoxDecoration(
-                          color: AppColors.neutral20,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      Container(
-                        width: 100,
-                        height: 15,
-                        margin: const EdgeInsets.only(bottom: 16),
-                        decoration: BoxDecoration(
-                          color: AppColors.neutral20,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      Container(
-                        width: 100,
-                        height: 15,
-                        decoration: BoxDecoration(
-                          color: AppColors.neutral20,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        },
-        separatorBuilder: (_, __) => const SizedBox(height: 16),
+      child: Container(
+        height: 25,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          color: AppColors.neutral20,
+        ),
       ),
+    );
+  }
+
+  Widget _programDescription() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 24),
+        const Text(
+          'Description',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 16),
+        ShadowWrapper(
+          padding: const EdgeInsets.all(16),
+          child: loading == true
+              ? shimmerDescription()
+              : Text(
+                  widget.program?.description ?? '',
+                ),
+        ),
+        const SizedBox(height: 24),
+      ],
     );
   }
 }

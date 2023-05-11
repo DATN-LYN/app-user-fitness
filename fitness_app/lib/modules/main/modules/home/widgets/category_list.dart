@@ -107,6 +107,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
         }
 
         return ListView.separated(
+          padding: const EdgeInsets.only(top: 2),
           itemCount: categories!.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
