@@ -87,10 +87,14 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
         if (index < urls.length - 1) {
           nextVideo();
         } else if (index == urls.length - 1) {
-          context.pushRoute(const FinishRoute());
+          goToFinishPage();
         }
       }
     };
+  }
+
+  void goToFinishPage() {
+    context.pushRoute(FinishRoute(exercises: widget.exercises));
   }
 
   VideoPlayerController controller(int index) {
@@ -147,7 +151,6 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
         isBreak: true,
         initialDuration: const Duration(seconds: 20),
         exerciseCount: '${index + 1} / ${urls.length}',
-        exercises: widget.exercises,
       ),
     );
 
@@ -301,7 +304,7 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
                   IconButton(
                     onPressed: () {
                       if (index == urls.length - 1) {
-                        context.pushRoute(const FinishRoute());
+                        goToFinishPage();
                       } else {
                         nextVideo();
                       }

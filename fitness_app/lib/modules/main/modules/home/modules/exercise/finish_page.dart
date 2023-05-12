@@ -1,24 +1,32 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/utils/duration_time.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../global/gen/assets.gen.dart';
 import '../../../../../../global/themes/app_colors.dart';
 
-class FinishPage extends StatefulWidget {
-  const FinishPage({super.key});
+class FinishPage extends StatelessWidget {
+  const FinishPage({
+    super.key,
+    required this.exercises,
+  });
 
-  @override
-  State<FinishPage> createState() => _FinishPageState();
-}
+  final List<GExercise> exercises;
 
-class _FinishPageState extends State<FinishPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
+    final calo =
+        exercises.map((e) => e.calo).toList().reduce((a, b) => a! + b!);
+    final duration =
+        exercises.map((e) => e.duration).toList().reduce((a, b) => a! + b!);
+    final durationString =
+        DurationTime.totalDurationFormat(Duration(seconds: duration!.toInt()));
 
     return Scaffold(
       body: SafeArea(
@@ -42,8 +50,18 @@ class _FinishPageState extends State<FinishPage> {
             Row(
               children: [
                 StatisticItem(
-                  title: '809',
-                  subtitle: 'Calories',
+                  title: exercises.length.toString(),
+                  subtitle: i18n.exercises_Exercises,
+                  icon: const Icon(
+                    Icons.format_list_numbered_outlined,
+                    size: 30,
+                    color: AppColors.success,
+                  ),
+                  color: AppColors.success,
+                ),
+                StatisticItem(
+                  title: calo.toString(),
+                  subtitle: i18n.common_Calories,
                   icon: const Icon(
                     Icons.local_fire_department,
                     size: 30,
@@ -52,8 +70,8 @@ class _FinishPageState extends State<FinishPage> {
                   color: AppColors.error,
                 ),
                 StatisticItem(
-                  title: '600',
-                  subtitle: 'Minutes',
+                  title: durationString,
+                  subtitle: i18n.common_Duration,
                   icon: const Icon(
                     Icons.timelapse,
                     size: 30,

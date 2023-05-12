@@ -13,15 +13,14 @@ class CountdownTimerPage extends StatefulWidget {
     super.key,
     this.initialDuration = const Duration(seconds: 3),
     this.isBreak = false,
-    required this.exercises,
+    this.exercises,
     this.exerciseCount,
   });
 
   final Duration initialDuration;
   final bool isBreak;
   final String? exerciseCount;
-
-  final List<GExercise> exercises;
+  final List<GExercise>? exercises;
 
   @override
   State<CountdownTimerPage> createState() => _CountdownTimerPageState();
@@ -42,7 +41,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
             context.popRoute();
           } else {
             context
-                .replaceRoute(PlayExerciseRoute(exercises: widget.exercises));
+                .replaceRoute(PlayExerciseRoute(exercises: widget.exercises!));
           }
         } else {
           countdownDuration = Duration(seconds: seconds);
@@ -165,8 +164,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
             if (widget.isBreak) {
               context.popRoute();
             } else {
-              context
-                  .replaceRoute(PlayExerciseRoute(exercises: widget.exercises));
+              context.replaceRoute(
+                  PlayExerciseRoute(exercises: widget.exercises!));
             }
           },
           child:

@@ -150,7 +150,8 @@
       "pleasePullToTryAgain": "Please pull to refresh data",
       "search": "Search",
       "minutes": "Minutes",
-      "calories": "Calories"
+      "calories": "Calories",
+      "duration": "Duration"
     },
     "home_":{
       "Hello": "Hello!",

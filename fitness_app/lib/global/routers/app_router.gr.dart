@@ -84,7 +84,8 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     CountdownTimerRoute.name: (routeData) {
-      final args = routeData.argsAs<CountdownTimerRouteArgs>();
+      final args = routeData.argsAs<CountdownTimerRouteArgs>(
+          orElse: () => const CountdownTimerRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: CountdownTimerPage(
@@ -97,9 +98,13 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     FinishRoute.name: (routeData) {
+      final args = routeData.argsAs<FinishRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const FinishPage(),
+        child: FinishPage(
+          key: args.key,
+          exercises: args.exercises,
+        ),
       );
     },
     SearchRoute.name: (routeData) {
@@ -411,7 +416,7 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
     Key? key,
     Duration initialDuration = const Duration(seconds: 3),
     bool isBreak = false,
-    required List<GExercise> exercises,
+    List<GExercise>? exercises,
     String? exerciseCount,
   }) : super(
           CountdownTimerRoute.name,
@@ -433,7 +438,7 @@ class CountdownTimerRouteArgs {
     this.key,
     this.initialDuration = const Duration(seconds: 3),
     this.isBreak = false,
-    required this.exercises,
+    this.exercises,
     this.exerciseCount,
   });
 
@@ -443,7 +448,7 @@ class CountdownTimerRouteArgs {
 
   final bool isBreak;
 
-  final List<GExercise> exercises;
+  final List<GExercise>? exercises;
 
   final String? exerciseCount;
 
@@ -455,14 +460,36 @@ class CountdownTimerRouteArgs {
 
 /// generated route for
 /// [FinishPage]
-class FinishRoute extends PageRouteInfo<void> {
-  const FinishRoute()
-      : super(
+class FinishRoute extends PageRouteInfo<FinishRouteArgs> {
+  FinishRoute({
+    Key? key,
+    required List<GExercise> exercises,
+  }) : super(
           FinishRoute.name,
           path: '/finish-page',
+          args: FinishRouteArgs(
+            key: key,
+            exercises: exercises,
+          ),
         );
 
   static const String name = 'FinishRoute';
+}
+
+class FinishRouteArgs {
+  const FinishRouteArgs({
+    this.key,
+    required this.exercises,
+  });
+
+  final Key? key;
+
+  final List<GExercise> exercises;
+
+  @override
+  String toString() {
+    return 'FinishRouteArgs{key: $key, exercises: $exercises}';
+  }
 }
 
 /// generated route for
