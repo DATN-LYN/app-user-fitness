@@ -11,10 +11,7 @@ class FitnessEmpty extends StatelessWidget {
     this.title,
     this.onPressed,
     this.textButton,
-  }) : assert(
-          (onPressed != null && textButton != null) ||
-              (onPressed == null && textButton == null),
-        );
+  });
 
   final String? title;
   final String? textButton;

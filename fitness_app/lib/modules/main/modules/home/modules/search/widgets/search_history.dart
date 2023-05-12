@@ -4,7 +4,7 @@ import 'package:fitness_app/global/widgets/indicator_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../global/themes/app_colors.dart';
+import '../../../../../../../global/themes/app_colors.dart';
 import '../providers/history_search_provider.dart';
 
 class SearchHistory extends ConsumerWidget {

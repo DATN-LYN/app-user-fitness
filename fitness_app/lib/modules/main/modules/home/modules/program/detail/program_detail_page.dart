@@ -7,11 +7,11 @@ import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
-import 'package:fitness_app/modules/program/widgets/program_detail_body.dart';
+import 'package:fitness_app/modules/main/modules/home/modules/program/detail/widgets/program_detail_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../global/graphql/client.dart';
+import '../../../../../../../global/graphql/client.dart';
 
 class ProgramDetailPage extends ConsumerStatefulWidget {
   const ProgramDetailPage({

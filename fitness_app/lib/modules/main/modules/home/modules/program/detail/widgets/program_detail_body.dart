@@ -5,16 +5,16 @@ import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragme
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercises.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
-import 'package:fitness_app/modules/program/widgets/program_overview.dart';
+import 'package:fitness_app/modules/main/modules/home/modules/program/detail/widgets/program_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../global/graphql/client.dart';
-import '../../../global/utils/constants.dart';
-import '../../../global/widgets/fitness_empty.dart';
-import '../../../global/widgets/fitness_error.dart';
-import '../../../global/widgets/infinity_list.dart';
-import '../../../global/widgets/shadow_wrapper.dart';
+import '../../../../../../../../global/graphql/client.dart';
+import '../../../../../../../../global/utils/constants.dart';
+import '../../../../../../../../global/widgets/fitness_empty.dart';
+import '../../../../../../../../global/widgets/fitness_error.dart';
+import '../../../../../../../../global/widgets/infinity_list.dart';
+import '../../../../../../../../global/widgets/shadow_wrapper.dart';
 import 'exercise_tile.dart';
 import 'shimmer_exercise_list.dart';
 

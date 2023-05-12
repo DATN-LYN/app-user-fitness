@@ -1,12 +1,12 @@
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
-import 'package:fitness_app/modules/category/widgets/program_item_large.dart';
+import 'package:fitness_app/global/widgets/program_item_large.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../global/graphql/client.dart';
-import '../../../../../global/widgets/fitness_empty.dart';
+import '../../../../../../../global/graphql/client.dart';
+import '../../../../../../../global/widgets/fitness_empty.dart';
 
 class SearchResult extends ConsumerWidget {
   const SearchResult({
