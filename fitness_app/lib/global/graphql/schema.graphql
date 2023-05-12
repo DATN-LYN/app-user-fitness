@@ -135,6 +135,22 @@ type IUsers {
   items: [User!]
 }
 
+type IUserStatistics {
+  id: ID
+  userId: String!
+  programCount: Float
+  caloCount: Float
+  durationCount: Float
+  user: User
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type IUserStatisticses {
+  meta: Meta
+  items: [UserStatistics!]
+}
+
 input LoginInputDto {
   accessToken: String
   expiresIn: String
@@ -163,14 +179,16 @@ type Mutation {
   deleteExercise(exerciseId: String!): ResponseMessageBase!
   register(input: RegisterInputDto!): ResponseMessageBase!
   logout(userId: String!): ResponseMessageBase!
-  upsertInbox(input: UpsertInboxInputDto!): IInbox!
-  deleteInbox(inboxId: String!): ResponseMessageBase!
   upsertCategory(input: UpsertCategoryInputDto!): ICategory!
   deleteCategory(categoryId: String!): ResponseMessageBase!
   upsertProgram(input: UpsertProgramInputDto!): IProgram!
   deleteProgram(programId: String!): ResponseMessageBase!
   deleteUser(userId: String!): ResponseMessageBase!
   upsertUser(input: UpsertUserInputDto!): IUser!
+  upsertInbox(input: UpsertInboxInputDto!): IInbox!
+  deleteInbox(inboxId: String!): ResponseMessageBase!
+  upsertStats(input: UpsertUserStatisticsInputDto!): IUserStatistics!
+  deleteStats(statsId: String!): ResponseMessageBase!
 }
 
 type Program {
@@ -193,15 +211,18 @@ type Query {
   loginGoogle(input: LoginInputDto!): LoginResponseDto!
   login(input: LoginInputDto!): LoginResponseDto!
   refreshToken(refreshToken: String!): RefreshTokenResponseDto!
-  getInbox(categoryId: String!): IInbox!
-  getInboxes(queryParams: QueryFilterDto!): IInboxes!
-  getMyInboxes(queryParams: QueryFilterDto!): IInboxes!
   getCategory(categoryId: String!): Category!
   getCategories(queryParams: QueryFilterDto!): ICategories!
   getProgram(programId: String!): Program!
   getPrograms(queryParams: QueryFilterDto!): IPrograms!
   getUser(userId: String!): IUser!
   getUsers(queryParams: QueryFilterDto!): IUsers!
+  getInbox(inboxId: String!): IInbox!
+  getInboxes(queryParams: QueryFilterDto!): IInboxes!
+  getMyInboxes(queryParams: QueryFilterDto!): IInboxes!
+  getStats(statsId: String!): IUserStatistics!
+  getStatsList(queryParams: QueryFilterDto!): IUserStatisticses!
+  getMyStats(queryParams: QueryFilterDto!): IUserStatisticses!
 }
 
 input QueryFilterDto {
@@ -273,6 +294,14 @@ input UpsertUserInputDto {
   age: Float!
 }
 
+input UpsertUserStatisticsInputDto {
+  id: ID
+  userId: String!
+  programCount: Float!
+  caloCount: Float!
+  durationCount: Float!
+}
+
 type User {
   id: String
   email: String!
@@ -285,5 +314,16 @@ type User {
   roleId: String
   role: Role
   inboxes: [Inbox!]
+}
+
+type UserStatistics {
+  id: ID
+  userId: String!
+  programCount: Float
+  caloCount: Float
+  durationCount: Float
+  user: User
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 

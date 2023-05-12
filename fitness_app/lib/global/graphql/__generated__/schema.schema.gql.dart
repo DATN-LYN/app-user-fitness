@@ -248,4 +248,32 @@ abstract class GUpsertUserInputDto
       );
 }
 
+abstract class GUpsertUserStatisticsInputDto
+    implements
+        Built<GUpsertUserStatisticsInputDto,
+            GUpsertUserStatisticsInputDtoBuilder> {
+  GUpsertUserStatisticsInputDto._();
+
+  factory GUpsertUserStatisticsInputDto(
+          [Function(GUpsertUserStatisticsInputDtoBuilder b) updates]) =
+      _$GUpsertUserStatisticsInputDto;
+
+  String? get id;
+  String get userId;
+  double get programCount;
+  double get caloCount;
+  double get durationCount;
+  static Serializer<GUpsertUserStatisticsInputDto> get serializer =>
+      _$gUpsertUserStatisticsInputDtoSerializer;
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GUpsertUserStatisticsInputDto.serializer,
+        this,
+      ) as Map<String, dynamic>);
+  static GUpsertUserStatisticsInputDto? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GUpsertUserStatisticsInputDto.serializer,
+        json,
+      );
+}
+
 const Map<String, Set<String>> possibleTypesMap = {};

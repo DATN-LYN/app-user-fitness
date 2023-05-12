@@ -19,7 +19,7 @@ class UserStatisticItem extends StatelessWidget {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(16),
-        margin: const EdgeInsets.symmetric(horizontal: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 6),
         decoration: BoxDecoration(
           color: AppColors.grey6.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10),

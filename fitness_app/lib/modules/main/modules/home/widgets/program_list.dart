@@ -130,11 +130,11 @@ class ShimmerProgramList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: 4,
+      itemCount: 3,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return Container(
-          height: 170,
+          height: 160,
           decoration: BoxDecoration(
             color: AppColors.neutral20,
             borderRadius: BorderRadius.circular(12),

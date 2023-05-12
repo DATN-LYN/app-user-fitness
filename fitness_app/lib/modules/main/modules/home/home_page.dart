@@ -5,7 +5,7 @@ import 'package:fitness_app/global/widgets/label.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/category_list.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/home_header.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/program_list.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/user_statistic.dart';
+import 'package:fitness_app/modules/main/modules/home/widgets/user_statistics.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
