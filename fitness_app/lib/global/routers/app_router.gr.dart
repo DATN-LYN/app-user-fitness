@@ -74,20 +74,24 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     PlayExerciseRoute.name: (routeData) {
+      final args = routeData.argsAs<PlayExerciseRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const PlayExercisePage(),
+        child: PlayExercisePage(
+          key: args.key,
+          exercises: args.exercises,
+        ),
       );
     },
     CountdownTimerRoute.name: (routeData) {
-      final args = routeData.argsAs<CountdownTimerRouteArgs>(
-          orElse: () => const CountdownTimerRouteArgs());
+      final args = routeData.argsAs<CountdownTimerRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: CountdownTimerPage(
           key: args.key,
           initialDuration: args.initialDuration,
           isBreak: args.isBreak,
+          exercises: args.exercises,
           exerciseCount: args.exerciseCount,
         ),
       );
@@ -368,14 +372,36 @@ class CategoryDetailRouteArgs {
 
 /// generated route for
 /// [PlayExercisePage]
-class PlayExerciseRoute extends PageRouteInfo<void> {
-  const PlayExerciseRoute()
-      : super(
+class PlayExerciseRoute extends PageRouteInfo<PlayExerciseRouteArgs> {
+  PlayExerciseRoute({
+    Key? key,
+    required List<GExercise> exercises,
+  }) : super(
           PlayExerciseRoute.name,
           path: '/play-exercise-page',
+          args: PlayExerciseRouteArgs(
+            key: key,
+            exercises: exercises,
+          ),
         );
 
   static const String name = 'PlayExerciseRoute';
+}
+
+class PlayExerciseRouteArgs {
+  const PlayExerciseRouteArgs({
+    this.key,
+    required this.exercises,
+  });
+
+  final Key? key;
+
+  final List<GExercise> exercises;
+
+  @override
+  String toString() {
+    return 'PlayExerciseRouteArgs{key: $key, exercises: $exercises}';
+  }
 }
 
 /// generated route for
@@ -385,6 +411,7 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
     Key? key,
     Duration initialDuration = const Duration(seconds: 3),
     bool isBreak = false,
+    required List<GExercise> exercises,
     String? exerciseCount,
   }) : super(
           CountdownTimerRoute.name,
@@ -393,6 +420,7 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
             key: key,
             initialDuration: initialDuration,
             isBreak: isBreak,
+            exercises: exercises,
             exerciseCount: exerciseCount,
           ),
         );
@@ -405,6 +433,7 @@ class CountdownTimerRouteArgs {
     this.key,
     this.initialDuration = const Duration(seconds: 3),
     this.isBreak = false,
+    required this.exercises,
     this.exerciseCount,
   });
 
@@ -414,11 +443,13 @@ class CountdownTimerRouteArgs {
 
   final bool isBreak;
 
+  final List<GExercise> exercises;
+
   final String? exerciseCount;
 
   @override
   String toString() {
-    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak, exerciseCount: $exerciseCount}';
+    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak, exercises: $exercises, exerciseCount: $exerciseCount}';
   }
 }
 
