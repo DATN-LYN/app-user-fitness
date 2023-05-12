@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
@@ -15,7 +16,12 @@ import '../../../../../../global/utils/duration_time.dart';
 enum PlayerState { playing, paused }
 
 class PlayExercisePage extends StatefulWidget {
-  const PlayExercisePage({super.key});
+  const PlayExercisePage({
+    super.key,
+    required this.exercises,
+  });
+
+  final List<GExercise> exercises;
 
   @override
   State<PlayExercisePage> createState() => _PlayExercisePageState();
@@ -30,13 +36,7 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
   final Map<String, VideoPlayerController> controllers = {};
   final Map<int, VoidCallback> listeners = {};
   PlayerState playerState = PlayerState.playing;
-  final List<String> urls = [
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#4',
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4#6',
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-  ];
+  List<String> urls = [];
 
   @override
   void dispose() {
@@ -52,18 +52,24 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
     super.initState();
   }
 
-  initData() {
+  initData() async {
     loading = true;
-    if (urls.isNotEmpty) {
-      initController(0).then((_) {
-        playController(0);
-        loading = false;
-      });
-    }
+    urls = widget.exercises.map((e) {
+      Uri initialUri = Uri.parse(e.videoUrl!);
+      Uri replaceUri = initialUri.replace(scheme: 'https');
+      return replaceUri.toString();
+    }).toList();
+
+    await initController(0);
+
+    playController(0);
+
+    setState(() => loading = false);
+
     if (urls.length > 1) {
-      initController(1).whenComplete(() {
+      await initController(1);
+      setState(() {
         lock = false;
-        loading = false;
       });
     }
   }
@@ -81,10 +87,14 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
         if (index < urls.length - 1) {
           nextVideo();
         } else if (index == urls.length - 1) {
-          context.pushRoute(const FinishRoute());
+          goToFinishPage();
         }
       }
     };
+  }
+
+  void goToFinishPage() {
+    context.pushRoute(FinishRoute(exercises: widget.exercises));
   }
 
   VideoPlayerController controller(int index) {
@@ -103,12 +113,12 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
     controller(index).seekTo(const Duration(milliseconds: 0));
   }
 
-  void playController(int index) async {
+  void playController(int index) {
     if (!listeners.keys.contains(index)) {
       listeners[index] = checkEndVideo(index);
     }
     controller(index).addListener(listeners[index]!);
-    await controller(index).play();
+    controller(index).play();
   }
 
   void previousVideo() {
@@ -294,7 +304,7 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
                   IconButton(
                     onPressed: () {
                       if (index == urls.length - 1) {
-                        context.pushRoute(const FinishRoute());
+                        goToFinishPage();
                       } else {
                         nextVideo();
                       }

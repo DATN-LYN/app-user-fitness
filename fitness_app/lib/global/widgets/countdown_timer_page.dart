@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/material.dart';
 
@@ -12,12 +13,14 @@ class CountdownTimerPage extends StatefulWidget {
     super.key,
     this.initialDuration = const Duration(seconds: 3),
     this.isBreak = false,
+    this.exercises,
     this.exerciseCount,
   });
 
   final Duration initialDuration;
   final bool isBreak;
   final String? exerciseCount;
+  final List<GExercise>? exercises;
 
   @override
   State<CountdownTimerPage> createState() => _CountdownTimerPageState();
@@ -37,7 +40,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
           if (widget.isBreak) {
             context.popRoute();
           } else {
-            context.replaceRoute(const PlayExerciseRoute());
+            context
+                .replaceRoute(PlayExerciseRoute(exercises: widget.exercises!));
           }
         } else {
           countdownDuration = Duration(seconds: seconds);
@@ -124,7 +128,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                 Center(
                   child: Text(
                     i18n.countdown_YouHaveFinishCountEx(
-                      widget.exerciseCount.toString(),
+                      widget.exerciseCount ?? '',
                     ),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
@@ -160,7 +164,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
             if (widget.isBreak) {
               context.popRoute();
             } else {
-              context.replaceRoute(const PlayExerciseRoute());
+              context.replaceRoute(
+                  PlayExerciseRoute(exercises: widget.exercises!));
             }
           },
           child:

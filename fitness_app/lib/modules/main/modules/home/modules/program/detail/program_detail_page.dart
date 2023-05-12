@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercises.req.gql.dart';
-import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
@@ -78,16 +77,6 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
     return LoadingOverlay(
       loading: loading,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.grey1,
-          child: const Icon(
-            Icons.play_arrow,
-            color: AppColors.white,
-          ),
-          onPressed: () {
-            context.pushRoute(CountdownTimerRoute());
-          },
-        ),
         body: Column(
           children: [
             Container(

@@ -140,13 +140,14 @@ class _ProgramListPageState extends ConsumerState<ProgramListPage> {
                     );
                   }
 
-                  return ListView.builder(
+                  return ListView.separated(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     itemCount: programs!.length,
                     itemBuilder: (context, index) {
                       final item = programs[index];
                       return ProgramItemLarge(program: item);
                     },
+                    separatorBuilder: (_, __) => const SizedBox(height: 16),
                   );
                 },
               ),
