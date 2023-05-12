@@ -5,10 +5,10 @@ import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/global/widgets/shimmer_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../global/enums/workout_body_part.dart';
-import '../../../global/gen/i18n.dart';
-import '../../../global/graphql/query/__generated__/query_get_programs.data.gql.dart';
-import '../../../global/routers/app_router.dart';
+import '../enums/workout_body_part.dart';
+import '../gen/i18n.dart';
+import '../graphql/query/__generated__/query_get_programs.data.gql.dart';
+import '../routers/app_router.dart';
 
 class ProgramItemLarge extends StatelessWidget {
   const ProgramItemLarge({

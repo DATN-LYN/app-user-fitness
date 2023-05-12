@@ -1,5 +1,4 @@
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
-import 'package:fitness_app/modules/program/widgets/program_info_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../global/enums/workout_body_part.dart';
@@ -8,6 +7,7 @@ import '../../../global/gen/i18n.dart';
 import '../../../global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import '../../../global/themes/app_colors.dart';
 import '../../../global/utils/duration_time copy.dart';
+import '../../main/modules/home/modules/program/detail/widgets/program_info_tile.dart';
 
 class ProgramOverview extends StatelessWidget {
   const ProgramOverview({

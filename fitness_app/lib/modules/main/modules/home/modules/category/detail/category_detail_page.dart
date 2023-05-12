@@ -1,19 +1,18 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragment.data.gql.dart';
-import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
-import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../global/gen/i18n.dart';
-import '../../global/graphql/client.dart';
-import '../../global/graphql/query/__generated__/query_get_programs.req.gql.dart';
-import '../../global/utils/constants.dart';
-import '../../global/widgets/fitness_empty.dart';
-import '../../global/widgets/fitness_error.dart';
-import 'widgets/program_item_large.dart';
+import '../../../../../../../global/gen/i18n.dart';
+import '../../../../../../../global/graphql/client.dart';
+import '../../../../../../../global/graphql/query/__generated__/query_get_programs.req.gql.dart';
+import '../../../../../../../global/utils/constants.dart';
+import '../../../../../../../global/widgets/fitness_empty.dart';
+import '../../../../../../../global/widgets/fitness_error.dart';
+import '../../../../../../../global/widgets/program_item_large.dart';
+import '../../../../../../../global/widgets/shimmer_program_large_list.dart';
 
 class CategoryDetailPage extends ConsumerStatefulWidget {
   const CategoryDetailPage({required this.category, super.key});
@@ -114,7 +113,7 @@ class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
           }
 
           if (response?.loading == true) {
-            return const ShimmerProgramList();
+            return const ShimmerProgramLargeList();
           }
 
           if (response?.hasErrors == true || response?.data == null) {
@@ -146,87 +145,6 @@ class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
             separatorBuilder: (_, __) => const SizedBox(height: 16),
           );
         },
-      ),
-    );
-  }
-}
-
-class ShimmerProgramList extends StatelessWidget {
-  const ShimmerProgramList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ShimmerWrapper(
-      child: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return Container(
-            height: 270,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: AppColors.neutral20,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 150,
-                  decoration: const BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  width: 200,
-                  height: 15,
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  width: 100,
-                  height: 15,
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  width: 100,
-                  height: 15,
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  width: 100,
-                  height: 15,
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral20,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                )
-              ],
-            ),
-          );
-        },
-        separatorBuilder: (_, __) => const SizedBox(height: 16),
       ),
     );
   }

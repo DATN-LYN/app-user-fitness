@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../global/themes/app_colors.dart';
-import '../../../global/widgets/shimmer_wrapper.dart';
+import '../../../../../../../../global/themes/app_colors.dart';
+import '../../../../../../../../global/widgets/shimmer_wrapper.dart';
 
 class ShimmerExerciseList extends StatelessWidget {
   const ShimmerExerciseList({super.key});

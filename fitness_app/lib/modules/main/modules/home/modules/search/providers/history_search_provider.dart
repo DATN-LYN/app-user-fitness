@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../global/data/repositories/history_search_repository.dart';
-import '../../../../../global/utils/riverpod/app_state.dart';
+import '../../../../../../../global/data/repositories/history_search_repository.dart';
+import '../../../../../../../global/utils/riverpod/app_state.dart';
 
 final historySearchProvider =
     StateNotifierProvider<HistorySearchProvider, AppState<List<String>>>(

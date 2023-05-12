@@ -3,8 +3,8 @@ import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/material.dart';
 
-import '../../global/gen/assets.gen.dart';
-import '../../global/themes/app_colors.dart';
+import '../../../../../../global/gen/assets.gen.dart';
+import '../../../../../../global/themes/app_colors.dart';
 
 class FinishPage extends StatefulWidget {
   const FinishPage({super.key});

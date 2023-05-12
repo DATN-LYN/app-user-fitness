@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../global/themes/app_colors.dart';
+import '../../../../../../../../global/themes/app_colors.dart';
 
 class ProgramInfoTile extends StatelessWidget {
   const ProgramInfoTile({

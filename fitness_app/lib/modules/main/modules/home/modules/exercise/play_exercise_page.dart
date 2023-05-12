@@ -9,8 +9,8 @@ import 'package:fitness_app/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../global/themes/app_colors.dart';
-import '../../global/utils/duration_time.dart';
+import '../../../../../../global/themes/app_colors.dart';
+import '../../../../../../global/utils/duration_time.dart';
 
 enum PlayerState { playing, paused }
 
