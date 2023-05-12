@@ -244,6 +244,12 @@ class I18n implements WidgetsLocalizations {
 	String get common_Calories => "Calories";
 	/// "Duration"
 	String get common_Duration => "Duration";
+	/// "Weekly"
+	String get common_Weekly => "Weekly";
+	/// "Monthly"
+	String get common_Monthly => "Monthly";
+	/// "Yearly"
+	String get common_Yearly => "Yearly";
 	/// "Hello!"
 	String get home_Hello => "Hello!";
 	/// "Have a nice day"
@@ -584,6 +590,15 @@ class _I18n_vi_VN extends I18n {
 	/// "Thời gian"
 	@override
 	String get common_Duration => "Thời gian";
+	/// "Tuần"
+	@override
+	String get common_Weekly => "Tuần";
+	/// "Tháng"
+	@override
+	String get common_Monthly => "Tháng";
+	/// "Năm"
+	@override
+	String get common_Yearly => "Năm";
 	/// "Xin chào!"
 	@override
 	String get home_Hello => "Xin chào!";

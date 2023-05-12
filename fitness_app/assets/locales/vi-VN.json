@@ -154,7 +154,10 @@
       "minutes": "Phút",
       "calories": "Calo",
       "description": "Mô Tả",
-      "duration": "Thời gian"
+      "duration": "Thời gian",
+      "weekly": "Tuần",
+      "monthly": "Tháng",
+      "yearly": "Năm"
     },
     "home_":{
       "Hello": "Xin chào!",

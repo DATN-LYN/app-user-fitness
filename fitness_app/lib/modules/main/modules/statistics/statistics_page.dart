@@ -1,5 +1,6 @@
 import 'package:fitness_app/global/enums/schedule_filter.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -18,6 +19,11 @@ class StatisticsPage extends StatefulWidget {
 
 class _StatisticsPageState extends State<StatisticsPage> {
   ScheduleFilter selectedFilter = ScheduleFilter.weekly;
+  var req = GGetMyStatsReq(
+    (b) => b
+      ..vars.queryParams.limit = 10
+      ..vars.queryParams.page = 1,
+  );
 
   @override
   Widget build(BuildContext context) {

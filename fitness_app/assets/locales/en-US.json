@@ -151,7 +151,10 @@
       "search": "Search",
       "minutes": "Minutes",
       "calories": "Calories",
-      "duration": "Duration"
+      "duration": "Duration",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly"
     },
     "home_":{
       "Hello": "Hello!",
