@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../../global/themes/app_colors.dart';
 
-class CategoryItemWidget extends StatefulWidget {
-  const CategoryItemWidget({
+class CategoryItem extends StatelessWidget {
+  const CategoryItem({
     super.key,
     required this.category,
   });
@@ -15,14 +15,9 @@ class CategoryItemWidget extends StatefulWidget {
   final GCategory category;
 
   @override
-  State<CategoryItemWidget> createState() => _CategoryItemWidgetState();
-}
-
-class _CategoryItemWidgetState extends State<CategoryItemWidget> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.pushRoute(const CategoryDetailRoute()),
+      onTap: () => context.pushRoute(CategoryDetailRoute(category: category)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -31,11 +26,11 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
             height: 70,
             borderImage: 1,
             borderRadius: BorderRadius.circular(100),
-            imageUrl: widget.category.imgUrl ?? '',
+            imageUrl: category.imgUrl ?? '',
           ),
           const SizedBox(height: 8),
           Text(
-            widget.category.name ?? '_',
+            category.name ?? '_',
             style: const TextStyle(
               color: AppColors.grey2,
             ),

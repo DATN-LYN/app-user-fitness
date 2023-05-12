@@ -2,11 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercises.req.gql.dart';
-import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.req.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
-import 'package:fitness_app/global/utils/dialogs.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:fitness_app/modules/program/widgets/program_detail_body.dart';
@@ -14,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../global/graphql/client.dart';
-import '../../global/graphql/query/__generated__/query_get_program.data.gql.dart';
 
 class ProgramDetailPage extends ConsumerStatefulWidget {
   const ProgramDetailPage({
@@ -29,7 +26,7 @@ class ProgramDetailPage extends ConsumerStatefulWidget {
 }
 
 class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
-  GGetProgramData_getProgram? program;
+  // GGetProgramData_getProgram? program;
   bool loading = false;
   var key = GlobalKey();
 
@@ -42,38 +39,36 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
 
   @override
   void initState() {
-    initData();
+    // initData();
     super.initState();
   }
 
-  void initData() async {
-    await Future.wait([
-      getProgram(),
-    ]);
-  }
+  // void initData() async {
+  //   await getProgram();
+  // }
 
-  Future getProgram() async {
-    setState(() => loading = true);
-    await Future.delayed(const Duration(seconds: 1));
-    final client = ref.watch(appClientProvider);
+  // Future getProgram() async {
+  //   setState(() => loading = true);
+  //   await Future.delayed(const Duration(seconds: 1));
+  //   final client = ref.watch(appClientProvider);
 
-    final getProgramReq = GGetProgramReq(
-      (b) => b
-        ..requestId = '@getProgramRequestId'
-        ..vars.programId = widget.program.id,
-    );
+  //   final getProgramReq = GGetProgramReq(
+  //     (b) => b
+  //       ..requestId = '@getProgramRequestId'
+  //       ..vars.programId = widget.program.id,
+  //   );
 
-    final res = await client.request(getProgramReq).first;
-    setState(() => loading = false);
+  //   final res = await client.request(getProgramReq).first;
+  //   setState(() => loading = false);
 
-    if (res.hasErrors) {
-      if (mounted) {
-        DialogUtils.showError(context: context, response: res);
-      }
-    } else {
-      setState(() => program = res.data!.getProgram);
-    }
-  }
+  //   if (res.hasErrors) {
+  //     if (mounted) {
+  //       DialogUtils.showError(context: context, response: res);
+  //     }
+  //   } else {
+  //     setState(() => program = res.data!.getProgram);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -125,17 +120,17 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
                         if (loading)
                           ShimmerWrapper(
                             child: Container(
-                              width: 120,
-                              height: 20,
+                              width: 200,
+                              height: 25,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(4),
                                 color: AppColors.primary,
                               ),
                             ),
                           )
                         else
                           Text(
-                            program?.name ?? '_',
+                            widget.program.name ?? '_',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w700,
@@ -155,7 +150,10 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
                     key = GlobalKey();
                   });
                 },
-                child: ProgramDetailBody(program: program),
+                child: ProgramDetailBody(
+                  program: widget.program,
+                  loading: loading,
+                ),
               ),
             ),
           ],

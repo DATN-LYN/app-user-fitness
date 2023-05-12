@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../themes/app_colors.dart';
+import '../../../global/themes/app_colors.dart';
 
 class ProgramInfoTile extends StatelessWidget {
   const ProgramInfoTile({
@@ -38,6 +38,7 @@ class ProgramInfoTile extends StatelessWidget {
             label ?? '_',
             style: const TextStyle(
               fontWeight: FontWeight.w600,
+              fontSize: 12,
             ),
           ),
         ],

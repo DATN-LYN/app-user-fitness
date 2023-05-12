@@ -1,16 +1,16 @@
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../global/enums/workout_body_part.dart';
 import '../../../../../global/enums/workout_level.dart';
 import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/graphql/query/__generated__/query_get_programs.data.gql.dart';
 import '../../../../../global/themes/app_colors.dart';
 
-class ProgramItemWidget extends StatelessWidget {
-  const ProgramItemWidget({
+class ProgramItem extends StatelessWidget {
+  const ProgramItem({
     super.key,
     required this.program,
   });
@@ -21,7 +21,7 @@ class ProgramItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
     final level = WorkoutLevel.getLevel(program.level ?? 0);
-    final bodyPart = WorkoutBodyPart.getBodyPart(program.bodyPart ?? 0);
+
     return InkWell(
       onTap: () {
         context.pushRoute(ProgramDetailRoute(program: program));

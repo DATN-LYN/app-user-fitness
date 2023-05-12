@@ -1,15 +1,16 @@
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/widgets/fitness_empty.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/category_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/widgets/fitness_error.dart';
+import 'category_item.dart';
 
 class CategoryList extends ConsumerStatefulWidget {
   const CategoryList({super.key});
@@ -37,6 +38,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
   @override
   Widget build(BuildContext context) {
     final client = ref.watch(appClientProvider);
+    final i18n = I18n.of(context)!;
 
     return InfinityList(
       client: client,
@@ -100,18 +102,19 @@ class _CategoryListState extends ConsumerState<CategoryList> {
         final categories = data.items;
 
         if (categories?.isEmpty == true) {
-          return const FitnessEmpty(
-            title: 'No Data',
-            message: 'Please pull to refresh to try again.',
+          return FitnessEmpty(
+            title: i18n.categories_CategoryNotFound,
+            message: i18n.common_PleasePullToTryAgain,
           );
         }
 
         return ListView.separated(
+          padding: const EdgeInsets.only(top: 2),
           itemCount: categories!.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             final item = categories[index];
-            return CategoryItemWidget(
+            return CategoryItem(
               category: item,
             );
           },

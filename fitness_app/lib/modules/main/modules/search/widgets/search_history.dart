@@ -1,3 +1,4 @@
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/widgets/fitness_error.dart';
 import 'package:fitness_app/global/widgets/indicator_loading.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +19,16 @@ class SearchHistory extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final historyProvider = ref.watch(historySearchProvider.notifier);
     final state = ref.watch(historySearchProvider);
+    final i18n = I18n.of(context)!;
+
     return Column(
       children: [
         Row(
           children: [
             const SizedBox(width: 16),
-            const Text(
-              'Recent Searches',
-              style: TextStyle(
+            Text(
+              i18n.search_RecentSearches,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -33,9 +36,9 @@ class SearchHistory extends ConsumerWidget {
             const Spacer(),
             TextButton(
               onPressed: historyProvider.clearHistory,
-              child: const Text(
-                'Clear all',
-                style: TextStyle(
+              child: Text(
+                i18n.search_ClearAll,
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   decoration: TextDecoration.underline,
                 ),

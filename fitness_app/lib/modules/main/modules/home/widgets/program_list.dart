@@ -1,3 +1,4 @@
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/utils/constants.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../global/widgets/fitness_error.dart';
-import 'program_item_widget.dart';
+import 'program_item.dart';
 
 class ProgramList extends ConsumerStatefulWidget {
   const ProgramList({super.key});
@@ -39,6 +40,7 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
   @override
   Widget build(BuildContext context) {
     final client = ref.watch(appClientProvider);
+    final i18n = I18n.of(context)!;
 
     return InfinityList(
       client: client,
@@ -99,9 +101,9 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
         final programs = data.items;
 
         if (programs?.isEmpty == true) {
-          return const FitnessEmpty(
-            title: 'No Data',
-            message: 'Please pull to refresh to try again',
+          return FitnessEmpty(
+            title: i18n.programs_ProgramNotFound,
+            message: i18n.common_PleasePullToTryAgain,
             showImage: false,
           );
         }
@@ -111,7 +113,7 @@ class _WorkoutProgramsState extends ConsumerState<ProgramList> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             final item = programs[index];
-            return ProgramItemWidget(
+            return ProgramItem(
               program: item,
             );
           },

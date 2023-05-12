@@ -64,9 +64,13 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     CategoryDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<CategoryDetailRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const CategoryDetailPage(),
+        child: CategoryDetailPage(
+          category: args.category,
+          key: args.key,
+        ),
       );
     },
     PlayExerciseRoute.name: (routeData) {
@@ -98,6 +102,18 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const SearchPage(),
+      );
+    },
+    CategoryListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const CategoryListPage(),
+      );
+    },
+    ProgramListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ProgramListPage(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -197,6 +213,14 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           SearchRoute.name,
           path: '/search-page',
+        ),
+        RouteConfig(
+          CategoryListRoute.name,
+          path: '/category-list-page',
+        ),
+        RouteConfig(
+          ProgramListRoute.name,
+          path: '/program-list-page',
         ),
       ];
 }
@@ -310,14 +334,36 @@ class ProgramDetailRouteArgs {
 
 /// generated route for
 /// [CategoryDetailPage]
-class CategoryDetailRoute extends PageRouteInfo<void> {
-  const CategoryDetailRoute()
-      : super(
+class CategoryDetailRoute extends PageRouteInfo<CategoryDetailRouteArgs> {
+  CategoryDetailRoute({
+    required GCategory category,
+    Key? key,
+  }) : super(
           CategoryDetailRoute.name,
           path: '/category-detail-page',
+          args: CategoryDetailRouteArgs(
+            category: category,
+            key: key,
+          ),
         );
 
   static const String name = 'CategoryDetailRoute';
+}
+
+class CategoryDetailRouteArgs {
+  const CategoryDetailRouteArgs({
+    required this.category,
+    this.key,
+  });
+
+  final GCategory category;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CategoryDetailRouteArgs{category: $category, key: $key}';
+  }
 }
 
 /// generated route for
@@ -398,6 +444,30 @@ class SearchRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SearchRoute';
+}
+
+/// generated route for
+/// [CategoryListPage]
+class CategoryListRoute extends PageRouteInfo<void> {
+  const CategoryListRoute()
+      : super(
+          CategoryListRoute.name,
+          path: '/category-list-page',
+        );
+
+  static const String name = 'CategoryListRoute';
+}
+
+/// generated route for
+/// [ProgramListPage]
+class ProgramListRoute extends PageRouteInfo<void> {
+  const ProgramListRoute()
+      : super(
+          ProgramListRoute.name,
+          path: '/program-list-page',
+        );
+
+  static const String name = 'ProgramListRoute';
 }
 
 /// generated route for

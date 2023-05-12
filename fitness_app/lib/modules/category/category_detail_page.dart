@@ -1,3 +1,6 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/category_fragment.data.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
@@ -9,23 +12,42 @@ import '../../global/graphql/client.dart';
 import '../../global/graphql/query/__generated__/query_get_programs.req.gql.dart';
 import '../../global/utils/constants.dart';
 import '../../global/widgets/fitness_empty.dart';
+import '../../global/widgets/fitness_error.dart';
 import 'widgets/program_item_large.dart';
 
 class CategoryDetailPage extends ConsumerStatefulWidget {
-  const CategoryDetailPage({super.key});
+  const CategoryDetailPage({required this.category, super.key});
+
+  final GCategory category;
 
   @override
   ConsumerState<CategoryDetailPage> createState() => _CategoryDetailPageState();
 }
 
 class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
-  var getProgramsReq = GGetProgramsReq(
-    (b) => b
-      ..requestId = '@getProgramsByDetailReq'
-      ..vars.queryParams.limit = Constants.defaultLimit
-      ..vars.queryParams.page = 1
-      ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
-  );
+  var getProgramsReq = GGetProgramsReq();
+
+  @override
+  void initState() {
+    getProgramsReq = GGetProgramsReq(
+      (b) => b
+        ..requestId = '@getProgramsByDetailReq'
+        ..vars.queryParams.limit = Constants.defaultLimit
+        ..vars.queryParams.page = 1
+        ..vars.queryParams.orderBy = 'Program.createdAt:DESC'
+        ..vars.queryParams.filters = ListBuilder(
+          [
+            GFilterDto(
+              (b) => b
+                ..data = widget.category.id
+                ..field = 'Program.categoryId'
+                ..operator = GFILTER_OPERATOR.eq,
+            )
+          ],
+        ),
+    );
+    super.initState();
+  }
 
   void refreshHandler() {
     setState(
@@ -45,7 +67,7 @@ class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 254, 253, 253),
       appBar: AppBar(
-        title: const Text('Gym'),
+        title: Text(widget.category.name ?? '_'),
       ),
       body: InfinityList(
         client: client,
@@ -96,8 +118,7 @@ class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
           }
 
           if (response?.hasErrors == true || response?.data == null) {
-            // return FitnessError(response: response);
-            return const SizedBox();
+            return FitnessError(response: response);
           }
 
           final data = response!.data!.getPrograms;
@@ -107,8 +128,8 @@ class _CategoryDetailPageState extends ConsumerState<CategoryDetailPage> {
 
           if (programs?.isEmpty == true) {
             return FitnessEmpty(
-              title: 'Empty',
-              message: 'Inbox is empty',
+              title: i18n.common_EmptyData,
+              message: i18n.programs_ProgramNotFound,
               textButton: 'Refresh',
               showImage: true,
               onPressed: refreshHandler,

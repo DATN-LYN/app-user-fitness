@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/enums/workout_level.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
-import 'package:fitness_app/global/widgets/program_info_tile.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/global/widgets/shimmer_image.dart';
 import 'package:flutter/material.dart';
@@ -47,40 +46,70 @@ class ProgramItemLarge extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    bodyPart.label(i18n),
+                    program.name ?? '_',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 6),
-                  // ProgramInfoTile(
-                  //   icon: Icons.local_fire_department_rounded,
-                  //   label: '${widget.program.calo} Calories',
-                  //   textStyle: textStyle,
-                  // ),
-                  // const SizedBox(height: 8),
-                  // ProgramInfoTile(
-                  //   icon: Icons.timelapse,
-                  //   label: '${widget.program.duration} Mins',
-                  //   textStyle: textStyle,
-                  // ),
-                  const SizedBox(height: 8),
-                  ProgramInfoTile(
-                    icon: Icons.fitness_center,
-                    label: level.label(i18n),
-                    textStyle: textStyle,
+                  _infoTile(
+                    icon: Icons.sports,
+                    label: 'Level: ',
+                    value: level.label(i18n),
+                  ),
+                  _infoTile(
+                    icon: Icons.sports,
+                    label: 'Body Part: ',
+                    value: bodyPart.label(i18n),
+                  ),
+                  _infoTile(
+                    icon: Icons.note,
+                    label: 'Description: ',
+                    value: program.description ?? '_',
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _infoTile({
+    required String label,
+    required String value,
+    required IconData icon,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 16,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }

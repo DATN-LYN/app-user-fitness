@@ -40,6 +40,8 @@ class I18n implements WidgetsLocalizations {
 	String get button_Cancel => "Cancel";
 	/// "OK"
 	String get button_Ok => "OK";
+	/// "Try Again"
+	String get button_TryAgain => "Try Again";
 	/// ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"]
 	List<String> get onboard_Title => ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"];
 	/// ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"]
@@ -206,8 +208,54 @@ class I18n implements WidgetsLocalizations {
 	String get statistics_SelectMonth => "Select month";
 	/// ["Upper", "Downer", "Abs", "Full Body"]
 	List<String> get workoutBodyPart => ["Upper", "Downer", "Abs", "Full Body"];
+	/// "Categories"
+	String get categories_Categories => "Categories";
+	/// "Category Not Found"
+	String get categories_CategoryNotFound => "Category Not Found";
+	/// "Exercise"
+	String get exercises_Exercises => "Exercise";
+	/// "Exercise Not Found"
+	String get exercises_ExerciseNotFound => "Exercise Not Found";
+	/// "Programs"
+	String get programs_Programs => "Programs";
+	/// "Program Not Found"
+	String get programs_ProgramNotFound => "Program Not Found";
+	/// "Trending Programs"
+	String get programs_TrendingPrograms => "Trending Programs";
+	/// "Most Viewed Programs"
+	String get programs_MostViewedPrograms => "Most Viewed Programs";
+	/// "Input program name"
+	String get programs_SearchHint => "Input program name";
+	/// "Description"
+	String get programs_Description => "Description";
+	/// "Inboxes"
+	String get inboxes_Inboxes => "Inboxes";
+	/// "Inbox Not Found"
+	String get inboxes_InboxNotFound => "Inbox Not Found";
+	/// "Empty Data"
+	String get common_EmptyData => "Empty Data";
+	/// "Please pull to refresh data"
+	String get common_PleasePullToTryAgain => "Please pull to refresh data";
+	/// "Search"
+	String get common_Search => "Search";
+	/// "Minutes"
+	String get common_Minutes => "Minutes";
+	/// "Calories"
+	String get common_Calories => "Calories";
+	/// "Hello!"
+	String get home_Hello => "Hello!";
+	/// "Have a nice day"
+	String get home_HaveANiceDay => "Have a nice day";
+	/// "View all"
+	String get home_ViewAll => "View all";
+	/// "Recent Searches"
+	String get search_RecentSearches => "Recent Searches";
+	/// "Clear All"
+	String get search_ClearAll => "Clear All";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
+	/// "Mô Tả"
+	String get common_Description => "Mô Tả";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -231,6 +279,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Đồng ý"
 	@override
 	String get button_Ok => "Đồng ý";
+	/// "Thử lại"
+	@override
+	String get button_TryAgain => "Thử lại";
 	/// ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"]
 	@override
 	List<String> get onboard_Title => ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"];
@@ -480,6 +531,69 @@ class _I18n_vi_VN extends I18n {
 	/// ["Thân trên", "Thân dưới", "Bụng", "Toàn thân"]
 	@override
 	List<String> get workoutBodyPart => ["Thân trên", "Thân dưới", "Bụng", "Toàn thân"];
+	/// "Thể Loại"
+	@override
+	String get categories_Categories => "Thể Loại";
+	/// "Không tìm thấy thể loại"
+	@override
+	String get categories_CategoryNotFound => "Không tìm thấy thể loại";
+	/// "Bài Tập"
+	@override
+	String get exercises_Exercises => "Bài Tập";
+	/// "Không tìm thấy bài tập"
+	@override
+	String get exercises_ExerciseNotFound => "Không tìm thấy bài tập";
+	/// "Chương trình"
+	@override
+	String get programs_Programs => "Chương trình";
+	/// "Không tìm thấy chương trình"
+	@override
+	String get programs_ProgramNotFound => "Không tìm thấy chương trình";
+	/// "Chương trình nổi bật"
+	@override
+	String get programs_TrendingPrograms => "Chương trình nổi bật";
+	/// "Chương trình nhiều lượt xem"
+	@override
+	String get programs_MostViewedPrograms => "Chương trình nhiều lượt xem";
+	/// "Nhập tên chương trình"
+	@override
+	String get programs_SearchHint => "Nhập tên chương trình";
+	/// "Tin nhắn"
+	@override
+	String get inboxes_Inboxes => "Tin nhắn";
+	/// "Không tìm thấy tin nhắn"
+	@override
+	String get inboxes_InboxNotFound => "Không tìm thấy tin nhắn";
+	/// "Không có dữ liệu"
+	@override
+	String get common_EmptyData => "Không có dữ liệu";
+	/// "Hãy kéo xuống để làm mới dữ liệu"
+	@override
+	String get common_PleasePullToTryAgain => "Hãy kéo xuống để làm mới dữ liệu";
+	/// "Tìm kiếm"
+	@override
+	String get common_Search => "Tìm kiếm";
+	/// "Phút"
+	@override
+	String get common_Minutes => "Phút";
+	/// "Calo"
+	@override
+	String get common_Calories => "Calo";
+	/// "Xin chào!"
+	@override
+	String get home_Hello => "Xin chào!";
+	/// "Chúc bạn một ngày vui vẻ"
+	@override
+	String get home_HaveANiceDay => "Chúc bạn một ngày vui vẻ";
+	/// "Xem tất cả"
+	@override
+	String get home_ViewAll => "Xem tất cả";
+	/// "Tìm kiếm gần đây"
+	@override
+	String get search_RecentSearches => "Tìm kiếm gần đây";
+	/// "Xoá hết"
+	@override
+	String get search_ClearAll => "Xoá hết";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

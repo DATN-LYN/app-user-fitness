@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/modules/main/modules/search/providers/history_search_provider.dart';
 import 'package:flutter/material.dart';
@@ -80,6 +81,8 @@ class _SearchPageState extends ConsumerState<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final i18n = I18n.of(context)!;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -97,7 +100,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
               onTapOutside: (_) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
               decoration: InputDecoration(
-                hintText: 'Search Hint',
+                hintText: i18n.programs_SearchHint,
                 hintStyle: const TextStyle(color: AppColors.grey3),
                 prefixIconConstraints: const BoxConstraints(),
                 prefixIcon: SizedBox.square(

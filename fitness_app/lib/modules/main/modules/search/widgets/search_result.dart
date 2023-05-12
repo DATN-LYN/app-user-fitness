@@ -1,3 +1,4 @@
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
 import 'package:fitness_app/modules/category/widgets/program_item_large.dart';
@@ -18,6 +19,7 @@ class SearchResult extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final client = ref.watch(appClientProvider);
     var searchProgramsReq = request;
+    final i18n = I18n.of(context)!;
 
     return InfinityList(
       client: client,
@@ -77,9 +79,9 @@ class SearchResult extends ConsumerWidget {
 
         if (programs?.isEmpty == true) {
           return FitnessEmpty(
-            title: 'Empty',
-            message: 'Not Found',
-            textButton: 'Refresh',
+            title: i18n.common_EmptyData,
+            message: i18n.programs_ProgramNotFound,
+            textButton: i18n.button_TryAgain,
             onPressed: () {
               searchProgramsReq = searchProgramsReq.rebuild(
                 (b) => b
