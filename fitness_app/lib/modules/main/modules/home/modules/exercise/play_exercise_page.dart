@@ -4,10 +4,12 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
+import 'package:fitness_app/global/providers/current_stats_id.provider.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../../../global/themes/app_colors.dart';
@@ -15,19 +17,21 @@ import '../../../../../../global/utils/duration_time.dart';
 
 enum PlayerState { playing, paused }
 
-class PlayExercisePage extends StatefulWidget {
+class PlayExercisePage extends ConsumerStatefulWidget {
   const PlayExercisePage({
     super.key,
     required this.exercises,
+    // required this.program,
   });
 
   final List<GExercise> exercises;
+  // final GProgram program;
 
   @override
-  State<PlayExercisePage> createState() => _PlayExercisePageState();
+  ConsumerState<PlayExercisePage> createState() => _PlayExercisePageState();
 }
 
-class _PlayExercisePageState extends State<PlayExercisePage> {
+class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
   int index = 0;
   bool lock = true;
   int maxValue = 0;
@@ -150,7 +154,8 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
       CountdownTimerRoute(
         isBreak: true,
         initialDuration: const Duration(seconds: 20),
-        exerciseCount: '${index + 1} / ${urls.length}',
+        index: index,
+        exercises: widget.exercises,
       ),
     );
 
@@ -181,10 +186,11 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
           image: const Icon(Icons.warning_rounded),
           titleText: i18n.exerciseDetail_QuitWorkout,
           contentText: i18n.exerciseDetail_QuitWorkoutDes,
-          onTapPositiveButton: () =>
-              AutoRouter.of(context).popUntilRouteWithName(
-            ProgramDetailRoute.name,
-          ),
+          onTapPositiveButton: () {
+            AutoRouter.of(context)
+                .popUntilRouteWithName(ProgramDetailRoute.name);
+            ref.read(currentStatsId.notifier).update((state) => null);
+          },
           onTapNegativeButton: () {
             context.popRoute();
             controller(index).play();
@@ -219,7 +225,7 @@ class _PlayExercisePageState extends State<PlayExercisePage> {
       loading: loading,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Chest And Tricep'),
+          title: Text(widget.exercises[index].name ?? '_'),
           centerTitle: false,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_sharp),

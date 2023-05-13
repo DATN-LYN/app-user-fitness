@@ -212,6 +212,8 @@ class I18n implements WidgetsLocalizations {
 	String get categories_Categories => "Categories";
 	/// "Category Not Found"
 	String get categories_CategoryNotFound => "Category Not Found";
+	/// "Input category name"
+	String get categories_SearchHint => "Input category name";
 	/// "Exercise"
 	String get exercises_Exercises => "Exercise";
 	/// "Exercise Not Found"
@@ -244,6 +246,16 @@ class I18n implements WidgetsLocalizations {
 	String get common_Calories => "Calories";
 	/// "Duration"
 	String get common_Duration => "Duration";
+	/// "Weekly"
+	String get common_Weekly => "Weekly";
+	/// "Monthly"
+	String get common_Monthly => "Monthly";
+	/// "Yearly"
+	String get common_Yearly => "Yearly";
+	/// "Level"
+	String get common_Level => "Level";
+	/// "Body Part"
+	String get common_BodyPart => "Body Part";
 	/// "Hello!"
 	String get home_Hello => "Hello!";
 	/// "Have a nice day"
@@ -256,6 +268,8 @@ class I18n implements WidgetsLocalizations {
 	String get search_ClearAll => "Clear All";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
+	/// "Nhập tên thể loại"
+	String get exercises_SearchHint => "Nhập tên thể loại";
 	/// "Mô Tả"
 	String get common_Description => "Mô Tả";
 }
@@ -584,6 +598,21 @@ class _I18n_vi_VN extends I18n {
 	/// "Thời gian"
 	@override
 	String get common_Duration => "Thời gian";
+	/// "Tuần"
+	@override
+	String get common_Weekly => "Tuần";
+	/// "Tháng"
+	@override
+	String get common_Monthly => "Tháng";
+	/// "Năm"
+	@override
+	String get common_Yearly => "Năm";
+	/// "Độ khó"
+	@override
+	String get common_Level => "Độ khó";
+	/// "Vùng tập luyện"
+	@override
+	String get common_BodyPart => "Vùng tập luyện";
 	/// "Xin chào!"
 	@override
 	String get home_Hello => "Xin chào!";

@@ -127,7 +127,8 @@
     ],
     "categories_":{
       "categories": "Categories",
-      "categoryNotFound": "Category Not Found"
+      "categoryNotFound": "Category Not Found",
+      "searchHint": "Input category name"
     },
     "exercises_":{
       "exercises": "Exercise",
@@ -151,7 +152,12 @@
       "search": "Search",
       "minutes": "Minutes",
       "calories": "Calories",
-      "duration": "Duration"
+      "duration": "Duration",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "level": "Level",
+      "bodyPart": "Body Part"
     },
     "home_":{
       "Hello": "Hello!",

@@ -41,4 +41,17 @@ enum WorkoutLevel {
         return AppColors.warning;
     }
   }
+
+  Color backgroundColor() {
+    switch (this) {
+      case beginner:
+        return AppColors.successSoft;
+      case intermediate:
+        return AppColors.informationSoft;
+      case advanced:
+        return AppColors.warningSoft;
+      default:
+        return AppColors.warningSoft;
+    }
+  }
 }

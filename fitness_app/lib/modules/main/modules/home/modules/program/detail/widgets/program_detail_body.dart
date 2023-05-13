@@ -5,6 +5,7 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
 import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercises.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
+import 'package:fitness_app/global/utils/exercise_helper.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/program/detail/widgets/program_overview.dart';
 import 'package:flutter/material.dart';
@@ -109,9 +110,9 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
                 totalCalo: totalCalo,
               ),
             _programDescription(),
-            const Text(
-              'Exercises',
-              style: TextStyle(
+            Text(
+              i18n.exercises_Exercises,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
@@ -189,15 +190,11 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
 
                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                   setState(() {
-                    totalDuration = exercises!
-                        .map((p0) => p0.duration)
-                        .toList()
-                        .reduce((a, b) => a ?? 0 + (b ?? 0))!;
-                    totalCalo = exercises
-                        .map((p0) => p0.calo)
-                        .toList()
-                        .reduce((a, b) => a ?? 0 + (b ?? 0))!;
-                    exerciseList = exercises.toList();
+                    exerciseList = exercises!.toList();
+                    totalDuration =
+                        ExerciseHelper.getTotalDuration(exerciseList.toList());
+                    totalCalo =
+                        ExerciseHelper.getTotalCalo(exerciseList.toList());
                   });
                 });
 
@@ -227,7 +224,10 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
               ),
               onPressed: () {
                 context.pushRoute(
-                  CountdownTimerRoute(exercises: exerciseList.toList()),
+                  CountdownTimerRoute(
+                    exercises: exerciseList.toList(),
+                    // program: widget.program,
+                  ),
                 );
               },
             ),

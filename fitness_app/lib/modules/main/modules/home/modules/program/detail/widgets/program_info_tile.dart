@@ -9,12 +9,14 @@ class ProgramInfoTile extends StatelessWidget {
     required this.icon,
     this.textStyle = const TextStyle(fontWeight: FontWeight.w700),
     this.iconColor = AppColors.grey1,
+    this.backgroundColor = AppColors.grey6,
   });
 
   final String? label;
   final IconData icon;
   final TextStyle textStyle;
   final Color iconColor;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class ProgramInfoTile extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: AppColors.grey6,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

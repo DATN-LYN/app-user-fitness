@@ -1,0 +1,11 @@
+mutation UpsertStats($input: UpsertUserStatisticsInputDto!) {
+  upsertStats(input: $input) {
+    id
+    userId
+    programCount
+    caloCount
+    durationCount
+    createdAt
+    updatedAt
+  }
+}

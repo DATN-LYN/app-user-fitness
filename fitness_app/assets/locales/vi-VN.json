@@ -133,7 +133,9 @@
     },
     "exercises_":{
       "exercises": "Bài Tập",
-      "exerciseNotFound": "Không tìm thấy bài tập"
+      "exerciseNotFound": "Không tìm thấy bài tập",
+      "searchHint": "Nhập tên thể loại"
+
     },
     "programs_":{
       "programs": "Chương trình",
@@ -154,7 +156,12 @@
       "minutes": "Phút",
       "calories": "Calo",
       "description": "Mô Tả",
-      "duration": "Thời gian"
+      "duration": "Thời gian",
+      "weekly": "Tuần",
+      "monthly": "Tháng",
+      "yearly": "Năm",
+      "level": "Độ khó",
+      "bodyPart": "Vùng tập luyện"
     },
     "home_":{
       "Hello": "Xin chào!",

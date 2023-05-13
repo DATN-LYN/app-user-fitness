@@ -17,7 +17,8 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
         GUpsertExerciseInputDto,
         GUpsertInboxInputDto,
         GUpsertProgramInputDto,
-        GUpsertUserInputDto;
+        GUpsertUserInputDto,
+        GUpsertUserStatisticsInputDto;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.data.gql.dart'
     show GLogoutData, GLogoutData_logout;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.req.gql.dart'
@@ -78,12 +79,24 @@ import 'package:fitness_app/global/graphql/fragment/__generated__/user_fragment.
     show GUserReq;
 import 'package:fitness_app/global/graphql/fragment/__generated__/user_fragment.var.gql.dart'
     show GUserVars;
+import 'package:fitness_app/global/graphql/fragment/__generated__/user_statistics_fragment.data.gql.dart'
+    show GUserStatisticsData;
+import 'package:fitness_app/global/graphql/fragment/__generated__/user_statistics_fragment.req.gql.dart'
+    show GUserStatisticsReq;
+import 'package:fitness_app/global/graphql/fragment/__generated__/user_statistics_fragment.var.gql.dart'
+    show GUserStatisticsVars;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_inbox.data.gql.dart'
     show GUpsertInboxData, GUpsertInboxData_upsertInbox;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart'
     show GUpsertInboxReq;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_inbox.var.gql.dart'
     show GUpsertInboxVars;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.data.gql.dart'
+    show GUpsertStatsData, GUpsertStatsData_upsertStats;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.req.gql.dart'
+    show GUpsertStatsReq;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.var.gql.dart'
+    show GUpsertStatsVars;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.data.gql.dart'
     show
         GGetCategoriesData,
@@ -145,6 +158,16 @@ import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inbo
     show GGetMyInboxesReq;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.var.gql.dart'
     show GGetMyInboxesVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.data.gql.dart'
+    show
+        GGetMyStatsData,
+        GGetMyStatsData_getMyStats,
+        GGetMyStatsData_getMyStats_items,
+        GGetMyStatsData_getMyStats_meta;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart'
+    show GGetMyStatsReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.var.gql.dart'
+    show GGetMyStatsVars;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.data.gql.dart'
     show GGetProgramData, GGetProgramData_getProgram;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.req.gql.dart'
@@ -222,6 +245,12 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GGetMyInboxesData_getMyInboxes_meta,
   GGetMyInboxesReq,
   GGetMyInboxesVars,
+  GGetMyStatsData,
+  GGetMyStatsData_getMyStats,
+  GGetMyStatsData_getMyStats_items,
+  GGetMyStatsData_getMyStats_meta,
+  GGetMyStatsReq,
+  GGetMyStatsVars,
   GGetProgramData,
   GGetProgramData_getProgram,
   GGetProgramReq,
@@ -270,9 +299,17 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GUpsertInboxReq,
   GUpsertInboxVars,
   GUpsertProgramInputDto,
+  GUpsertStatsData,
+  GUpsertStatsData_upsertStats,
+  GUpsertStatsReq,
+  GUpsertStatsVars,
   GUpsertUserInputDto,
+  GUpsertUserStatisticsInputDto,
   GUserData,
   GUserReq,
+  GUserStatisticsData,
+  GUserStatisticsReq,
+  GUserStatisticsVars,
   GUserVars,
 ])
 final Serializers serializers = _serializersBuilder.build();

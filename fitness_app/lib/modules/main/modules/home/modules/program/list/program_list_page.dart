@@ -1,6 +1,6 @@
 import 'package:ferry/ferry.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
-import 'package:fitness_app/global/widgets/shimmer_program_large_list.dart';
+import 'package:fitness_app/global/widgets/program/shimmer_program_large_list.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/program/list/models/program_filter_data.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/program/list/widgets/program_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ import '../../../../../../../global/utils/debouncer.dart';
 import '../../../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../../../global/widgets/fitness_error.dart';
 import '../../../../../../../global/widgets/infinity_list.dart';
-import '../../../../../../../global/widgets/program_item_large.dart';
+import '../../../../../../../global/widgets/program/program_item_large.dart';
 
 class ProgramListPage extends ConsumerStatefulWidget {
   const ProgramListPage({super.key});
