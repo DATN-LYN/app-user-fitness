@@ -39,9 +39,9 @@
       "registerNow": "Đăng ký",
       "logIn": "Đăng Nhập",
       "emailNotValid": "Email không hợp lệ",
-      "emailIsRequired": "Email bắt buộc",
+      "emailIsRequired": "Bạn chưa nhập email",
       "passwordMustBeAtLeastSixCharacters": "Mật khẩu phải dài tối thiểu 6 ký tự",
-      "passwordIsRequired": "Mật khẩu bắt buộc"
+      "passwordIsRequired": "Bạn chưa nhập mật khẩu"
     },
     "signup_": {
       "createNewAccount": "Tạo tài khoản mới",
@@ -57,9 +57,14 @@
       "and": "và",
       "termsAndConditions": "Điều Khoản & Dịch Vụ",
       "fullName": "Họ và tên",
-      "fullNameIsRequired": "Họ và tên bắt buộc",
-      "confirmPasswordIsRequired": "Xác nhận mật khẩu bắt buộc",
-      "passwordNotMatch": "Mật khẩu không khớp"
+      "fullNameIsRequired": "Bạn chưa nhập họ và tên",
+      "confirmPasswordIsRequired": "Bạn chưa xác nhận mật khẩu",
+      "passwordNotMatch": "Mật khẩu không khớp",
+      "age": "Tuổi",
+      "ageIsRequired": "Bạn chưa nhập tuổi",
+      "enterYourAge": "Nhập tuổi của bạn",
+      "registerSuccess": "Bạn đã đăng ký thành công",
+      "backToLogin": "Quay lại đăng nhập"
     },
     "forgotPassword_": {
       "title": "Quên mật khẩu",
@@ -76,6 +81,7 @@
     },
     "setting_":{
       "title":"Cài đặt",
+      "editProfile": "Cập nhật thông tin",
       "language":"Ngôn ngữ",
       "shareWithFriends":"Chia sẻ với bạn bè",
       "privacyPolicy":"Chính sách bảo mật",
@@ -161,7 +167,8 @@
       "monthly": "Tháng",
       "yearly": "Năm",
       "level": "Độ khó",
-      "bodyPart": "Vùng tập luyện"
+      "bodyPart": "Vùng tập luyện",      
+      "success":"Thành công"
     },
     "home_":{
       "Hello": "Xin chào!",

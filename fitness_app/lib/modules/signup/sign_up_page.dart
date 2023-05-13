@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../global/gen/i18n.dart';
 import '../../global/graphql/__generated__/schema.schema.gql.dart';
@@ -28,8 +30,18 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   bool confirmPasswordObscure = true;
   final focusConfirmPasswordNode = FocusNode();
 
+  GRegisterInputDto get formData {
+    final formValue = formKey.currentState!.value;
+    return GRegisterInputDto((b) => b
+      ..age = double.parse(formValue['age'])
+      ..fullName = formValue['fullName']
+      ..email = formValue['email']
+      ..password = formValue['password']);
+  }
+
   void signUp() async {
     final client = ref.read(appClientProvider);
+    final i18n = I18n.of(context)!;
 
     FocusManager.instance.primaryFocus?.unfocus();
     if (formKey.currentState!.saveAndValidate()) {
@@ -37,7 +49,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       final data = formKey.currentState!.value;
       final registerReq = GRegisterReq(
         (b) => b.vars.input.replace(
-          GRegisterInputDto.fromJson(data)!,
+          GRegisterInputDto.fromJson(formData.toJson())!,
         ),
       );
       final response = await client.request(registerReq).first;
@@ -49,7 +61,25 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       } else {
         if (response.data?.register.success == true) {
           if (mounted) {
-            context.popRoute();
+            await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) {
+                return ConfirmationDialog(
+                  showNegativeButton: false,
+                  titleText: i18n.common_Success,
+                  contentText: i18n.signup_RegisterSuccess,
+                  positiveButtonText: i18n.signup_BackToLogin,
+                  image: const Icon(
+                    Ionicons.checkmark_circle,
+                    color: AppColors.primaryBold,
+                  ),
+                );
+              },
+            );
+            if (mounted) {
+              context.popRoute();
+            }
           }
         }
       }
@@ -75,23 +105,40 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 style: theme.textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
-              // Label(i18n.signup_FullName),
-              // FormBuilderTextField(
-              //   name: 'fullName',
-              //   enabled: !isLoading,
-              //   decoration: InputDecoration(
-              //     fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-              //     filled: true,
-              //     hintText: i18n.signup_EnterYourFullName,
-              //   ),
-              //   validator: FormBuilderValidators.required(
-              //     errorText: i18n.signup_FullNameIsRequired,
-              //   ),
-              //   autovalidateMode: AutovalidateMode.onUserInteraction,
-              //   autocorrect: false,
-              //   textInputAction: TextInputAction.next,
-              //   keyboardType: TextInputType.visiblePassword,
-              // ),
+              Label(i18n.signup_FullName),
+              FormBuilderTextField(
+                name: 'fullName',
+                enabled: !isLoading,
+                decoration: InputDecoration(
+                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
+                  filled: true,
+                  hintText: i18n.signup_EnterYourFullName,
+                ),
+                validator: FormBuilderValidators.required(
+                  errorText: i18n.signup_FullNameIsRequired,
+                ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autocorrect: false,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.visiblePassword,
+              ),
+              Label(i18n.signup_Age),
+              FormBuilderTextField(
+                name: 'age',
+                enabled: !isLoading,
+                decoration: InputDecoration(
+                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
+                  filled: true,
+                  hintText: i18n.signup_EnterYourAge,
+                ),
+                validator: FormBuilderValidators.required(
+                  errorText: i18n.signup_AgeIsRequired,
+                ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autocorrect: false,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+              ),
               Label(i18n.login_Email),
               FormBuilderTextField(
                 name: 'email',
@@ -196,9 +243,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     (value) {
                       if (value !=
                           formKey.currentState?.fields['password']?.value) {
-                        return i18n.signup_PasswordNotMatch;
+                        return i18n.setting_PasswordNotMatch;
+                      } else {
+                        return null;
                       }
-                      return null;
                     }
                   ],
                 ),

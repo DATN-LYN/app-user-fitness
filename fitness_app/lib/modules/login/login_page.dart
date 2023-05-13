@@ -56,15 +56,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void handleLoginSuccess(GLoginData? response) async {
+    print(response);
     ref.watch(authProvider.notifier).logIn(response!);
 
-    if (!mounted) return;
-
-    // if (AutoRouter.of(context).canPop()) {
-    //   AutoRouter.of(context).pop();
-    // } else {
-    //   AutoRouter.of(context).replaceAll([const MainRoute()]);
-    // }
     AutoRouter.of(context).replaceAll([const MainRoute()]);
   }
 
@@ -73,7 +67,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final i18n = I18n.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(elevation: 0),
+      appBar: AppBar(
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
       body: FormBuilder(
         key: formKey,
         child: GestureDetector(
