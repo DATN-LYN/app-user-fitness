@@ -9,6 +9,7 @@ import 'package:fitness_app/modules/main/modules/settings/widgets/change_passwor
 import 'package:fitness_app/modules/main/modules/settings/widgets/setting_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -168,13 +169,13 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ),
                 const SizedBox(height: 16),
                 SettingTile(
-                  icon: Icons.language,
+                  icon: Ionicons.language,
                   title: i18n.setting_Language,
                   onTap: changeLanguage,
                 ),
                 const Divider(height: 12),
                 SettingTile(
-                  icon: Icons.share,
+                  icon: Ionicons.share_social,
                   title: i18n.setting_ShareWithFriends,
                   onTap: shareIntroUrl,
                 ),
@@ -199,13 +200,13 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ),
                 const SizedBox(height: 16),
                 SettingTile(
-                  icon: Icons.privacy_tip_outlined,
+                  icon: Icons.privacy_tip,
                   title: i18n.setting_PrivacyPolicy,
                   onTap: openPrivacyPolicyUrl,
                 ),
                 const Divider(height: 12),
                 SettingTile(
-                  icon: Icons.note_outlined,
+                  icon: Ionicons.document_text,
                   title: i18n.setting_TermsAndConditions,
                   onTap: openTermsAndConditionsUrl,
                 ),
@@ -238,7 +239,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 const Divider(height: 12),
                 if (!isLogedIn)
                   SettingTile(
-                    icon: Icons.login,
+                    icon: Ionicons.log_in,
                     title: i18n.login_LogIn,
                     onTap: () => context.pushRoute(const LoginRoute()),
                   )

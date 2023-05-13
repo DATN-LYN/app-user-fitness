@@ -2,31 +2,39 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.req.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/utils/dialogs.dart';
+import 'package:fitness_app/global/utils/exercise_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../gen/i18n.dart';
+import '../graphql/client.dart';
+import '../providers/current_stats_id.provider.dart';
 import '../themes/app_colors.dart';
 
-class CountdownTimerPage extends StatefulWidget {
+class CountdownTimerPage extends ConsumerStatefulWidget {
   const CountdownTimerPage({
     super.key,
     this.initialDuration = const Duration(seconds: 3),
     this.isBreak = false,
-    this.exercises,
-    this.exerciseCount,
+    required this.exercises,
+    this.index,
+    // this.program,
   });
 
   final Duration initialDuration;
   final bool isBreak;
-  final String? exerciseCount;
-  final List<GExercise>? exercises;
+  final int? index;
+  final List<GExercise> exercises;
+  // final GProgram? program;
 
   @override
-  State<CountdownTimerPage> createState() => _CountdownTimerPageState();
+  ConsumerState<CountdownTimerPage> createState() => _CountdownTimerPageState();
 }
 
-class _CountdownTimerPageState extends State<CountdownTimerPage> {
+class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
   late Duration countdownDuration = widget.initialDuration;
   late int seconds = widget.initialDuration.inSeconds;
   Timer? countdownTimer;
@@ -41,7 +49,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
             context.popRoute();
           } else {
             context
-                .replaceRoute(PlayExerciseRoute(exercises: widget.exercises!));
+                .replaceRoute(PlayExerciseRoute(exercises: widget.exercises));
           }
         } else {
           countdownDuration = Duration(seconds: seconds);
@@ -52,8 +60,49 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      await initData();
+    });
     startTimer();
     super.initState();
+  }
+
+  Future initData() async {
+    if (widget.isBreak) {
+      final client = ref.watch(appClientProvider);
+      final statsId = ref.watch(currentStatsId);
+      final exercises = widget.index == 0
+          ? [widget.exercises.first]
+          : widget.exercises.getRange(0, widget.index ?? 0).toList();
+
+      final calo = ExerciseHelper.getTotalCalo(exercises);
+      final duration = ExerciseHelper.getTotalDuration(exercises);
+
+      print(calo);
+      print(duration);
+
+      var req = GUpsertStatsReq(
+        (b) => b
+          ..vars.input.id = statsId
+          ..vars.input.caloCount = calo
+          ..vars.input.durationCount = duration
+          ..vars.input.programCount = 1
+          ..vars.input.userId = 'f80200e4-b36b-4803-b5c0-dd0c0ef8cb89',
+      );
+
+      final response = await client.request(req).first;
+      if (response.hasErrors) {
+        if (mounted) {
+          DialogUtils.showError(context: context, response: response);
+        }
+      } else {
+        print(response.data?.upsertStats.id);
+        ref
+            .read(currentStatsId.notifier)
+            .update((state) => response.data?.upsertStats.id);
+        print(response);
+      }
+    }
   }
 
   @override
@@ -128,7 +177,7 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
                 Center(
                   child: Text(
                     i18n.countdown_YouHaveFinishCountEx(
-                      widget.exerciseCount ?? '',
+                      '${widget.index ?? 0 + 1} / ${widget.exercises.length}',
                     ),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
@@ -164,8 +213,8 @@ class _CountdownTimerPageState extends State<CountdownTimerPage> {
             if (widget.isBreak) {
               context.popRoute();
             } else {
-              context.replaceRoute(
-                  PlayExerciseRoute(exercises: widget.exercises!));
+              context
+                  .replaceRoute(PlayExerciseRoute(exercises: widget.exercises));
             }
           },
           child:

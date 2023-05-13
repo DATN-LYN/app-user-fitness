@@ -3,12 +3,14 @@ import 'package:fitness_app/global/enums/workout_level.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/global/widgets/shimmer_image.dart';
+import 'package:fitness_app/global/widgets/tag.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
-import '../enums/workout_body_part.dart';
-import '../gen/i18n.dart';
-import '../graphql/query/__generated__/query_get_programs.data.gql.dart';
-import '../routers/app_router.dart';
+import '../../enums/workout_body_part.dart';
+import '../../gen/i18n.dart';
+import '../../graphql/query/__generated__/query_get_programs.data.gql.dart';
+import '../../routers/app_router.dart';
 
 class ProgramItemLarge extends StatelessWidget {
   const ProgramItemLarge({
@@ -50,27 +52,31 @@ class ProgramItemLarge extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    program.name ?? '_',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        program.name ?? '_',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Tag(
+                        text: level.label(i18n),
+                        color: level.color(),
+                      )
+                    ],
                   ),
                   const SizedBox(height: 6),
                   _infoTile(
-                    icon: Icons.sports,
-                    label: 'Level: ',
-                    value: level.label(i18n),
-                  ),
-                  _infoTile(
-                    icon: Icons.sports,
-                    label: 'Body Part: ',
+                    icon: Ionicons.body,
+                    label: '${i18n.common_BodyPart}: ',
                     value: bodyPart.label(i18n),
                   ),
                   _infoTile(
-                    icon: Icons.note,
-                    label: 'Description: ',
+                    icon: Ionicons.document_text,
+                    label: '${i18n.common_Description}: ',
                     value: program.description ?? '_',
                   ),
                 ],

@@ -1,7 +1,7 @@
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:flutter/material.dart';
 
-import '../themes/app_colors.dart';
+import '../../themes/app_colors.dart';
 
 class ShimmerProgramLargeList extends StatelessWidget {
   const ShimmerProgramLargeList({super.key});

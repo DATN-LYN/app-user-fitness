@@ -11,8 +11,8 @@ import '../../../../../../../global/graphql/query/__generated__/query_get_progra
 import '../../../../../../../global/utils/constants.dart';
 import '../../../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../../../global/widgets/fitness_error.dart';
-import '../../../../../../../global/widgets/program_item_large.dart';
-import '../../../../../../../global/widgets/shimmer_program_large_list.dart';
+import '../../../../../../../global/widgets/program/program_item_large.dart';
+import '../../../../../../../global/widgets/program/shimmer_program_large_list.dart';
 
 class CategoryDetailPage extends ConsumerStatefulWidget {
   const CategoryDetailPage({required this.category, super.key});

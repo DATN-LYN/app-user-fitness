@@ -1,4 +1,4 @@
-import 'package:fitness_app/global/enums/schedule_filter.dart';
+import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
-  ScheduleFilter selectedFilter = ScheduleFilter.weekly;
+  FilterRangeType selectedFilter = FilterRangeType.weekly;
   var req = GGetMyStatsReq(
     (b) => b
       ..vars.queryParams.limit = 10
@@ -39,12 +39,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
           const SizedBox(height: 8),
           Row(
             children: [
-              _filterItem(schedule: ScheduleFilter.weekly),
-              _filterItem(schedule: ScheduleFilter.monthly),
-              _filterItem(schedule: ScheduleFilter.yearly),
+              _filterItem(schedule: FilterRangeType.weekly),
+              _filterItem(schedule: FilterRangeType.monthly),
+              _filterItem(schedule: FilterRangeType.yearly),
             ],
           ),
-          if (selectedFilter == ScheduleFilter.monthly)
+          if (selectedFilter == FilterRangeType.monthly)
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: FormBuilderField<DateTime>(
@@ -115,8 +115,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
     );
   }
 
-  Widget _filterItem({required ScheduleFilter schedule}) {
+  Widget _filterItem({required FilterRangeType schedule}) {
     final isSelected = selectedFilter == schedule;
+    final i18n = I18n.of(context)!;
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -132,7 +134,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 : AppColors.primary.withOpacity(0.7),
           ),
           child: Text(
-            schedule.value,
+            schedule.label(i18n),
             style: TextStyle(
               color: isSelected ? AppColors.white : AppColors.grey1,
               fontWeight: FontWeight.w600,

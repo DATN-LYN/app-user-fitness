@@ -1,5 +1,6 @@
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../../../../../../../global/enums/workout_body_part.dart';
 import '../../../../../../../../global/enums/workout_level.dart';
@@ -34,27 +35,36 @@ class ProgramOverview extends StatelessWidget {
           children: [
             Expanded(
               child: ProgramInfoTile(
-                icon: Icons.macro_off,
+                icon: Ionicons.stats_chart,
                 label: level.label(i18n),
+                iconColor: AppColors.success,
+                backgroundColor: AppColors.successSoft,
               ),
             ),
             Expanded(
               child: ProgramInfoTile(
-                icon: Icons.macro_off,
+                icon: Ionicons.time,
                 label: DurationTime.totalDurationFormat(
-                    Duration(seconds: totalDuration.toInt())),
+                  Duration(seconds: totalDuration.toInt()),
+                ),
+                iconColor: AppColors.information,
+                backgroundColor: AppColors.informationSoft,
               ),
             ),
             Expanded(
               child: ProgramInfoTile(
-                icon: Icons.macro_off,
+                icon: Ionicons.fitness,
                 label: totalCalo.toString(),
+                iconColor: AppColors.error,
+                backgroundColor: AppColors.errorSoft,
               ),
             ),
             Expanded(
               child: ProgramInfoTile(
-                icon: Icons.macro_off,
+                icon: Ionicons.body,
                 label: bodyPart.label(i18n),
+                iconColor: AppColors.alert,
+                backgroundColor: AppColors.alertSoft,
               ),
             ),
           ],

@@ -50,7 +50,7 @@ class _CategorySearchBarState extends State<CategorySearchBar> {
     final i18n = I18n.of(context)!;
 
     return FilterTextField(
-      hintText: i18n.programs_SearchHint,
+      hintText: i18n.categories_SearchHint,
       onTextChange: (text) => handleFilter(text),
     );
   }

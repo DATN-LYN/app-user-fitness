@@ -84,8 +84,7 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     CountdownTimerRoute.name: (routeData) {
-      final args = routeData.argsAs<CountdownTimerRouteArgs>(
-          orElse: () => const CountdownTimerRouteArgs());
+      final args = routeData.argsAs<CountdownTimerRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: CountdownTimerPage(
@@ -93,7 +92,7 @@ class _$AppRouter extends RootStackRouter {
           initialDuration: args.initialDuration,
           isBreak: args.isBreak,
           exercises: args.exercises,
-          exerciseCount: args.exerciseCount,
+          index: args.index,
         ),
       );
     },
@@ -416,8 +415,8 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
     Key? key,
     Duration initialDuration = const Duration(seconds: 3),
     bool isBreak = false,
-    List<GExercise>? exercises,
-    String? exerciseCount,
+    required List<GExercise> exercises,
+    int? index,
   }) : super(
           CountdownTimerRoute.name,
           path: '/countdown-timer-page',
@@ -426,7 +425,7 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
             initialDuration: initialDuration,
             isBreak: isBreak,
             exercises: exercises,
-            exerciseCount: exerciseCount,
+            index: index,
           ),
         );
 
@@ -438,8 +437,8 @@ class CountdownTimerRouteArgs {
     this.key,
     this.initialDuration = const Duration(seconds: 3),
     this.isBreak = false,
-    this.exercises,
-    this.exerciseCount,
+    required this.exercises,
+    this.index,
   });
 
   final Key? key;
@@ -448,13 +447,13 @@ class CountdownTimerRouteArgs {
 
   final bool isBreak;
 
-  final List<GExercise>? exercises;
+  final List<GExercise> exercises;
 
-  final String? exerciseCount;
+  final int? index;
 
   @override
   String toString() {
-    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak, exercises: $exercises, exerciseCount: $exerciseCount}';
+    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak, exercises: $exercises, index: $index}';
   }
 }
 

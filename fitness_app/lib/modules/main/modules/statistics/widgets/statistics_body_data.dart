@@ -2,7 +2,7 @@ import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../global/themes/app_colors.dart';
-import '../../../../../global/widgets/user_statistic_item.dart';
+import '../../../../../global/widgets/stats/user_statistic_item.dart';
 
 class StatisticsBodyData extends StatelessWidget {
   const StatisticsBodyData({

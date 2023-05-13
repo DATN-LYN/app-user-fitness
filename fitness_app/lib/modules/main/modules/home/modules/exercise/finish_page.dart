@@ -3,30 +3,72 @@ import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/utils/duration_time.dart';
+import 'package:fitness_app/global/utils/exercise_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../global/gen/assets.gen.dart';
+import '../../../../../../global/graphql/client.dart';
+import '../../../../../../global/graphql/mutation/__generated__/mutation_upsert_stats.req.gql.dart';
+import '../../../../../../global/providers/current_stats_id.provider.dart';
 import '../../../../../../global/themes/app_colors.dart';
+import '../../../../../../global/utils/dialogs.dart';
 
-class FinishPage extends StatelessWidget {
+class FinishPage extends ConsumerStatefulWidget {
   const FinishPage({
     super.key,
     required this.exercises,
   });
-
   final List<GExercise> exercises;
+
+  @override
+  ConsumerState<FinishPage> createState() => _FinishPage();
+}
+
+class _FinishPage extends ConsumerState<FinishPage> {
+  late final calo = ExerciseHelper.getTotalCalo(widget.exercises);
+  late final duration = ExerciseHelper.getTotalDuration(widget.exercises);
+  late final durationString =
+      DurationTime.totalDurationFormat(Duration(seconds: duration.toInt()));
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await initData();
+    });
+    super.initState();
+  }
+
+  Future initData() async {
+    final client = ref.watch(appClientProvider);
+    final statsId = ref.watch(currentStatsId);
+
+    var req = GUpsertStatsReq(
+      (b) => b
+        ..vars.input.id = statsId
+        ..vars.input.caloCount = calo
+        ..vars.input.durationCount = duration
+        ..vars.input.programCount = 1
+        ..vars.input.userId = 'f80200e4-b36b-4803-b5c0-dd0c0ef8cb89',
+    );
+
+    final response = await client.request(req).first;
+    if (response.hasErrors) {
+      if (context.mounted) {
+        DialogUtils.showError(context: context, response: response);
+      }
+    } else {
+      ref
+          .read(currentStatsId.notifier)
+          .update((state) => response.data?.upsertStats.id);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
-    final calo =
-        exercises.map((e) => e.calo).toList().reduce((a, b) => a! + b!);
-    final duration =
-        exercises.map((e) => e.duration).toList().reduce((a, b) => a! + b!);
-    final durationString =
-        DurationTime.totalDurationFormat(Duration(seconds: duration!.toInt()));
 
     return Scaffold(
       body: SafeArea(
@@ -50,7 +92,7 @@ class FinishPage extends StatelessWidget {
             Row(
               children: [
                 StatisticItem(
-                  title: exercises.length.toString(),
+                  title: widget.exercises.length.toString(),
                   subtitle: i18n.exercises_Exercises,
                   icon: const Icon(
                     Icons.format_list_numbered_outlined,
@@ -87,8 +129,10 @@ class FinishPage extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
         child: ElevatedButton(
-          onPressed: () =>
-              AutoRouter.of(context).popUntilRouteWithName(MainRoute.name),
+          onPressed: () {
+            ref.read(currentStatsId.notifier).update((state) => null);
+            AutoRouter.of(context).popUntilRouteWithName(MainRoute.name);
+          },
           child: Text(i18n.finish_GoBackToHome),
         ),
       ),
