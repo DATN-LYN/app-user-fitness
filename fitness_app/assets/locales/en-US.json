@@ -58,7 +58,12 @@
       "fullName": "Full name",
       "fullNameIsRequired": "Full name is required",
       "confirmPasswordIsRequired": "Confirm password is required",
-      "passwordNotMatch": "Password not match"
+      "passwordNotMatch": "Password not match",
+      "age": "Age",
+      "ageIsRequired": "Age is required",
+      "enterYourAge": "Enter your age",
+      "registerSuccess": "You have registered successfully",
+      "backToLogin": "Back to login"
     },
     "forgotPassword_": {
       "title": "Forgot password",
@@ -75,6 +80,7 @@
     },
     "setting_":{
       "title":"Setting",
+      "editProfile": "Edit Profile",
       "language":"Language",
       "shareWithFriends":"Share with friends",
       "privacyPolicy":"Privacy policy",
@@ -157,7 +163,8 @@
       "monthly": "Monthly",
       "yearly": "Yearly",
       "level": "Level",
-      "bodyPart": "Body Part"
+      "bodyPart": "Body Part",
+      "success":"Success"
     },
     "home_":{
       "Hello": "Hello!",

@@ -116,6 +116,16 @@ class I18n implements WidgetsLocalizations {
 	String get signup_ConfirmPasswordIsRequired => "Confirm password is required";
 	/// "Password not match"
 	String get signup_PasswordNotMatch => "Password not match";
+	/// "Age"
+	String get signup_Age => "Age";
+	/// "Age is required"
+	String get signup_AgeIsRequired => "Age is required";
+	/// "Enter your age"
+	String get signup_EnterYourAge => "Enter your age";
+	/// "You have registered successfully"
+	String get signup_RegisterSuccess => "You have registered successfully";
+	/// "Back to login"
+	String get signup_BackToLogin => "Back to login";
 	/// "Forgot password"
 	String get forgotPassword_Title => "Forgot password";
 	/// "Please enter your email address to get login code"
@@ -136,6 +146,8 @@ class I18n implements WidgetsLocalizations {
 	String get countdown_WalkAround => "Walk around";
 	/// "Setting"
 	String get setting_Title => "Setting";
+	/// "Edit Profile"
+	String get setting_EditProfile => "Edit Profile";
 	/// "Language"
 	String get setting_Language => "Language";
 	/// "Share with friends"
@@ -256,6 +268,8 @@ class I18n implements WidgetsLocalizations {
 	String get common_Level => "Level";
 	/// "Body Part"
 	String get common_BodyPart => "Body Part";
+	/// "Success"
+	String get common_Success => "Success";
 	/// "Hello!"
 	String get home_Hello => "Hello!";
 	/// "Have a nice day"
@@ -352,15 +366,15 @@ class _I18n_vi_VN extends I18n {
 	/// "Email không hợp lệ"
 	@override
 	String get login_EmailNotValid => "Email không hợp lệ";
-	/// "Email bắt buộc"
+	/// "Bạn chưa nhập email"
 	@override
-	String get login_EmailIsRequired => "Email bắt buộc";
+	String get login_EmailIsRequired => "Bạn chưa nhập email";
 	/// "Mật khẩu phải dài tối thiểu 6 ký tự"
 	@override
 	String get login_PasswordMustBeAtLeastSixCharacters => "Mật khẩu phải dài tối thiểu 6 ký tự";
-	/// "Mật khẩu bắt buộc"
+	/// "Bạn chưa nhập mật khẩu"
 	@override
-	String get login_PasswordIsRequired => "Mật khẩu bắt buộc";
+	String get login_PasswordIsRequired => "Bạn chưa nhập mật khẩu";
 	/// "Tạo tài khoản mới"
 	@override
 	String get signup_CreateNewAccount => "Tạo tài khoản mới";
@@ -400,15 +414,30 @@ class _I18n_vi_VN extends I18n {
 	/// "Họ và tên"
 	@override
 	String get signup_FullName => "Họ và tên";
-	/// "Họ và tên bắt buộc"
+	/// "Bạn chưa nhập họ và tên"
 	@override
-	String get signup_FullNameIsRequired => "Họ và tên bắt buộc";
-	/// "Xác nhận mật khẩu bắt buộc"
+	String get signup_FullNameIsRequired => "Bạn chưa nhập họ và tên";
+	/// "Bạn chưa xác nhận mật khẩu"
 	@override
-	String get signup_ConfirmPasswordIsRequired => "Xác nhận mật khẩu bắt buộc";
+	String get signup_ConfirmPasswordIsRequired => "Bạn chưa xác nhận mật khẩu";
 	/// "Mật khẩu không khớp"
 	@override
 	String get signup_PasswordNotMatch => "Mật khẩu không khớp";
+	/// "Tuổi"
+	@override
+	String get signup_Age => "Tuổi";
+	/// "Bạn chưa nhập tuổi"
+	@override
+	String get signup_AgeIsRequired => "Bạn chưa nhập tuổi";
+	/// "Nhập tuổi của bạn"
+	@override
+	String get signup_EnterYourAge => "Nhập tuổi của bạn";
+	/// "Bạn đã đăng ký thành công"
+	@override
+	String get signup_RegisterSuccess => "Bạn đã đăng ký thành công";
+	/// "Quay lại đăng nhập"
+	@override
+	String get signup_BackToLogin => "Quay lại đăng nhập";
 	/// "Quên mật khẩu"
 	@override
 	String get forgotPassword_Title => "Quên mật khẩu";
@@ -439,6 +468,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Cài đặt"
 	@override
 	String get setting_Title => "Cài đặt";
+	/// "Cập nhật thông tin"
+	@override
+	String get setting_EditProfile => "Cập nhật thông tin";
 	/// "Ngôn ngữ"
 	@override
 	String get setting_Language => "Ngôn ngữ";
@@ -613,6 +645,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Vùng tập luyện"
 	@override
 	String get common_BodyPart => "Vùng tập luyện";
+	/// "Thành công"
+	@override
+	String get common_Success => "Thành công";
 	/// "Xin chào!"
 	@override
 	String get home_Hello => "Xin chào!";

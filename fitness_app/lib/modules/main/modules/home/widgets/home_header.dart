@@ -20,6 +20,7 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
     var user = ref.watch(meProvider)?.user;
+    bool isLogedIn = ref.watch(isSignedInProvider);
 
     return Column(
       children: [
@@ -46,8 +47,8 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                         children: [
                           Text(
                             user?.fullName == null
-                                ? i18n.home_Hello
-                                : '${i18n.home_Hello} ${user?.fullName}',
+                                ? '${i18n.home_Hello}!'
+                                : '${i18n.home_Hello} ${user?.fullName}!',
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -71,8 +72,7 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                             ),
                           ),
                           child: UserAvatar(
-                            avatar:
-                                'https://i1-vnexpress.vnecdn.net/2016/03/02/2-b1-a1-4358-1456906706.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=JEuZuiViqjODpa45ruzTtw',
+                            avatar: user.avatar,
                             fullName: user.fullName,
                           ),
                         ),

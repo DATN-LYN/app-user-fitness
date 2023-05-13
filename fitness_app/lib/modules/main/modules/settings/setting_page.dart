@@ -125,8 +125,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
-    var user = ref.watch(meProvider);
-    bool isLogedIn = user?.id != null;
+    var user = ref.watch(meProvider)?.user;
+    bool isLogedIn = ref.watch(isSignedInProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -138,20 +138,76 @@ class _SettingPageState extends ConsumerState<SettingPage> {
           Center(
             child: Avatar(
               size: 80,
-              name: isLogedIn ? 'Nhi' : null,
+              name: isLogedIn ? user?.fullName : null,
             ),
           ),
           const SizedBox(height: 16),
           Center(
             child: Text(
-              isLogedIn ? 'Nhi' : 'Guest User',
+              isLogedIn ? user?.fullName ?? '_' : 'Guest User',
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 20,
               ),
             ),
           ),
+          const SizedBox(height: 6),
+          Center(
+            child: Text(
+              isLogedIn ? user?.email ?? '_' : 'Guest User',
+              style: const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+              ),
+            ),
+          ),
           const SizedBox(height: 20),
+          ShadowWrapper(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 16,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  i18n.setting_Account,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                if (isLogedIn) ...[
+                  SettingTile(
+                    icon: Ionicons.person_circle_outline,
+                    title: i18n.setting_EditProfile,
+                    onTap: changePasswordHandler,
+                  ),
+                  const Divider(height: 12),
+                  SettingTile(
+                    icon: Icons.password,
+                    title: i18n.setting_ChangePassword,
+                    onTap: changePasswordHandler,
+                  ),
+                  const Divider(height: 12),
+                ],
+                if (!isLogedIn)
+                  SettingTile(
+                    icon: Ionicons.log_in,
+                    title: i18n.login_LogIn,
+                    onTap: () => context.pushRoute(const LoginRoute()),
+                  )
+                else
+                  SettingTile(
+                    icon: Icons.logout,
+                    title: i18n.setting_Logout,
+                    onTap: () => logOut(),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
           ShadowWrapper(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -200,13 +256,13 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ),
                 const SizedBox(height: 16),
                 SettingTile(
-                  icon: Icons.privacy_tip,
+                  icon: Icons.privacy_tip_outlined,
                   title: i18n.setting_PrivacyPolicy,
                   onTap: openPrivacyPolicyUrl,
                 ),
                 const Divider(height: 12),
                 SettingTile(
-                  icon: Ionicons.document_text,
+                  icon: Icons.file_copy_outlined,
                   title: i18n.setting_TermsAndConditions,
                   onTap: openTermsAndConditionsUrl,
                 ),
@@ -214,44 +270,6 @@ class _SettingPageState extends ConsumerState<SettingPage> {
             ),
           ),
           const SizedBox(height: 16),
-          ShadowWrapper(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  i18n.setting_Account,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                if (isLogedIn)
-                  SettingTile(
-                    icon: Icons.password,
-                    title: i18n.setting_ChangePassword,
-                    onTap: changePasswordHandler,
-                  ),
-                const Divider(height: 12),
-                if (!isLogedIn)
-                  SettingTile(
-                    icon: Ionicons.log_in,
-                    title: i18n.login_LogIn,
-                    onTap: () => context.pushRoute(const LoginRoute()),
-                  )
-                else
-                  SettingTile(
-                    icon: Icons.logout,
-                    title: i18n.setting_Logout,
-                    onTap: () => logOut(),
-                  ),
-              ],
-            ),
-          ),
         ],
       ),
     );

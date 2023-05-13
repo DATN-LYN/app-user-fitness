@@ -16,6 +16,7 @@ class ConfirmationDialog extends StatelessWidget {
     this.onTapPositiveButton,
     this.negativeButtonText,
     this.onTapNegativeButton,
+    this.showNegativeButton = true,
   });
 
   final Widget? image;
@@ -27,6 +28,7 @@ class ConfirmationDialog extends StatelessWidget {
   final String? negativeButtonText;
   final VoidCallback? onTapPositiveButton;
   final VoidCallback? onTapNegativeButton;
+  final bool showNegativeButton;
 
   @override
   Widget build(BuildContext context) {
@@ -84,16 +86,19 @@ class ConfirmationDialog extends StatelessWidget {
                     ),
                   Row(
                     children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: onTapNegativeButton ?? context.popRoute,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.grey6,
+                      if (showNegativeButton) ...[
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: onTapNegativeButton ?? context.popRoute,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.grey6,
+                            ),
+                            child:
+                                Text(negativeButtonText ?? i18n.button_Cancel),
                           ),
-                          child: Text(negativeButtonText ?? i18n.button_Cancel),
                         ),
-                      ),
-                      const SizedBox(width: 16),
+                        const SizedBox(width: 16),
+                      ],
                       Expanded(
                         child: ElevatedButton(
                           onPressed: onTapPositiveButton ?? context.popRoute,
@@ -105,17 +110,18 @@ class ConfirmationDialog extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              top: 8,
-              right: 8,
-              child: IconButton(
-                onPressed: context.popRoute,
-                icon: const Icon(
-                  Icons.close,
-                  color: AppColors.grey2,
+            if (showNegativeButton)
+              Positioned(
+                top: 8,
+                right: 8,
+                child: IconButton(
+                  onPressed: context.popRoute,
+                  icon: const Icon(
+                    Icons.close,
+                    color: AppColors.grey2,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
