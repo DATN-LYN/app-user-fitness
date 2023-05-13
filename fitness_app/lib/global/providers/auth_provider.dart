@@ -8,6 +8,7 @@ import '../graphql/auth/__generated__/query_login.data.gql.dart';
 enum AuthProviderLoading {
   logIn,
   logOut,
+  editProfile,
 }
 
 final authProvider =
@@ -51,7 +52,13 @@ class AuthNotifier extends StateNotifier<AppState<UserCredentials>> {
 
   void logOut() {
     state = AppState.loading(AuthProviderLoading.logOut.name);
-    userCredentialProvider.saveUserCredential(UserCredentials());
+    userCredentialProvider.clear();
+    state = AppState.data(userCredentialProvider.getUserCredential());
+  }
+
+  void editProfile(UserCredentials credentials) {
+    state = AppState.loading(AuthProviderLoading.editProfile.name);
+    userCredentialProvider.saveUserCredential(credentials);
     state = AppState.data(userCredentialProvider.getUserCredential());
   }
 }

@@ -5,6 +5,7 @@ import 'package:fitness_app/global/providers/app_settings_provider.dart';
 import 'package:fitness_app/global/providers/auth_provider.dart';
 import 'package:fitness_app/global/providers/me_provider.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
+import 'package:fitness_app/global/widgets/shimmer_image.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/change_password_bottom_sheet.dart';
 import 'package:fitness_app/modules/main/modules/settings/widgets/setting_tile.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +123,10 @@ class _SettingPageState extends ConsumerState<SettingPage> {
     );
   }
 
+  void goToEditProfile() {
+    context.pushRoute(const EditProfileRoute());
+  }
+
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
@@ -136,9 +141,15 @@ class _SettingPageState extends ConsumerState<SettingPage> {
         padding: const EdgeInsets.all(16),
         children: [
           Center(
-            child: Avatar(
-              size: 80,
-              name: isLogedIn ? user?.fullName : null,
+            child: ShimmerImage(
+              width: 100,
+              height: 100,
+              borderRadius: BorderRadius.circular(100),
+              imageUrl: user?.avatar ?? '_',
+              errorWidget: Avatar(
+                size: 100,
+                name: user?.fullName,
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -182,7 +193,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   SettingTile(
                     icon: Ionicons.person_circle_outline,
                     title: i18n.setting_EditProfile,
-                    onTap: changePasswordHandler,
+                    onTap: goToEditProfile,
                   ),
                   const Divider(height: 12),
                   SettingTile(

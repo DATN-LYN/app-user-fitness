@@ -22,7 +22,7 @@ abstract class UserCredentialsRepository {
     UserCredentials user,
   );
 
-  Future<Either<Failure, Unit>> signOut();
+  Future<Either<Failure, Unit>> clear();
 }
 
 class _UserCredentialsRepositoryImpl extends BaseRepository
@@ -62,7 +62,7 @@ class _UserCredentialsRepositoryImpl extends BaseRepository
   }
 
   @override
-  Future<Either<Failure, Unit>> signOut() {
+  Future<Either<Failure, Unit>> clear() {
     return guardFuture(() async {
       await box.delete(key);
       return unit;

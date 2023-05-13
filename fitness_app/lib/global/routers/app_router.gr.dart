@@ -124,6 +124,12 @@ class _$AppRouter extends RootStackRouter {
         child: const ProgramListPage(),
       );
     },
+    EditProfileRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const EditProfilePage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -229,6 +235,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           ProgramListRoute.name,
           path: '/program-list-page',
+        ),
+        RouteConfig(
+          EditProfileRoute.name,
+          path: '/edit-profile-page',
         ),
       ];
 }
@@ -525,6 +535,18 @@ class ProgramListRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ProgramListRoute';
+}
+
+/// generated route for
+/// [EditProfilePage]
+class EditProfileRoute extends PageRouteInfo<void> {
+  const EditProfileRoute()
+      : super(
+          EditProfileRoute.name,
+          path: '/edit-profile-page',
+        );
+
+  static const String name = 'EditProfileRoute';
 }
 
 /// generated route for
