@@ -9,10 +9,11 @@ import 'package:fitness_app/global/utils/exercise_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../gen/i18n.dart';
-import '../graphql/client.dart';
-import '../providers/current_stats_id.provider.dart';
-import '../themes/app_colors.dart';
+import '../../../../../../global/gen/i18n.dart';
+import '../../../../../../global/graphql/client.dart';
+import '../../../../../../global/providers/current_stats_id.provider.dart';
+import '../../../../../../global/providers/me_provider.dart';
+import '../../../../../../global/themes/app_colors.dart';
 
 class CountdownTimerPage extends ConsumerStatefulWidget {
   const CountdownTimerPage({
@@ -69,6 +70,8 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
 
   Future initData() async {
     if (widget.isBreak) {
+      final user = ref.read(meProvider)?.user;
+
       final client = ref.watch(appClientProvider);
       final statsId = ref.watch(currentStatsId);
       final exercises = widget.index == 0
@@ -84,7 +87,7 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
           ..vars.input.caloCount = calo
           ..vars.input.durationCount = duration
           ..vars.input.programCount = 1
-          ..vars.input.userId = 'f80200e4-b36b-4803-b5c0-dd0c0ef8cb89',
+          ..vars.input.userId = user!.id,
       );
 
       final response = await client.request(req).first;

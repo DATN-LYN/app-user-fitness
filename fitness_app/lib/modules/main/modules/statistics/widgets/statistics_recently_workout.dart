@@ -1,5 +1,6 @@
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
+import 'package:fitness_app/global/utils/constants.dart';
 import 'package:fitness_app/global/widgets/infinity_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +21,12 @@ class StatisticsRecentlyWorkout extends ConsumerStatefulWidget {
 
 class _StatisticsRecentlyWorkoutState
     extends ConsumerState<StatisticsRecentlyWorkout> {
-  var getProgramsReq = GGetProgramsReq();
+  var getProgramsReq = GGetProgramsReq(
+    (b) => b
+      ..vars.queryParams.limit = Constants.defaultLimit
+      ..vars.queryParams.page = 1
+      ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
+  );
 
   void refreshHanlder() {
     setState(() {
@@ -101,6 +107,8 @@ class _StatisticsRecentlyWorkoutState
         }
 
         return ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
           padding: const EdgeInsets.symmetric(vertical: 8),
           itemCount: programs!.length > 10 ? 10 : programs.length,
           itemBuilder: (context, index) {

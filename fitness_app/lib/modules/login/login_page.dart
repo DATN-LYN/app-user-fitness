@@ -66,10 +66,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final i18n = I18n.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
+      appBar: AppBar(elevation: 0),
       body: FormBuilder(
         key: formKey,
         child: GestureDetector(

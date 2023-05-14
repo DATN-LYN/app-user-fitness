@@ -201,10 +201,9 @@ type Meta {
 }
 
 type Mutation {
-  upsertStats(input: UpsertUserStatisticsInputDto!): IUserStatistics!
-  deleteUserProgram(id: String!): ResponseMessageBase!
   upsertUserExercise(input: UpsertUserExerciseInputDto!): IUserExercise!
   deleteUserExercise(id: String!): ResponseMessageBase!
+  upsertStats(input: UpsertUserStatisticsInputDto!): IUserStatistics!
   deleteStats(statsId: String!): ResponseMessageBase!
   upsertExercise(input: UpsertExerciseInputDto!): IExercise!
   deleteExercise(exerciseId: String!): ResponseMessageBase!
@@ -218,6 +217,8 @@ type Mutation {
   deleteProgram(programId: String!): ResponseMessageBase!
   deleteUser(userId: String!): ResponseMessageBase!
   upsertUser(input: UpsertUserInputDto!): IUser!
+  upsertUserProgram(input: UpsertUserProgramInputDto!): IUserProgram!
+  deleteUserProgram(id: String!): ResponseMessageBase!
 }
 
 type Program {
@@ -235,9 +236,6 @@ type Program {
 }
 
 type Query {
-  getUserProgram(id: String!): IUserProgram!
-  getUserPrograms(queryParams: QueryFilterDto!): IUserPrograms!
-  getMyUserPrograms(queryParams: QueryFilterDto!): IUserPrograms!
   getUserExercise(id: String!): IUserExercise!
   getUserExercises(queryParams: QueryFilterDto!): IUserExercises!
   getMyUserExercises(queryParams: QueryFilterDto!): IUserExercises!
@@ -258,6 +256,9 @@ type Query {
   getPrograms(queryParams: QueryFilterDto!): IPrograms!
   getUser(userId: String!): IUser!
   getUsers(queryParams: QueryFilterDto!): IUsers!
+  getUserProgram(id: String!): IUserProgram!
+  getUserPrograms(queryParams: QueryFilterDto!): IUserPrograms!
+  getMyUserPrograms(queryParams: QueryFilterDto!): IUserPrograms!
 }
 
 input QueryFilterDto {
@@ -333,6 +334,12 @@ input UpsertUserInputDto {
   avatar: String!
   email: String!
   age: Float!
+}
+
+input UpsertUserProgramInputDto {
+  id: ID
+  userId: String!
+  programId: String!
 }
 
 input UpsertUserStatisticsInputDto {

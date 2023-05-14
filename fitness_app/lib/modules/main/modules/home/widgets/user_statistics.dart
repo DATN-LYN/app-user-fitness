@@ -17,15 +17,14 @@ class UserStatistic extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final i18n = I18n.of(context)!;
+    final client = ref.watch(appClientProvider);
     var req = GGetMyStatsReq(
       (b) => b
         ..vars.queryParams.limit = 10
         ..vars.queryParams.page = 1
         ..vars.queryParams.orderBy = 'UserStatistics.createdAt',
     );
-    final client = ref.watch(appClientProvider);
-
-    final i18n = I18n.of(context)!;
 
     return Operation(
       client: client,
@@ -114,6 +113,7 @@ class ShimmerUserStatistics extends StatelessWidget {
       child: ListView.separated(
         itemCount: 3,
         scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           return Container(
             height: 160,
@@ -164,6 +164,50 @@ class ShimmerUserStatistics extends StatelessWidget {
         },
         separatorBuilder: (_, __) => const SizedBox(width: 12),
       ),
+    );
+  }
+}
+
+class UnLoginUserStatistics extends StatelessWidget {
+  const UnLoginUserStatistics({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final i18n = I18n.of(context)!;
+
+    return Row(
+      children: [
+        UserStatisticItem(
+          title: '0',
+          subtitle: i18n.common_Calories,
+          icon: const Icon(
+            Icons.local_fire_department,
+            size: 30,
+            color: AppColors.error,
+          ),
+          backgroundColor: AppColors.errorSoft,
+        ),
+        UserStatisticItem(
+          title: '0',
+          subtitle: i18n.common_Duration,
+          icon: const Icon(
+            Icons.timelapse,
+            size: 30,
+            color: AppColors.information,
+          ),
+          backgroundColor: AppColors.informationSoft,
+        ),
+        UserStatisticItem(
+          title: '0',
+          subtitle: i18n.programs_Programs,
+          icon: const Icon(
+            Icons.feed_rounded,
+            size: 30,
+            color: AppColors.success,
+          ),
+          backgroundColor: AppColors.successSoft,
+        ),
+      ],
     );
   }
 }

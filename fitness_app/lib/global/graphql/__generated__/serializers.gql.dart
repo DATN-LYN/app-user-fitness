@@ -19,6 +19,7 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
         GUpsertProgramInputDto,
         GUpsertUserExerciseInputDto,
         GUpsertUserInputDto,
+        GUpsertUserProgramInputDto,
         GUpsertUserStatisticsInputDto;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.data.gql.dart'
     show GLogoutData, GLogoutData_logout;
@@ -104,6 +105,18 @@ import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upser
     show GUpsertUserReq;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user.var.gql.dart'
     show GUpsertUserVars;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user_exercise.data.gql.dart'
+    show GUpsertUserExerciseData, GUpsertUserExerciseData_upsertUserExercise;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user_exercise.req.gql.dart'
+    show GUpsertUserExerciseReq;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user_exercise.var.gql.dart'
+    show GUpsertUserExerciseVars;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user_program.data.gql.dart'
+    show GUpsertUserProgramData, GUpsertUserProgramData_upsertUserProgram;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user_program.req.gql.dart'
+    show GUpsertUserProgramReq;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user_program.var.gql.dart'
+    show GUpsertUserProgramVars;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_categories.data.gql.dart'
     show
         GGetCategoriesData,
@@ -312,8 +325,17 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GUpsertStatsVars,
   GUpsertUserData,
   GUpsertUserData_upsertUser,
+  GUpsertUserExerciseData,
+  GUpsertUserExerciseData_upsertUserExercise,
   GUpsertUserExerciseInputDto,
+  GUpsertUserExerciseReq,
+  GUpsertUserExerciseVars,
   GUpsertUserInputDto,
+  GUpsertUserProgramData,
+  GUpsertUserProgramData_upsertUserProgram,
+  GUpsertUserProgramInputDto,
+  GUpsertUserProgramReq,
+  GUpsertUserProgramVars,
   GUpsertUserReq,
   GUpsertUserStatisticsInputDto,
   GUpsertUserVars,

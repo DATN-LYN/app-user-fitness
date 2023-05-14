@@ -25,8 +25,6 @@ class _SplashPageState extends ConsumerState<SplashPage> {
 
         if (appSettings.isFirstLaunch) {
           AutoRouter.of(context).replaceAll([const OnBoardRoute()]);
-        } else if (!isLogedIn) {
-          AutoRouter.of(context).replaceAll([const LoginRoute()]);
         } else {
           AutoRouter.of(context).replaceAll([const MainRoute()]);
         }

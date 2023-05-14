@@ -1,8 +1,10 @@
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
+import 'package:fitness_app/global/providers/me_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../global/themes/app_colors.dart';
 import 'widgets/month_picker_dialog.dart';
@@ -10,14 +12,14 @@ import 'widgets/statistics_body_data.dart';
 import 'widgets/statistics_chart.dart';
 import 'widgets/statistics_recently_workout.dart';
 
-class StatisticsPage extends StatefulWidget {
+class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
 
   @override
-  State<StatisticsPage> createState() => _StatisticsPageState();
+  ConsumerState<StatisticsPage> createState() => _StatisticsPageState();
 }
 
-class _StatisticsPageState extends State<StatisticsPage> {
+class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   FilterRangeType selectedFilter = FilterRangeType.weekly;
   var req = GGetMyStatsReq(
     (b) => b
@@ -28,6 +30,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+    final isLogedIn = ref.watch(isSignedInProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -37,13 +40,14 @@ class _StatisticsPageState extends State<StatisticsPage> {
         padding: const EdgeInsets.all(16),
         children: [
           const SizedBox(height: 8),
-          Row(
-            children: [
-              _filterItem(schedule: FilterRangeType.weekly),
-              _filterItem(schedule: FilterRangeType.monthly),
-              _filterItem(schedule: FilterRangeType.yearly),
-            ],
-          ),
+          if (isLogedIn)
+            Row(
+              children: [
+                _filterItem(schedule: FilterRangeType.weekly),
+                _filterItem(schedule: FilterRangeType.monthly),
+                _filterItem(schedule: FilterRangeType.yearly),
+              ],
+            ),
           if (selectedFilter == FilterRangeType.monthly)
             Padding(
               padding: const EdgeInsets.only(top: 16),
