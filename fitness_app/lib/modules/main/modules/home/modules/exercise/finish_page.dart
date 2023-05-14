@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user_program.req.gql.dart';
+import 'package:fitness_app/global/providers/me_provider.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/utils/duration_time.dart';
 import 'package:fitness_app/global/utils/exercise_helper.dart';
@@ -18,8 +21,10 @@ class FinishPage extends ConsumerStatefulWidget {
   const FinishPage({
     super.key,
     required this.exercises,
+    required this.program,
   });
   final List<GExercise> exercises;
+  final GProgram program;
 
   @override
   ConsumerState<FinishPage> createState() => _FinishPage();
@@ -39,9 +44,12 @@ class _FinishPage extends ConsumerState<FinishPage> {
     super.initState();
   }
 
-  Future initData() async {
+  Future initData() async {}
+
+  void upsertStats() async {
     final client = ref.watch(appClientProvider);
     final statsId = ref.watch(currentStatsId);
+    final user = ref.watch(meProvider)?.user;
 
     var req = GUpsertStatsReq(
       (b) => b
@@ -49,7 +57,7 @@ class _FinishPage extends ConsumerState<FinishPage> {
         ..vars.input.caloCount = calo
         ..vars.input.durationCount = duration
         ..vars.input.programCount = 1
-        ..vars.input.userId = 'f80200e4-b36b-4803-b5c0-dd0c0ef8cb89',
+        ..vars.input.userId = user!.id,
     );
 
     final response = await client.request(req).first;
@@ -61,6 +69,24 @@ class _FinishPage extends ConsumerState<FinishPage> {
       ref
           .read(currentStatsId.notifier)
           .update((state) => response.data?.upsertStats.id);
+    }
+  }
+
+  void upsertUserExercise() async {
+    final user = ref.read(meProvider)?.user;
+    final client = ref.watch(appClientProvider);
+
+    var req = GUpsertUserProgramReq(
+      (b) => b
+        ..vars.input.programId = widget.program.id
+        ..vars.input.userId = user!.id,
+    );
+
+    final response = await client.request(req).first;
+    if (response.hasErrors) {
+      if (mounted) {
+        DialogUtils.showError(context: context, response: response);
+      }
     }
   }
 
