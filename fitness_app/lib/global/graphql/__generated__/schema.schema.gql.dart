@@ -223,6 +223,31 @@ abstract class GUpsertProgramInputDto
       );
 }
 
+abstract class GUpsertUserExerciseInputDto
+    implements
+        Built<GUpsertUserExerciseInputDto, GUpsertUserExerciseInputDtoBuilder> {
+  GUpsertUserExerciseInputDto._();
+
+  factory GUpsertUserExerciseInputDto(
+          [Function(GUpsertUserExerciseInputDtoBuilder b) updates]) =
+      _$GUpsertUserExerciseInputDto;
+
+  String? get id;
+  String get userId;
+  String get exerciseId;
+  static Serializer<GUpsertUserExerciseInputDto> get serializer =>
+      _$gUpsertUserExerciseInputDtoSerializer;
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GUpsertUserExerciseInputDto.serializer,
+        this,
+      ) as Map<String, dynamic>);
+  static GUpsertUserExerciseInputDto? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GUpsertUserExerciseInputDto.serializer,
+        json,
+      );
+}
+
 abstract class GUpsertUserInputDto
     implements Built<GUpsertUserInputDto, GUpsertUserInputDtoBuilder> {
   GUpsertUserInputDto._();
@@ -244,6 +269,31 @@ abstract class GUpsertUserInputDto
   static GUpsertUserInputDto? fromJson(Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GUpsertUserInputDto.serializer,
+        json,
+      );
+}
+
+abstract class GUpsertUserProgramInputDto
+    implements
+        Built<GUpsertUserProgramInputDto, GUpsertUserProgramInputDtoBuilder> {
+  GUpsertUserProgramInputDto._();
+
+  factory GUpsertUserProgramInputDto(
+          [Function(GUpsertUserProgramInputDtoBuilder b) updates]) =
+      _$GUpsertUserProgramInputDto;
+
+  String? get id;
+  String get userId;
+  String get programId;
+  static Serializer<GUpsertUserProgramInputDto> get serializer =>
+      _$gUpsertUserProgramInputDtoSerializer;
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GUpsertUserProgramInputDto.serializer,
+        this,
+      ) as Map<String, dynamic>);
+  static GUpsertUserProgramInputDto? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GUpsertUserProgramInputDto.serializer,
         json,
       );
 }

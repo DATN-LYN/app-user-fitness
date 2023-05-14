@@ -4,6 +4,7 @@ import 'package:dart_openai/openai.dart';
 import 'package:ferry/ferry.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.req.gql.dart';
+import 'package:fitness_app/global/utils/auth_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -11,6 +12,7 @@ import 'package:touchable_opacity/touchable_opacity.dart';
 import '../../../../global/graphql/client.dart';
 import '../../../../global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart';
 import '../../../../global/graphql/query/__generated__/query_get_my_inboxes.data.gql.dart';
+import '../../../../global/providers/me_provider.dart';
 import '../../../../global/themes/app_colors.dart';
 import '../../../../global/utils/dialogs.dart';
 import '../../../../global/widgets/fitness_empty.dart';
@@ -116,6 +118,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     required bool isSender,
   }) async {
     final client = ref.read(appClientProvider);
+    final user = ref.read(meProvider);
+
     setState(() => loading = true);
 
     var req = GUpsertInboxReq(
@@ -123,7 +127,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ..fetchPolicy = FetchPolicy.CacheAndNetwork
         ..vars.input.isSender = isSender
         ..vars.input.message = message
-        ..vars.input.userId = 'f80200e4-b36b-4803-b5c0-dd0c0ef8cb89',
+        ..vars.input.userId = user?.id,
     );
     final response = await client.request(req).first;
 
@@ -145,6 +149,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
     final client = ref.watch(appClientProvider);
+    final isLogedIn = ref.watch(isSignedInProvider);
 
     return Scaffold(
       backgroundColor: AppColors.grey6.withOpacity(0.1),
@@ -152,108 +157,113 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         title: Text(i18n.chat_Title),
         elevation: 0,
       ),
-      body: InfinityList(
-        client: client,
-        request: getMyInboxesReq,
-        loadMoreRequest: (response) {
-          final data = response?.data?.getMyInboxes;
-          if (data != null &&
-              data.meta!.currentPage!.toDouble() <
-                  data.meta!.totalPages!.toDouble()) {
-            getMyInboxesReq = getMyInboxesReq.rebuild(
-              (b) => b
-                ..vars.queryParams.page = (b.vars.queryParams.page! + 1)
-                ..updateResult = (previous, result) =>
-                    previous?.rebuild(
-                      (b) => b.getMyInboxes
-                        ..meta = (result?.getMyInboxes.meta ??
-                                previous.getMyInboxes.meta)!
-                            .toBuilder()
-                        ..items.addAll(
-                          result?.getMyInboxes.items ?? [],
-                        ),
-                    ) ??
-                    result,
-            );
-            return getMyInboxesReq;
-          }
-          return null;
-        },
-        refreshRequest: () {
-          getMyInboxesReq = getMyInboxesReq.rebuild(
-            (b) => b
-              ..vars.queryParams.page = 1
-              ..updateResult = ((previous, result) => result),
-          );
-          return getMyInboxesReq;
-        },
-        builder: (context, response, error) {
-          if ((response?.hasErrors == true ||
-                  response?.data?.getMyInboxes.meta?.itemCount == 0) &&
-              getMyInboxesReq.vars.queryParams.page != 1) {
-            getMyInboxesReq = getMyInboxesReq.rebuild(
-              (b) => b..vars.queryParams.page = b.vars.queryParams.page! - 1,
-            );
-          }
-
-          if (response?.loading == true) {
-            return const ShimmerInbox();
-          }
-
-          if (response?.hasErrors == true || response?.data == null) {
-            return FitnessError(response: response);
-          }
-
-          final data = response!.data!.getMyInboxes;
-          final hasMoreData = data.meta!.currentPage!.toDouble() <
-              data.meta!.totalPages!.toDouble();
-          final inboxes = data.items;
-
-          if (inboxes?.isEmpty == true) {
-            return FitnessEmpty(
-              title: 'Empty',
-              message: 'Inbox is empty',
-              textButton: 'Refresh',
-              onPressed: refreshHandler,
-            );
-          }
-
-          return ListView.separated(
-            itemCount: inboxes!.length + 1,
-            reverse: true,
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            itemBuilder: (_, index) {
-              if (index == 0) {
-                if (loading) {
-                  return Consumer(
-                    builder: (context, ref, child) {
-                      return MessageWidget(
-                        item: GGetMyInboxesData_getMyInboxes_items(
-                          (b) => b
-                            ..userId = '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
-                            ..isSender = false
-                            ..message =
-                                ref.watch(messageResponseProvider).join(''),
-                        ),
-                      );
-                    },
+      body: isLogedIn
+          ? InfinityList(
+              client: client,
+              request: getMyInboxesReq,
+              loadMoreRequest: (response) {
+                final data = response?.data?.getMyInboxes;
+                if (data != null &&
+                    data.meta!.currentPage!.toDouble() <
+                        data.meta!.totalPages!.toDouble()) {
+                  getMyInboxesReq = getMyInboxesReq.rebuild(
+                    (b) => b
+                      ..vars.queryParams.page = (b.vars.queryParams.page! + 1)
+                      ..updateResult = (previous, result) =>
+                          previous?.rebuild(
+                            (b) => b.getMyInboxes
+                              ..meta = (result?.getMyInboxes.meta ??
+                                      previous.getMyInboxes.meta)!
+                                  .toBuilder()
+                              ..items.addAll(
+                                result?.getMyInboxes.items ?? [],
+                              ),
+                          ) ??
+                          result,
                   );
-                } else {
-                  return const SizedBox();
+                  return getMyInboxesReq;
                 }
-              }
+                return null;
+              },
+              refreshRequest: () {
+                getMyInboxesReq = getMyInboxesReq.rebuild(
+                  (b) => b
+                    ..vars.queryParams.page = 1
+                    ..updateResult = ((previous, result) => result),
+                );
+                return getMyInboxesReq;
+              },
+              builder: (context, response, error) {
+                if ((response?.hasErrors == true ||
+                        response?.data?.getMyInboxes.meta?.itemCount == 0) &&
+                    getMyInboxesReq.vars.queryParams.page != 1) {
+                  getMyInboxesReq = getMyInboxesReq.rebuild(
+                    (b) =>
+                        b..vars.queryParams.page = b.vars.queryParams.page! - 1,
+                  );
+                }
 
-              final item = inboxes[index - 1];
+                if (response?.loading == true) {
+                  return const ShimmerInbox();
+                }
 
-              return MessageWidget(
-                item: item,
-              );
-            },
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
-            controller: scrollController,
-          );
-        },
-      ),
+                if (response?.hasErrors == true || response?.data == null) {
+                  return FitnessError(response: response);
+                }
+
+                final data = response!.data!.getMyInboxes;
+                final hasMoreData = data.meta!.currentPage!.toDouble() <
+                    data.meta!.totalPages!.toDouble();
+                final inboxes = data.items;
+
+                if (inboxes?.isEmpty == true) {
+                  return FitnessEmpty(
+                    title: 'Empty',
+                    message: 'Inbox is empty',
+                    textButton: 'Refresh',
+                    onPressed: refreshHandler,
+                  );
+                }
+
+                return ListView.separated(
+                  itemCount: inboxes!.length + 1,
+                  reverse: true,
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  itemBuilder: (_, index) {
+                    if (index == 0) {
+                      if (loading) {
+                        return Consumer(
+                          builder: (context, ref, child) {
+                            return MessageWidget(
+                              item: GGetMyInboxesData_getMyInboxes_items(
+                                (b) => b
+                                  ..userId =
+                                      '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
+                                  ..isSender = false
+                                  ..message = ref
+                                      .watch(messageResponseProvider)
+                                      .join(''),
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    }
+
+                    final item = inboxes[index - 1];
+
+                    return MessageWidget(
+                      item: item,
+                    );
+                  },
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  controller: scrollController,
+                );
+              },
+            )
+          : const UnLoginInbox(),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(8),
         color: AppColors.white,
@@ -280,7 +290,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             ),
             const SizedBox(width: 12),
             TouchableOpacity(
-              onTap: !loading ? () => chat() : null,
+              onTap: () {
+                if (!loading && isLogedIn) {
+                  chat();
+                } else {
+                  AuthHelper.showLoginDialog(context);
+                }
+              },
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(

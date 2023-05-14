@@ -130,6 +130,32 @@ type IUser {
   inboxes: [Inbox!]
 }
 
+type IUserExercise {
+  id: ID
+  userId: String!
+  exerciseId: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type IUserExercises {
+  meta: Meta
+  items: [UserExercise!]
+}
+
+type IUserProgram {
+  id: ID
+  userId: String!
+  programId: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type IUserPrograms {
+  meta: Meta
+  items: [UserProgram!]
+}
+
 type IUsers {
   meta: Meta
   items: [User!]
@@ -175,6 +201,8 @@ type Meta {
 }
 
 type Mutation {
+  upsertUserExercise(input: UpsertUserExerciseInputDto!): IUserExercise!
+  deleteUserExercise(id: String!): ResponseMessageBase!
   upsertStats(input: UpsertUserStatisticsInputDto!): IUserStatistics!
   deleteStats(statsId: String!): ResponseMessageBase!
   upsertExercise(input: UpsertExerciseInputDto!): IExercise!
@@ -189,6 +217,8 @@ type Mutation {
   deleteProgram(programId: String!): ResponseMessageBase!
   deleteUser(userId: String!): ResponseMessageBase!
   upsertUser(input: UpsertUserInputDto!): IUser!
+  upsertUserProgram(input: UpsertUserProgramInputDto!): IUserProgram!
+  deleteUserProgram(id: String!): ResponseMessageBase!
 }
 
 type Program {
@@ -206,6 +236,9 @@ type Program {
 }
 
 type Query {
+  getUserExercise(id: String!): IUserExercise!
+  getUserExercises(queryParams: QueryFilterDto!): IUserExercises!
+  getMyUserExercises(queryParams: QueryFilterDto!): IUserExercises!
   getStats(statsId: String!): IUserStatistics!
   getStatsList(queryParams: QueryFilterDto!): IUserStatisticses!
   getMyStats(queryParams: QueryFilterDto!): IUserStatisticses!
@@ -223,6 +256,9 @@ type Query {
   getPrograms(queryParams: QueryFilterDto!): IPrograms!
   getUser(userId: String!): IUser!
   getUsers(queryParams: QueryFilterDto!): IUsers!
+  getUserProgram(id: String!): IUserProgram!
+  getUserPrograms(queryParams: QueryFilterDto!): IUserPrograms!
+  getMyUserPrograms(queryParams: QueryFilterDto!): IUserPrograms!
 }
 
 input QueryFilterDto {
@@ -286,12 +322,24 @@ input UpsertProgramInputDto {
   categoryId: String!
 }
 
+input UpsertUserExerciseInputDto {
+  id: ID
+  userId: String!
+  exerciseId: String!
+}
+
 input UpsertUserInputDto {
   id: ID
   fullName: String!
   avatar: String!
   email: String!
   age: Float!
+}
+
+input UpsertUserProgramInputDto {
+  id: ID
+  userId: String!
+  programId: String!
 }
 
 input UpsertUserStatisticsInputDto {
@@ -314,6 +362,22 @@ type User {
   roleId: String
   role: Role
   inboxes: [Inbox!]
+}
+
+type UserExercise {
+  id: ID
+  userId: String!
+  exerciseId: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type UserProgram {
+  id: ID
+  userId: String!
+  programId: String!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type UserStatistics {

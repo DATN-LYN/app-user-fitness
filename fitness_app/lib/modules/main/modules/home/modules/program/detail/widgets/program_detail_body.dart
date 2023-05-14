@@ -5,6 +5,7 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
 import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_exercises.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
+import 'package:fitness_app/global/utils/auth_helper.dart';
 import 'package:fitness_app/global/utils/exercise_helper.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/program/detail/widgets/program_overview.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../../../global/graphql/client.dart';
 import '../../../../../../../../global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
+import '../../../../../../../../global/providers/me_provider.dart';
 import '../../../../../../../../global/routers/app_router.dart';
 import '../../../../../../../../global/utils/constants.dart';
 import '../../../../../../../../global/widgets/fitness_empty.dart';
@@ -223,12 +225,17 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
                 color: AppColors.white,
               ),
               onPressed: () {
-                context.pushRoute(
-                  CountdownTimerRoute(
-                    exercises: exerciseList.toList(),
-                    // program: widget.program,
-                  ),
-                );
+                final isLogedIn = ref.read(isSignedInProvider);
+                if (isLogedIn) {
+                  context.pushRoute(
+                    CountdownTimerRoute(
+                      exercises: exerciseList.toList(),
+                      // program: widget.program,
+                    ),
+                  );
+                } else {
+                  AuthHelper.showLoginDialog(context);
+                }
               },
             ),
           ),

@@ -46,15 +46,15 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
         context: context,
         builder: (dialogContext, child) {
           return ConfirmationDialog(
-            titleText: 'Update Profile',
-            contentText: 'Are you sure you want to update your profile?',
+            titleText: i18n.editProfile_Title,
+            contentText: i18n.editProfile_EditDes,
             onTapPositiveButton: () async {
               dialogContext.popRoute(true);
               setState(() => loading = true);
               String? imageUrl = '';
 
               if (image != null) {
-                imageUrl = await FileHelper.uploadImage(image!, 'category');
+                imageUrl = await FileHelper.uploadImage(image!, 'user');
               } else {
                 imageUrl = me?.user?.avatar;
               }
@@ -92,8 +92,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       return ConfirmationDialog(
                         showNegativeButton: false,
                         titleText: i18n.common_Success,
-                        contentText:
-                            'You have updated your profile successfully',
+                        contentText: i18n.editProfile_UpdateSuccess,
                       );
                     },
                   );
@@ -121,7 +120,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       loading: loading,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Edit Profile'),
+          title: Text(i18n.editProfile_Title),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -227,7 +226,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
               child: ElevatedButton(
                 onPressed: handleSubmit,
-                child: Text(i18n.button_Ok),
+                child: Text(i18n.button_Apply),
               ),
             ),
           ],

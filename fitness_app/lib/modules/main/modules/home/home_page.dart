@@ -7,19 +7,23 @@ import 'package:fitness_app/modules/main/modules/home/widgets/home_header.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/program_list.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/user_statistics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+import '../../../../global/providers/me_provider.dart';
+
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   var key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+    final isLogedIn = ref.watch(isSignedInProvider);
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -35,7 +39,10 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                const UserStatistic(),
+                if (isLogedIn)
+                  const UserStatistic()
+                else
+                  const UnLoginUserStatistics(),
                 _listLabel(
                   label: i18n.programs_TrendingPrograms,
                   onPressed: () => context.pushRoute(const ProgramListRoute()),

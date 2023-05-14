@@ -6,6 +6,8 @@ import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../global/providers/me_provider.dart';
+
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
@@ -18,6 +20,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 1), () {
+        bool isLogedIn = ref.watch(isSignedInProvider);
         final appSettings = ref.read(appSettingProvider);
 
         if (appSettings.isFirstLaunch) {

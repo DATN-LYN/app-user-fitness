@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fitness_app/global/widgets/countdown_timer_page.dart';
 import 'package:fitness_app/modules/forgot_password/forgot_password_page.dart';
 import 'package:fitness_app/modules/login/login_page.dart';
 import 'package:fitness_app/modules/main/modules/chat/chat_page.dart';
 import 'package:fitness_app/modules/main/modules/home/home_page.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/category/detail/category_detail_page.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/category/list/category_list_page.dart';
+import 'package:fitness_app/modules/main/modules/home/modules/exercise/countdown_timer_page.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/exercise/play_exercise_page.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/program/detail/program_detail_page.dart';
 import 'package:fitness_app/modules/main/modules/home/modules/program/list/program_list_page.dart';

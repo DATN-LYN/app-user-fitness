@@ -1,0 +1,9 @@
+mutation UpsertUserProgram($input: UpsertUserProgramInputDto!) {
+  upsertUserProgram(input: $input) {
+    id
+    userId
+    programId
+    createdAt
+    updatedAt
+  }
+}

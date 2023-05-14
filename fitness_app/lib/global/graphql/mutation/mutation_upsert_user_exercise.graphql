@@ -1,0 +1,9 @@
+mutation UpsertUserExercise($input: UpsertUserExerciseInputDto!) {
+  upsertUserExercise(input: $input) {
+    id
+    userId
+    exerciseId
+    createdAt
+    updatedAt
+  }
+}

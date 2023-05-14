@@ -46,7 +46,7 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            user?.fullName == null
+                            isLogedIn
                                 ? '${i18n.home_Hello}!'
                                 : '${i18n.home_Hello} ${user?.fullName}!',
                             style: const TextStyle(
@@ -59,10 +59,10 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                         ],
                       ),
                     ),
-                    if (user != null)
+                    if (isLogedIn)
                       InkWell(
-                        // onTap: () =>
-                        //     context.pushRoute(const EditProfileRoute()),
+                        onTap: () =>
+                            context.pushRoute(const EditProfileRoute()),
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
@@ -72,7 +72,7 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                             ),
                           ),
                           child: UserAvatar(
-                            avatar: user.avatar,
+                            avatar: user!.avatar,
                             fullName: user.fullName,
                           ),
                         ),
