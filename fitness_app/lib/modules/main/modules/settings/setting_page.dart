@@ -74,7 +74,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
 
   void logOut() {
     final i18n = I18n.of(context)!;
-    final user = ref.read(meProvider)?.user;
+    final user = ref.read(meProvider);
     final client = ref.read(appClientProvider);
 
     showDialog(

@@ -130,6 +130,32 @@ type IUser {
   inboxes: [Inbox!]
 }
 
+type IUserExercise {
+  id: ID
+  userId: String!
+  exerciseId: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type IUserExercises {
+  meta: Meta
+  items: [UserExercise!]
+}
+
+type IUserProgram {
+  id: ID
+  userId: String!
+  programId: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type IUserPrograms {
+  meta: Meta
+  items: [UserProgram!]
+}
+
 type IUsers {
   meta: Meta
   items: [User!]
@@ -176,6 +202,9 @@ type Meta {
 
 type Mutation {
   upsertStats(input: UpsertUserStatisticsInputDto!): IUserStatistics!
+  deleteUserProgram(id: String!): ResponseMessageBase!
+  upsertUserExercise(input: UpsertUserExerciseInputDto!): IUserExercise!
+  deleteUserExercise(id: String!): ResponseMessageBase!
   deleteStats(statsId: String!): ResponseMessageBase!
   upsertExercise(input: UpsertExerciseInputDto!): IExercise!
   deleteExercise(exerciseId: String!): ResponseMessageBase!
@@ -206,6 +235,12 @@ type Program {
 }
 
 type Query {
+  getUserProgram(id: String!): IUserProgram!
+  getUserPrograms(queryParams: QueryFilterDto!): IUserPrograms!
+  getMyUserPrograms(queryParams: QueryFilterDto!): IUserPrograms!
+  getUserExercise(id: String!): IUserExercise!
+  getUserExercises(queryParams: QueryFilterDto!): IUserExercises!
+  getMyUserExercises(queryParams: QueryFilterDto!): IUserExercises!
   getStats(statsId: String!): IUserStatistics!
   getStatsList(queryParams: QueryFilterDto!): IUserStatisticses!
   getMyStats(queryParams: QueryFilterDto!): IUserStatisticses!
@@ -286,6 +321,12 @@ input UpsertProgramInputDto {
   categoryId: String!
 }
 
+input UpsertUserExerciseInputDto {
+  id: ID
+  userId: String!
+  exerciseId: String!
+}
+
 input UpsertUserInputDto {
   id: ID
   fullName: String!
@@ -314,6 +355,22 @@ type User {
   roleId: String
   role: Role
   inboxes: [Inbox!]
+}
+
+type UserExercise {
+  id: ID
+  userId: String!
+  exerciseId: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type UserProgram {
+  id: ID
+  userId: String!
+  programId: String!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type UserStatistics {

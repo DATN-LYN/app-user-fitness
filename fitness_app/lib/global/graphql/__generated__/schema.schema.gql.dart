@@ -223,6 +223,31 @@ abstract class GUpsertProgramInputDto
       );
 }
 
+abstract class GUpsertUserExerciseInputDto
+    implements
+        Built<GUpsertUserExerciseInputDto, GUpsertUserExerciseInputDtoBuilder> {
+  GUpsertUserExerciseInputDto._();
+
+  factory GUpsertUserExerciseInputDto(
+          [Function(GUpsertUserExerciseInputDtoBuilder b) updates]) =
+      _$GUpsertUserExerciseInputDto;
+
+  String? get id;
+  String get userId;
+  String get exerciseId;
+  static Serializer<GUpsertUserExerciseInputDto> get serializer =>
+      _$gUpsertUserExerciseInputDtoSerializer;
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GUpsertUserExerciseInputDto.serializer,
+        this,
+      ) as Map<String, dynamic>);
+  static GUpsertUserExerciseInputDto? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GUpsertUserExerciseInputDto.serializer,
+        json,
+      );
+}
+
 abstract class GUpsertUserInputDto
     implements Built<GUpsertUserInputDto, GUpsertUserInputDtoBuilder> {
   GUpsertUserInputDto._();

@@ -42,6 +42,8 @@ class I18n implements WidgetsLocalizations {
 	String get button_Ok => "OK";
 	/// "Try Again"
 	String get button_TryAgain => "Try Again";
+	/// "Apply"
+	String get button_Apply => "Apply";
 	/// ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"]
 	List<String> get onboard_Title => ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"];
 	/// ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"]
@@ -280,6 +282,12 @@ class I18n implements WidgetsLocalizations {
 	String get search_RecentSearches => "Recent Searches";
 	/// "Clear All"
 	String get search_ClearAll => "Clear All";
+	/// "Update Profile"
+	String get editProfile_Title => "Update Profile";
+	/// "Are you sure you want to update your profile?"
+	String get editProfile_EditDes => "Are you sure you want to update your profile?";
+	/// "Your profile has been updated successfully."
+	String get editProfile_UpdateSuccess => "Your profile has been updated successfully.";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 	/// "Nhập tên thể loại"
@@ -312,6 +320,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Thử lại"
 	@override
 	String get button_TryAgain => "Thử lại";
+	/// "Áp dụng"
+	@override
+	String get button_Apply => "Áp dụng";
 	/// ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"]
 	@override
 	List<String> get onboard_Title => ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"];
@@ -663,6 +674,15 @@ class _I18n_vi_VN extends I18n {
 	/// "Xoá hết"
 	@override
 	String get search_ClearAll => "Xoá hết";
+	/// "Cập nhật thông tin"
+	@override
+	String get editProfile_Title => "Cập nhật thông tin";
+	/// "Bạn có chắc chắn muốn cập nhật thông tin cá nhân?"
+	@override
+	String get editProfile_EditDes => "Bạn có chắc chắn muốn cập nhật thông tin cá nhân?";
+	/// "Thông tin của bạn đã được cập nhật thành công"
+	@override
+	String get editProfile_UpdateSuccess => "Thông tin của bạn đã được cập nhật thành công";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

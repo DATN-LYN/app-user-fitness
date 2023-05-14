@@ -135,7 +135,7 @@ class _ProgramListPageState extends ConsumerState<ProgramListPage> {
 
                   if (programs?.isEmpty == true) {
                     return FitnessEmpty(
-                      title: i18n.categories_CategoryNotFound,
+                      title: i18n.programs_ProgramNotFound,
                       onPressed: refreshHanlder,
                     );
                   }

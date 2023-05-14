@@ -5,8 +5,8 @@
         "done": "Xong",
         "cancel": "Huỷ bỏ",
         "ok": "Đồng ý",
-        "tryAgain": "Thử lại"
-
+        "tryAgain": "Thử lại",
+        "apply": "Áp dụng"
     },
     "onboard_":{
       "title": [
@@ -178,5 +178,11 @@
     "search_":{
       "recentSearches": "Tìm kiếm gần đây",
       "clearAll": "Xoá hết"
+    },
+    "editProfile_":{
+      "title": "Cập nhật thông tin",
+      "editDes": "Bạn có chắc chắn muốn cập nhật thông tin cá nhân?",
+      "updateSuccess": "Thông tin của bạn đã được cập nhật thành công"
+
     }
 }

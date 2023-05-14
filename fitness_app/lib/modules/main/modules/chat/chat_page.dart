@@ -11,6 +11,7 @@ import 'package:touchable_opacity/touchable_opacity.dart';
 import '../../../../global/graphql/client.dart';
 import '../../../../global/graphql/mutation/__generated__/mutation_upsert_inbox.req.gql.dart';
 import '../../../../global/graphql/query/__generated__/query_get_my_inboxes.data.gql.dart';
+import '../../../../global/providers/me_provider.dart';
 import '../../../../global/themes/app_colors.dart';
 import '../../../../global/utils/dialogs.dart';
 import '../../../../global/widgets/fitness_empty.dart';
@@ -116,6 +117,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     required bool isSender,
   }) async {
     final client = ref.read(appClientProvider);
+    final user = ref.read(meProvider);
+
     setState(() => loading = true);
 
     var req = GUpsertInboxReq(
@@ -123,7 +126,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ..fetchPolicy = FetchPolicy.CacheAndNetwork
         ..vars.input.isSender = isSender
         ..vars.input.message = message
-        ..vars.input.userId = 'f80200e4-b36b-4803-b5c0-dd0c0ef8cb89',
+        ..vars.input.userId = user?.id,
     );
     final response = await client.request(req).first;
 

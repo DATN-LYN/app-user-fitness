@@ -17,6 +17,7 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
         GUpsertExerciseInputDto,
         GUpsertInboxInputDto,
         GUpsertProgramInputDto,
+        GUpsertUserExerciseInputDto,
         GUpsertUserInputDto,
         GUpsertUserStatisticsInputDto;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.data.gql.dart'
@@ -311,6 +312,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GUpsertStatsVars,
   GUpsertUserData,
   GUpsertUserData_upsertUser,
+  GUpsertUserExerciseInputDto,
   GUpsertUserInputDto,
   GUpsertUserReq,
   GUpsertUserStatisticsInputDto,
