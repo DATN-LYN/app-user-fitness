@@ -78,9 +78,6 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
       final calo = ExerciseHelper.getTotalCalo(exercises);
       final duration = ExerciseHelper.getTotalDuration(exercises);
 
-      print(calo);
-      print(duration);
-
       var req = GUpsertStatsReq(
         (b) => b
           ..vars.input.id = statsId
@@ -96,11 +93,9 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
           DialogUtils.showError(context: context, response: response);
         }
       } else {
-        print(response.data?.upsertStats.id);
         ref
             .read(currentStatsId.notifier)
             .update((state) => response.data?.upsertStats.id);
-        print(response);
       }
     }
   }
