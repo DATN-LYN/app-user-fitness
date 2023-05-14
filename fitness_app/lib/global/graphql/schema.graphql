@@ -117,7 +117,7 @@ type IPrograms {
 }
 
 type IUser {
-  id: String
+  id: String!
   email: String!
   fullName: String
   password: String!
@@ -160,7 +160,7 @@ input LoginInputDto {
 }
 
 type LoginResponseDto {
-  id: ID
+  id: String!
   user: User
   accessToken: String
   refreshToken: String
@@ -303,7 +303,7 @@ input UpsertUserStatisticsInputDto {
 }
 
 type User {
-  id: String
+  id: String!
   email: String!
   fullName: String
   password: String!
