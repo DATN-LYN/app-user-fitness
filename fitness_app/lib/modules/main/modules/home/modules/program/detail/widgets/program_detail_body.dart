@@ -230,7 +230,7 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
                   context.pushRoute(
                     CountdownTimerRoute(
                       exercises: exerciseList.toList(),
-                      // program: widget.program,
+                      program: widget.program,
                     ),
                   );
                 } else {

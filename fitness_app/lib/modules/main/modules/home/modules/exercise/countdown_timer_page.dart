@@ -2,17 +2,13 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
-import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.req.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
-import 'package:fitness_app/global/utils/dialogs.dart';
 import 'package:fitness_app/global/utils/exercise_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../global/gen/i18n.dart';
-import '../../../../../../global/graphql/client.dart';
-import '../../../../../../global/providers/current_stats_id.provider.dart';
-import '../../../../../../global/providers/me_provider.dart';
+import '../../../../../../global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import '../../../../../../global/themes/app_colors.dart';
 
 class CountdownTimerPage extends ConsumerStatefulWidget {
@@ -22,14 +18,14 @@ class CountdownTimerPage extends ConsumerStatefulWidget {
     this.isBreak = false,
     required this.exercises,
     this.index,
-    // this.program,
+    this.program,
   });
 
   final Duration initialDuration;
   final bool isBreak;
   final int? index;
   final List<GExercise> exercises;
-  // final GProgram? program;
+  final GProgram? program;
 
   @override
   ConsumerState<CountdownTimerPage> createState() => _CountdownTimerPageState();
@@ -40,18 +36,26 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
   late int seconds = widget.initialDuration.inSeconds;
   Timer? countdownTimer;
 
+  void goToPlayVideo() {
+    if (widget.isBreak) {
+      context.popRoute();
+    } else {
+      context.replaceRoute(
+        PlayExerciseRoute(
+          exercises: widget.exercises,
+          program: widget.program!,
+        ),
+      );
+    }
+  }
+
   void startTimer() {
     countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         seconds = countdownDuration.inSeconds - 1;
         if (seconds < 0) {
           timer.cancel();
-          if (widget.isBreak) {
-            context.popRoute();
-          } else {
-            context
-                .replaceRoute(PlayExerciseRoute(exercises: widget.exercises));
-          }
+          goToPlayVideo();
         } else {
           countdownDuration = Duration(seconds: seconds);
         }
@@ -70,37 +74,33 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
 
   Future initData() async {
     if (widget.isBreak) {
-      final user = ref.read(meProvider)?.user;
-
-      final client = ref.watch(appClientProvider);
-      final statsId = ref.watch(currentStatsId);
-      final exercises = widget.index == 0
-          ? [widget.exercises.first]
-          : widget.exercises.getRange(0, widget.index ?? 0).toList();
-
-      final calo = ExerciseHelper.getTotalCalo(exercises);
-      final duration = ExerciseHelper.getTotalDuration(exercises);
-
-      var req = GUpsertStatsReq(
-        (b) => b
-          ..vars.input.id = statsId
-          ..vars.input.caloCount = calo
-          ..vars.input.durationCount = duration
-          ..vars.input.programCount = 1
-          ..vars.input.userId = user!.id,
-      );
-
-      final response = await client.request(req).first;
-      if (response.hasErrors) {
-        if (mounted) {
-          DialogUtils.showError(context: context, response: response);
-        }
-      } else {
-        ref
-            .read(currentStatsId.notifier)
-            .update((state) => response.data?.upsertStats.id);
-      }
+      upsertStats();
+      upsertUserExercise();
     }
+  }
+
+  void upsertStats() async {
+    final exercises = widget.index == 0
+        ? [widget.exercises.first]
+        : widget.exercises.getRange(0, widget.index ?? 0).toList();
+
+    final calo = ExerciseHelper.getTotalCalo(exercises);
+    final duration = ExerciseHelper.getTotalDuration(exercises);
+
+    ExerciseHelper.upsertStats(
+      context,
+      ref,
+      calo: calo,
+      duration: duration,
+    );
+  }
+
+  void upsertUserExercise() async {
+    ExerciseHelper.upsertUserExercise(
+      context,
+      ref,
+      exerciseId: widget.exercises[widget.index!].id!,
+    );
   }
 
   @override
@@ -208,12 +208,7 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
         child: ElevatedButton(
           onPressed: () {
             countdownTimer?.cancel();
-            if (widget.isBreak) {
-              context.popRoute();
-            } else {
-              context
-                  .replaceRoute(PlayExerciseRoute(exercises: widget.exercises));
-            }
+            goToPlayVideo();
           },
           child:
               Text(widget.isBreak ? i18n.button_Next : i18n.countdown_StartNow),

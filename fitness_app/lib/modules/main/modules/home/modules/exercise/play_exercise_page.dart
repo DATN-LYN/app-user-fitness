@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../../../../global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import '../../../../../../global/themes/app_colors.dart';
 import '../../../../../../global/utils/duration_time.dart';
 
@@ -21,11 +22,11 @@ class PlayExercisePage extends ConsumerStatefulWidget {
   const PlayExercisePage({
     super.key,
     required this.exercises,
-    // required this.program,
+    required this.program,
   });
 
   final List<GExercise> exercises;
-  // final GProgram program;
+  final GProgram program;
 
   @override
   ConsumerState<PlayExercisePage> createState() => _PlayExercisePageState();
@@ -98,7 +99,12 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
   }
 
   void goToFinishPage() {
-    context.pushRoute(FinishRoute(exercises: widget.exercises));
+    context.pushRoute(
+      FinishRoute(
+        exercises: widget.exercises,
+        program: widget.program,
+      ),
+    );
   }
 
   VideoPlayerController controller(int index) {

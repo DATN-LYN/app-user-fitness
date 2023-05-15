@@ -272,12 +272,18 @@ class I18n implements WidgetsLocalizations {
 	String get common_BodyPart => "Body Part";
 	/// "Success"
 	String get common_Success => "Success";
-	/// "Hello!"
-	String get home_Hello => "Hello!";
+	/// "Oops!"
+	String get common_Oops => "Oops!";
+	/// "Please log in to use this feature"
+	String get common_YouHaveToLogin => "Please log in to use this feature";
+	/// "Hello"
+	String get home_Hello => "Hello";
 	/// "Have a nice day"
 	String get home_HaveANiceDay => "Have a nice day";
 	/// "View all"
 	String get home_ViewAll => "View all";
+	/// "User"
+	String get home_User => "User";
 	/// "Recent Searches"
 	String get search_RecentSearches => "Recent Searches";
 	/// "Clear All"
@@ -659,15 +665,24 @@ class _I18n_vi_VN extends I18n {
 	/// "Thành công"
 	@override
 	String get common_Success => "Thành công";
-	/// "Xin chào!"
+	/// "Oops!"
 	@override
-	String get home_Hello => "Xin chào!";
+	String get common_Oops => "Oops!";
+	/// "Vui lòng đăng nhập để sử dụng tính năng này"
+	@override
+	String get common_YouHaveToLogin => "Vui lòng đăng nhập để sử dụng tính năng này";
+	/// "Xin chào"
+	@override
+	String get home_Hello => "Xin chào";
 	/// "Chúc bạn một ngày vui vẻ"
 	@override
 	String get home_HaveANiceDay => "Chúc bạn một ngày vui vẻ";
 	/// "Xem tất cả"
 	@override
 	String get home_ViewAll => "Xem tất cả";
+	/// "Người dùng"
+	@override
+	String get home_User => "Người dùng";
 	/// "Tìm kiếm gần đây"
 	@override
 	String get search_RecentSearches => "Tìm kiếm gần đây";

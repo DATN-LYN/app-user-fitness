@@ -48,7 +48,7 @@ class _HomeHeaderState extends ConsumerState<HomeHeader> {
                           Text(
                             isLogedIn
                                 ? '${i18n.home_Hello}!'
-                                : '${i18n.home_Hello} ${user?.fullName}!',
+                                : '${i18n.home_Hello} ${user?.fullName ?? i18n.home_User}!',
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,

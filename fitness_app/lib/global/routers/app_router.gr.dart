@@ -80,6 +80,7 @@ class _$AppRouter extends RootStackRouter {
         child: PlayExercisePage(
           key: args.key,
           exercises: args.exercises,
+          program: args.program,
         ),
       );
     },
@@ -93,6 +94,7 @@ class _$AppRouter extends RootStackRouter {
           isBreak: args.isBreak,
           exercises: args.exercises,
           index: args.index,
+          program: args.program,
         ),
       );
     },
@@ -103,6 +105,7 @@ class _$AppRouter extends RootStackRouter {
         child: FinishPage(
           key: args.key,
           exercises: args.exercises,
+          program: args.program,
         ),
       );
     },
@@ -390,12 +393,14 @@ class PlayExerciseRoute extends PageRouteInfo<PlayExerciseRouteArgs> {
   PlayExerciseRoute({
     Key? key,
     required List<GExercise> exercises,
+    required GProgram program,
   }) : super(
           PlayExerciseRoute.name,
           path: '/play-exercise-page',
           args: PlayExerciseRouteArgs(
             key: key,
             exercises: exercises,
+            program: program,
           ),
         );
 
@@ -406,15 +411,18 @@ class PlayExerciseRouteArgs {
   const PlayExerciseRouteArgs({
     this.key,
     required this.exercises,
+    required this.program,
   });
 
   final Key? key;
 
   final List<GExercise> exercises;
 
+  final GProgram program;
+
   @override
   String toString() {
-    return 'PlayExerciseRouteArgs{key: $key, exercises: $exercises}';
+    return 'PlayExerciseRouteArgs{key: $key, exercises: $exercises, program: $program}';
   }
 }
 
@@ -427,6 +435,7 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
     bool isBreak = false,
     required List<GExercise> exercises,
     int? index,
+    GProgram? program,
   }) : super(
           CountdownTimerRoute.name,
           path: '/countdown-timer-page',
@@ -436,6 +445,7 @@ class CountdownTimerRoute extends PageRouteInfo<CountdownTimerRouteArgs> {
             isBreak: isBreak,
             exercises: exercises,
             index: index,
+            program: program,
           ),
         );
 
@@ -449,6 +459,7 @@ class CountdownTimerRouteArgs {
     this.isBreak = false,
     required this.exercises,
     this.index,
+    this.program,
   });
 
   final Key? key;
@@ -461,9 +472,11 @@ class CountdownTimerRouteArgs {
 
   final int? index;
 
+  final GProgram? program;
+
   @override
   String toString() {
-    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak, exercises: $exercises, index: $index}';
+    return 'CountdownTimerRouteArgs{key: $key, initialDuration: $initialDuration, isBreak: $isBreak, exercises: $exercises, index: $index, program: $program}';
   }
 }
 
@@ -473,12 +486,14 @@ class FinishRoute extends PageRouteInfo<FinishRouteArgs> {
   FinishRoute({
     Key? key,
     required List<GExercise> exercises,
+    required GProgram program,
   }) : super(
           FinishRoute.name,
           path: '/finish-page',
           args: FinishRouteArgs(
             key: key,
             exercises: exercises,
+            program: program,
           ),
         );
 
@@ -489,15 +504,18 @@ class FinishRouteArgs {
   const FinishRouteArgs({
     this.key,
     required this.exercises,
+    required this.program,
   });
 
   final Key? key;
 
   final List<GExercise> exercises;
 
+  final GProgram program;
+
   @override
   String toString() {
-    return 'FinishRouteArgs{key: $key, exercises: $exercises}';
+    return 'FinishRouteArgs{key: $key, exercises: $exercises, program: $program}';
   }
 }
 

@@ -33,12 +33,12 @@ class SettingTile extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(1000),
           child: Container(
-            color: backgroundColorIc ?? AppColors.primary,
+            color: backgroundColorIc ?? AppColors.primarySoft,
             alignment: Alignment.center,
             child: Icon(
               icon,
               size: 20,
-              color: AppColors.grey1,
+              color: AppColors.primaryBold,
             ),
           ),
         ),
