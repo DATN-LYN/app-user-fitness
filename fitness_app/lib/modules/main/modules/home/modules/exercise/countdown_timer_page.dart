@@ -2,19 +2,13 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
-import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.req.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
-import 'package:fitness_app/global/utils/dialogs.dart';
 import 'package:fitness_app/global/utils/exercise_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../global/gen/i18n.dart';
-import '../../../../../../global/graphql/client.dart';
 import '../../../../../../global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
-import '../../../../../../global/graphql/mutation/__generated__/mutation_upsert_user_exercise.req.gql.dart';
-import '../../../../../../global/providers/current_stats_id.provider.dart';
-import '../../../../../../global/providers/me_provider.dart';
 import '../../../../../../global/themes/app_colors.dart';
 
 class CountdownTimerPage extends ConsumerStatefulWidget {
@@ -86,10 +80,6 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
   }
 
   void upsertStats() async {
-    final user = ref.read(meProvider)?.user;
-
-    final client = ref.watch(appClientProvider);
-    final statsId = ref.watch(currentStatsId);
     final exercises = widget.index == 0
         ? [widget.exercises.first]
         : widget.exercises.getRange(0, widget.index ?? 0).toList();
@@ -97,41 +87,20 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
     final calo = ExerciseHelper.getTotalCalo(exercises);
     final duration = ExerciseHelper.getTotalDuration(exercises);
 
-    var req = GUpsertStatsReq(
-      (b) => b
-        ..vars.input.id = statsId
-        ..vars.input.caloCount = calo
-        ..vars.input.durationCount = duration
-        ..vars.input.programCount = 1
-        ..vars.input.userId = user!.id,
+    ExerciseHelper.upsertStats(
+      context,
+      ref,
+      calo: calo,
+      duration: duration,
     );
-
-    final response = await client.request(req).first;
-    if (response.hasErrors) {
-      if (mounted) {
-        DialogUtils.showError(context: context, response: response);
-      }
-    } else {
-      ref
-          .read(currentStatsId.notifier)
-          .update((state) => response.data?.upsertStats.id);
-    }
   }
 
   void upsertUserExercise() async {
-    final user = ref.read(meProvider)?.user;
-    final client = ref.watch(appClientProvider);
-
-    var req = GUpsertUserExerciseReq((b) => b
-      ..vars.input.exerciseId = widget.exercises[widget.index!].id
-      ..vars.input.userId = user!.id);
-
-    final response = await client.request(req).first;
-    if (response.hasErrors) {
-      if (mounted) {
-        DialogUtils.showError(context: context, response: response);
-      }
-    }
+    ExerciseHelper.upsertUserExercise(
+      context,
+      ref,
+      exerciseId: widget.exercises[widget.index!].id!,
+    );
   }
 
   @override

@@ -23,19 +23,20 @@ class SearchPage extends ConsumerStatefulWidget {
 
 class _SearchPageState extends ConsumerState<SearchPage> {
   final textController = TextEditingController();
-  final debouncer = Debouncer(duration: const Duration(milliseconds: 300));
+  final debouncer = Debouncer(duration: const Duration(milliseconds: 200));
   late final keywordProvider = ref.read(searchKeywordProvider.notifier);
 
   var searchProgramsReq = GGetProgramsReq(
     (b) => b
+      ..requestId = '@getProgramsRequestId'
       ..vars.queryParams.limit = Constants.defaultLimit
       ..vars.queryParams.page = 1
       ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
   );
 
-  void onChanged(String text) async {
+  void onChanged(String? text) async {
     debouncer.run(() {
-      keywordProvider.update((state) => text);
+      keywordProvider.update((state) => text ?? '');
       onSearch();
     });
   }
@@ -56,27 +57,26 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     final newFilters =
         searchProgramsReq.vars.queryParams.filters?.toList() ?? [];
     newFilters.removeWhere((e) => e.field == 'Program.name');
-    final keyword = ref.read(searchKeywordProvider);
-    if (keyword.isNotEmpty) {
-      newFilters.add(
-        GFilterDto(
-          (b) => b
-            ..field = 'Program.name'
-            ..operator = GFILTER_OPERATOR.like
-            ..data = keyword,
-        ),
-      );
-    }
-    setState(
-      () => searchProgramsReq = searchProgramsReq.rebuild(
+    final keyword = ref.watch(searchKeywordProvider);
+    newFilters.add(
+      GFilterDto(
+        (b) => b
+          ..field = 'Program.name'
+          ..operator = GFILTER_OPERATOR.like
+          ..data = keyword,
+      ),
+    );
+
+    setState(() {
+      searchProgramsReq = searchProgramsReq.rebuild(
         (b) => b
           ..vars.queryParams.page = 1
           ..vars.queryParams.filters = ListBuilder(newFilters)
           ..vars.queryParams.orderBy =
               searchProgramsReq.vars.queryParams.orderBy
           ..updateResult = ((previous, result) => result),
-      ),
-    );
+      );
+    });
   }
 
   @override
@@ -127,6 +127,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
               onTap: (String text) {
                 setState(() => textController.text = text);
                 keywordProvider.update((state) => text);
+                onSearch();
               },
             ),
     );

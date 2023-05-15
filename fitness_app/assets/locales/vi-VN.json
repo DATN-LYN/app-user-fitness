@@ -168,12 +168,15 @@
       "yearly": "Năm",
       "level": "Độ khó",
       "bodyPart": "Vùng tập luyện",      
-      "success":"Thành công"
+      "success":"Thành công",
+      "oops": "Oops!",
+      "youHaveToLogin":"Vui lòng đăng nhập để sử dụng tính năng này"
     },
     "home_":{
-      "Hello": "Xin chào!",
+      "Hello": "Xin chào",
       "haveANiceDay": "Chúc bạn một ngày vui vẻ",
-      "viewAll": "Xem tất cả"
+      "viewAll": "Xem tất cả",
+      "user":"Người dùng"
     },
     "search_":{
       "recentSearches": "Tìm kiếm gần đây",

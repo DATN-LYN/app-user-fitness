@@ -56,6 +56,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void handleLoginSuccess(GLoginData? response) async {
+    print(response);
     ref.watch(authProvider.notifier).logIn(response!);
 
     AutoRouter.of(context).replaceAll([const MainRoute()]);

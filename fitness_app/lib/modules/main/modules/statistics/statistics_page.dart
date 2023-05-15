@@ -2,6 +2,7 @@ import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
 import 'package:fitness_app/global/providers/me_provider.dart';
+import 'package:fitness_app/global/widgets/fitness_empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,8 +40,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const SizedBox(height: 8),
-          if (isLogedIn)
+          if (isLogedIn) ...[
+            const SizedBox(height: 8),
             Row(
               children: [
                 _filterItem(schedule: FilterRangeType.weekly),
@@ -48,29 +49,30 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                 _filterItem(schedule: FilterRangeType.yearly),
               ],
             ),
-          if (selectedFilter == FilterRangeType.monthly)
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: FormBuilderField<DateTime>(
-                name: 'month',
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(
-                    Icons.arrow_drop_down_sharp,
-                    size: 30,
+            if (selectedFilter == FilterRangeType.monthly)
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: FormBuilderField<DateTime>(
+                  name: 'month',
+                  decoration: const InputDecoration(
+                    suffixIcon: Icon(
+                      Icons.arrow_drop_down_sharp,
+                      size: 30,
+                    ),
                   ),
+                  builder: (field) {
+                    return MonthPickerDialog(
+                      onChanged: (selectedMonth) {
+                        if (selectedMonth != null) {
+                          field.didChange(selectedMonth);
+                        }
+                      },
+                    );
+                  },
                 ),
-                builder: (field) {
-                  return MonthPickerDialog(
-                    onChanged: (selectedMonth) {
-                      if (selectedMonth != null) {
-                        field.didChange(selectedMonth);
-                      }
-                    },
-                  );
-                },
               ),
-            ),
-          const SizedBox(height: 32),
+            const SizedBox(height: 32),
+          ],
           const StatisticsBodyData(),
           const SizedBox(height: 32),
           RichText(
@@ -83,7 +85,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
               ),
               children: [
                 TextSpan(
-                  text: '1290 ${i18n.statistics_Calories} ',
+                  text: isLogedIn
+                      ? '1290 ${i18n.statistics_Calories} '
+                      : '0 ${i18n.statistics_Calories} ',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -113,7 +117,14 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
             ),
           ),
           const SizedBox(height: 16),
-          const StatisticsRecentlyWorkout(),
+          if (isLogedIn)
+            const StatisticsRecentlyWorkout()
+          else
+            FitnessEmpty(
+              title: i18n.common_Oops,
+              message: i18n.common_YouHaveToLogin,
+            ),
+          const SizedBox(height: 16),
         ],
       ),
     );

@@ -205,7 +205,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ],
                 if (!isLogedIn)
                   SettingTile(
-                    icon: Ionicons.log_in,
+                    icon: Icons.login,
                     title: i18n.login_LogIn,
                     onTap: () => context.pushRoute(const LoginRoute()),
                   )

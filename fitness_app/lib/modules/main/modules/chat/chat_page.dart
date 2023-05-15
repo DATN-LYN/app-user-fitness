@@ -5,6 +5,7 @@ import 'package:ferry/ferry.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inboxes.req.gql.dart';
 import 'package:fitness_app/global/utils/auth_helper.dart';
+import 'package:fitness_app/modules/main/modules/chat/widgets/un_login_inbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -157,8 +158,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         title: Text(i18n.chat_Title),
         elevation: 0,
       ),
-      body: isLogedIn
-          ? InfinityList(
+      body: !isLogedIn
+          ? const UnLoginInbox()
+          : InfinityList(
               client: client,
               request: getMyInboxesReq,
               loadMoreRequest: (response) {
@@ -262,8 +264,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   controller: scrollController,
                 );
               },
-            )
-          : const UnLoginInbox(),
+            ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(8),
         color: AppColors.white,
