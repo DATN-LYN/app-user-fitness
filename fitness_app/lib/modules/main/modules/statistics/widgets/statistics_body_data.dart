@@ -8,8 +8,15 @@ import '../../../../../global/widgets/stats/user_statistic_item.dart';
 
 class StatisticsBodyData extends ConsumerWidget {
   const StatisticsBodyData({
+    required this.calo,
+    required this.programs,
+    required this.exercises,
     super.key,
   });
+
+  final double calo;
+  final double programs;
+  final double exercises;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +26,7 @@ class StatisticsBodyData extends ConsumerWidget {
     return Row(
       children: [
         UserStatisticItem(
-          title: isLogedIn ? '600' : '0',
+          title: isLogedIn ? calo.toString() : '0',
           subtitle: i18n.common_Minutes,
           icon: const Icon(
             Icons.timelapse,
@@ -29,7 +36,7 @@ class StatisticsBodyData extends ConsumerWidget {
           backgroundColor: AppColors.warningSoft,
         ),
         UserStatisticItem(
-          title: isLogedIn ? '600' : '0',
+          title: isLogedIn ? programs.toString() : '0',
           subtitle: i18n.programs_Programs,
           icon: const Icon(
             Icons.feed_rounded,
@@ -39,7 +46,7 @@ class StatisticsBodyData extends ConsumerWidget {
           backgroundColor: AppColors.successSoft,
         ),
         UserStatisticItem(
-          title: isLogedIn ? '600' : '0',
+          title: isLogedIn ? exercises.toString() : '0',
           subtitle: i18n.exercises_Exercises,
           icon: const Icon(
             Icons.fitness_center,

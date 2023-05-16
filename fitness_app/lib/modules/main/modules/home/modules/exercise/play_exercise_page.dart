@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_program.req.gql.dart';
 import 'package:fitness_app/global/providers/current_stats_id.provider.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
@@ -12,9 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../../../../global/graphql/client.dart';
 import '../../../../../../global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import '../../../../../../global/themes/app_colors.dart';
-import '../../../../../../global/utils/duration_time.dart';
+import '../../../../../../global/utils/date_time_helper.dart';
+import '../../../../../../global/utils/dialogs.dart';
 
 enum PlayerState { playing, paused }
 
@@ -58,6 +61,9 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
   }
 
   initData() async {
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      upsertProgramView();
+    });
     loading = true;
     urls = widget.exercises.map((e) {
       Uri initialUri = Uri.parse(e.videoUrl!);
@@ -76,6 +82,28 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
       setState(() {
         lock = false;
       });
+    }
+  }
+
+  void upsertProgramView() async {
+    final client = ref.watch(appClientProvider);
+    var req = GUpsertProgramReq(
+      (b) => b
+        ..vars.input.bodyPart = widget.program.bodyPart
+        ..vars.input.categoryId = widget.program.categoryId
+        ..vars.input.id = widget.program.id
+        ..vars.input.imgUrl = widget.program.imgUrl
+        ..vars.input.description = widget.program.description
+        ..vars.input.level = widget.program.level
+        ..vars.input.name = widget.program.name
+        ..vars.input.view = (widget.program.view ?? 0) + 1,
+    );
+
+    final response = await client.request(req).first;
+    if (response.hasErrors) {
+      if (context.mounted) {
+        DialogUtils.showError(context: context, response: response);
+      }
     }
   }
 
@@ -353,7 +381,7 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
         color: AppColors.primarySoft,
       ),
       child: Text(
-        DurationTime.totalDurationFormat(
+        DateTimeHelper.totalDurationFormat(
           controller(index).value.duration - controller(index).value.position,
         ),
         style: const TextStyle(

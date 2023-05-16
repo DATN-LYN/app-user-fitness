@@ -1,7 +1,7 @@
 import 'package:ferry_flutter/ferry_flutter.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
-import 'package:fitness_app/global/utils/duration_time.dart';
+import 'package:fitness_app/global/utils/date_time_helper.dart';
 import 'package:fitness_app/global/widgets/stats/user_statistic_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,7 +45,7 @@ class UserStatistic extends ConsumerWidget {
 
         if (stats?.isEmpty == true) {
           return FitnessEmpty(
-            title: i18n.programs_ProgramNotFound,
+            title: i18n.common_EmptyData,
             message: i18n.common_PleasePullToTryAgain,
             showImage: false,
           );
@@ -73,7 +73,7 @@ class UserStatistic extends ConsumerWidget {
               backgroundColor: AppColors.errorSoft,
             ),
             UserStatisticItem(
-              title: DurationTime.totalDurationFormat(
+              title: DateTimeHelper.totalDurationFormat(
                 Duration(
                   seconds: duration!.toInt(),
                 ),

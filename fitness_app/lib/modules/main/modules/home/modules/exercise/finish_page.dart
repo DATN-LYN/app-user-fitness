@@ -3,7 +3,7 @@ import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
-import 'package:fitness_app/global/utils/duration_time.dart';
+import 'package:fitness_app/global/utils/date_time_helper.dart';
 import 'package:fitness_app/global/utils/exercise_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +29,7 @@ class _FinishPage extends ConsumerState<FinishPage> {
   late final calo = ExerciseHelper.getTotalCalo(widget.exercises);
   late final duration = ExerciseHelper.getTotalDuration(widget.exercises);
   late final durationString =
-      DurationTime.totalDurationFormat(Duration(seconds: duration.toInt()));
+      DateTimeHelper.totalDurationFormat(Duration(seconds: duration.toInt()));
 
   @override
   void initState() {

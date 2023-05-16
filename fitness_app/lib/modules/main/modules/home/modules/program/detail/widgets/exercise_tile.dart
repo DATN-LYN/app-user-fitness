@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
-import 'package:fitness_app/global/utils/duration_time.dart';
+import 'package:fitness_app/global/utils/date_time_helper.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +64,7 @@ class ExerciseTile extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      DurationTime.totalDurationFormat(
+                      DateTimeHelper.totalDurationFormat(
                         Duration(seconds: exercise.duration!.toInt()),
                       ),
                     ),

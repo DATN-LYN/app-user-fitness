@@ -1,3 +1,4 @@
+import 'package:fitness_app/global/utils/date_time_helper.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -7,7 +8,6 @@ import '../../../../../../../../global/enums/workout_level.dart';
 import '../../../../../../../../global/gen/i18n.dart';
 import '../../../../../../../../global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import '../../../../../../../../global/themes/app_colors.dart';
-import '../../../../../../../../global/utils/duration_time copy.dart';
 import 'program_info_tile.dart';
 
 class ProgramOverview extends StatelessWidget {
@@ -44,7 +44,7 @@ class ProgramOverview extends StatelessWidget {
             Expanded(
               child: ProgramInfoTile(
                 icon: Ionicons.time,
-                label: DurationTime.totalDurationFormat(
+                label: DateTimeHelper.totalDurationFormat(
                   Duration(seconds: totalDuration.toInt()),
                 ),
                 iconColor: AppColors.information,
