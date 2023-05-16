@@ -93,6 +93,12 @@ import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upser
     show GUpsertInboxReq;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_inbox.var.gql.dart'
     show GUpsertInboxVars;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_program.data.gql.dart'
+    show GUpsertProgramData, GUpsertProgramData_upsertProgram;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_program.req.gql.dart'
+    show GUpsertProgramReq;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_program.var.gql.dart'
+    show GUpsertProgramVars;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.data.gql.dart'
     show GUpsertStatsData, GUpsertStatsData_upsertStats;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.req.gql.dart'
@@ -318,7 +324,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GUpsertInboxInputDto,
   GUpsertInboxReq,
   GUpsertInboxVars,
+  GUpsertProgramData,
+  GUpsertProgramData_upsertProgram,
   GUpsertProgramInputDto,
+  GUpsertProgramReq,
+  GUpsertProgramVars,
   GUpsertStatsData,
   GUpsertStatsData_upsertStats,
   GUpsertStatsReq,

@@ -17,6 +17,13 @@ class GFILTER_OPERATOR extends EnumClass {
 
   static const GFILTER_OPERATOR like = _$gFILTEROPERATORlike;
 
+  @BuiltValueEnumConst(wireName: 'in')
+  static const GFILTER_OPERATOR Gin = _$gFILTEROPERATORGin;
+
+  static const GFILTER_OPERATOR lt = _$gFILTEROPERATORlt;
+
+  static const GFILTER_OPERATOR gt = _$gFILTEROPERATORgt;
+
   static Serializer<GFILTER_OPERATOR> get serializer =>
       _$gFILTEROPERATORSerializer;
   static BuiltSet<GFILTER_OPERATOR> get values => _$gFILTEROPERATORValues;
@@ -210,6 +217,7 @@ abstract class GUpsertProgramInputDto
   String get description;
   String get imgUrl;
   String get categoryId;
+  double get view;
   static Serializer<GUpsertProgramInputDto> get serializer =>
       _$gUpsertProgramInputDtoSerializer;
   Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(

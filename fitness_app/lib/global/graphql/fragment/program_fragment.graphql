@@ -5,6 +5,7 @@ fragment Program on Program {
   bodyPart
   description
   imgUrl
+  view
   createdAt
   updatedAt
   categoryId
