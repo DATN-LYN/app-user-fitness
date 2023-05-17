@@ -8,13 +8,13 @@ import '../../../../../global/widgets/stats/user_statistic_item.dart';
 
 class StatisticsBodyData extends ConsumerWidget {
   const StatisticsBodyData({
-    required this.calo,
+    required this.duration,
     required this.programs,
     required this.exercises,
     super.key,
   });
 
-  final double calo;
+  final double duration;
   final double programs;
   final double exercises;
 
@@ -26,7 +26,7 @@ class StatisticsBodyData extends ConsumerWidget {
     return Row(
       children: [
         UserStatisticItem(
-          title: isLogedIn ? calo.toString() : '0',
+          title: isLogedIn ? duration.toString() : '0',
           subtitle: i18n.common_Minutes,
           icon: const Icon(
             Icons.timelapse,

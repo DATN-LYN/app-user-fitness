@@ -26,6 +26,8 @@ class StatisticsPage extends ConsumerStatefulWidget {
 
 class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   FilterRangeType selectedFilter = FilterRangeType.weekly;
+  String? timeText;
+
   var req = GGetMyStatsReq(
     (b) => b
       ..requestId = '@getMyStatsRequestId'
@@ -48,15 +50,13 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
           operationRequest: req,
           builder: (context, response, error) {
             final data = response?.data;
-            final stats = data?.getMyStats;
+            final stats = data?.getMyStats.items?.toList();
             final calo =
-                stats?.items?.map((e) => e.caloCount).reduce((a, b) => a! + b!);
-            final duration = stats?.items
-                ?.map((e) => e.durationCount)
-                .reduce((a, b) => a! + b!);
-            final program = stats?.items
-                ?.map((e) => e.programCount)
-                .reduce((a, b) => a! + b!);
+                stats?.map((e) => e.caloCount).reduce((a, b) => a! + b!);
+            final duration =
+                stats?.map((e) => e.durationCount).reduce((a, b) => a! + b!);
+            final program =
+                stats?.map((e) => e.programCount).reduce((a, b) => a! + b!);
 
             return ListView(
               padding: const EdgeInsets.all(16),
@@ -65,9 +65,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      _filterItem(schedule: FilterRangeType.weekly),
-                      _filterItem(schedule: FilterRangeType.monthly),
-                      _filterItem(schedule: FilterRangeType.yearly),
+                      _filterItem(filter: FilterRangeType.weekly),
+                      _filterItem(filter: FilterRangeType.monthly),
+                      _filterItem(filter: FilterRangeType.yearly),
                     ],
                   ),
                   if (selectedFilter == FilterRangeType.monthly)
@@ -95,7 +95,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   const SizedBox(height: 32),
                 ],
                 StatisticsBodyData(
-                  calo: calo ?? 0,
+                  duration: duration ?? 0,
                   programs: program ?? 0,
                   exercises: 0,
                 ),
@@ -119,7 +119,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                           color: AppColors.primaryBold,
                         ),
                       ),
-                      TextSpan(text: '${i18n.statistics_ThisMonth}.'),
+                      TextSpan(
+                          text: '${timeText ?? i18n.statistics_ThisWeek}.'),
                     ],
                   ),
                 ),
@@ -132,7 +133,10 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const StatisticsChart(),
+                if (stats != null && stats.isNotEmpty)
+                  StatisticsChart(
+                    data: stats,
+                  ),
                 const SizedBox(height: 32),
                 Text(
                   i18n.statistics_RecentWorkout,
@@ -156,8 +160,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
     );
   }
 
-  Widget _filterItem({required FilterRangeType schedule}) {
-    final isSelected = selectedFilter == schedule;
+  Widget _filterItem({required FilterRangeType filter}) {
+    final isSelected = selectedFilter == filter;
     final i18n = I18n.of(context)!;
 
     return Expanded(
@@ -168,7 +172,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
             final newFilters = req.vars.queryParams.filters?.toList() ?? [];
 
             setState(() {
-              selectedFilter = schedule;
+              selectedFilter = filter;
+              timeText = filter.timeText(i18n);
             });
 
             newFilters.addAll(
@@ -197,7 +202,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                 : AppColors.primary.withOpacity(0.7),
           ),
           child: Text(
-            schedule.label(i18n),
+            filter.label(i18n),
             style: TextStyle(
               color: isSelected ? AppColors.white : AppColors.grey1,
               fontWeight: FontWeight.w600,

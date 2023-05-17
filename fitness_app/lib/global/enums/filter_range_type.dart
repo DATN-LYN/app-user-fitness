@@ -39,4 +39,15 @@ enum FilterRangeType {
         return i18n.common_Yearly;
     }
   }
+
+  String timeText(I18n i18n) {
+    switch (this) {
+      case FilterRangeType.weekly:
+        return i18n.statistics_ThisWeek;
+      case FilterRangeType.monthly:
+        return i18n.statistics_ThisMonth;
+      case FilterRangeType.yearly:
+        return i18n.statistics_ThisMonth;
+    }
+  }
 }

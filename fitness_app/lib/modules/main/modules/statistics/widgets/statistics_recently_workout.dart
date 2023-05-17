@@ -23,6 +23,7 @@ class _StatisticsRecentlyWorkoutState
     extends ConsumerState<StatisticsRecentlyWorkout> {
   var getProgramsReq = GGetProgramsReq(
     (b) => b
+      ..requestId = '@getProgramsRequestId'
       ..vars.queryParams.limit = Constants.defaultLimit
       ..vars.queryParams.page = 1
       ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
