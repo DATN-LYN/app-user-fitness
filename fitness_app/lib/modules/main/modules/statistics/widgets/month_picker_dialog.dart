@@ -37,7 +37,7 @@ class MonthPickerDialog extends StatelessWidget {
                       allowViewNavigation: false,
                       initialSelectedDate: DateTime.now(),
                       onSelectionChanged: (selectedDate) {
-                        onChanged(selectedDate as DateTime);
+                        onChanged(selectedDate.value as DateTime);
                         // setState(
                         //   () {
                         //     startDate =

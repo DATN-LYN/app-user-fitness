@@ -7,23 +7,23 @@ enum FilterRangeType {
   monthly(),
   yearly();
 
-  DateTime? startDate() {
+  DateTime? startDate({int? month}) {
     switch (this) {
       case FilterRangeType.weekly:
         return Jiffy().startOf(Units.WEEK).dateTime;
       case FilterRangeType.monthly:
-        return Jiffy().startOf(Units.MONTH).dateTime;
+        return getFirstDayOfMonth(month ?? Jiffy().month);
       case FilterRangeType.yearly:
         return Jiffy().startOf(Units.YEAR).dateTime;
     }
   }
 
-  DateTime? endDate() {
+  DateTime? endDate({int? month}) {
     switch (this) {
       case FilterRangeType.weekly:
         return Jiffy().endOf(Units.WEEK).dateTime;
       case FilterRangeType.monthly:
-        return Jiffy().endOf(Units.MONTH).dateTime;
+        return getLastDayOfMonth(month ?? Jiffy().month);
       case FilterRangeType.yearly:
         return Jiffy().endOf(Units.YEAR).dateTime;
     }
@@ -48,6 +48,31 @@ enum FilterRangeType {
         return i18n.statistics_ThisMonth;
       case FilterRangeType.yearly:
         return i18n.statistics_ThisMonth;
+    }
+  }
+
+  DateTime getFirstDayOfMonth(int month) {
+    final now = DateTime.now();
+    return DateTime(now.year, month, 1);
+  }
+
+  DateTime getLastDayOfMonth(int month) {
+    final now = DateTime.now();
+    return DateTime(now.year, month + 1, 0);
+  }
+
+  List<String> xValuesChart(I18n i18n, {int? month}) {
+    final now = DateTime.now();
+
+    switch (this) {
+      case FilterRangeType.weekly:
+        return i18n.weekDays_;
+      case FilterRangeType.monthly:
+        final daysInMonth = DateTime(now.year, month ?? 1, 0).day;
+        print(daysInMonth);
+        return List.generate(daysInMonth, (index) => (index + 1).toString());
+      case FilterRangeType.yearly:
+        return i18n.weekDays_;
     }
   }
 }

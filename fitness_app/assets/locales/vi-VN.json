@@ -187,5 +187,14 @@
       "editDes": "Bạn có chắc chắn muốn cập nhật thông tin cá nhân?",
       "updateSuccess": "Thông tin của bạn đã được cập nhật thành công"
 
-    }
+    },
+    "weekDays_":[
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "CN"
+    ]
 }

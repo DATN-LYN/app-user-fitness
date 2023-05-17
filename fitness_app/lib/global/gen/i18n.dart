@@ -294,6 +294,8 @@ class I18n implements WidgetsLocalizations {
 	String get editProfile_EditDes => "Are you sure you want to update your profile?";
 	/// "Your profile has been updated successfully."
 	String get editProfile_UpdateSuccess => "Your profile has been updated successfully.";
+	/// ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+	List<String> get weekDays_ => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 	/// "Nhập tên thể loại"
@@ -698,6 +700,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Thông tin của bạn đã được cập nhật thành công"
 	@override
 	String get editProfile_UpdateSuccess => "Thông tin của bạn đã được cập nhật thành công";
+	/// ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+	@override
+	List<String> get weekDays_ => ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

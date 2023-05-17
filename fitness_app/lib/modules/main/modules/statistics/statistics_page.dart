@@ -1,21 +1,16 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:ferry_flutter/ferry_flutter.dart';
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
-import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
 import 'package:fitness_app/global/providers/me_provider.dart';
-import 'package:fitness_app/global/widgets/fitness_empty.dart';
+import 'package:fitness_app/modules/main/modules/statistics/widgets/statistics_filter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../global/graphql/client.dart';
 import '../../../../global/themes/app_colors.dart';
-import 'widgets/month_picker_dialog.dart';
 import 'widgets/statistics_body_data.dart';
 import 'widgets/statistics_chart.dart';
-import 'widgets/statistics_recently_workout.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
@@ -25,15 +20,28 @@ class StatisticsPage extends ConsumerStatefulWidget {
 }
 
 class _StatisticsPageState extends ConsumerState<StatisticsPage> {
-  FilterRangeType selectedFilter = FilterRangeType.weekly;
   String? timeText;
+  var selectedFilter = FilterRangeType.weekly;
 
-  var req = GGetMyStatsReq(
+  var key = GlobalKey();
+  var getMyStatsReq = GGetMyStatsReq(
     (b) => b
       ..requestId = '@getMyStatsRequestId'
       ..vars.queryParams.limit = 10
       ..vars.queryParams.page = 1,
   );
+
+  void handleFilterChange(GGetMyStatsReq newReq, FilterRangeType filter) {
+    setState(
+      () {
+        selectedFilter = filter;
+        getMyStatsReq = getMyStatsReq.rebuild((b) => b
+          ..vars.queryParams.filters =
+              newReq.vars.queryParams.filters?.toBuilder());
+        // key = GlobalKey();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +50,13 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
     final client = ref.watch(appClientProvider);
 
     return Scaffold(
+      key: key,
       appBar: AppBar(
         title: Text(i18n.main_Statistics),
       ),
       body: Operation(
           client: client,
-          operationRequest: req,
+          operationRequest: getMyStatsReq,
           builder: (context, response, error) {
             final data = response?.data;
             final stats = data?.getMyStats.items?.toList();
@@ -61,39 +70,15 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
             return ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                if (isLogedIn) ...[
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      _filterItem(filter: FilterRangeType.weekly),
-                      _filterItem(filter: FilterRangeType.monthly),
-                      _filterItem(filter: FilterRangeType.yearly),
-                    ],
+                StatisticsFilter(
+                  request: GGetMyStatsReq(
+                    (b) => b
+                      ..vars.queryParams =
+                          getMyStatsReq.vars.queryParams.toBuilder(),
                   ),
-                  if (selectedFilter == FilterRangeType.monthly)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: FormBuilderField<DateTime>(
-                        name: 'month',
-                        decoration: const InputDecoration(
-                          suffixIcon: Icon(
-                            Icons.arrow_drop_down_sharp,
-                            size: 30,
-                          ),
-                        ),
-                        builder: (field) {
-                          return MonthPickerDialog(
-                            onChanged: (selectedMonth) {
-                              if (selectedMonth != null) {
-                                field.didChange(selectedMonth);
-                              }
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  const SizedBox(height: 32),
-                ],
+                  onChanged: (getMyStatsReq, selectedFilter) =>
+                      handleFilterChange(getMyStatsReq, selectedFilter),
+                ),
                 StatisticsBodyData(
                   duration: duration ?? 0,
                   programs: program ?? 0,
@@ -136,6 +121,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                 if (stats != null && stats.isNotEmpty)
                   StatisticsChart(
                     data: stats,
+                    filter: selectedFilter,
                   ),
                 const SizedBox(height: 32),
                 Text(
@@ -146,70 +132,17 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                if (isLogedIn)
-                  const StatisticsRecentlyWorkout()
-                else
-                  FitnessEmpty(
-                    title: i18n.common_Oops,
-                    message: i18n.common_YouHaveToLogin,
-                  ),
+                // if (isLogedIn)
+                //   const StatisticsRecentlyWorkout()
+                // else
+                //   FitnessEmpty(
+                //     title: i18n.common_Oops,
+                //     message: i18n.common_YouHaveToLogin,
+                //   ),
                 const SizedBox(height: 16),
               ],
             );
           }),
-    );
-  }
-
-  Widget _filterItem({required FilterRangeType filter}) {
-    final isSelected = selectedFilter == filter;
-    final i18n = I18n.of(context)!;
-
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: FilledButton(
-          onPressed: () {
-            final newFilters = req.vars.queryParams.filters?.toList() ?? [];
-
-            setState(() {
-              selectedFilter = filter;
-              timeText = filter.timeText(i18n);
-            });
-
-            newFilters.addAll(
-              [
-                GFilterDto(
-                  (b) => b
-                    ..data = selectedFilter.startDate().toString()
-                    ..field = 'UserStatistics.updatedAt'
-                    ..operator = GFILTER_OPERATOR.gt,
-                ),
-                GFilterDto(
-                  (b) => b
-                    ..data = selectedFilter.endDate().toString()
-                    ..field = 'UserStatistics.updatedAt'
-                    ..operator = GFILTER_OPERATOR.lt,
-                ),
-              ],
-            );
-
-            req = req.rebuild(
-                (p0) => p0..vars.queryParams.filters = ListBuilder(newFilters));
-          },
-          style: FilledButton.styleFrom(
-            backgroundColor: isSelected
-                ? AppColors.primaryBold
-                : AppColors.primary.withOpacity(0.7),
-          ),
-          child: Text(
-            filter.label(i18n),
-            style: TextStyle(
-              color: isSelected ? AppColors.white : AppColors.grey1,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

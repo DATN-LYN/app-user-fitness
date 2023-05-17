@@ -1,3 +1,5 @@
+import 'package:fitness_app/global/enums/filter_range_type.dart';
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -8,12 +10,21 @@ class StatisticsChart extends StatelessWidget {
   const StatisticsChart({
     super.key,
     required this.data,
+    required this.filter,
   });
 
   final List<GGetMyStatsData_getMyStats_items> data;
-
+  final FilterRangeType filter;
   @override
   Widget build(BuildContext context) {
+    final i18n = I18n.of(context)!;
+    var xValues = [];
+    if (filter == FilterRangeType.monthly) {
+      xValues = filter.xValuesChart(i18n, month: 2);
+    } else {
+      xValues = filter.xValuesChart(i18n);
+    }
+
     return ShadowWrapper(
       padding: const EdgeInsets.all(8),
       child: SizedBox(
@@ -28,8 +39,7 @@ class StatisticsChart extends StatelessWidget {
                   (index) =>
                       index < data.length ? data[index].caloCount ?? 0 : 0),
               borderRadius: BorderRadius.circular(10),
-              xValueMapper: (data, index) =>
-                  ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index],
+              xValueMapper: (data, index) => xValues[index],
               yValueMapper: (data, _) => data,
             )
           ],
