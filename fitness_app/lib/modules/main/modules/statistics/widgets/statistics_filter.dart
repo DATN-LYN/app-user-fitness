@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:fitness_app/global/data/models/statistics_filter_data.dart';
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
 import 'package:flutter/material.dart';
@@ -16,19 +17,20 @@ class StatisticsFilter extends ConsumerStatefulWidget {
   const StatisticsFilter({
     required this.request,
     required this.onChanged,
+    required this.filter,
     super.key,
   });
 
   final GGetMyStatsReq request;
-  final Function(GGetMyStatsReq, FilterRangeType) onChanged;
+  final Function(GGetMyStatsReq, StatisticsFilterData) onChanged;
+  final StatisticsFilterData filter;
 
   @override
   ConsumerState<StatisticsFilter> createState() => _StatisticsFilterState();
 }
 
 class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
-  var selectedFilter = FilterRangeType.weekly;
-  int month = Jiffy().month;
+  late var filter = widget.filter;
 
   void handleFilter(DateTime startDate, DateTime endDate) {
     final newFilters = widget.request.vars.queryParams.filters?.toList() ?? [];
@@ -37,13 +39,13 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
       [
         GFilterDto(
           (b) => b
-            ..data = selectedFilter.startDate().toString()
+            ..data = filter.rangeType?.startDate().toString()
             ..field = 'UserStatistics.updatedAt'
             ..operator = GFILTER_OPERATOR.gt,
         ),
         GFilterDto(
           (b) => b
-            ..data = selectedFilter.endDate().toString()
+            ..data = filter.rangeType?.endDate().toString()
             ..field = 'UserStatistics.updatedAt'
             ..operator = GFILTER_OPERATOR.lt,
         ),
@@ -57,7 +59,7 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
           ..vars.queryParams.filters = ListBuilder(newFilters)
           ..updateResult = (previous, result) => result,
       ),
-      selectedFilter,
+      filter,
     );
   }
 
@@ -72,24 +74,28 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
           Row(
             children: [
               ...FilterRangeType.values.map(
-                (filter) {
+                (rangeType) {
                   return FilterButton(
-                    isSelected: selectedFilter == filter,
-                    filter: filter,
+                    isSelected: filter.rangeType == rangeType,
+                    filter: rangeType,
                     onFilter: () {
                       final now = DateTime.now();
                       setState(() {
-                        selectedFilter = filter;
+                        filter = filter.copyWith(rangeType: rangeType);
                       });
-                      if (selectedFilter == FilterRangeType.monthly) {
+                      if (filter.rangeType == FilterRangeType.monthly) {
                         handleFilter(
-                          selectedFilter.startDate(month: month) ?? now,
-                          selectedFilter.startDate(month: month) ?? now,
+                          filter.rangeType
+                                  ?.startDate(month: filter.month ?? 1) ??
+                              now,
+                          filter.rangeType
+                                  ?.startDate(month: filter.month ?? 1) ??
+                              now,
                         );
                       } else {
                         handleFilter(
-                          selectedFilter.startDate() ?? now,
-                          selectedFilter.endDate() ?? now,
+                          filter.rangeType?.startDate() ?? now,
+                          filter.rangeType?.endDate() ?? now,
                         );
                       }
                     },
@@ -98,7 +104,7 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
               ),
             ],
           ),
-          if (selectedFilter == FilterRangeType.monthly)
+          if (filter.rangeType == FilterRangeType.monthly)
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: FormBuilderField<int>(
@@ -112,9 +118,13 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
                 ),
                 builder: (field) {
                   return MonthPickerDialog(
+                    initialValue: filter.rangeType
+                        ?.getFirstDayOfMonth(filter.month ?? Jiffy().month),
                     onChanged: (selectedMonth) {
                       if (selectedMonth != null) {
-                        month = selectedMonth.month;
+                        setState(() {
+                          filter = filter.copyWith(month: selectedMonth.month);
+                        });
                       }
                     },
                   );

@@ -69,10 +69,22 @@ enum FilterRangeType {
         return i18n.weekDays_;
       case FilterRangeType.monthly:
         final daysInMonth = DateTime(now.year, month ?? 1, 0).day;
-        print(daysInMonth);
         return List.generate(daysInMonth, (index) => (index + 1).toString());
       case FilterRangeType.yearly:
-        return i18n.weekDays_;
+        return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    }
+  }
+
+  int chartLength({int? month}) {
+    final now = DateTime.now();
+
+    switch (this) {
+      case FilterRangeType.weekly:
+        return 7;
+      case FilterRangeType.monthly:
+        return DateTime(now.year, month ?? 1, 0).day;
+      case FilterRangeType.yearly:
+        return 12;
     }
   }
 }

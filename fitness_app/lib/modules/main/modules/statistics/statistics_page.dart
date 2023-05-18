@@ -1,4 +1,5 @@
 import 'package:ferry_flutter/ferry_flutter.dart';
+import 'package:fitness_app/global/data/models/statistics_filter_data.dart';
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
@@ -21,7 +22,8 @@ class StatisticsPage extends ConsumerStatefulWidget {
 
 class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   String? timeText;
-  var selectedFilter = FilterRangeType.weekly;
+  var filterData =
+      const StatisticsFilterData(rangeType: FilterRangeType.weekly);
 
   var key = GlobalKey();
   var getMyStatsReq = GGetMyStatsReq(
@@ -31,10 +33,10 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
       ..vars.queryParams.page = 1,
   );
 
-  void handleFilterChange(GGetMyStatsReq newReq, FilterRangeType filter) {
+  void handleFilterChange(GGetMyStatsReq newReq, StatisticsFilterData filter) {
     setState(
       () {
-        selectedFilter = filter;
+        filterData = filter;
         getMyStatsReq = getMyStatsReq.rebuild((b) => b
           ..vars.queryParams.filters =
               newReq.vars.queryParams.filters?.toBuilder());
@@ -71,6 +73,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
               padding: const EdgeInsets.all(16),
               children: [
                 StatisticsFilter(
+                  filter: filterData,
                   request: GGetMyStatsReq(
                     (b) => b
                       ..vars.queryParams =
@@ -121,7 +124,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                 if (stats != null && stats.isNotEmpty)
                   StatisticsChart(
                     data: stats,
-                    filter: selectedFilter,
+                    filter: filterData,
                   ),
                 const SizedBox(height: 32),
                 Text(

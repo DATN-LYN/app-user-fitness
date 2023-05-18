@@ -6,9 +6,8 @@ part 'statistics_filter_data.freezed.dart';
 
 @freezed
 class StatisticsFilterData with _$StatisticsFilterData {
-  const factory StatisticsFilterData([
+  const factory StatisticsFilterData({
+    int? month,
     FilterRangeType? rangeType,
-    DateTime? startDate,
-    DateTime? endDate,
-  ]) = _StatisticsFilterData;
+  }) = _StatisticsFilterData;
 }

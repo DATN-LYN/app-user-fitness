@@ -1,19 +1,28 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/themes/app_colors.dart';
 import '../../../../../global/widgets/elevated_button_opacity.dart';
 
-class MonthPickerDialog extends StatelessWidget {
+class MonthPickerDialog extends StatefulWidget {
   const MonthPickerDialog({
     super.key,
     required this.onChanged,
+    this.initialValue,
   });
 
   final Function(DateTime?) onChanged;
+  final DateTime? initialValue;
 
+  @override
+  State<MonthPickerDialog> createState() => _MonthPickerDialogState();
+}
+
+class _MonthPickerDialogState extends State<MonthPickerDialog> {
+  DateTime selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
@@ -35,18 +44,12 @@ class MonthPickerDialog extends StatelessWidget {
                       selectionColor: AppColors.primaryBold,
                       todayHighlightColor: AppColors.primaryBold,
                       allowViewNavigation: false,
-                      initialSelectedDate: DateTime.now(),
-                      onSelectionChanged: (selectedDate) {
-                        onChanged(selectedDate.value as DateTime);
-                        // setState(
-                        //   () {
-                        //     startDate =
-                        //         dateRange.startDate?.combineTime(startDate) ??
-                        //             startDate;
-                        //     endDate = dateRange.endDate?.combineTime(endDate) ??
-                        //         startDate.combineTime(endDate);
-                        //   },
-                        // );
+                      initialSelectedDate:
+                          widget.initialValue ?? DateTime.now(),
+                      onSelectionChanged: (date) {
+                        setState(() {
+                          selectedDate = date.value as DateTime;
+                        });
                       },
                       // selectableDayPredicate: (DateTime val) =>
                       //     !widget.excludeWeekDay.contains(val.weekday),
@@ -58,7 +61,7 @@ class MonthPickerDialog extends StatelessWidget {
                           child: ElevatedButtonOpacity(
                             onTap: () {
                               context.popRoute();
-                              onChanged(null);
+                              widget.onChanged(null);
                             },
                             color: AppColors.grey6,
                             label: i18n.button_Cancel,
@@ -69,6 +72,7 @@ class MonthPickerDialog extends StatelessWidget {
                           child: ElevatedButtonOpacity(
                             onTap: () {
                               context.popRoute();
+                              widget.onChanged(selectedDate);
                             },
                             label: i18n.button_Done,
                           ),
@@ -91,7 +95,7 @@ class MonthPickerDialog extends StatelessWidget {
         ),
       ),
       child: InkWell(
-        child: Text(i18n.statistics_SelectMonth),
+        child: Text('${selectedDate.month.toString()} / ${Jiffy().year}'),
         onTap: () => showDialogPicker(),
       ),
     );
