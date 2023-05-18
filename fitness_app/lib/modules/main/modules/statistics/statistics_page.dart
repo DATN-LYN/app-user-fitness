@@ -108,7 +108,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                         ),
                       ),
                       TextSpan(
-                          text: '${timeText ?? i18n.statistics_ThisWeek}.'),
+                        text: '${timeText ?? i18n.statistics_ThisWeek}.',
+                      ),
                     ],
                   ),
                 ),

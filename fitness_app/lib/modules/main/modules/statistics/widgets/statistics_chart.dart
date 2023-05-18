@@ -20,12 +20,10 @@ class StatisticsChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
-    var xValues = [];
-    if (filter.rangeType == FilterRangeType.monthly) {
-      xValues = filter.rangeType!.xValuesChart(i18n, month: filter.month);
-    } else {
-      xValues = filter.rangeType!.xValuesChart(i18n);
-    }
+    var initialFilter = filter.rangeType;
+    var xValues = initialFilter == FilterRangeType.monthly
+        ? filter.rangeType!.xValuesChart(i18n, month: filter.month)
+        : filter.rangeType!.xValuesChart(i18n);
 
     return ShadowWrapper(
       padding: const EdgeInsets.all(8),
@@ -71,10 +69,4 @@ class StatisticsChart extends StatelessWidget {
       ),
     );
   }
-}
-
-class SalesData {
-  SalesData(this.year, this.sales);
-  final String year;
-  final double sales;
 }

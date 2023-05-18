@@ -8,6 +8,7 @@ part 'statistics_filter_data.freezed.dart';
 class StatisticsFilterData with _$StatisticsFilterData {
   const factory StatisticsFilterData({
     int? month,
+    int? year,
     FilterRangeType? rangeType,
   }) = _StatisticsFilterData;
 }

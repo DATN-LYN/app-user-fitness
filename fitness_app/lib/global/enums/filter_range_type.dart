@@ -7,25 +7,25 @@ enum FilterRangeType {
   monthly(),
   yearly();
 
-  DateTime? startDate({int? month}) {
+  DateTime? startDate({int? month, int? year}) {
     switch (this) {
       case FilterRangeType.weekly:
         return Jiffy().startOf(Units.WEEK).dateTime;
       case FilterRangeType.monthly:
         return getFirstDayOfMonth(month ?? Jiffy().month);
       case FilterRangeType.yearly:
-        return Jiffy().startOf(Units.YEAR).dateTime;
+        return getFirstDayOfYear(year ?? Jiffy().year);
     }
   }
 
-  DateTime? endDate({int? month}) {
+  DateTime? endDate({int? month, int? year}) {
     switch (this) {
       case FilterRangeType.weekly:
         return Jiffy().endOf(Units.WEEK).dateTime;
       case FilterRangeType.monthly:
         return getLastDayOfMonth(month ?? Jiffy().month);
       case FilterRangeType.yearly:
-        return Jiffy().endOf(Units.YEAR).dateTime;
+        return getLastDayOfYear(year ?? Jiffy().year);
     }
   }
 
@@ -61,17 +61,25 @@ enum FilterRangeType {
     return DateTime(now.year, month + 1, 0);
   }
 
-  List<String> xValuesChart(I18n i18n, {int? month}) {
+  DateTime getFirstDayOfYear(int year) {
+    return DateTime(year, 1, 1);
+  }
+
+  DateTime getLastDayOfYear(int year) {
+    return DateTime(year, 12, 31);
+  }
+
+  List<String> xValuesChart(I18n i18n, {int? month, int? year}) {
     final now = DateTime.now();
 
     switch (this) {
       case FilterRangeType.weekly:
         return i18n.weekDays_;
       case FilterRangeType.monthly:
-        final daysInMonth = DateTime(now.year, month ?? 1, 0).day;
+        final daysInMonth = DateTime(now.year, (month ?? 1) + 1, 0).day;
         return List.generate(daysInMonth, (index) => (index + 1).toString());
       case FilterRangeType.yearly:
-        return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        return List.generate(12, (index) => (index + 1).toString());
     }
   }
 
@@ -82,7 +90,7 @@ enum FilterRangeType {
       case FilterRangeType.weekly:
         return 7;
       case FilterRangeType.monthly:
-        return DateTime(now.year, month ?? 1, 0).day;
+        return DateTime(now.year, (month ?? 1) + 1, 0).day;
       case FilterRangeType.yearly:
         return 12;
     }

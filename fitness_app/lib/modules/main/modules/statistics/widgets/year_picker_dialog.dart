@@ -1,14 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/themes/app_colors.dart';
 import '../../../../../global/widgets/elevated_button_opacity.dart';
 
-class MonthPickerDialog extends StatefulWidget {
-  const MonthPickerDialog({
+class YearPickerDialog extends StatefulWidget {
+  const YearPickerDialog({
     super.key,
     required this.onChanged,
     this.initialValue,
@@ -18,11 +17,12 @@ class MonthPickerDialog extends StatefulWidget {
   final DateTime? initialValue;
 
   @override
-  State<MonthPickerDialog> createState() => _MonthPickerDialogState();
+  State<YearPickerDialog> createState() => _YearPickerDialogState();
 }
 
-class _MonthPickerDialogState extends State<MonthPickerDialog> {
+class _YearPickerDialogState extends State<YearPickerDialog> {
   late DateTime selectedDate = widget.initialValue ?? DateTime.now();
+  String? value;
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
@@ -40,17 +40,18 @@ class _MonthPickerDialogState extends State<MonthPickerDialog> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SfDateRangePicker(
-                      view: DateRangePickerView.year,
+                      view: DateRangePickerView.decade,
                       selectionColor: AppColors.primaryBold,
                       todayHighlightColor: AppColors.primaryBold,
                       allowViewNavigation: false,
-                      initialSelectedDate:
-                          widget.initialValue ?? DateTime.now(),
+                      initialSelectedDate: selectedDate,
                       onSelectionChanged: (date) {
                         setState(() {
                           selectedDate = date.value as DateTime;
                         });
                       },
+                      // selectableDayPredicate: (DateTime val) =>
+                      //     !widget.excludeWeekDay.contains(val.weekday),
                     ),
                     const SizedBox(height: 32),
                     Row(
@@ -93,8 +94,8 @@ class _MonthPickerDialogState extends State<MonthPickerDialog> {
         ),
       ),
       child: InkWell(
-        onTap: showDialogPicker,
-        child: Text('${selectedDate.month.toString()} / ${Jiffy().year}'),
+        child: Text(selectedDate.year.toString()),
+        onTap: () => showDialogPicker(),
       ),
     );
   }

@@ -12,6 +12,7 @@ import '../../../../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../../../../global/providers/me_provider.dart';
 import '../../../../../global/themes/app_colors.dart';
 import 'month_picker_dialog.dart';
+import 'year_picker_dialog.dart';
 
 class StatisticsFilter extends ConsumerStatefulWidget {
   const StatisticsFilter({
@@ -63,6 +64,16 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
     );
   }
 
+  void onFilter() {
+    final now = DateTime.now();
+
+    handleFilter(
+      filter.rangeType?.startDate(month: filter.month, year: filter.year) ??
+          now,
+      filter.rangeType?.endDate(month: filter.month, year: filter.year) ?? now,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isLogedIn = ref.watch(isSignedInProvider);
@@ -79,25 +90,10 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
                     isSelected: filter.rangeType == rangeType,
                     filter: rangeType,
                     onFilter: () {
-                      final now = DateTime.now();
                       setState(() {
                         filter = filter.copyWith(rangeType: rangeType);
                       });
-                      if (filter.rangeType == FilterRangeType.monthly) {
-                        handleFilter(
-                          filter.rangeType
-                                  ?.startDate(month: filter.month ?? 1) ??
-                              now,
-                          filter.rangeType
-                                  ?.startDate(month: filter.month ?? 1) ??
-                              now,
-                        );
-                      } else {
-                        handleFilter(
-                          filter.rangeType?.startDate() ?? now,
-                          filter.rangeType?.endDate() ?? now,
-                        );
-                      }
+                      onFilter();
                     },
                   );
                 },
@@ -118,13 +114,44 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
                 ),
                 builder: (field) {
                   return MonthPickerDialog(
-                    initialValue: filter.rangeType
-                        ?.getFirstDayOfMonth(filter.month ?? Jiffy().month),
+                    initialValue: filter.rangeType?.getFirstDayOfMonth(
+                      filter.month ?? Jiffy().month,
+                    ),
                     onChanged: (selectedMonth) {
                       if (selectedMonth != null) {
                         setState(() {
                           filter = filter.copyWith(month: selectedMonth.month);
                         });
+                        onFilter();
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          if (filter.rangeType == FilterRangeType.yearly)
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: FormBuilderField<int>(
+                name: 'year',
+                initialValue: Jiffy().month,
+                decoration: const InputDecoration(
+                  suffixIcon: Icon(
+                    Icons.arrow_drop_down_sharp,
+                    size: 30,
+                  ),
+                ),
+                builder: (field) {
+                  return YearPickerDialog(
+                    initialValue: filter.rangeType?.getFirstDayOfMonth(
+                      filter.month ?? Jiffy().month,
+                    ),
+                    onChanged: (selectedMonth) {
+                      if (selectedMonth != null) {
+                        setState(() {
+                          filter = filter.copyWith(year: selectedMonth.year);
+                        });
+                        onFilter();
                       }
                     },
                   );
