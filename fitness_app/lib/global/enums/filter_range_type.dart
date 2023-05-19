@@ -1,7 +1,6 @@
 import 'package:jiffy/jiffy.dart';
 
 import '../gen/i18n.dart';
-import '../graphql/query/__generated__/query_get_my_stats.data.gql.dart';
 
 enum FilterRangeType {
   weekly(),
@@ -81,14 +80,6 @@ enum FilterRangeType {
         return List.generate(daysInMonth, (index) => (index + 1).toString());
       case FilterRangeType.yearly:
         return List.generate(12, (index) => (index + 1).toString());
-    }
-  }
-
-  static void calculateByYear(List<GGetMyStatsData_getMyStats_items> data) {
-    Map<int, double> mapData = {};
-    for (final item in data) {
-      mapData[item.updatedAt!.month] =
-          mapData[item.updatedAt!.month] ?? 0 + item.caloCount!;
     }
   }
 }

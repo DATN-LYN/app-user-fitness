@@ -9,9 +9,11 @@ class ExerciseTile extends StatelessWidget {
   const ExerciseTile({
     super.key,
     required this.exercise,
+    required this.isChecked,
   });
 
   final GExercise exercise;
+  final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +75,11 @@ class ExerciseTile extends StatelessWidget {
               ],
             ),
           ),
-          const Icon(
-            Icons.check_circle_outline,
-            color: AppColors.success,
-          )
+          if (isChecked)
+            const Icon(
+              Icons.check_circle_outline,
+              color: AppColors.success,
+            )
         ],
       ),
     );

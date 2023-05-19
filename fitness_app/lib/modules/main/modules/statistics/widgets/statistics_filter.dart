@@ -40,13 +40,17 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
       [
         GFilterDto(
           (b) => b
-            ..data = filter.rangeType?.startDate().toString()
+            ..data = filter.rangeType
+                ?.startDate(month: filter.month, year: filter.year)
+                .toString()
             ..field = 'UserStatistics.updatedAt'
             ..operator = GFILTER_OPERATOR.gt,
         ),
         GFilterDto(
           (b) => b
-            ..data = filter.rangeType?.endDate().toString()
+            ..data = filter.rangeType
+                ?.endDate(month: filter.month, year: filter.year)
+                .toString()
             ..field = 'UserStatistics.updatedAt'
             ..operator = GFILTER_OPERATOR.lt,
         ),
@@ -56,7 +60,6 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
     widget.onChanged(
       widget.request.rebuild(
         (b) => b
-          ..vars.queryParams.page = 1
           ..vars.queryParams.filters = ListBuilder(newFilters)
           ..updateResult = (previous, result) => result,
       ),

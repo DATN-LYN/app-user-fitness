@@ -27,7 +27,7 @@ class _StatisticsRecentlyWorkoutState
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getPrograms();
+      getUserPrograms();
     });
     super.initState();
   }
@@ -40,7 +40,7 @@ class _StatisticsRecentlyWorkoutState
     );
   }
 
-  void getPrograms() async {
+  void getUserPrograms() async {
     final client = ref.watch(appClientProvider);
 
     final res = await client.request(getCurrentUserReq).first;
