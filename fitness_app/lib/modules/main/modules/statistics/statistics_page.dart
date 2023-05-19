@@ -5,11 +5,13 @@ import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
 import 'package:fitness_app/global/providers/me_provider.dart';
 import 'package:fitness_app/modules/main/modules/statistics/widgets/statistics_filter.dart';
+import 'package:fitness_app/modules/main/modules/statistics/widgets/statistics_recently_workout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../global/graphql/client.dart';
 import '../../../../global/themes/app_colors.dart';
+import '../../../../global/widgets/fitness_empty.dart';
 import 'widgets/statistics_body_data.dart';
 import 'widgets/statistics_chart.dart';
 
@@ -136,13 +138,13 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // if (isLogedIn)
-                //   const StatisticsRecentlyWorkout()
-                // else
-                //   FitnessEmpty(
-                //     title: i18n.common_Oops,
-                //     message: i18n.common_YouHaveToLogin,
-                //   ),
+                if (isLogedIn)
+                  const StatisticsRecentlyWorkout()
+                else
+                  FitnessEmpty(
+                    title: i18n.common_Oops,
+                    message: i18n.common_YouHaveToLogin,
+                  ),
                 const SizedBox(height: 16),
               ],
             );

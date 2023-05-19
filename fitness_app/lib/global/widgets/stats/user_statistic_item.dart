@@ -37,7 +37,10 @@ class UserStatisticItem extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(subtitle),
+            Text(
+              subtitle,
+              style: const TextStyle(fontSize: 12),
+            ),
           ],
         ),
       ),

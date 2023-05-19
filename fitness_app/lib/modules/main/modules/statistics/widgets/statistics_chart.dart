@@ -24,6 +24,7 @@ class StatisticsChart extends StatelessWidget {
     var xValues = initialFilter == FilterRangeType.monthly
         ? filter.rangeType!.xValuesChart(i18n, month: filter.month)
         : filter.rangeType!.xValuesChart(i18n);
+    FilterRangeType.calculateByYear(data);
 
     return ShadowWrapper(
       padding: const EdgeInsets.all(8),
@@ -57,7 +58,7 @@ class StatisticsChart extends StatelessWidget {
           series: [
             ColumnSeries(
               dataSource: List.generate(
-                  filter.rangeType!.chartLength(month: filter.month),
+                  xValues.length,
                   (index) =>
                       index < data.length ? data[index].caloCount ?? 0 : 0),
               borderRadius: BorderRadius.circular(10),
