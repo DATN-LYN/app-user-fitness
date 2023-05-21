@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/enums/workout_level.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/global/widgets/shadow_wrapper.dart';
 import 'package:fitness_app/global/widgets/shimmer_image.dart';
@@ -9,7 +10,6 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../enums/workout_body_part.dart';
 import '../../gen/i18n.dart';
-import '../../graphql/query/__generated__/query_get_programs.data.gql.dart';
 import '../../routers/app_router.dart';
 
 class ProgramItemLarge extends StatelessWidget {
@@ -18,7 +18,7 @@ class ProgramItemLarge extends StatelessWidget {
     required this.program,
   });
 
-  final GGetProgramsData_getPrograms_items program;
+  final GProgram program;
 
   @override
   Widget build(BuildContext context) {

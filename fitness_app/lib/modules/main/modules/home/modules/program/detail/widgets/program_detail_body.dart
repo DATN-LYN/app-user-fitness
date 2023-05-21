@@ -14,9 +14,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../../../global/graphql/client.dart';
 import '../../../../../../../../global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
+import '../../../../../../../../global/graphql/query/__generated__/query_get_current_user.req.gql.dart';
 import '../../../../../../../../global/providers/me_provider.dart';
 import '../../../../../../../../global/routers/app_router.dart';
 import '../../../../../../../../global/utils/constants.dart';
+import '../../../../../../../../global/utils/dialogs.dart';
 import '../../../../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../../../../global/widgets/fitness_error.dart';
 import '../../../../../../../../global/widgets/infinity_list.dart';
@@ -44,9 +46,36 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
   bool? loading = false;
   var getExercisesReq = GGetExercisesReq();
   List<GExercise> exerciseList = [];
+  List<String>? userExercisesId;
+  var getCurrentUserReq = GGetCurrentUserReq();
+
+  void getUserExercises() async {
+    final client = ref.watch(appClientProvider);
+
+    final res = await client.request(getCurrentUserReq).first;
+    if (mounted) {
+      setState(() => loading = false);
+    }
+
+    if (res.hasErrors) {
+      if (mounted) {
+        DialogUtils.showError(context: context, response: res);
+      }
+    } else {
+      final result = res.data?.getCurrentUser.userExercises;
+      if (mounted) {
+        setState(
+          () => userExercisesId = result?.map((e) => e.exercise!.id!).toList(),
+        );
+      }
+    }
+  }
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getUserExercises();
+    });
     getExercisesReq = GGetExercisesReq(
       (b) => b
         ..requestId = '@getExercisesByProgramRequestId'
@@ -80,6 +109,9 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
         (b) => b
           ..vars.queryParams.page = 1
           ..updateResult = ((previous, result) => result),
+      );
+      getCurrentUserReq = getCurrentUserReq.rebuild(
+        (b) => b..updateResult = ((previous, result) => result),
       );
     });
   }
@@ -207,8 +239,12 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
                   itemCount: exercises!.length + (hasMoreData ? 1 : 0),
                   itemBuilder: (context, index) {
                     final item = exercises[index];
+                    final isChecked = userExercisesId?.contains(item.id);
 
-                    return ExerciseTile(exercise: item);
+                    return ExerciseTile(
+                      exercise: item,
+                      isChecked: isChecked ?? false,
+                    );
                   },
                 );
               },

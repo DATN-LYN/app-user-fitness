@@ -87,17 +87,16 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
 
   void upsertProgramView() async {
     final client = ref.watch(appClientProvider);
-    var req = GUpsertProgramReq(
-      (b) => b
-        ..vars.input.bodyPart = widget.program.bodyPart
-        ..vars.input.categoryId = widget.program.categoryId
-        ..vars.input.id = widget.program.id
-        ..vars.input.imgUrl = widget.program.imgUrl
-        ..vars.input.description = widget.program.description
-        ..vars.input.level = widget.program.level
-        ..vars.input.name = widget.program.name
-        ..vars.input.view = (widget.program.view ?? 0) + 1,
-    );
+    var req = GUpsertProgramReq((b) => b
+          ..vars.input.bodyPart = widget.program.bodyPart
+          ..vars.input.categoryId = widget.program.categoryId
+          ..vars.input.id = widget.program.id
+          ..vars.input.imgUrl = widget.program.imgUrl
+          ..vars.input.description = widget.program.description
+          ..vars.input.level = widget.program.level
+          ..vars.input.name = widget.program.name
+        // ..vars.input.view = (widget.program.view ?? 0) + 1,
+        );
 
     final response = await client.request(req).first;
     if (response.hasErrors) {

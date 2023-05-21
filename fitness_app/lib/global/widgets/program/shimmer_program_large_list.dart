@@ -10,6 +10,7 @@ class ShimmerProgramLargeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerWrapper(
       child: ListView.separated(
+        shrinkWrap: true,
         padding: const EdgeInsets.all(16),
         itemCount: 5,
         itemBuilder: (context, index) {

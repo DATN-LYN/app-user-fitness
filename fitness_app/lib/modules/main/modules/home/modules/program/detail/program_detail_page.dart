@@ -25,7 +25,6 @@ class ProgramDetailPage extends ConsumerStatefulWidget {
 }
 
 class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
-  // GGetProgramData_getProgram? program;
   bool loading = false;
   var key = GlobalKey();
 
@@ -38,36 +37,8 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
 
   @override
   void initState() {
-    // initData();
     super.initState();
   }
-
-  // void initData() async {
-  //   await getProgram();
-  // }
-
-  // Future getProgram() async {
-  //   setState(() => loading = true);
-  //   await Future.delayed(const Duration(seconds: 1));
-  //   final client = ref.watch(appClientProvider);
-
-  //   final getProgramReq = GGetProgramReq(
-  //     (b) => b
-  //       ..requestId = '@getProgramRequestId'
-  //       ..vars.programId = widget.program.id,
-  //   );
-
-  //   final res = await client.request(getProgramReq).first;
-  //   setState(() => loading = false);
-
-  //   if (res.hasErrors) {
-  //     if (mounted) {
-  //       DialogUtils.showError(context: context, response: res);
-  //     }
-  //   } else {
-  //     setState(() => program = res.data!.getProgram);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
