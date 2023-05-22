@@ -23,7 +23,7 @@ class StatisticsChart extends StatefulWidget {
 }
 
 class _StatisticsChartState extends State<StatisticsChart> {
-  late var initialData = widget.data?.map((e) => e.caloCount).toList();
+  late List<double> initialData;
 
   List<double> calculateByYear(List<GGetMyStatsData_getMyStats_items> data) {
     Map<int, double> mapData = {};
@@ -34,8 +34,11 @@ class _StatisticsChartState extends State<StatisticsChart> {
     return mapData.entries.map((e) => e.value).toList();
   }
 
-  @override
-  void initState() {
+  List<double> getListCalo() {
+    return widget.data?.map((e) => e.caloCount ?? 0).toList() ?? [];
+  }
+
+  void setListByFilterRangeType() {
     if (widget.filter.rangeType == FilterRangeType.yearly) {
       if (mounted) {
         if (widget.data != null) {
@@ -44,9 +47,24 @@ class _StatisticsChartState extends State<StatisticsChart> {
           });
         }
       }
+    } else {
+      setState(() {
+        initialData = getListCalo();
+      });
     }
-    print(initialData);
+  }
 
+  @override
+  void didUpdateWidget(covariant StatisticsChart oldWidget) {
+    if (widget.data != oldWidget.data) {
+      setListByFilterRangeType();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void initState() {
+    setListByFilterRangeType();
     super.initState();
   }
 
@@ -92,9 +110,9 @@ class _StatisticsChartState extends State<StatisticsChart> {
               dataSource: List.generate(
                 xValues.length,
                 (index) {
-                  if (initialData != null && initialData?.isNotEmpty == true) {
-                    if (index < initialData!.length) {
-                      return initialData![index];
+                  if (initialData.isNotEmpty == true) {
+                    if (index < initialData.length) {
+                      return initialData[index];
                     } else {
                       return 0;
                     }
