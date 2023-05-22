@@ -4,8 +4,8 @@ import '../../../../../global/gen/assets.gen.dart';
 import '../../../../../global/themes/app_colors.dart';
 import '../../../../../global/widgets/shadow_wrapper.dart';
 
-class UnLoginInbox extends StatelessWidget {
-  const UnLoginInbox({super.key});
+class NotLoginInbox extends StatelessWidget {
+  const NotLoginInbox({super.key});
 
   @override
   Widget build(BuildContext context) {

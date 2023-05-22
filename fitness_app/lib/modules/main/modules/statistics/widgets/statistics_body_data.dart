@@ -21,6 +21,9 @@ class StatisticsBodyData extends ConsumerWidget {
     final isLogedIn = ref.watch(isSignedInProvider);
     final hasData = data != null && data?.isNotEmpty == true;
     final calo = hasData
+        ? data!.map((e) => e.caloCount).reduce((a, b) => a! + b!).toString()
+        : '0';
+    final duration = hasData
         ? data!.map((e) => e.durationCount).reduce((a, b) => a! + b!).toString()
         : '0';
 
@@ -29,7 +32,7 @@ class StatisticsBodyData extends ConsumerWidget {
         Row(
           children: [
             UserStatisticItem(
-              title: calo,
+              title: duration,
               subtitle: i18n.common_Minutes,
               icon: const Icon(
                 Icons.timelapse,
@@ -52,16 +55,6 @@ class StatisticsBodyData extends ConsumerWidget {
                 color: AppColors.success,
               ),
               backgroundColor: AppColors.successSoft,
-            ),
-            UserStatisticItem(
-              title: '0',
-              subtitle: i18n.exercises_Exercises,
-              icon: const Icon(
-                Icons.fitness_center,
-                size: 30,
-                color: AppColors.alert,
-              ),
-              backgroundColor: AppColors.alertSoft,
             ),
           ],
         ),

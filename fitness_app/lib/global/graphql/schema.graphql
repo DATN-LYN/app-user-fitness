@@ -331,6 +331,7 @@ input UpsertProgramInputDto {
   description: String!
   imgUrl: String!
   categoryId: String!
+  view: Float!
 }
 
 input UpsertUserExerciseInputDto {
