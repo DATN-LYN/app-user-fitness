@@ -1,4 +1,5 @@
 import 'package:fitness_app/global/gen/assets.gen.dart';
+import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../themes/app_colors.dart';
@@ -21,6 +22,7 @@ class FitnessEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final i18n = I18n.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -58,7 +60,7 @@ class FitnessEmpty extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: onPressed,
                   child: Text(
-                    textButton.toString(),
+                    textButton ?? i18n.button_TryAgain,
                     style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
                 ),
