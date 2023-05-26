@@ -1,0 +1,12 @@
+mutation UpsertSupport($input: UpsertSupportInputDto!) {
+  upsertSupport(input: $input) {
+    id
+    userId
+    user {
+      email
+    }
+    content
+    imgUrl
+    isRead
+  }
+}

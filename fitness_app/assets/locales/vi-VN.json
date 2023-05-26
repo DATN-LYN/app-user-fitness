@@ -196,5 +196,17 @@
       "T6",
       "T7",
       "CN"
-    ]
+    ],
+    "support_":{
+      "title": "Hỗ trợ",
+      "description": "Hãy cho chúng tôi biết vấn đề của bạn",
+      "contentHint": "Nhập câu hỏi,vấn đề,...",
+      "contentRequired": "Bạn chưa nhập nội dung",
+      "uploadPhoto": "Tải lên hình ảnh",
+      "takePhoto": "Chụp ảnh",
+      "chooseFormGallery": "Chọn từ thư viện",
+      "pickPhoto": "Chọn một hình ảnh",
+      "image": "Hình ảnh",
+      "content": "Nội dung"
+    }
 }

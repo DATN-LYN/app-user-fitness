@@ -76,6 +76,7 @@ dependencies:
   side_sheet: ^1.0.4
   jiffy: ^5.0.0
   ionicons: ^0.2.2
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:

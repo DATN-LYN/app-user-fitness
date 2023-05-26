@@ -6,7 +6,9 @@
         "cancel": "Cancel",
         "ok": "OK",
         "tryAgain": "Try Again",
-        "apply": "Apply"
+        "apply": "Apply",
+        "send": "Send",
+        "reset":"Reset"
     },
     "onboard_": {
         "title": [
@@ -192,5 +194,17 @@
       "Fri",
       "Sat",
       "Sun"
-    ]
+    ],
+    "support_":{
+      "title": "Support",
+      "description": "Tell us your problem",
+      "contentHint": "Enter your question,problem,...",
+      "contentRequired": "Content is required",
+      "uploadPhoto": "Upload Photo",
+      "takePhoto": "Take Photo",
+      "chooseFormGallery": "Choose From Gallery",
+      "pickImage": "Pick a image",
+      "image": "Image",
+      "content": "Content"
+    }
 }

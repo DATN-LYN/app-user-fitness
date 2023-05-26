@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.req.gql.dart';
 import 'package:fitness_app/global/graphql/client.dart';
@@ -15,9 +17,11 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../global/enums/app_locale.dart';
+import '../../../../global/gen/assets.gen.dart';
 import '../../../../global/gen/i18n.dart';
 import '../../../../global/routers/app_router.dart';
 import '../../../../global/utils/constants.dart';
+import '../../../../global/utils/draggable_widget.dart';
 import '../../../../global/widgets/avatar.dart';
 import '../../../../global/widgets/dialogs/confirmation_dialog.dart';
 import '../../../../global/widgets/dialogs/radio_selector_dialog.dart';
@@ -132,157 +136,179 @@ class _SettingPageState extends ConsumerState<SettingPage> {
     final i18n = I18n.of(context)!;
     var user = ref.watch(meProvider)?.user;
     bool isLogedIn = ref.watch(isSignedInProvider);
+    final mediaQuery = MediaQuery.of(context);
+    final width = mediaQuery.size.width;
+    final padding = mediaQuery.padding;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(i18n.setting_Title),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          Center(
-            child: ShimmerImage(
-              width: 100,
-              height: 100,
-              borderRadius: BorderRadius.circular(100),
-              imageUrl: user?.avatar ?? '_',
-              errorWidget: Avatar(
-                size: 100,
-                name: user?.fullName,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text(i18n.setting_Title),
+          ),
+          body: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              Center(
+                child: ShimmerImage(
+                  width: 100,
+                  height: 100,
+                  borderRadius: BorderRadius.circular(100),
+                  imageUrl: user?.avatar ?? '_',
+                  errorWidget: Avatar(
+                    size: 100,
+                    name: user?.fullName,
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Center(
-            child: Text(
-              isLogedIn ? user?.fullName ?? '_' : 'Guest User',
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
+              const SizedBox(height: 16),
+              Center(
+                child: Text(
+                  isLogedIn ? user?.fullName ?? '_' : 'Guest User',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Center(
-            child: Text(
-              isLogedIn ? user?.email ?? '_' : 'Guest User',
-              style: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
+              const SizedBox(height: 6),
+              Center(
+                child: Text(
+                  isLogedIn ? user?.email ?? '_' : 'Guest User',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                ),
               ),
+              const SizedBox(height: 20),
+              ShadowWrapper(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      i18n.setting_Account,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    if (isLogedIn) ...[
+                      SettingTile(
+                        icon: Ionicons.person_circle_outline,
+                        title: i18n.setting_EditProfile,
+                        onTap: goToEditProfile,
+                      ),
+                      const Divider(height: 12),
+                      SettingTile(
+                        icon: Icons.password,
+                        title: i18n.setting_ChangePassword,
+                        onTap: changePasswordHandler,
+                      ),
+                      const Divider(height: 12),
+                    ],
+                    if (!isLogedIn)
+                      SettingTile(
+                        icon: Icons.login,
+                        title: i18n.login_LogIn,
+                        onTap: () => context.pushRoute(const LoginRoute()),
+                      )
+                    else
+                      SettingTile(
+                        icon: Icons.logout,
+                        title: i18n.setting_Logout,
+                        onTap: () => logOut(),
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              ShadowWrapper(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      i18n.setting_AboutApp,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    SettingTile(
+                      icon: Ionicons.language,
+                      title: i18n.setting_Language,
+                      onTap: changeLanguage,
+                    ),
+                    const Divider(height: 12),
+                    SettingTile(
+                      icon: Ionicons.share_social,
+                      title: i18n.setting_ShareWithFriends,
+                      onTap: shareIntroUrl,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              ShadowWrapper(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      i18n.setting_Security,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    SettingTile(
+                      icon: Icons.privacy_tip_outlined,
+                      title: i18n.setting_PrivacyPolicy,
+                      onTap: openPrivacyPolicyUrl,
+                    ),
+                    const Divider(height: 12),
+                    SettingTile(
+                      icon: Icons.file_copy_outlined,
+                      title: i18n.setting_TermsAndConditions,
+                      onTap: openTermsAndConditionsUrl,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+        DraggableWidget(
+          horizontalSpace: 8,
+          verticalSpace: 8,
+          normalShadow: const BoxShadow(),
+          topMargin: padding.top,
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              AutoRouter.of(context).push(SupportRoute());
+            },
+            child: Assets.images.operator.image(
+              width: min(60, width * 0.25),
             ),
           ),
-          const SizedBox(height: 20),
-          ShadowWrapper(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  i18n.setting_Account,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                if (isLogedIn) ...[
-                  SettingTile(
-                    icon: Ionicons.person_circle_outline,
-                    title: i18n.setting_EditProfile,
-                    onTap: goToEditProfile,
-                  ),
-                  const Divider(height: 12),
-                  SettingTile(
-                    icon: Icons.password,
-                    title: i18n.setting_ChangePassword,
-                    onTap: changePasswordHandler,
-                  ),
-                  const Divider(height: 12),
-                ],
-                if (!isLogedIn)
-                  SettingTile(
-                    icon: Icons.login,
-                    title: i18n.login_LogIn,
-                    onTap: () => context.pushRoute(const LoginRoute()),
-                  )
-                else
-                  SettingTile(
-                    icon: Icons.logout,
-                    title: i18n.setting_Logout,
-                    onTap: () => logOut(),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          ShadowWrapper(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  i18n.setting_AboutApp,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                SettingTile(
-                  icon: Ionicons.language,
-                  title: i18n.setting_Language,
-                  onTap: changeLanguage,
-                ),
-                const Divider(height: 12),
-                SettingTile(
-                  icon: Ionicons.share_social,
-                  title: i18n.setting_ShareWithFriends,
-                  onTap: shareIntroUrl,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          ShadowWrapper(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  i18n.setting_Security,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                SettingTile(
-                  icon: Icons.privacy_tip_outlined,
-                  title: i18n.setting_PrivacyPolicy,
-                  onTap: openPrivacyPolicyUrl,
-                ),
-                const Divider(height: 12),
-                SettingTile(
-                  icon: Icons.file_copy_outlined,
-                  title: i18n.setting_TermsAndConditions,
-                  onTap: openTermsAndConditionsUrl,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

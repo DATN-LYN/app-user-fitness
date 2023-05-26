@@ -17,6 +17,7 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
         GUpsertExerciseInputDto,
         GUpsertInboxInputDto,
         GUpsertProgramInputDto,
+        GUpsertSupportInputDto,
         GUpsertUserExerciseInputDto,
         GUpsertUserInputDto,
         GUpsertUserProgramInputDto,
@@ -105,6 +106,15 @@ import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upser
     show GUpsertStatsReq;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.var.gql.dart'
     show GUpsertStatsVars;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_support.data.gql.dart'
+    show
+        GUpsertSupportData,
+        GUpsertSupportData_upsertSupport,
+        GUpsertSupportData_upsertSupport_user;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_support.req.gql.dart'
+    show GUpsertSupportReq;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_support.var.gql.dart'
+    show GUpsertSupportVars;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user.data.gql.dart'
     show GUpsertUserData, GUpsertUserData_upsertUser;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user.req.gql.dart'
@@ -355,6 +365,12 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GUpsertStatsData_upsertStats,
   GUpsertStatsReq,
   GUpsertStatsVars,
+  GUpsertSupportData,
+  GUpsertSupportData_upsertSupport,
+  GUpsertSupportData_upsertSupport_user,
+  GUpsertSupportInputDto,
+  GUpsertSupportReq,
+  GUpsertSupportVars,
   GUpsertUserData,
   GUpsertUserData_upsertUser,
   GUpsertUserExerciseData,

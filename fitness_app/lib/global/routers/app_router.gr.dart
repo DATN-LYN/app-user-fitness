@@ -133,6 +133,12 @@ class _$AppRouter extends RootStackRouter {
         child: const EditProfilePage(),
       );
     },
+    SupportRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SupportPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -242,6 +248,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           EditProfileRoute.name,
           path: '/edit-profile-page',
+        ),
+        RouteConfig(
+          SupportRoute.name,
+          path: '/support-page',
         ),
       ];
 }
@@ -565,6 +575,18 @@ class EditProfileRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'EditProfileRoute';
+}
+
+/// generated route for
+/// [SupportPage]
+class SupportRoute extends PageRouteInfo<void> {
+  const SupportRoute()
+      : super(
+          SupportRoute.name,
+          path: '/support-page',
+        );
+
+  static const String name = 'SupportRoute';
 }
 
 /// generated route for
