@@ -58,6 +58,12 @@ import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragm
     show GExerciseReq;
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.var.gql.dart'
     show GExerciseVars;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_support_fragment.data.gql.dart'
+    show GISupportData, GISupportData_user;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_support_fragment.req.gql.dart'
+    show GISupportReq;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_support_fragment.var.gql.dart'
+    show GISupportVars;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.data.gql.dart'
     show GInboxData, GInboxData_user;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.req.gql.dart'
@@ -76,6 +82,12 @@ import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragme
     show GProgramReq;
 import 'package:fitness_app/global/graphql/fragment/__generated__/program_fragment.var.gql.dart'
     show GProgramVars;
+import 'package:fitness_app/global/graphql/fragment/__generated__/support_fragment.data.gql.dart'
+    show GSupportData, GSupportData_user;
+import 'package:fitness_app/global/graphql/fragment/__generated__/support_fragment.req.gql.dart'
+    show GSupportReq;
+import 'package:fitness_app/global/graphql/fragment/__generated__/support_fragment.var.gql.dart'
+    show GSupportVars;
 import 'package:fitness_app/global/graphql/fragment/__generated__/user_fragment.data.gql.dart'
     show GUserData;
 import 'package:fitness_app/global/graphql/fragment/__generated__/user_fragment.req.gql.dart'
@@ -106,6 +118,15 @@ import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upser
     show GUpsertStatsReq;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_stats.var.gql.dart'
     show GUpsertStatsVars;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_support.data.gql.dart'
+    show
+        GUpsertSupportData,
+        GUpsertSupportData_upsertSupport,
+        GUpsertSupportData_upsertSupport_user;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_support.req.gql.dart'
+    show GUpsertSupportReq;
+import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_support.var.gql.dart'
+    show GUpsertSupportVars;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user.data.gql.dart'
     show GUpsertUserData, GUpsertUserData_upsertUser;
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user.req.gql.dart'
@@ -208,6 +229,17 @@ import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stat
     show GGetMyStatsReq;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.var.gql.dart'
     show GGetMyStatsVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_supports.data.gql.dart'
+    show
+        GGetMySupportsData,
+        GGetMySupportsData_getMySupports,
+        GGetMySupportsData_getMySupports_items,
+        GGetMySupportsData_getMySupports_items_user,
+        GGetMySupportsData_getMySupports_meta;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_supports.req.gql.dart'
+    show GGetMySupportsReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_supports.var.gql.dart'
+    show GGetMySupportsVars;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.data.gql.dart'
     show GGetProgramData, GGetProgramData_getProgram;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_program.req.gql.dart'
@@ -224,6 +256,15 @@ import 'package:fitness_app/global/graphql/query/__generated__/query_get_program
     show GGetProgramsReq;
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.var.gql.dart'
     show GGetProgramsVars;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_support.data.gql.dart'
+    show
+        GGetSupportData,
+        GGetSupportData_getSupport,
+        GGetSupportData_getSupport_user;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_support.req.gql.dart'
+    show GGetSupportReq;
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_support.var.gql.dart'
+    show GGetSupportVars;
 import 'package:fitness_app/global/utils/date_serializer.dart'
     show DateSerializer;
 import 'package:gql_code_builder/src/serializers/operation_serializer.dart'
@@ -300,6 +341,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GGetMyStatsData_getMyStats_meta,
   GGetMyStatsReq,
   GGetMyStatsVars,
+  GGetMySupportsData,
+  GGetMySupportsData_getMySupports,
+  GGetMySupportsData_getMySupports_items,
+  GGetMySupportsData_getMySupports_items_user,
+  GGetMySupportsData_getMySupports_meta,
+  GGetMySupportsReq,
+  GGetMySupportsVars,
   GGetProgramData,
   GGetProgramData_getProgram,
   GGetProgramReq,
@@ -310,6 +358,15 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GGetProgramsData_getPrograms_meta,
   GGetProgramsReq,
   GGetProgramsVars,
+  GGetSupportData,
+  GGetSupportData_getSupport,
+  GGetSupportData_getSupport_user,
+  GGetSupportReq,
+  GGetSupportVars,
+  GISupportData,
+  GISupportData_user,
+  GISupportReq,
+  GISupportVars,
   GInboxData,
   GInboxData_user,
   GInboxReq,
@@ -340,6 +397,10 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GRegisterInputDto,
   GRegisterReq,
   GRegisterVars,
+  GSupportData,
+  GSupportData_user,
+  GSupportReq,
+  GSupportVars,
   GUpsertCategoryInputDto,
   GUpsertExerciseInputDto,
   GUpsertInboxData,
@@ -356,7 +417,12 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GUpsertStatsData_upsertStats,
   GUpsertStatsReq,
   GUpsertStatsVars,
+  GUpsertSupportData,
+  GUpsertSupportData_upsertSupport,
+  GUpsertSupportData_upsertSupport_user,
   GUpsertSupportInputDto,
+  GUpsertSupportReq,
+  GUpsertSupportVars,
   GUpsertUserData,
   GUpsertUserData_upsertUser,
   GUpsertUserExerciseData,

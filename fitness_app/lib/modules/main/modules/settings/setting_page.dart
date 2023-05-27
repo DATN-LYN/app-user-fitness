@@ -215,6 +215,11 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                     title: i18n.setting_Logout,
                     onTap: () => logOut(),
                   ),
+                SettingTile(
+                  icon: Icons.headphones,
+                  title: i18n.support_Title,
+                  onTap: () => context.pushRoute(const LoginRoute()),
+                )
               ],
             ),
           ),

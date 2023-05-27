@@ -296,6 +296,16 @@ class I18n implements WidgetsLocalizations {
 	String get editProfile_UpdateSuccess => "Your profile has been updated successfully.";
 	/// ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 	List<String> get weekDays_ => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+	/// "Content"
+	String get support_Content => "Content";
+	/// "Status"
+	String get support_Status => "Status";
+	/// ["Waiting", "Solving", "Done", "Cancelled"]
+	List<String> get support_SupportStatus => ["Waiting", "Solving", "Done", "Cancelled"];
+	/// "Support Request Details"
+	String get support_SupportDetails => "Support Request Details";
+	/// "Support"
+	String get support_Title => "Support";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 	/// "Nhập tên thể loại"
@@ -703,6 +713,21 @@ class _I18n_vi_VN extends I18n {
 	/// ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
 	@override
 	List<String> get weekDays_ => ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+	/// "Nội dung"
+	@override
+	String get support_Content => "Nội dung";
+	/// "Trạng thái"
+	@override
+	String get support_Status => "Trạng thái";
+	/// ["Đang chờ", "Đang xử lý", "Hoàn thành", "Đã huỷ"]
+	@override
+	List<String> get support_SupportStatus => ["Đang chờ", "Đang xử lý", "Hoàn thành", "Đã huỷ"];
+	/// "Chi tiết yêu cầu hỗ trợ"
+	@override
+	String get support_SupportDetails => "Chi tiết yêu cầu hỗ trợ";
+	/// "Hỗ trợ"
+	@override
+	String get support_Title => "Hỗ trợ";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();
