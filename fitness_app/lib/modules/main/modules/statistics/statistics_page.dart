@@ -12,8 +12,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../global/graphql/client.dart';
 import '../../../../global/widgets/fitness_empty.dart';
-import 'widgets/statistics_body_data.dart';
 import 'widgets/statistics_chart.dart';
+import 'widgets/statistics_overview.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
@@ -30,14 +30,13 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   var getMyStatsReq = GGetMyStatsReq(
     (b) => b
       ..requestId = '@getMyStatsRequestId'
-      ..vars.queryParams.limit = 10
+      ..vars.queryParams.limit = 200
       ..vars.queryParams.page = 1,
   );
 
   void handleFilterChange(GGetMyStatsReq newReq, StatisticsFilterData filter) {
     final client = ref.watch(appClientProvider);
 
-    print(newReq.vars.queryParams.filters);
     setState(
       () {
         filterData = filter;
@@ -89,7 +88,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   onChanged: (getMyStatsReq, selectedFilter) =>
                       handleFilterChange(getMyStatsReq, selectedFilter),
                 ),
-                StatisticsBodyData(
+                StatisticsOverview(
                   data: stats,
                 ),
                 const SizedBox(height: 16),

@@ -82,4 +82,18 @@ enum FilterRangeType {
         return List.generate(12, (index) => (index + 1).toString());
     }
   }
+
+  List<int> days({int? month}) {
+    final now = DateTime.now();
+
+    switch (this) {
+      case FilterRangeType.weekly:
+        return [1, 2, 3, 4, 5, 6, 7];
+      case FilterRangeType.monthly:
+        final daysInMonth = DateTime(now.year, (month ?? 1) + 1, 0).day;
+        return List.generate(daysInMonth, (index) => index + 1);
+      case FilterRangeType.yearly:
+        return List.generate(12, (index) => index + 1);
+    }
+  }
 }

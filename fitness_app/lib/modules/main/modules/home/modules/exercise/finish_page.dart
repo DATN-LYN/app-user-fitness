@@ -33,13 +33,13 @@ class _FinishPage extends ConsumerState<FinishPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await initData();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      initData();
     });
     super.initState();
   }
 
-  Future initData() async {
+  void initData() async {
     upsertStats();
     upsertUserProgram();
     upsertUserExercise();
@@ -63,11 +63,11 @@ class _FinishPage extends ConsumerState<FinishPage> {
   }
 
   void upsertUserExercise() async {
-    if (widget.exercises.length == 1) {
+    if (widget.exercises.isNotEmpty) {
       ExerciseHelper.upsertUserExercise(
         context,
         ref,
-        exerciseId: widget.exercises[0].id!,
+        exerciseId: widget.exercises.last.id!,
       );
     }
   }
