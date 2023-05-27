@@ -69,9 +69,7 @@ class _ProgramDetailPageState extends ConsumerState<ProgramDetailPage> {
                         SizedBox.square(
                           dimension: 40,
                           child: IconButton(
-                            onPressed: () {
-                              context.popRoute();
-                            },
+                            onPressed: context.popRoute,
                             icon: const Icon(
                               Icons.arrow_back,
                             ),

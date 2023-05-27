@@ -14,8 +14,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../../../global/graphql/client.dart';
 import '../../../../global/widgets/fitness_empty.dart';
-import 'widgets/statistics_body_data.dart';
 import 'widgets/statistics_chart.dart';
+import 'widgets/statistics_overview.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
@@ -27,11 +27,12 @@ class StatisticsPage extends ConsumerStatefulWidget {
 class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   var filterData =
       const StatisticsFilterData(rangeType: FilterRangeType.weekly);
+  var key = GlobalKey();
 
   late var getMyStatsReq = GGetMyStatsReq(
     (b) => b
       ..requestId = '@getMyStatsRequestId'
-      ..vars.queryParams.limit = 10
+      ..vars.queryParams.limit = 200
       ..vars.queryParams.page = 1
       ..vars.queryParams.filters = ListBuilder(
         [
@@ -61,6 +62,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
           ..vars.queryParams.filters =
               newReq.vars.queryParams.filters?.toBuilder());
         client.requestController.add(getMyStatsReq);
+        key = GlobalKey();
       },
     );
   }
@@ -72,6 +74,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
     final client = ref.watch(appClientProvider);
 
     return Scaffold(
+      key: key,
       appBar: AppBar(
         title: Text(i18n.main_Statistics),
       ),
@@ -103,12 +106,12 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   onChanged: (getMyStatsReq, selectedFilter) =>
                       handleFilterChange(getMyStatsReq, selectedFilter),
                 ),
-                StatisticsBodyData(
+                StatisticsOverview(
                   data: stats,
                 ),
                 const SizedBox(height: 16),
                 StatisticsChart(
-                  data: stats,
+                  data: stats ?? [],
                   filter: filterData,
                 ),
                 const SizedBox(height: 32),

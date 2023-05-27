@@ -40,7 +40,7 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
   bool lock = true;
   int maxValue = 0;
   int value = 0;
-  bool loading = false;
+  bool loading = true;
   final Map<String, VideoPlayerController> controllers = {};
   final Map<int, VoidCallback> listeners = {};
   PlayerState playerState = PlayerState.playing;
@@ -56,47 +56,52 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
 
   @override
   void initState() {
-    initData();
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      initData();
+    });
     super.initState();
   }
 
   initData() async {
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      upsertProgramView();
-    });
-    loading = true;
-    urls = widget.exercises.map((e) {
-      Uri initialUri = Uri.parse(e.videoUrl!);
-      Uri replaceUri = initialUri.replace(scheme: 'https');
-      return replaceUri.toString();
-    }).toList();
+    upsertProgramView();
 
-    await initController(0);
-
-    playController(0);
-
-    setState(() => loading = false);
-
-    if (urls.length > 1) {
-      await initController(1);
+    if (mounted) {
       setState(() {
-        lock = false;
+        urls = widget.exercises.map((e) {
+          Uri initialUri = Uri.parse(e.videoUrl!);
+          Uri replaceUri = initialUri.replace(scheme: 'https');
+          return replaceUri.toString();
+        }).toList();
       });
+
+      await initController(0);
+
+      playController(0);
+
+      setState(() => loading = false);
+
+      if (urls.length > 1) {
+        await initController(1);
+        setState(() {
+          lock = false;
+        });
+      }
     }
   }
 
   void upsertProgramView() async {
     final client = ref.watch(appClientProvider);
-    var req = GUpsertProgramReq((b) => b
-          ..vars.input.bodyPart = widget.program.bodyPart
-          ..vars.input.categoryId = widget.program.categoryId
-          ..vars.input.id = widget.program.id
-          ..vars.input.imgUrl = widget.program.imgUrl
-          ..vars.input.description = widget.program.description
-          ..vars.input.level = widget.program.level
-          ..vars.input.name = widget.program.name
-        // ..vars.input.view = (widget.program.view ?? 0) + 1,
-        );
+    var req = GUpsertProgramReq(
+      (b) => b
+        ..vars.input.bodyPart = widget.program.bodyPart
+        ..vars.input.categoryId = widget.program.categoryId
+        ..vars.input.id = widget.program.id
+        ..vars.input.imgUrl = widget.program.imgUrl
+        ..vars.input.description = widget.program.description
+        ..vars.input.level = widget.program.level
+        ..vars.input.name = widget.program.name
+        ..vars.input.view = (widget.program.view ?? 0) + 1,
+    );
 
     final response = await client.request(req).first;
     if (response.hasErrors) {

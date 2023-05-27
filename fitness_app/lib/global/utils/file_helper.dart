@@ -42,10 +42,7 @@ class FileHelper {
       );
 
       return response.url;
-    } on CloudinaryException catch (e) {
-      print(e.message);
-      print(e.request);
-    }
+    } on CloudinaryException {}
     return null;
   }
 
@@ -77,10 +74,7 @@ class FileHelper {
       );
 
       return response.url;
-    } on CloudinaryException catch (e) {
-      print(e.message);
-      print(e.request);
-    }
+    } on CloudinaryException {}
     return null;
   }
 

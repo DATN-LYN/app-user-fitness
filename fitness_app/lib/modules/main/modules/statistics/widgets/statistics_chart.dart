@@ -1,6 +1,7 @@
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/extensions/double_extension.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/modules/main/modules/statistics/helper/statistics_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -15,7 +16,7 @@ class StatisticsChart extends StatefulWidget {
     required this.filter,
   });
 
-  final List<GGetMyStatsData_getMyStats_items>? data;
+  final List<GGetMyStatsData_getMyStats_items> data;
   final StatisticsFilterData filter;
 
   @override
@@ -23,48 +24,21 @@ class StatisticsChart extends StatefulWidget {
 }
 
 class _StatisticsChartState extends State<StatisticsChart> {
-  late List<double> initialData;
-
-  List<double> calculateByYear(List<GGetMyStatsData_getMyStats_items> data) {
-    Map<int, double> mapData = {};
-    for (final item in data) {
-      mapData[item.updatedAt!.month] =
-          mapData[item.updatedAt!.month] ?? 0 + item.caloCount!;
-    }
-    return mapData.entries.map((e) => e.value).toList();
-  }
-
-  List<double> getListCalo() {
-    return widget.data?.map((e) => e.caloCount ?? 0).toList() ?? [];
-  }
-
-  void setListByFilterRangeType() {
-    if (widget.filter.rangeType == FilterRangeType.yearly) {
-      if (mounted) {
-        if (widget.data != null) {
-          setState(() {
-            initialData = calculateByYear(widget.data!);
-          });
-        }
-      }
-    } else {
-      setState(() {
-        initialData = getListCalo();
-      });
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant StatisticsChart oldWidget) {
-    if (widget.data != oldWidget.data) {
-      setListByFilterRangeType();
-    }
-    super.didUpdateWidget(oldWidget);
-  }
+  List<double> initialData = [];
+  List<String> xValue = [];
 
   @override
   void initState() {
-    setListByFilterRangeType();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          initialData = StatisticsHelper.getStatsData(
+            data: widget.data,
+            filter: widget.filter,
+          );
+        });
+      }
+    });
     super.initState();
   }
 
@@ -107,20 +81,7 @@ class _StatisticsChartState extends State<StatisticsChart> {
           ),
           series: [
             ColumnSeries(
-              dataSource: List.generate(
-                xValues.length,
-                (index) {
-                  if (initialData.isNotEmpty == true) {
-                    if (index < initialData.length) {
-                      return initialData[index];
-                    } else {
-                      return 0;
-                    }
-                  } else {
-                    return 0;
-                  }
-                },
-              ),
+              dataSource: initialData,
               borderRadius: BorderRadius.circular(10),
               xValueMapper: (data, index) => xValues[index],
               yValueMapper: (data, index) => data,
