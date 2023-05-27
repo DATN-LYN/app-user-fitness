@@ -16,7 +16,7 @@ class StatisticsChart extends StatefulWidget {
     required this.filter,
   });
 
-  final List<GGetMyStatsData_getMyStats_items>? data;
+  final List<GGetMyStatsData_getMyStats_items> data;
   final StatisticsFilterData filter;
 
   @override
@@ -25,6 +25,7 @@ class StatisticsChart extends StatefulWidget {
 
 class _StatisticsChartState extends State<StatisticsChart> {
   List<double> initialData = [];
+  List<String> xValue = [];
 
   @override
   void initState() {
@@ -32,13 +33,12 @@ class _StatisticsChartState extends State<StatisticsChart> {
       if (mounted) {
         setState(() {
           initialData = StatisticsHelper.getStatsData(
-            data: widget.data!,
+            data: widget.data,
             filter: widget.filter,
           );
         });
       }
     });
-
     super.initState();
   }
 
