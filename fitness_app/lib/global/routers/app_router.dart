@@ -11,6 +11,7 @@ import 'package:fitness_app/modules/main/modules/home/modules/program/detail/pro
 import 'package:fitness_app/modules/main/modules/home/modules/program/list/program_list_page.dart';
 import 'package:fitness_app/modules/main/modules/settings/setting_page.dart';
 import 'package:fitness_app/modules/main/modules/statistics/statistics_page.dart';
+import 'package:fitness_app/modules/main/modules/support/support_list_page.dart';
 import 'package:fitness_app/modules/profile/edit_profile_page.dart';
 import 'package:fitness_app/modules/signup/sign_up_page.dart';
 import 'package:fitness_app/modules/splash/splash_page.dart';
@@ -55,6 +56,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: CategoryListPage),
     AutoRoute(page: ProgramListPage),
     AutoRoute(page: EditProfilePage),
+    AutoRoute(page: SupportListPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

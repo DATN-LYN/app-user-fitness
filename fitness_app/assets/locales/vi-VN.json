@@ -196,5 +196,17 @@
       "T6",
       "T7",
       "CN"
-    ]
+    ],
+    "support_":{
+      "content": "Nội dung",
+      "status": "Trạng thái",
+      "supportStatus":[
+          "Đang chờ",
+          "Đang xử lý",
+          "Hoàn thành",
+          "Đã huỷ"
+      ],
+      "supportDetails": "Chi tiết yêu cầu hỗ trợ",
+      "title": "Hỗ trợ"
+  }
 }
