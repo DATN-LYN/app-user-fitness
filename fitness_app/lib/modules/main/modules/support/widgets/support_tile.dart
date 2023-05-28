@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../global/enums/support_status.dart';
+import '../../../../../global/extensions/date_time_extension.dart';
 import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../../../../global/graphql/cache_handler/upsert_support_cache_handler.dart';
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/graphql/fragment/__generated__/support_fragment.data.gql.dart';
 import '../../../../../global/graphql/mutation/__generated__/mutation_upsert_support.req.gql.dart';
+import '../../../../../global/providers/me_provider.dart';
 import '../../../../../global/themes/app_colors.dart';
-import '../../../../../global/widgets/shimmer_image.dart';
 import '../../../../../global/widgets/tag.dart';
 
 class SupportTile extends ConsumerWidget {
@@ -24,6 +25,7 @@ class SupportTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final status = SupportStatus.getStatus(support.status ?? 1);
     final i18n = I18n.of(context)!;
+    final user = ref.read(meProvider)?.user;
 
     void markRead() async {
       final client = ref.watch(appClientProvider);
@@ -61,10 +63,17 @@ class SupportTile extends ConsumerWidget {
             : AppColors.warningSoft.withOpacity(0.7),
         child: Row(
           children: [
-            ShimmerImage(
-              imageUrl: support.user?.avatar ?? '_',
-              width: 70,
-              height: 70,
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: AppColors.primarySoft,
+              ),
+              child: const Icon(
+                Icons.headphones,
+                color: AppColors.primaryBold,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -72,10 +81,10 @@ class SupportTile extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    support.user?.email ?? '_',
+                    support.createdAt?.formatDateTime(i18n) ?? '_',
                     style: const TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 8),
