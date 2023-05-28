@@ -208,5 +208,14 @@
       ],
       "supportDetails": "Chi tiết yêu cầu hỗ trợ",
       "title": "Hỗ trợ"
+  },
+  "chart_":{
+    "chart": "Biểu đồ",
+    "chartType":[
+      "Cột",
+      "Thanh",
+      "Đường",
+      "Đường bậc thang"
+    ]
   }
 }
