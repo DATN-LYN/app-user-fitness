@@ -1,3 +1,5 @@
+import 'package:adaptive_selector/adaptive_selector.dart';
+import 'package:fitness_app/global/enums/chart_type.dart';
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/extensions/double_extension.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
@@ -26,6 +28,7 @@ class StatisticsChart extends StatefulWidget {
 class _StatisticsChartState extends State<StatisticsChart> {
   List<double> initialData = [];
   List<String> xValue = [];
+  ChartType chartType = ChartType.column;
 
   @override
   void initState() {
@@ -45,50 +48,100 @@ class _StatisticsChartState extends State<StatisticsChart> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
+
     var xValues = widget.filter.rangeType == FilterRangeType.monthly
         ? widget.filter.rangeType!
             .xValuesChart(i18n, month: widget.filter.month)
         : widget.filter.rangeType!.xValuesChart(i18n);
 
-    return ShadowWrapper(
-      padding: const EdgeInsets.all(8),
-      child: SizedBox(
-        height: 300,
-        width: MediaQuery.of(context).size.width * 0.9,
-        child: SfCartesianChart(
-          tooltipBehavior: TooltipBehavior(
-            enable: true,
-            builder: (data, point, _, __, ___) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                  vertical: 6,
-                ),
-                child: Text(
-                  '${(point.y as double).toStringWithNoZero()} ',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              );
+    final options = ChartType.values
+        .map(
+          (e) => AdaptiveSelectorOption(label: e.label(i18n), value: e),
+        )
+        .toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: 210,
+          height: 40,
+          child: AdaptiveSelector(
+            allowClear: false,
+            initialOption: options.first,
+            options: options,
+            onChanged: (option) {
+              if (option != null) {
+                setState(() {
+                  chartType = option.value;
+                });
+              }
             },
           ),
-          primaryXAxis: CategoryAxis(
-            axisLine: const AxisLine(width: 0),
-            interval: 1,
-          ),
-          series: [
-            ColumnSeries(
-              dataSource: initialData,
-              borderRadius: BorderRadius.circular(10),
-              xValueMapper: (data, index) => xValues[index],
-              yValueMapper: (data, index) => data,
-            )
-          ],
         ),
-      ),
+        const SizedBox(height: 16),
+        ShadowWrapper(
+          padding: const EdgeInsets.all(8),
+          child: SizedBox(
+            height: 300,
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: SfCartesianChart(
+              tooltipBehavior: TooltipBehavior(
+                enable: true,
+                builder: (data, point, _, __, ___) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 6,
+                    ),
+                    child: Text(
+                      '${(point.y as double).toStringWithNoZero()} ',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              primaryXAxis: CategoryAxis(
+                axisLine: const AxisLine(width: 0),
+                interval: 1,
+              ),
+              series: [
+                if (chartType == ChartType.column)
+                  ColumnSeries(
+                    dataSource: initialData,
+                    borderRadius: BorderRadius.circular(10),
+                    xValueMapper: (data, index) => xValues[index],
+                    yValueMapper: (data, index) => data,
+                  ),
+                if (chartType == ChartType.bar)
+                  BarSeries(
+                    dataSource: initialData,
+                    borderRadius: BorderRadius.circular(10),
+                    xValueMapper: (data, index) => xValues[index],
+                    yValueMapper: (data, index) => data,
+                  ),
+                if (chartType == ChartType.line)
+                  LineSeries(
+                    dataSource: initialData,
+                    xValueMapper: (data, index) => xValues[index],
+                    yValueMapper: (data, index) => data,
+                  ),
+                if (chartType == ChartType.stepline)
+                  StepLineSeries(
+                    dataSource: initialData,
+                    xValueMapper: (data, index) => xValues[index],
+                    yValueMapper: (data, index) => data,
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

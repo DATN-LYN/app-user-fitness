@@ -21,6 +21,7 @@ import '../../modules/intro/onboard_page.dart';
 import '../../modules/main/main_page.dart';
 import '../../modules/main/modules/home/modules/exercise/finish_page.dart';
 import '../../modules/main/modules/home/modules/search/search_page.dart';
+import '../../modules/main/modules/support/support_list_page.dart';
 import '../graphql/fragment/__generated__/category_fragment.data.gql.dart';
 import '../graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import '../graphql/fragment/__generated__/program_fragment.data.gql.dart';
@@ -56,6 +57,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: CategoryListPage),
     AutoRoute(page: ProgramListPage),
     AutoRoute(page: EditProfilePage),
+    AutoRoute(page: SupportListPage),
     AutoRoute(page: UpsertSupportPage),
   ],
 )

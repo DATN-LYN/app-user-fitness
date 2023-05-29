@@ -198,6 +198,15 @@
       "CN"
     ],
     "support_":{
+      "content": "Nội dung",
+      "status": "Trạng thái",
+      "supportStatus":[
+          "Đang chờ",
+          "Đang xử lý",
+          "Hoàn thành",
+          "Đã huỷ"
+      ],
+      "supportDetails": "Chi tiết yêu cầu hỗ trợ",
       "title": "Hỗ trợ",
       "description": "Hãy cho chúng tôi biết vấn đề của bạn",
       "contentHint": "Nhập câu hỏi,vấn đề,...",
@@ -207,9 +216,17 @@
       "chooseFormGallery": "Chọn từ thư viện",
       "pickPhoto": "Chọn một hình ảnh",
       "image": "Hình ảnh",
-      "content": "Nội dung",
       "createTitle": "Tạo yêu cầu hỗ trợ",
       "createDes": "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?",
       "createSuccess": "Bạn đã tạo yêu cầu thành công"
-    }
+  },
+  "chart_":{
+    "chart": "Biểu đồ",
+    "chartType":[
+      "Cột",
+      "Thanh",
+      "Đường",
+      "Đường bậc thang"
+    ]
+ }
 }

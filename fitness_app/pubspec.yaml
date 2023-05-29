@@ -76,6 +76,11 @@ dependencies:
   side_sheet: ^1.0.4
   jiffy: ^5.0.0
   ionicons: ^0.2.2
+  intl: ^0.17.0
+  adaptive_selector:
+    git:
+      url: https://github.com/lvxduck/adaptive_selector.git
+      ref: feat/multiple_choice
   dotted_border: ^2.0.0+3
 
 dev_dependencies:

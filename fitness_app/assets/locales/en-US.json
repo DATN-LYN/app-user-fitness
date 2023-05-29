@@ -196,6 +196,15 @@
       "Sun"
     ],
     "support_":{
+      "content": "Content",
+      "status": "Status",
+      "supportStatus":[
+          "Waiting",
+          "Solving",
+          "Done",
+          "Cancelled"
+      ],
+      "supportDetails": "Support Request Details",
       "title": "Support",
       "description": "Tell us your problem",
       "contentHint": "Enter your question,problem,...",
@@ -205,9 +214,18 @@
       "chooseFormGallery": "Choose From Gallery",
       "pickImage": "Pick a image",
       "image": "Image",
-      "content": "Content",
       "createTitle": "Create support request",
       "createDes": "Are you sure you want to create a new support request?",
       "createSuccess": "You have created a support request successfully"
-    }
+  },
+  "chart_":{
+    "chart": "Chart",
+    "chartType":[
+      "Column",
+      "Bar",
+      "Line",
+      "Bubble",
+      "Stepline"
+    ]
+  }  
 }

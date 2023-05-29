@@ -1,0 +1,13 @@
+#import '../fragment/meta_fragment.graphql'
+#import '../fragment/support_fragment.graphql'
+
+query GetMySupports($queryParams: QueryFilterDto!) {
+  getMySupports(queryParams: $queryParams) {
+    meta {
+      ...Meta
+    }
+    items {
+      ...Support
+    }
+  }
+}

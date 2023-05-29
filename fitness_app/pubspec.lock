@@ -17,6 +17,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
+  adaptive_selector:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "feat/multiple_choice"
+      resolved-ref: "652d120b7e836fad275fb47e2000dd3450c4da7e"
+      url: "https://github.com/lvxduck/adaptive_selector.git"
+    source: git
+    version: "0.0.3"
   analyzer:
     dependency: transitive
     description:
@@ -782,7 +791,7 @@ packages:
     source: hosted
     version: "2.0.0"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"

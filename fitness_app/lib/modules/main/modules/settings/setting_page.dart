@@ -211,6 +211,13 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                         onTap: changePasswordHandler,
                       ),
                       const Divider(height: 12),
+                      SettingTile(
+                        icon: Icons.headphones,
+                        title: i18n.support_Title,
+                        onTap: () =>
+                            context.pushRoute(const SupportListRoute()),
+                      ),
+                      const Divider(height: 12),
                     ],
                     if (!isLogedIn)
                       SettingTile(
