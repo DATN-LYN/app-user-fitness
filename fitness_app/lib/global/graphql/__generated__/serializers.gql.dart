@@ -2,7 +2,6 @@
 // ignore_for_file: type=lint
 
 import 'package:built_collection/built_collection.dart';
-import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart' show StandardJsonPlugin;
 import 'package:ferry_exec/ferry_exec.dart';
@@ -365,12 +364,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GUpsertStatsData_upsertStats,
   GUpsertStatsReq,
   GUpsertStatsVars,
-  GUpsertSupportData,
-  GUpsertSupportData_upsertSupport,
-  GUpsertSupportData_upsertSupport_user,
   GUpsertSupportInputDto,
-  GUpsertSupportReq,
-  GUpsertSupportVars,
   GUpsertUserData,
   GUpsertUserData_upsertUser,
   GUpsertUserExerciseData,

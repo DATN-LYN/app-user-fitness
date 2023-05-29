@@ -1,3 +1,4 @@
+import 'package:built_collection/src/list.dart';
 import 'package:ferry_flutter/ferry_flutter.dart';
 import 'package:fitness_app/global/data/models/statistics_filter_data.dart';
 import 'package:fitness_app/global/enums/filter_range_type.dart';
@@ -10,10 +11,11 @@ import 'package:fitness_app/modules/main/modules/statistics/widgets/statistics_r
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../../../global/graphql/client.dart';
 import '../../../../global/widgets/fitness_empty.dart';
-import 'widgets/statistics_body_data.dart';
 import 'widgets/statistics_chart.dart';
+import 'widgets/statistics_overview.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
@@ -25,19 +27,34 @@ class StatisticsPage extends ConsumerStatefulWidget {
 class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   var filterData =
       const StatisticsFilterData(rangeType: FilterRangeType.weekly);
-
   var key = GlobalKey();
-  var getMyStatsReq = GGetMyStatsReq(
+
+  late var getMyStatsReq = GGetMyStatsReq(
     (b) => b
       ..requestId = '@getMyStatsRequestId'
-      ..vars.queryParams.limit = 10
-      ..vars.queryParams.page = 1,
+      ..vars.queryParams.limit = 200
+      ..vars.queryParams.page = 1
+      ..vars.queryParams.filters = ListBuilder(
+        [
+          GFilterDto(
+            (b) => b
+              ..data = filterData.rangeType!.startDate().toString()
+              ..field = 'UserStatistics.updatedAt'
+              ..operator = GFILTER_OPERATOR.gt,
+          ),
+          GFilterDto(
+            (b) => b
+              ..data = filterData.rangeType!.endDate().toString().toString()
+              ..field = 'UserStatistics.updatedAt'
+              ..operator = GFILTER_OPERATOR.lt,
+          ),
+        ],
+      ),
   );
 
   void handleFilterChange(GGetMyStatsReq newReq, StatisticsFilterData filter) {
     final client = ref.watch(appClientProvider);
 
-    print(newReq.vars.queryParams.filters);
     setState(
       () {
         filterData = filter;
@@ -76,48 +93,49 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
           final data = response?.data;
           final stats = data?.getMyStats.items?.toList();
 
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              StatisticsFilter(
-                filter: filterData,
-                request: GGetMyStatsReq(
-                  (b) => b
-                    ..vars.queryParams =
-                        getMyStatsReq.vars.queryParams.toBuilder(),
+            return ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                StatisticsFilter(
+                  filter: filterData,
+                  request: GGetMyStatsReq(
+                    (b) => b
+                      ..vars.queryParams =
+                          getMyStatsReq.vars.queryParams.toBuilder(),
+                  ),
+                  onChanged: (getMyStatsReq, selectedFilter) =>
+                      handleFilterChange(getMyStatsReq, selectedFilter),
                 ),
-                onChanged: (getMyStatsReq, selectedFilter) =>
-                    handleFilterChange(getMyStatsReq, selectedFilter),
-              ),
-              StatisticsBodyData(
-                data: stats,
-              ),
-              const SizedBox(height: 16),
-              StatisticsChart(
-                data: stats,
-                filter: filterData,
-              ),
-              const SizedBox(height: 32),
-              Text(
-                i18n.statistics_RecentWorkout,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                StatisticsOverview(
+                  data: stats,
                 ),
-              ),
-              const SizedBox(height: 16),
-              if (isLogedIn && stats != null && stats.isNotEmpty == true)
-                const StatisticsRecentlyWorkout()
-              else
-                FitnessEmpty(
-                  title: i18n.common_Oops,
-                  message: i18n.common_EmptyData,
+                const SizedBox(height: 16),
+                StatisticsChart(
+                  data: stats ?? [],
+                  filter: filterData,
                 ),
-              const SizedBox(height: 16),
-            ],
-          );
-        },
-      ),
+                const SizedBox(height: 32),
+                Text(
+                  i18n.statistics_RecentWorkout,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                if (isLogedIn && stats != null && stats.isNotEmpty == true)
+                  const StatisticsRecentlyWorkout()
+                else
+                  FitnessEmpty(
+                    title: i18n.common_Oops,
+                    message: isLogedIn
+                        ? i18n.common_EmptyData
+                        : i18n.common_YouHaveToLogin,
+                  ),
+                const SizedBox(height: 16),
+              ],
+            );
+          }),
     );
   }
 }

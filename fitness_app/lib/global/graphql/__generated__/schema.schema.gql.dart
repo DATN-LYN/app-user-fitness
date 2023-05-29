@@ -243,6 +243,8 @@ abstract class GUpsertSupportInputDto
   String? get userId;
   String? get content;
   String? get imgUrl;
+  bool? get isRead;
+  double? get status;
   static Serializer<GUpsertSupportInputDto> get serializer =>
       _$gUpsertSupportInputDtoSerializer;
   Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(

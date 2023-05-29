@@ -130,9 +130,10 @@ type ISupport {
   id: String!
   userId: String
   user: User
-  content: String!
-  imgUrl: String!
-  isRead: Boolean!
+  content: String
+  imgUrl: String
+  isRead: Boolean
+  status: Float
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -247,14 +248,14 @@ type Mutation {
   deleteExercise(exerciseId: String!): ResponseMessageBase!
   register(input: RegisterInputDto!): ResponseMessageBase!
   logout(userId: String!): ResponseMessageBase!
-  upsertInbox(input: UpsertInboxInputDto!): IInbox!
-  deleteInbox(inboxId: String!): ResponseMessageBase!
   upsertCategory(input: UpsertCategoryInputDto!): ICategory!
   deleteCategory(categoryId: String!): ResponseMessageBase!
   upsertProgram(input: UpsertProgramInputDto!): IProgram!
   deleteProgram(programId: String!): ResponseMessageBase!
   deleteUser(userId: String!): ResponseMessageBase!
   upsertUser(input: UpsertUserInputDto!): IUser!
+  upsertInbox(input: UpsertInboxInputDto!): IInbox!
+  deleteInbox(inboxId: String!): ResponseMessageBase!
 }
 
 type Program {
@@ -289,18 +290,18 @@ type Query {
   loginGoogle(input: LoginInputDto!): LoginResponseDto!
   login(input: LoginInputDto!): LoginResponseDto!
   refreshToken(refreshToken: String!): RefreshTokenResponseDto!
-  getInbox(inboxId: String!): IInbox!
-  getInboxes(queryParams: QueryFilterDto!): IInboxes!
-  getMyInboxes(queryParams: QueryFilterDto!): IInboxes!
   getCategory(categoryId: String!): Category!
   getCategories(queryParams: QueryFilterDto!): ICategories!
   getProgram(programId: String!): Program!
-  getProgramCountBABCBCBCBC: ISummary!
+  getHomeOverview: ISummary!
   getPrograms(queryParams: QueryFilterDto!): IPrograms!
   getUser(userId: String!): IUser!
   getCurrentUser: IUser!
   getUsers(queryParams: QueryFilterDto!): IUsers!
   getTopUsersProgram(queryParams: QueryFilterDto!): IUsers!
+  getInbox(inboxId: String!): IInbox!
+  getInboxes(queryParams: QueryFilterDto!): IInboxes!
+  getMyInboxes(queryParams: QueryFilterDto!): IInboxes!
 }
 
 input QueryFilterDto {
@@ -336,9 +337,10 @@ type Support {
   id: String!
   userId: String
   user: User
-  content: String!
-  imgUrl: String!
-  isRead: Boolean!
+  content: String
+  imgUrl: String
+  isRead: Boolean
+  status: Float
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -382,6 +384,8 @@ input UpsertSupportInputDto {
   userId: String
   content: String
   imgUrl: String
+  isRead: Boolean
+  status: Float
 }
 
 input UpsertUserExerciseInputDto {
