@@ -44,6 +44,10 @@ class I18n implements WidgetsLocalizations {
 	String get button_TryAgain => "Try Again";
 	/// "Apply"
 	String get button_Apply => "Apply";
+	/// "Send"
+	String get button_Send => "Send";
+	/// "Reset"
+	String get button_Reset => "Reset";
 	/// ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"]
 	List<String> get onboard_Title => ["JOIN US", "DAILY WORKOUT", "SET DIET PLAN"];
 	/// ["Our teams with iconic athletes & sport brands to build the future of fitness", "Workout plans designed to  help you achieve your everyday fitness goals and plan", "Before you begin designing your own diet plan, some self-reflection is in order"]
@@ -306,6 +310,40 @@ class I18n implements WidgetsLocalizations {
 	String get support_SupportDetails => "Support Request Details";
 	/// "Support"
 	String get support_Title => "Support";
+	/// "Tell us your problem"
+	String get support_Description => "Tell us your problem";
+	/// "Enter your question,problem,..."
+	String get support_ContentHint => "Enter your question,problem,...";
+	/// "Content is required"
+	String get support_ContentRequired => "Content is required";
+	/// "Upload Photo"
+	String get support_UploadPhoto => "Upload Photo";
+	/// "Take Photo"
+	String get support_TakePhoto => "Take Photo";
+	/// "Choose From Gallery"
+	String get support_ChooseFormGallery => "Choose From Gallery";
+	/// "Pick a image"
+	String get support_PickImage => "Pick a image";
+	/// "Image"
+	String get support_Image => "Image";
+	/// "Create support request"
+	String get support_CreateTitle => "Create support request";
+	/// "Are you sure you want to create a new support request?"
+	String get support_CreateDes => "Are you sure you want to create a new support request?";
+	/// "You have created a support request successfully"
+	String get support_CreateSuccess => "You have created a support request successfully";
+	/// "Cancel support request"
+	String get support_CancelTitle => "Cancel support request";
+	/// "Are you sure you want to cancel your support request?"
+	String get support_CancelDes => "Are you sure you want to cancel your support request?";
+	/// "You have cancelled a support request successfully"
+	String get support_CancelSuccess => "You have cancelled a support request successfully";
+	/// "Update support request"
+	String get support_UpdateTitle => "Update support request";
+	/// "Are you sure you want to update your support request?"
+	String get support_UpdateDes => "Are you sure you want to update your support request?";
+	/// "You have updated a support request successfully"
+	String get support_UpdateSuccess => "You have updated a support request successfully";
 	/// "Chart"
 	String get chart_Chart => "Chart";
 	/// ["Column", "Bar", "Line", "Bubble", "Stepline"]
@@ -316,6 +354,8 @@ class I18n implements WidgetsLocalizations {
 	String get exercises_SearchHint => "Nhập tên thể loại";
 	/// "Mô Tả"
 	String get common_Description => "Mô Tả";
+	/// "Chọn một hình ảnh"
+	String get support_PickPhoto => "Chọn một hình ảnh";
 }
 class _I18n_en_US extends I18n {
   const _I18n_en_US();
@@ -732,6 +772,54 @@ class _I18n_vi_VN extends I18n {
 	/// "Hỗ trợ"
 	@override
 	String get support_Title => "Hỗ trợ";
+	/// "Hãy cho chúng tôi biết vấn đề của bạn"
+	@override
+	String get support_Description => "Hãy cho chúng tôi biết vấn đề của bạn";
+	/// "Nhập câu hỏi,vấn đề,..."
+	@override
+	String get support_ContentHint => "Nhập câu hỏi,vấn đề,...";
+	/// "Bạn chưa nhập nội dung"
+	@override
+	String get support_ContentRequired => "Bạn chưa nhập nội dung";
+	/// "Tải lên hình ảnh"
+	@override
+	String get support_UploadPhoto => "Tải lên hình ảnh";
+	/// "Chụp ảnh"
+	@override
+	String get support_TakePhoto => "Chụp ảnh";
+	/// "Chọn từ thư viện"
+	@override
+	String get support_ChooseFormGallery => "Chọn từ thư viện";
+	/// "Hình ảnh"
+	@override
+	String get support_Image => "Hình ảnh";
+	/// "Tạo yêu cầu hỗ trợ"
+	@override
+	String get support_CreateTitle => "Tạo yêu cầu hỗ trợ";
+	/// "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?"
+	@override
+	String get support_CreateDes => "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?";
+	/// "Bạn đã tạo yêu cầu thành công"
+	@override
+	String get support_CreateSuccess => "Bạn đã tạo yêu cầu thành công";
+	/// "Huỷ yêu cầu hỗ trợ"
+	@override
+	String get support_CancelTitle => "Huỷ yêu cầu hỗ trợ";
+	/// "Bạn có chắc chắn muốn huỷ yêu cầu hỗ trợ?"
+	@override
+	String get support_CancelDes => "Bạn có chắc chắn muốn huỷ yêu cầu hỗ trợ?";
+	/// "Bạn đã huỷ yêu cầu thành công"
+	@override
+	String get support_CancelSuccess => "Bạn đã huỷ yêu cầu thành công";
+	/// "Cập nhật yêu cầu hỗ trợ"
+	@override
+	String get support_UpdateTitle => "Cập nhật yêu cầu hỗ trợ";
+	/// "Bạn có chắc chắn muốn cập nhật yêu cầu hỗ trợ?"
+	@override
+	String get support_UpdateDes => "Bạn có chắc chắn muốn cập nhật yêu cầu hỗ trợ?";
+	/// "Bạn đã cập nhật yêu cầu thành công"
+	@override
+	String get support_UpdateSuccess => "Bạn đã cập nhật yêu cầu thành công";
 	/// "Biểu đồ"
 	@override
 	String get chart_Chart => "Biểu đồ";

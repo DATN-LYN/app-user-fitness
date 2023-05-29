@@ -29,6 +29,7 @@ class _SupportListPageState extends ConsumerState<SupportListPage> {
       ..vars.queryParams.limit = Constants.defaultLimit
       ..vars.queryParams.orderBy = 'Support.createdAt:DESC',
   );
+
   @override
   Widget build(BuildContext context) {
     final client = ref.watch(appClientProvider);
@@ -117,7 +118,7 @@ class _SupportListPageState extends ConsumerState<SupportListPage> {
           }
 
           return ListView.separated(
-            itemCount: supports!.length + (hasMoreData ? 1 : 0),
+            itemCount: supports!.length,
             itemBuilder: (context, index) {
               final item = supports[index];
               return SupportTile(support: item);
