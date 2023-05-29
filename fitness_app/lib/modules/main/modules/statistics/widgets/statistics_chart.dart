@@ -55,7 +55,10 @@ class _StatisticsChartState extends State<StatisticsChart> {
 
     final options = ChartType.values
         .map(
-          (e) => AdaptiveSelectorOption(label: e.label(i18n), value: e),
+          (e) => AdaptiveSelectorOption(
+            label: '${i18n.chart_Chart} ${e.label(i18n)}',
+            value: e,
+          ),
         )
         .toList();
 
@@ -63,7 +66,7 @@ class _StatisticsChartState extends State<StatisticsChart> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 210,
+          width: 270,
           height: 40,
           child: AdaptiveSelector(
             allowClear: false,
