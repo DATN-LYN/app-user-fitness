@@ -308,7 +308,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
           child: GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () {
-              AutoRouter.of(context).push(const UpsertSupportRoute());
+              AutoRouter.of(context).push(SupportUpsertRoute());
             },
             child: Assets.images.operator.image(
               width: min(60, width * 0.25),

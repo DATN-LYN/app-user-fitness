@@ -139,10 +139,15 @@ class _$AppRouter extends RootStackRouter {
         child: const SupportListPage(),
       );
     },
-    UpsertSupportRoute.name: (routeData) {
+    SupportUpsertRoute.name: (routeData) {
+      final args = routeData.argsAs<SupportUpsertRouteArgs>(
+          orElse: () => const SupportUpsertRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const UpsertSupportPage(),
+        child: SupportUpsertPage(
+          key: args.key,
+          support: args.support,
+        ),
       );
     },
     HomeRoute.name: (routeData) {
@@ -260,8 +265,8 @@ class _$AppRouter extends RootStackRouter {
           path: '/support-list-page',
         ),
         RouteConfig(
-          UpsertSupportRoute.name,
-          path: '/upsert-support-page',
+          SupportUpsertRoute.name,
+          path: '/support-upsert-page',
         ),
       ];
 }
@@ -600,15 +605,37 @@ class SupportListRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [UpsertSupportPage]
-class UpsertSupportRoute extends PageRouteInfo<void> {
-  const UpsertSupportRoute()
-      : super(
-          UpsertSupportRoute.name,
-          path: '/upsert-support-page',
+/// [SupportUpsertPage]
+class SupportUpsertRoute extends PageRouteInfo<SupportUpsertRouteArgs> {
+  SupportUpsertRoute({
+    Key? key,
+    GSupport? support,
+  }) : super(
+          SupportUpsertRoute.name,
+          path: '/support-upsert-page',
+          args: SupportUpsertRouteArgs(
+            key: key,
+            support: support,
+          ),
         );
 
-  static const String name = 'UpsertSupportRoute';
+  static const String name = 'SupportUpsertRoute';
+}
+
+class SupportUpsertRouteArgs {
+  const SupportUpsertRouteArgs({
+    this.key,
+    this.support,
+  });
+
+  final Key? key;
+
+  final GSupport? support;
+
+  @override
+  String toString() {
+    return 'SupportUpsertRouteArgs{key: $key, support: $support}';
+  }
 }
 
 /// generated route for

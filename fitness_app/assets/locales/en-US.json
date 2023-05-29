@@ -216,7 +216,13 @@
       "image": "Image",
       "createTitle": "Create support request",
       "createDes": "Are you sure you want to create a new support request?",
-      "createSuccess": "You have created a support request successfully"
+      "createSuccess": "You have created a support request successfully",
+      "cancelTitle": "Cancel support request",
+      "cancelDes": "Are you sure you want to cancel your support request?",
+      "cancelSuccess": "You have cancelled a support request successfully",
+      "updateTitle": "Update support request",
+      "updateDes": "Are you sure you want to update your support request?",
+      "updateSuccess": "You have updated a support request successfully"
   },
   "chart_":{
     "chart": "Chart",

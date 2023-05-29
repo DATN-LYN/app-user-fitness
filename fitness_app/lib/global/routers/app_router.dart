@@ -11,7 +11,7 @@ import 'package:fitness_app/modules/main/modules/home/modules/program/detail/pro
 import 'package:fitness_app/modules/main/modules/home/modules/program/list/program_list_page.dart';
 import 'package:fitness_app/modules/main/modules/settings/setting_page.dart';
 import 'package:fitness_app/modules/main/modules/statistics/statistics_page.dart';
-import 'package:fitness_app/modules/main/modules/support/upsert_support_page.dart';
+import 'package:fitness_app/modules/main/modules/support/support_upsert_page.dart';
 import 'package:fitness_app/modules/profile/edit_profile_page.dart';
 import 'package:fitness_app/modules/signup/sign_up_page.dart';
 import 'package:fitness_app/modules/splash/splash_page.dart';
@@ -25,6 +25,7 @@ import '../../modules/main/modules/support/support_list_page.dart';
 import '../graphql/fragment/__generated__/category_fragment.data.gql.dart';
 import '../graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import '../graphql/fragment/__generated__/program_fragment.data.gql.dart';
+import '../graphql/fragment/__generated__/support_fragment.data.gql.dart';
 
 part 'app_router.gr.dart';
 
@@ -58,7 +59,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: ProgramListPage),
     AutoRoute(page: EditProfilePage),
     AutoRoute(page: SupportListPage),
-    AutoRoute(page: UpsertSupportPage),
+    AutoRoute(page: SupportUpsertPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

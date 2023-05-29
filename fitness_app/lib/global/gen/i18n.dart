@@ -332,6 +332,18 @@ class I18n implements WidgetsLocalizations {
 	String get support_CreateDes => "Are you sure you want to create a new support request?";
 	/// "You have created a support request successfully"
 	String get support_CreateSuccess => "You have created a support request successfully";
+	/// "Cancel support request"
+	String get support_CancelTitle => "Cancel support request";
+	/// "Are you sure you want to cancel your support request?"
+	String get support_CancelDes => "Are you sure you want to cancel your support request?";
+	/// "You have cancelled a support request successfully"
+	String get support_CancelSuccess => "You have cancelled a support request successfully";
+	/// "Update support request"
+	String get support_UpdateTitle => "Update support request";
+	/// "Are you sure you want to update your support request?"
+	String get support_UpdateDes => "Are you sure you want to update your support request?";
+	/// "You have updated a support request successfully"
+	String get support_UpdateSuccess => "You have updated a support request successfully";
 	/// "Chart"
 	String get chart_Chart => "Chart";
 	/// ["Column", "Bar", "Line", "Bubble", "Stepline"]
@@ -790,6 +802,24 @@ class _I18n_vi_VN extends I18n {
 	/// "Bạn đã tạo yêu cầu thành công"
 	@override
 	String get support_CreateSuccess => "Bạn đã tạo yêu cầu thành công";
+	/// "Huỷ yêu cầu hỗ trợ"
+	@override
+	String get support_CancelTitle => "Huỷ yêu cầu hỗ trợ";
+	/// "Bạn có chắc chắn muốn huỷ yêu cầu hỗ trợ?"
+	@override
+	String get support_CancelDes => "Bạn có chắc chắn muốn huỷ yêu cầu hỗ trợ?";
+	/// "Bạn đã huỷ yêu cầu thành công"
+	@override
+	String get support_CancelSuccess => "Bạn đã huỷ yêu cầu thành công";
+	/// "Cập nhật yêu cầu hỗ trợ"
+	@override
+	String get support_UpdateTitle => "Cập nhật yêu cầu hỗ trợ";
+	/// "Bạn có chắc chắn muốn cập nhật yêu cầu hỗ trợ?"
+	@override
+	String get support_UpdateDes => "Bạn có chắc chắn muốn cập nhật yêu cầu hỗ trợ?";
+	/// "Bạn đã cập nhật yêu cầu thành công"
+	@override
+	String get support_UpdateSuccess => "Bạn đã cập nhật yêu cầu thành công";
 	/// "Biểu đồ"
 	@override
 	String get chart_Chart => "Biểu đồ";

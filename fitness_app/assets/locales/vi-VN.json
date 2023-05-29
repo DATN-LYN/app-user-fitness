@@ -218,7 +218,13 @@
       "image": "Hình ảnh",
       "createTitle": "Tạo yêu cầu hỗ trợ",
       "createDes": "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?",
-      "createSuccess": "Bạn đã tạo yêu cầu thành công"
+      "createSuccess": "Bạn đã tạo yêu cầu thành công",
+      "cancelTitle": "Huỷ yêu cầu hỗ trợ",
+      "cancelDes": "Bạn có chắc chắn muốn huỷ yêu cầu hỗ trợ?",
+      "cancelSuccess": "Bạn đã huỷ yêu cầu thành công",
+      "updateTitle": "Cập nhật yêu cầu hỗ trợ",
+      "updateDes": "Bạn có chắc chắn muốn cập nhật yêu cầu hỗ trợ?",
+      "updateSuccess": "Bạn đã cập nhật yêu cầu thành công"
   },
   "chart_":{
     "chart": "Biểu đồ",
