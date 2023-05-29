@@ -229,10 +229,10 @@
   "chart_":{
     "chart": "Biểu đồ",
     "chartType":[
-      "Cột",
-      "Thanh",
-      "Đường",
-      "Đường bậc thang"
+      "cột",
+      "thanh",
+      "đường",
+      "đường bậc thang"
     ]
  }
 }

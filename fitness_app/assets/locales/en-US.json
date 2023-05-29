@@ -227,11 +227,10 @@
   "chart_":{
     "chart": "Chart",
     "chartType":[
-      "Column",
-      "Bar",
-      "Line",
-      "Bubble",
-      "Stepline"
+      "column",
+      "bar",
+      "line",
+      "stepline"
     ]
   }  
 }

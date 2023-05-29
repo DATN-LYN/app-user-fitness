@@ -9,7 +9,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../global/data/models/statistics_filter_data.dart';
 import '../../../../../global/graphql/query/__generated__/query_get_my_stats.data.gql.dart';
-import '../../../../../global/widgets/shadow_wrapper.dart';
 
 class StatisticsChart extends StatefulWidget {
   const StatisticsChart({
@@ -56,16 +55,18 @@ class _StatisticsChartState extends State<StatisticsChart> {
 
     final options = ChartType.values
         .map(
-          (e) => AdaptiveSelectorOption(label: e.label(i18n), value: e),
+          (e) => AdaptiveSelectorOption(
+            label: '${i18n.chart_Chart} ${e.label(i18n)}',
+            value: e,
+          ),
         )
         .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: 210,
+          width: 270,
           height: 40,
           child: AdaptiveSelector(
             allowClear: false,
@@ -81,65 +82,63 @@ class _StatisticsChartState extends State<StatisticsChart> {
           ),
         ),
         const SizedBox(height: 16),
-        ShadowWrapper(
-          padding: const EdgeInsets.all(8),
-          child: SizedBox(
-            height: 300,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: SfCartesianChart(
-              tooltipBehavior: TooltipBehavior(
-                enable: true,
-                builder: (data, point, _, __, ___) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 6,
-                    ),
-                    child: Text(
-                      '${(point.y as double).toStringWithNoZero()} ',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  );
-                },
-              ),
-              primaryXAxis: CategoryAxis(
-                axisLine: const AxisLine(width: 0),
-                interval: 1,
-              ),
-              series: [
-                if (chartType == ChartType.column)
-                  ColumnSeries(
-                    dataSource: initialData,
-                    borderRadius: BorderRadius.circular(10),
-                    xValueMapper: (data, index) => xValues[index],
-                    yValueMapper: (data, index) => data,
-                  ),
-                if (chartType == ChartType.bar)
-                  BarSeries(
-                    dataSource: initialData,
-                    borderRadius: BorderRadius.circular(10),
-                    xValueMapper: (data, index) => xValues[index],
-                    yValueMapper: (data, index) => data,
-                  ),
-                if (chartType == ChartType.line)
-                  LineSeries(
-                    dataSource: initialData,
-                    xValueMapper: (data, index) => xValues[index],
-                    yValueMapper: (data, index) => data,
-                  ),
-                if (chartType == ChartType.stepline)
-                  StepLineSeries(
-                    dataSource: initialData,
-                    xValueMapper: (data, index) => xValues[index],
-                    yValueMapper: (data, index) => data,
-                  ),
-              ],
-            ),
+        SfCartesianChart(
+          zoomPanBehavior: ZoomPanBehavior(
+            enablePanning: true,
           ),
+          tooltipBehavior: TooltipBehavior(
+            enable: true,
+            builder: (data, point, _, __, ___) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 6,
+                ),
+                child: Text(
+                  '${(point.y as double).toStringWithNoZero()} ',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            },
+          ),
+          primaryXAxis: CategoryAxis(
+            axisLine: const AxisLine(width: 0),
+            interval: 1,
+            autoScrollingMode: AutoScrollingMode.start,
+            autoScrollingDelta: 12,
+          ),
+          series: [
+            if (chartType == ChartType.column)
+              ColumnSeries(
+                dataSource: initialData,
+                borderRadius: BorderRadius.circular(10),
+                xValueMapper: (data, index) => xValues[index],
+                yValueMapper: (data, index) => data,
+              ),
+            if (chartType == ChartType.bar)
+              BarSeries(
+                dataSource: initialData,
+                borderRadius: BorderRadius.circular(10),
+                xValueMapper: (data, index) => xValues[index],
+                yValueMapper: (data, index) => data,
+              ),
+            if (chartType == ChartType.line)
+              LineSeries(
+                dataSource: initialData,
+                xValueMapper: (data, index) => xValues[index],
+                yValueMapper: (data, index) => data,
+              ),
+            if (chartType == ChartType.stepline)
+              StepLineSeries(
+                dataSource: initialData,
+                xValueMapper: (data, index) => xValues[index],
+                yValueMapper: (data, index) => data,
+              ),
+          ],
         ),
       ],
     );
