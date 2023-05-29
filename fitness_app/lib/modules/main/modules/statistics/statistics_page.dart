@@ -28,6 +28,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   var filterData =
       const StatisticsFilterData(rangeType: FilterRangeType.weekly);
   var key = GlobalKey();
+  var scaffoldKey = GlobalKey();
 
   late var getMyStatsReq = GGetMyStatsReq(
     (b) => b
@@ -74,68 +75,76 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
     final client = ref.watch(appClientProvider);
 
     return Scaffold(
-      key: key,
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text(i18n.main_Statistics),
       ),
-      body: Operation(
-          client: client,
-          operationRequest: getMyStatsReq,
-          builder: (context, response, error) {
-            if (response?.loading == true) {
-              return const SizedBox();
-            }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            scaffoldKey = GlobalKey();
+          });
+        },
+        child: Operation(
+            client: client,
+            operationRequest: getMyStatsReq,
+            builder: (context, response, error) {
+              if (response?.loading == true) {
+                return const SizedBox();
+              }
 
-            if (response?.hasErrors == true) {
-              return FitnessError(response: response);
-            }
+              if (response?.hasErrors == true) {
+                return FitnessError(response: response);
+              }
 
-            final data = response?.data;
-            final stats = data?.getMyStats.items?.toList();
+              final data = response?.data;
+              final stats = data?.getMyStats.items?.toList();
 
-            return ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                StatisticsFilter(
-                  filter: filterData,
-                  request: GGetMyStatsReq(
-                    (b) => b
-                      ..vars.queryParams =
-                          getMyStatsReq.vars.queryParams.toBuilder(),
+              return ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  StatisticsFilter(
+                    filter: filterData,
+                    request: GGetMyStatsReq(
+                      (b) => b
+                        ..vars.queryParams =
+                            getMyStatsReq.vars.queryParams.toBuilder(),
+                    ),
+                    onChanged: (getMyStatsReq, selectedFilter) =>
+                        handleFilterChange(getMyStatsReq, selectedFilter),
                   ),
-                  onChanged: (getMyStatsReq, selectedFilter) =>
-                      handleFilterChange(getMyStatsReq, selectedFilter),
-                ),
-                StatisticsOverview(
-                  data: stats,
-                ),
-                const SizedBox(height: 16),
-                StatisticsChart(
-                  data: stats ?? [],
-                  filter: filterData,
-                ),
-                const SizedBox(height: 32),
-                Text(
-                  i18n.statistics_RecentWorkout,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                  StatisticsOverview(
+                    data: stats,
                   ),
-                ),
-                const SizedBox(height: 16),
-                if (isLogedIn && stats != null && stats.isNotEmpty == true)
-                  const StatisticsRecentlyWorkout()
-                else
-                  FitnessEmpty(
-                    title: i18n.common_Oops,
-                    message: isLogedIn
-                        ? i18n.common_EmptyData
-                        : i18n.common_YouHaveToLogin,
+                  const SizedBox(height: 16),
+                  StatisticsChart(
+                    key: key,
+                    data: stats ?? [],
+                    filter: filterData,
                   ),
-                const SizedBox(height: 16),
-              ],
-            );
-          }),
+                  const SizedBox(height: 32),
+                  Text(
+                    i18n.statistics_RecentWorkout,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  if (isLogedIn && stats != null && stats.isNotEmpty == true)
+                    const StatisticsRecentlyWorkout()
+                  else
+                    FitnessEmpty(
+                      title: i18n.common_Oops,
+                      message: isLogedIn
+                          ? i18n.common_EmptyData
+                          : i18n.common_YouHaveToLogin,
+                    ),
+                  const SizedBox(height: 16),
+                ],
+              );
+            }),
+      ),
     );
   }
 }
