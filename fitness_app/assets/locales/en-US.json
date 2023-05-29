@@ -204,5 +204,16 @@
       ],
       "supportDetails": "Support Request Details",
       "title": "Support"
+  },
+  "chart_":{
+    "chart": "Chart",
+    "chartType":[
+      "Column",
+      "Bar",
+      "Line",
+      "Bubble",
+      "Stepline"
+    ]
   }
+  
 }

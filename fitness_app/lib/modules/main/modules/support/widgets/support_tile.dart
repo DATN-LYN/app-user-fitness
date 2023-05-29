@@ -64,8 +64,8 @@ class SupportTile extends ConsumerWidget {
         child: Row(
           children: [
             Container(
-              width: 60,
-              height: 60,
+              width: 50,
+              height: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 color: AppColors.primarySoft,
@@ -86,6 +86,7 @@ class SupportTile extends ConsumerWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
                   Text(
