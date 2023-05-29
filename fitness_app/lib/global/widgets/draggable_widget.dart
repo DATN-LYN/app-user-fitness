@@ -47,7 +47,7 @@ class DraggableWidget extends StatefulWidget {
     this.horizontalSpace = 0,
     this.verticalSpace = 0,
     this.initialPosition = AnchoringPosition.centerRight,
-    this.bottomMargin = 100,
+    this.bottomMargin = 150,
     this.topMargin = 0,
     this.statusBarHeight = 24,
     this.shadowBorderRadius = 0,
@@ -184,7 +184,8 @@ class _DraggableWidgetState extends State<DraggableWidget>
           });
         }
         setState(() {
-          boundary = MediaQuery.of(context).size.height - widget.bottomMargin;
+          boundary =
+              MediaQuery.of(context).size.height - widget.bottomMargin + 50;
           animateWidget(currentlyDocked);
         });
       });

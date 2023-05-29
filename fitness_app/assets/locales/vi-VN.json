@@ -207,6 +207,9 @@
       "chooseFormGallery": "Chọn từ thư viện",
       "pickPhoto": "Chọn một hình ảnh",
       "image": "Hình ảnh",
-      "content": "Nội dung"
+      "content": "Nội dung",
+      "createTitle": "Tạo yêu cầu hỗ trợ",
+      "createDes": "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?",
+      "createSuccess": "Bạn đã tạo yêu cầu thành công"
     }
 }

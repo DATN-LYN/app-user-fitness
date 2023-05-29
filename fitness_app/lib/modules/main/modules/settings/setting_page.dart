@@ -21,10 +21,10 @@ import '../../../../global/gen/assets.gen.dart';
 import '../../../../global/gen/i18n.dart';
 import '../../../../global/routers/app_router.dart';
 import '../../../../global/utils/constants.dart';
-import '../../../../global/utils/draggable_widget.dart';
 import '../../../../global/widgets/avatar.dart';
 import '../../../../global/widgets/dialogs/confirmation_dialog.dart';
 import '../../../../global/widgets/dialogs/radio_selector_dialog.dart';
+import '../../../../global/widgets/draggable_widget.dart';
 
 class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
@@ -301,7 +301,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
           child: GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () {
-              AutoRouter.of(context).push(SupportRoute());
+              AutoRouter.of(context).push(const UpsertSupportRoute());
             },
             child: Assets.images.operator.image(
               width: min(60, width * 0.25),

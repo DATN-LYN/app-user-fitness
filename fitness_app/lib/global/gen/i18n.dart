@@ -320,6 +320,12 @@ class I18n implements WidgetsLocalizations {
 	String get support_Image => "Image";
 	/// "Content"
 	String get support_Content => "Content";
+	/// "Create support request"
+	String get support_CreateTitle => "Create support request";
+	/// "Are you sure you want to create a new support request?"
+	String get support_CreateDes => "Are you sure you want to create a new support request?";
+	/// "You have created a support request successfully"
+	String get support_CreateSuccess => "You have created a support request successfully";
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 	/// "Nhập tên thể loại"
@@ -756,6 +762,15 @@ class _I18n_vi_VN extends I18n {
 	/// "Nội dung"
 	@override
 	String get support_Content => "Nội dung";
+	/// "Tạo yêu cầu hỗ trợ"
+	@override
+	String get support_CreateTitle => "Tạo yêu cầu hỗ trợ";
+	/// "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?"
+	@override
+	String get support_CreateDes => "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?";
+	/// "Bạn đã tạo yêu cầu thành công"
+	@override
+	String get support_CreateSuccess => "Bạn đã tạo yêu cầu thành công";
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

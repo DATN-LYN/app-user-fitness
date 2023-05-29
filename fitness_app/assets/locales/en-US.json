@@ -205,6 +205,9 @@
       "chooseFormGallery": "Choose From Gallery",
       "pickImage": "Pick a image",
       "image": "Image",
-      "content": "Content"
+      "content": "Content",
+      "createTitle": "Create support request",
+      "createDes": "Are you sure you want to create a new support request?",
+      "createSuccess": "You have created a support request successfully"
     }
 }

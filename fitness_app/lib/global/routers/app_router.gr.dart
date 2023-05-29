@@ -133,10 +133,10 @@ class _$AppRouter extends RootStackRouter {
         child: const EditProfilePage(),
       );
     },
-    SupportRoute.name: (routeData) {
+    UpsertSupportRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const SupportPage(),
+        child: const UpsertSupportPage(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -250,8 +250,8 @@ class _$AppRouter extends RootStackRouter {
           path: '/edit-profile-page',
         ),
         RouteConfig(
-          SupportRoute.name,
-          path: '/support-page',
+          UpsertSupportRoute.name,
+          path: '/upsert-support-page',
         ),
       ];
 }
@@ -578,15 +578,15 @@ class EditProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SupportPage]
-class SupportRoute extends PageRouteInfo<void> {
-  const SupportRoute()
+/// [UpsertSupportPage]
+class UpsertSupportRoute extends PageRouteInfo<void> {
+  const UpsertSupportRoute()
       : super(
-          SupportRoute.name,
-          path: '/support-page',
+          UpsertSupportRoute.name,
+          path: '/upsert-support-page',
         );
 
-  static const String name = 'SupportRoute';
+  static const String name = 'UpsertSupportRoute';
 }
 
 /// generated route for
