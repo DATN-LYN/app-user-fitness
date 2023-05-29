@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,7 +10,7 @@ import '../../../../../global/graphql/cache_handler/upsert_support_cache_handler
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/graphql/fragment/__generated__/support_fragment.data.gql.dart';
 import '../../../../../global/graphql/mutation/__generated__/mutation_upsert_support.req.gql.dart';
-import '../../../../../global/providers/me_provider.dart';
+import '../../../../../global/routers/app_router.dart';
 import '../../../../../global/themes/app_colors.dart';
 import '../../../../../global/widgets/tag.dart';
 
@@ -25,20 +26,20 @@ class SupportTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final status = SupportStatus.getStatus(support.status ?? 1);
     final i18n = I18n.of(context)!;
-    final user = ref.read(meProvider)?.user;
 
     void markRead() async {
       final client = ref.watch(appClientProvider);
 
       var formData = GUpsertSupportInputDto(
         (b) => b
-          ..content = support.content
           ..id = support.id
+          ..content = support.content
           ..imgUrl = support.imgUrl
           ..isRead = true
           ..status = support.status
           ..userId = support.userId,
       );
+
       var request = GUpsertSupportReq(
         (b) => b
           ..vars.input.replace(formData)
@@ -54,7 +55,9 @@ class SupportTile extends ConsumerWidget {
     return InkWell(
       onTap: () {
         markRead();
-        // context.pushRoute(SupportUpsertRoute(support: support));
+        if (context.mounted) {
+          context.pushRoute(SupportUpsertRoute(support: support));
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(16),

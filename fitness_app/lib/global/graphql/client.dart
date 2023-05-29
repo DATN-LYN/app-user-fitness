@@ -1,5 +1,6 @@
 import 'package:ferry/ferry.dart';
 import 'package:ferry_hive_store/ferry_hive_store.dart';
+import 'package:fitness_app/global/graphql/cache_handler/upsert_support_cache_handler.dart';
 import 'package:fitness_app/global/providers/user_credential_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
@@ -68,7 +69,7 @@ class AppClient {
         OperationType.mutation: FetchPolicy.NoCache,
       },
       updateCacheHandlers: {
-        // UpsertInboxHandler.key: UpsertInboxHandler.handler,
+        UpsertSupportCacheHandler.key: UpsertSupportCacheHandler.handler,
       },
     );
     return client;

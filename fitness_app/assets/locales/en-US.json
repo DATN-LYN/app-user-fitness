@@ -6,7 +6,9 @@
         "cancel": "Cancel",
         "ok": "OK",
         "tryAgain": "Try Again",
-        "apply": "Apply"
+        "apply": "Apply",
+        "send": "Send",
+        "reset":"Reset"
     },
     "onboard_": {
         "title": [
@@ -203,7 +205,24 @@
           "Cancelled"
       ],
       "supportDetails": "Support Request Details",
-      "title": "Support"
+      "title": "Support",
+      "description": "Tell us your problem",
+      "contentHint": "Enter your question,problem,...",
+      "contentRequired": "Content is required",
+      "uploadPhoto": "Upload Photo",
+      "takePhoto": "Take Photo",
+      "chooseFormGallery": "Choose From Gallery",
+      "pickImage": "Pick a image",
+      "image": "Image",
+      "createTitle": "Create support request",
+      "createDes": "Are you sure you want to create a new support request?",
+      "createSuccess": "You have created a support request successfully",
+      "cancelTitle": "Cancel support request",
+      "cancelDes": "Are you sure you want to cancel your support request?",
+      "cancelSuccess": "You have cancelled a support request successfully",
+      "updateTitle": "Update support request",
+      "updateDes": "Are you sure you want to update your support request?",
+      "updateSuccess": "You have updated a support request successfully"
   },
   "chart_":{
     "chart": "Chart",
@@ -214,6 +233,5 @@
       "Bubble",
       "Stepline"
     ]
-  }
-  
+  }  
 }

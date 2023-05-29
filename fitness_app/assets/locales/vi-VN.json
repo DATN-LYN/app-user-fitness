@@ -207,7 +207,24 @@
           "Đã huỷ"
       ],
       "supportDetails": "Chi tiết yêu cầu hỗ trợ",
-      "title": "Hỗ trợ"
+      "title": "Hỗ trợ",
+      "description": "Hãy cho chúng tôi biết vấn đề của bạn",
+      "contentHint": "Nhập câu hỏi,vấn đề,...",
+      "contentRequired": "Bạn chưa nhập nội dung",
+      "uploadPhoto": "Tải lên hình ảnh",
+      "takePhoto": "Chụp ảnh",
+      "chooseFormGallery": "Chọn từ thư viện",
+      "pickPhoto": "Chọn một hình ảnh",
+      "image": "Hình ảnh",
+      "createTitle": "Tạo yêu cầu hỗ trợ",
+      "createDes": "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?",
+      "createSuccess": "Bạn đã tạo yêu cầu thành công",
+      "cancelTitle": "Huỷ yêu cầu hỗ trợ",
+      "cancelDes": "Bạn có chắc chắn muốn huỷ yêu cầu hỗ trợ?",
+      "cancelSuccess": "Bạn đã huỷ yêu cầu thành công",
+      "updateTitle": "Cập nhật yêu cầu hỗ trợ",
+      "updateDes": "Bạn có chắc chắn muốn cập nhật yêu cầu hỗ trợ?",
+      "updateSuccess": "Bạn đã cập nhật yêu cầu thành công"
   },
   "chart_":{
     "chart": "Biểu đồ",
@@ -217,5 +234,5 @@
       "Đường",
       "Đường bậc thang"
     ]
-  }
+ }
 }

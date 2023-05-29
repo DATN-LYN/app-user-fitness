@@ -79,19 +79,19 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
         title: Text(i18n.main_Statistics),
       ),
       body: Operation(
-          client: client,
-          operationRequest: getMyStatsReq,
-          builder: (context, response, error) {
-            if (response?.loading == true) {
-              return const SizedBox();
-            }
+        client: client,
+        operationRequest: getMyStatsReq,
+        builder: (context, response, error) {
+          if (response?.loading == true) {
+            return const SizedBox();
+          }
 
-            if (response?.hasErrors == true) {
-              return FitnessError(response: response);
-            }
+          if (response?.hasErrors == true) {
+            return FitnessError(response: response);
+          }
 
-            final data = response?.data;
-            final stats = data?.getMyStats.items?.toList();
+          final data = response?.data;
+          final stats = data?.getMyStats.items?.toList();
 
             return ListView(
               padding: const EdgeInsets.all(16),
