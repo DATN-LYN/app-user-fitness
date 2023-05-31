@@ -10,6 +10,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../global/graphql/client.dart';
 import '../../global/providers/me_provider.dart';
@@ -93,6 +94,10 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                         showNegativeButton: false,
                         titleText: i18n.common_Success,
                         contentText: i18n.editProfile_UpdateSuccess,
+                        image: const Icon(
+                          Ionicons.checkmark_circle,
+                          color: AppColors.primaryBold,
+                        ),
                       );
                     },
                   );

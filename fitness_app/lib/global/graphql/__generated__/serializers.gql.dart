@@ -8,6 +8,7 @@ import 'package:built_value/standard_json_plugin.dart' show StandardJsonPlugin;
 import 'package:ferry_exec/ferry_exec.dart';
 import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
     show
+        GChangePasswordInputDto,
         GFILTER_OPERATOR,
         GFilterDto,
         GLoginInputDto,
@@ -22,6 +23,12 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
         GUpsertUserInputDto,
         GUpsertUserProgramInputDto,
         GUpsertUserStatisticsInputDto;
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_change_password.data.gql.dart'
+    show GChangePasswordData, GChangePasswordData_changePassword;
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_change_password.req.gql.dart'
+    show GChangePasswordReq;
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_change_password.var.gql.dart'
+    show GChangePasswordVars;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.data.gql.dart'
     show GLogoutData, GLogoutData_logout;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_logout.req.gql.dart'
@@ -280,6 +287,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GCategoryData,
   GCategoryReq,
   GCategoryVars,
+  GChangePasswordData,
+  GChangePasswordData_changePassword,
+  GChangePasswordInputDto,
+  GChangePasswordReq,
+  GChangePasswordVars,
   GExerciseData,
   GExerciseData_program,
   GExerciseReq,
