@@ -82,9 +82,9 @@ class UserStatistic extends ConsumerWidget {
               icon: const Icon(
                 Icons.timelapse,
                 size: 30,
-                color: AppColors.information,
+                color: AppColors.alert,
               ),
-              backgroundColor: AppColors.informationSoft,
+              backgroundColor: AppColors.alertSoft,
             ),
             UserStatisticItem(
               title: programs?.toInt().toString() ?? '_',
@@ -193,9 +193,9 @@ class UnLoginUserStatistics extends StatelessWidget {
           icon: const Icon(
             Icons.timelapse,
             size: 30,
-            color: AppColors.information,
+            color: AppColors.alert,
           ),
-          backgroundColor: AppColors.informationSoft,
+          backgroundColor: AppColors.alertSoft,
         ),
         UserStatisticItem(
           title: '0',
