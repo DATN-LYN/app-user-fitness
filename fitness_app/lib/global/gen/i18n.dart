@@ -198,6 +198,10 @@ class I18n implements WidgetsLocalizations {
 	String get setting_ConfirmLogout => "Confirm logout";
 	/// "You need confirm to logout from this app"
 	String get setting_ConfirmLogoutDes => "You need confirm to logout from this app";
+	/// "Are you sure you want to change your password?"
+	String get setting_ChangePasswordConfirm => "Are you sure you want to change your password?";
+	/// "Your password has been updated successfully."
+	String get setting_ChangePasswordSuccess => "Your password has been updated successfully.";
 	/// "Confirm quit"
 	String get exerciseDetail_QuitWorkout => "Confirm quit";
 	/// "Are you sure you want to quit workout?"
@@ -610,6 +614,12 @@ class _I18n_vi_VN extends I18n {
 	/// "Bạn cần xác nhận để đăng xuất khỏi ứng dụng"
 	@override
 	String get setting_ConfirmLogoutDes => "Bạn cần xác nhận để đăng xuất khỏi ứng dụng";
+	/// "Bạn có chắc chắn muốn thay đổi mật khẩu"
+	@override
+	String get setting_ChangePasswordConfirm => "Bạn có chắc chắn muốn thay đổi mật khẩu";
+	/// "Bạn đã cập nhật mật khẩu thành công"
+	@override
+	String get setting_ChangePasswordSuccess => "Bạn đã cập nhật mật khẩu thành công";
 	/// "Confirm quit"
 	@override
 	String get exerciseDetail_QuitWorkout => "Confirm quit";

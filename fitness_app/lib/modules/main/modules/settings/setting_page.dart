@@ -60,8 +60,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
     }
   }
 
-  Future<void> changePasswordHandler() async {
-    final data = await showModalBottomSheet(
+  void changePasswordHandler() async {
+    showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       shape: const RoundedRectangleBorder(
@@ -72,8 +72,6 @@ class _SettingPageState extends ConsumerState<SettingPage> {
       ),
       builder: (_) => const ChangePasswordBottomSheet(),
     );
-
-    if (data != null) {}
   }
 
   void logOut() {

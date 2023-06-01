@@ -1,32 +1,87 @@
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/auth/__generated__/mutation_change_password.req.gql.dart';
+import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/utils/dialogs.dart';
+import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../../../../global/gen/i18n.dart';
+import '../../../../../global/graphql/client.dart';
 import '../../../../../global/themes/app_colors.dart';
 import '../../../../../global/widgets/label.dart';
 
-class ChangePasswordBottomSheet extends StatefulWidget {
+class ChangePasswordBottomSheet extends ConsumerStatefulWidget {
   const ChangePasswordBottomSheet({super.key});
 
   @override
-  State<ChangePasswordBottomSheet> createState() =>
+  ConsumerState<ChangePasswordBottomSheet> createState() =>
       _ChangePasswordBottomSheetState();
 }
 
-class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
+class _ChangePasswordBottomSheetState
+    extends ConsumerState<ChangePasswordBottomSheet> {
   final formKey = GlobalKey<FormBuilderState>();
   bool passwordObscure = true;
   bool newPasswordObscure = true;
   bool confirmNewPasswordObscure = true;
 
-  void navigateToSettingPage() {
+  void changePass() {
     if (formKey.currentState!.saveAndValidate()) {
       final data = formKey.currentState!.value;
-      AutoRouter.of(context).pop(data);
+      final client = ref.read(appClientProvider);
+      final i18n = I18n.of(context)!;
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ConfirmationDialog(
+            titleText: i18n.setting_ChangePassword,
+            contentText: i18n.setting_ChangePasswordConfirm,
+            onTapPositiveButton: () async {
+              final req = GChangePasswordReq(
+                (b) => b
+                  ..vars.input.oldPassword = data['oldPassword']
+                  ..vars.input.newPassword = data['newPassword'],
+              );
+
+              final res = await client.request(req).first;
+
+              if (res.hasErrors) {
+                if (mounted) {
+                  DialogUtils.showError(context: context, response: res);
+                }
+              } else {
+                if (mounted) {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ConfirmationDialog(
+                        titleText: i18n.common_Success,
+                        contentText: i18n.setting_ChangePasswordSuccess,
+                        showNegativeButton: false,
+                        image: const Icon(
+                          Ionicons.checkmark_circle,
+                          color: AppColors.primaryBold,
+                        ),
+                      );
+                    },
+                  );
+                  if (mounted) {
+                    AutoRouter.of(context)
+                        .popUntilRouteWithName(SettingRoute.name);
+                  }
+                }
+              }
+            },
+          );
+        },
+      );
     }
   }
 
@@ -173,12 +228,11 @@ class _ChangePasswordBottomSheetState extends State<ChangePasswordBottomSheet> {
                 ),
               ),
             ),
-            onSubmitted: (_) => navigateToSettingPage(),
             autocorrect: false,
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: navigateToSettingPage,
+            onPressed: changePass,
             child: Text(i18n.setting_ConfirmChange),
           ),
         ],

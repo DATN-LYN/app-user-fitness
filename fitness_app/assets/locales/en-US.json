@@ -105,7 +105,9 @@
       "confirmNewPasswordRequired": "Confirm new password is required",
       "passwordNotMatch": "Password not match",
       "confirmLogout": "Confirm logout",
-      "confirmLogoutDes": "You need confirm to logout from this app"
+      "confirmLogoutDes": "You need confirm to logout from this app",
+      "changePasswordConfirm": "Are you sure you want to change your password?",
+      "changePasswordSuccess": "Your password has been updated successfully."
     },
     "exerciseDetail_":{
       "quitWorkout":"Confirm quit",
