@@ -8,8 +8,8 @@ import 'package:fitness_app/modules/main/modules/statistics/helper/statistics_he
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../../../global/data/models/statistics_filter_data.dart';
 import '../../../../../global/graphql/query/__generated__/query_get_my_stats.data.gql.dart';
+import '../models/statistics_filter_data.dart';
 
 class StatisticsChart extends StatefulWidget {
   const StatisticsChart({

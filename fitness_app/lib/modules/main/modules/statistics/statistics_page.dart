@@ -1,11 +1,11 @@
 import 'package:built_collection/src/list.dart';
 import 'package:ferry_flutter/ferry_flutter.dart';
-import 'package:fitness_app/global/data/models/statistics_filter_data.dart';
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_stats.req.gql.dart';
 import 'package:fitness_app/global/providers/me_provider.dart';
 import 'package:fitness_app/global/widgets/fitness_error.dart';
+import 'package:fitness_app/modules/main/modules/statistics/models/statistics_filter_data.dart';
 import 'package:fitness_app/modules/main/modules/statistics/widgets/statistics_filter.dart';
 import 'package:fitness_app/modules/main/modules/statistics/widgets/statistics_recently_workout.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +25,11 @@ class StatisticsPage extends ConsumerStatefulWidget {
 }
 
 class _StatisticsPageState extends ConsumerState<StatisticsPage> {
-  var filterData =
-      const StatisticsFilterData(rangeType: FilterRangeType.weekly);
+  var filterData = StatisticsFilterData(
+    rangeType: FilterRangeType.weekly,
+    startDate: FilterRangeType.weekly.startDate(),
+    endDate: FilterRangeType.weekly.endDate(),
+  );
   var key = GlobalKey();
   var scaffoldKey = GlobalKey();
 
@@ -39,13 +42,13 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
         [
           GFilterDto(
             (b) => b
-              ..data = filterData.rangeType!.startDate().toString()
+              ..data = filterData.startDate.toString()
               ..field = 'UserStatistics.updatedAt'
               ..operator = GFILTER_OPERATOR.gt,
           ),
           GFilterDto(
             (b) => b
-              ..data = filterData.rangeType!.endDate().toString().toString()
+              ..data = filterData.endDate.toString().toString()
               ..field = 'UserStatistics.updatedAt'
               ..operator = GFILTER_OPERATOR.lt,
           ),
@@ -86,7 +89,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
           });
         },
         child: !isLogedIn
-            ? UnLoginStatistics()
+            ? const UnLoginStatistics()
             : Operation(
                 client: client,
                 operationRequest: getMyStatsReq,

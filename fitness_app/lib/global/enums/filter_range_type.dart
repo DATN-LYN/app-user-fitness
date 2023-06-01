@@ -5,7 +5,8 @@ import '../gen/i18n.dart';
 enum FilterRangeType {
   weekly(),
   monthly(),
-  yearly();
+  yearly(),
+  advanced();
 
   DateTime? startDate({int? month, int? year}) {
     switch (this) {
@@ -15,6 +16,8 @@ enum FilterRangeType {
         return getFirstDayOfMonth(month ?? Jiffy().month);
       case FilterRangeType.yearly:
         return getFirstDayOfYear(year ?? Jiffy().year);
+      case FilterRangeType.advanced:
+        return null;
     }
   }
 
@@ -26,6 +29,8 @@ enum FilterRangeType {
         return getLastDayOfMonth(month ?? Jiffy().month);
       case FilterRangeType.yearly:
         return getLastDayOfYear(year ?? Jiffy().year);
+      case FilterRangeType.advanced:
+        return null;
     }
   }
 
@@ -37,17 +42,8 @@ enum FilterRangeType {
         return i18n.common_Monthly;
       case FilterRangeType.yearly:
         return i18n.common_Yearly;
-    }
-  }
-
-  String timeText(I18n i18n) {
-    switch (this) {
-      case FilterRangeType.weekly:
-        return i18n.statistics_ThisWeek;
-      case FilterRangeType.monthly:
-        return i18n.statistics_ThisMonth;
-      case FilterRangeType.yearly:
-        return i18n.statistics_ThisMonth;
+      case FilterRangeType.advanced:
+        return 'Advanced';
     }
   }
 
@@ -80,6 +76,8 @@ enum FilterRangeType {
         return List.generate(daysInMonth, (index) => (index + 1).toString());
       case FilterRangeType.yearly:
         return List.generate(12, (index) => (index + 1).toString());
+      case FilterRangeType.advanced:
+        return [];
     }
   }
 
@@ -94,6 +92,8 @@ enum FilterRangeType {
         return List.generate(daysInMonth, (index) => index + 1);
       case FilterRangeType.yearly:
         return List.generate(12, (index) => index + 1);
+      case FilterRangeType.advanced:
+        return [];
     }
   }
 }

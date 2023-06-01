@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../../../global/enums/filter_range_type.dart';
+import '../../../../../../../../global/enums/filter_range_type.dart';
 
 part 'statistics_filter_data.freezed.dart';
 
@@ -10,5 +10,7 @@ class StatisticsFilterData with _$StatisticsFilterData {
     int? month,
     int? year,
     FilterRangeType? rangeType,
+    DateTime? startDate,
+    DateTime? endDate,
   }) = _StatisticsFilterData;
 }

@@ -1,7 +1,7 @@
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:jiffy/jiffy.dart';
 
-import '../../../../../global/data/models/statistics_filter_data.dart';
+import '../models/statistics_filter_data.dart';
 import '../../../../../global/graphql/query/__generated__/query_get_my_stats.data.gql.dart';
 
 class StatisticsHelper {
