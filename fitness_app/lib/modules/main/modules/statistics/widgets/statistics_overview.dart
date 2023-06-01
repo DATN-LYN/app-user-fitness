@@ -1,4 +1,3 @@
-
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/providers/me_provider.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ import '../../../../../global/widgets/stats/user_statistic_item.dart';
 
 class StatisticsOverview extends ConsumerWidget {
   const StatisticsOverview({
-    required this.data,
+    this.data,
     super.key,
   });
 

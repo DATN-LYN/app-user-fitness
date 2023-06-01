@@ -47,8 +47,8 @@ class ProgramOverview extends StatelessWidget {
                 label: DateTimeHelper.totalDurationFormat(
                   Duration(seconds: totalDuration.toInt()),
                 ),
-                iconColor: AppColors.information,
-                backgroundColor: AppColors.informationSoft,
+                iconColor: AppColors.alert,
+                backgroundColor: AppColors.alertSoft,
               ),
             ),
             Expanded(
@@ -63,8 +63,8 @@ class ProgramOverview extends StatelessWidget {
               child: ProgramInfoTile(
                 icon: Ionicons.body,
                 label: bodyPart.label(i18n),
-                iconColor: AppColors.alert,
-                backgroundColor: AppColors.alertSoft,
+                iconColor: AppColors.information,
+                backgroundColor: AppColors.informationSoft,
               ),
             ),
           ],

@@ -3,6 +3,7 @@ import 'package:fitness_app/global/enums/chart_type.dart';
 import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/extensions/double_extension.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/global/themes/app_colors.dart';
 import 'package:fitness_app/modules/main/modules/statistics/helper/statistics_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -118,6 +119,9 @@ class _StatisticsChartState extends State<StatisticsChart> {
                 borderRadius: BorderRadius.circular(10),
                 xValueMapper: (data, index) => xValues[index],
                 yValueMapper: (data, index) => data,
+                color: AppColors.chartColor,
+                width: 0.7,
+                spacing: 0.3,
               ),
             if (chartType == ChartType.bar)
               BarSeries(
@@ -125,18 +129,23 @@ class _StatisticsChartState extends State<StatisticsChart> {
                 borderRadius: BorderRadius.circular(10),
                 xValueMapper: (data, index) => xValues[index],
                 yValueMapper: (data, index) => data,
+                color: AppColors.chartColor,
+                width: 0.7,
+                spacing: 0.3,
               ),
             if (chartType == ChartType.line)
               LineSeries(
                 dataSource: initialData,
                 xValueMapper: (data, index) => xValues[index],
                 yValueMapper: (data, index) => data,
+                color: AppColors.chartColor,
               ),
             if (chartType == ChartType.stepline)
               StepLineSeries(
                 dataSource: initialData,
                 xValueMapper: (data, index) => xValues[index],
                 yValueMapper: (data, index) => data,
+                color: AppColors.chartColor,
               ),
           ],
         ),

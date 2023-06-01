@@ -72,7 +72,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         child: GestureDetector(
           onTapDown: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           child: ListView(padding: const EdgeInsets.all(16), children: [
-            Assets.images.logo.image(width: 100, height: 100),
+            Assets.images.loginIllu.image(height: 250),
+            const SizedBox(height: 18),
+
+            Text(
+              i18n.login_LogIn,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+              ),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 18),
             Label(i18n.login_Email),
             FormBuilderTextField(
