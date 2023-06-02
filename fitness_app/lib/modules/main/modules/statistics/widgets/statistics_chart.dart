@@ -1,6 +1,5 @@
 import 'package:adaptive_selector/adaptive_selector.dart';
 import 'package:fitness_app/global/enums/chart_type.dart';
-import 'package:fitness_app/global/enums/filter_range_type.dart';
 import 'package:fitness_app/global/extensions/double_extension.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
@@ -26,33 +25,22 @@ class StatisticsChart extends StatefulWidget {
 }
 
 class _StatisticsChartState extends State<StatisticsChart> {
-  List<double> initialData = [];
-  List<String> xValue = [];
   ChartType chartType = ChartType.column;
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        setState(() {
-          initialData = StatisticsHelper.getStatsData(
-            data: widget.data,
-            filter: widget.filter,
-          );
-        });
-      }
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
 
-    var xValues = widget.filter.rangeType == FilterRangeType.monthly
-        ? widget.filter.rangeType!
-            .xValuesChart(i18n, month: widget.filter.month)
-        : widget.filter.rangeType!.xValuesChart(i18n);
+    var xValues = widget.filter.rangeType!.xValuesChart(
+      i18n,
+      month: widget.filter.month,
+      year: widget.filter.year,
+    );
+
+    final initialData = StatisticsHelper.getStatsData(
+      data: widget.data,
+      filter: widget.filter,
+    );
 
     final options = ChartType.values
         .map(

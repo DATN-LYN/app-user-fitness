@@ -9,7 +9,6 @@ import 'package:jiffy/jiffy.dart';
 
 import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/graphql/__generated__/schema.schema.gql.dart';
-import '../../../../../global/providers/me_provider.dart';
 import '../../../../../global/themes/app_colors.dart';
 import 'month_picker_dialog.dart';
 import 'year_picker_dialog.dart';
@@ -40,17 +39,13 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
       [
         GFilterDto(
           (b) => b
-            ..data = filter.rangeType
-                ?.startDate(month: filter.month, year: filter.year)
-                .toString()
+            ..data = startDate.toString()
             ..field = 'UserStatistics.updatedAt'
             ..operator = GFILTER_OPERATOR.gt,
         ),
         GFilterDto(
           (b) => b
-            ..data = filter.rangeType
-                ?.endDate(month: filter.month, year: filter.year)
-                .toString()
+            ..data = endDate.toString()
             ..field = 'UserStatistics.updatedAt'
             ..operator = GFILTER_OPERATOR.lt,
         ),
@@ -71,98 +66,103 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
     final now = DateTime.now();
 
     handleFilter(
-      filter.rangeType?.startDate(month: filter.month, year: filter.year) ??
-          now,
-      filter.rangeType?.endDate(month: filter.month, year: filter.year) ?? now,
+      filter.rangeType!.startDate(
+        month: filter.month,
+        year: filter.year,
+      )!,
+      filter.rangeType!.endDate(
+        month: filter.month,
+        year: filter.year,
+      )!,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLogedIn = ref.watch(isSignedInProvider);
-
     return Column(
       children: [
-        if (isLogedIn) ...[
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              ...FilterRangeType.values.map(
-                (rangeType) {
-                  return FilterButton(
-                    isSelected: filter.rangeType == rangeType,
-                    filter: rangeType,
-                    onFilter: () {
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            ...FilterRangeType.values.map(
+              (rangeType) {
+                return FilterButton(
+                  isSelected: filter.rangeType == rangeType,
+                  filter: rangeType,
+                  onFilter: () {
+                    setState(() {
+                      filter = filter.copyWith(rangeType: rangeType);
+                    });
+                    onFilter();
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        if (filter.rangeType == FilterRangeType.monthly)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: FormBuilderField<int>(
+              name: 'month',
+              initialValue: Jiffy().month,
+              decoration: const InputDecoration(
+                suffixIcon: Icon(
+                  Icons.arrow_drop_down_sharp,
+                  size: 30,
+                ),
+              ),
+              builder: (field) {
+                return MonthPickerDialog(
+                  initialValue: filter.rangeType?.getFirstDayOfMonth(
+                    filter.month ?? Jiffy().month,
+                    filter.year ?? Jiffy().year,
+                  ),
+                  onChanged: (selectedMonth) {
+                    if (selectedMonth != null) {
                       setState(() {
-                        filter = filter.copyWith(rangeType: rangeType);
+                        filter = filter.copyWith(
+                          month: selectedMonth.month,
+                          year: selectedMonth.year,
+                        );
                       });
                       onFilter();
-                    },
-                  );
-                },
-              ),
-            ],
+                    }
+                  },
+                );
+              },
+            ),
           ),
-          if (filter.rangeType == FilterRangeType.monthly)
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: FormBuilderField<int>(
-                name: 'month',
-                initialValue: Jiffy().month,
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(
-                    Icons.arrow_drop_down_sharp,
-                    size: 30,
-                  ),
+        if (filter.rangeType == FilterRangeType.yearly)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: FormBuilderField<int>(
+              name: 'year',
+              initialValue: Jiffy().month,
+              decoration: const InputDecoration(
+                suffixIcon: Icon(
+                  Icons.arrow_drop_down_sharp,
+                  size: 30,
                 ),
-                builder: (field) {
-                  return MonthPickerDialog(
-                    initialValue: filter.rangeType?.getFirstDayOfMonth(
-                      filter.month ?? Jiffy().month,
-                    ),
-                    onChanged: (selectedMonth) {
-                      if (selectedMonth != null) {
-                        setState(() {
-                          filter = filter.copyWith(month: selectedMonth.month);
-                        });
-                        onFilter();
-                      }
-                    },
-                  );
-                },
               ),
-            ),
-          if (filter.rangeType == FilterRangeType.yearly)
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: FormBuilderField<int>(
-                name: 'year',
-                initialValue: Jiffy().month,
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(
-                    Icons.arrow_drop_down_sharp,
-                    size: 30,
+              builder: (field) {
+                return YearPickerDialog(
+                  initialValue: filter.rangeType?.getFirstDayOfYear(
+                    filter.year ?? Jiffy().year,
                   ),
-                ),
-                builder: (field) {
-                  return YearPickerDialog(
-                    initialValue: filter.rangeType?.getFirstDayOfMonth(
-                      filter.month ?? Jiffy().month,
-                    ),
-                    onChanged: (selectedMonth) {
-                      if (selectedMonth != null) {
-                        setState(() {
-                          filter = filter.copyWith(year: selectedMonth.year);
-                        });
-                        onFilter();
-                      }
-                    },
-                  );
-                },
-              ),
+                  onChanged: (selectedMonth) {
+                    if (selectedMonth != null) {
+                      setState(() {
+                        filter = filter.copyWith(year: selectedMonth.year);
+                      });
+                      onFilter();
+                    }
+                  },
+                );
+              },
             ),
-          const SizedBox(height: 32),
-        ],
+          ),
+        const SizedBox(height: 32),
       ],
     );
   }

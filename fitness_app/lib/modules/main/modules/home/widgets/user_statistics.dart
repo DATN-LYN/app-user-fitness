@@ -21,7 +21,7 @@ class UserStatistic extends ConsumerWidget {
     final client = ref.watch(appClientProvider);
     var req = GGetMyStatsReq(
       (b) => b
-        ..vars.queryParams.limit = 10
+        ..vars.queryParams.limit = 500
         ..vars.queryParams.page = 1
         ..vars.queryParams.orderBy = 'UserStatistics.createdAt',
     );

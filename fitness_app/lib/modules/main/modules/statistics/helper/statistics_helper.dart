@@ -16,7 +16,6 @@ class StatisticsHelper {
     switch (filter.rangeType) {
       case FilterRangeType.weekly:
         final startDay = Jiffy().startOf(Units.WEEK).dateTime.day + 1;
-        print(startDay);
         days = List.generate(7, (index) => startDay + index);
         break;
       case FilterRangeType.monthly:
