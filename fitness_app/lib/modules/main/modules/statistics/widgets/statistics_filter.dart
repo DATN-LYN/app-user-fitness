@@ -41,17 +41,13 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
       [
         GFilterDto(
           (b) => b
-            ..data = filter.rangeType
-                ?.startDate(month: filter.month, year: filter.year)
-                .toString()
+            ..data = startDate.toString()
             ..field = 'UserStatistics.updatedAt'
             ..operator = GFILTER_OPERATOR.gt,
         ),
         GFilterDto(
           (b) => b
-            ..data = filter.rangeType
-                ?.endDate(month: filter.month, year: filter.year)
-                .toString()
+            ..data = endDate.toString()
             ..field = 'UserStatistics.updatedAt'
             ..operator = GFILTER_OPERATOR.lt,
         ),
@@ -72,9 +68,8 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
     final now = DateTime.now();
 
     handleFilter(
-      filter.rangeType?.startDate(month: filter.month, year: filter.year) ??
-          now,
-      filter.rangeType?.endDate(month: filter.month, year: filter.year) ?? now,
+      filter.startDate ?? now,
+      filter.startDate ?? now,
     );
   }
 
