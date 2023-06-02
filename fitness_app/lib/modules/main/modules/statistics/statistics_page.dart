@@ -10,6 +10,7 @@ import 'package:fitness_app/modules/main/modules/statistics/widgets/statistics_f
 import 'package:fitness_app/modules/main/modules/statistics/widgets/statistics_recently_workout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jiffy/jiffy.dart';
 
 import '../../../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../../../global/graphql/client.dart';
@@ -25,8 +26,11 @@ class StatisticsPage extends ConsumerStatefulWidget {
 }
 
 class _StatisticsPageState extends ConsumerState<StatisticsPage> {
-  var filterData =
-      const StatisticsFilterData(rangeType: FilterRangeType.weekly);
+  var filterData = StatisticsFilterData(
+    rangeType: FilterRangeType.weekly,
+    month: Jiffy().month,
+    year: Jiffy().year,
+  );
   var key = GlobalKey();
   var scaffoldKey = GlobalKey();
 
@@ -45,7 +49,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
           ),
           GFilterDto(
             (b) => b
-              ..data = filterData.rangeType!.endDate().toString().toString()
+              ..data = filterData.rangeType!.endDate().toString()
               ..field = 'UserStatistics.updatedAt'
               ..operator = GFILTER_OPERATOR.lt,
           ),
@@ -56,16 +60,14 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
   void handleFilterChange(GGetMyStatsReq newReq, StatisticsFilterData filter) {
     final client = ref.watch(appClientProvider);
 
-    setState(
-      () {
-        filterData = filter;
-        getMyStatsReq = getMyStatsReq.rebuild((b) => b
-          ..vars.queryParams.filters =
-              newReq.vars.queryParams.filters?.toBuilder());
-        client.requestController.add(getMyStatsReq);
-        key = GlobalKey();
-      },
-    );
+    setState(() {
+      key = GlobalKey();
+      filterData = filter;
+      getMyStatsReq = getMyStatsReq.rebuild((b) => b
+        ..vars.queryParams.filters =
+            newReq.vars.queryParams.filters?.toBuilder());
+      client.requestController.add(getMyStatsReq);
+    });
   }
 
   @override
@@ -86,7 +88,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
           });
         },
         child: !isLogedIn
-            ? UnLoginStatistics()
+            ? const UnLoginStatistics()
             : Operation(
                 client: client,
                 operationRequest: getMyStatsReq,
@@ -100,18 +102,14 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   }
 
                   final data = response?.data;
-                  final stats = data?.getMyStats.items?.toList();
+                  final stats = data!.getMyStats.items!.toList();
 
                   return ListView(
                     padding: const EdgeInsets.all(16),
                     children: [
                       StatisticsFilter(
                         filter: filterData,
-                        request: GGetMyStatsReq(
-                          (b) => b
-                            ..vars.queryParams =
-                                getMyStatsReq.vars.queryParams.toBuilder(),
-                        ),
+                        request: getMyStatsReq,
                         onChanged: (getMyStatsReq, selectedFilter) =>
                             handleFilterChange(getMyStatsReq, selectedFilter),
                       ),
@@ -121,7 +119,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                       const SizedBox(height: 16),
                       StatisticsChart(
                         key: key,
-                        data: stats ?? [],
+                        data: stats,
                         filter: filterData,
                       ),
                       const SizedBox(height: 32),
@@ -133,7 +131,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      if (stats != null && stats.isNotEmpty == true)
+                      if (stats.isNotEmpty == true)
                         const StatisticsRecentlyWorkout(),
                       const SizedBox(height: 16),
                     ],

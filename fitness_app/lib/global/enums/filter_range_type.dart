@@ -12,7 +12,7 @@ enum FilterRangeType {
       case FilterRangeType.weekly:
         return Jiffy().startOf(Units.WEEK).dateTime;
       case FilterRangeType.monthly:
-        return getFirstDayOfMonth(month ?? Jiffy().month);
+        return getFirstDayOfMonth(month ?? Jiffy().month, year ?? Jiffy().year);
       case FilterRangeType.yearly:
         return getFirstDayOfYear(year ?? Jiffy().year);
     }
@@ -23,7 +23,7 @@ enum FilterRangeType {
       case FilterRangeType.weekly:
         return Jiffy().endOf(Units.WEEK).dateTime;
       case FilterRangeType.monthly:
-        return getLastDayOfMonth(month ?? Jiffy().month);
+        return getLastDayOfMonth(month ?? Jiffy().month, year ?? Jiffy().year);
       case FilterRangeType.yearly:
         return getLastDayOfYear(year ?? Jiffy().year);
     }
@@ -51,14 +51,12 @@ enum FilterRangeType {
     }
   }
 
-  DateTime getFirstDayOfMonth(int month) {
-    final now = DateTime.now();
-    return DateTime(now.year, month, 1);
+  DateTime getFirstDayOfMonth(int month, int year) {
+    return DateTime(year, month, 1);
   }
 
-  DateTime getLastDayOfMonth(int month) {
-    final now = DateTime.now();
-    return DateTime(now.year, month + 1, 0);
+  DateTime getLastDayOfMonth(int month, int year) {
+    return DateTime(year, month + 1, 0);
   }
 
   DateTime getFirstDayOfYear(int year) {

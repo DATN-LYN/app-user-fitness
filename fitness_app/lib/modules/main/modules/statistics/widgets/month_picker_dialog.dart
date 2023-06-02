@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../../global/gen/i18n.dart';
@@ -41,9 +40,18 @@ class _MonthPickerDialogState extends State<MonthPickerDialog> {
                   children: [
                     SfDateRangePicker(
                       view: DateRangePickerView.year,
+                      yearCellStyle: const DateRangePickerYearCellStyle(
+                        todayTextStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryBold,
+                        ),
+                      ),
                       selectionColor: AppColors.primaryBold,
                       todayHighlightColor: AppColors.primaryBold,
                       allowViewNavigation: false,
+                      showNavigationArrow: true,
+                      initialDisplayDate: widget.initialValue ?? DateTime.now(),
                       initialSelectedDate:
                           widget.initialValue ?? DateTime.now(),
                       onSelectionChanged: (date) {
@@ -94,7 +102,7 @@ class _MonthPickerDialogState extends State<MonthPickerDialog> {
       ),
       child: InkWell(
         onTap: showDialogPicker,
-        child: Text('${selectedDate.month.toString()} / ${Jiffy().year}'),
+        child: Text('${selectedDate.month} / ${selectedDate.year}'),
       ),
     );
   }
