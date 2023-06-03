@@ -4,7 +4,8 @@ import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/widgets/label.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/category_list.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/home_header.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/program_list.dart';
+import 'package:fitness_app/modules/main/modules/home/widgets/program_list_most_viewed.dart';
+import 'package:fitness_app/modules/main/modules/home/widgets/program_list_trending.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/user_statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,7 +56,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
                 const SizedBox(
                   height: 170,
-                  child: ProgramList(),
+                  child: ProgramListTrending(),
                 ),
                 _listLabel(
                   label: i18n.categories_Categories,
@@ -71,7 +72,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
                 const SizedBox(
                   height: 170,
-                  child: ProgramList(),
+                  child: ProgramListMostViewed(),
                 ),
               ],
             ),

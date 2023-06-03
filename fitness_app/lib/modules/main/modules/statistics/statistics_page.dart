@@ -136,7 +136,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                       const SizedBox(height: 16),
                     ],
                   );
-                }),
+                },
+              ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
@@ -12,19 +13,19 @@ import '../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../global/widgets/fitness_error.dart';
 import 'program_item.dart';
 
-class ProgramList extends ConsumerStatefulWidget {
-  const ProgramList({super.key});
+class ProgramListMostViewed extends ConsumerStatefulWidget {
+  const ProgramListMostViewed({super.key});
 
   @override
-  ConsumerState<ProgramList> createState() => _WorkoutProgramsState();
+  ConsumerState<ProgramListMostViewed> createState() => _WorkoutProgramsState();
 }
 
-class _WorkoutProgramsState extends ConsumerState<ProgramList> {
+class _WorkoutProgramsState extends ConsumerState<ProgramListMostViewed> {
   var getProgramsReq = GGetProgramsReq(
     (b) => b
       ..vars.queryParams.limit = Constants.defaultLimit
       ..vars.queryParams.page = 1
-      ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
+      ..vars.queryParams.orderBy = 'Program.view:DESC',
   );
 
   void refreshHandler() {
