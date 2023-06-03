@@ -106,12 +106,6 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
             child: FormBuilderField<int>(
               name: 'month',
               initialValue: Jiffy().month,
-              decoration: const InputDecoration(
-                suffixIcon: Icon(
-                  Icons.arrow_drop_down_sharp,
-                  size: 30,
-                ),
-              ),
               builder: (field) {
                 return MonthPickerDialog(
                   initialValue: filter.rangeType?.getFirstDayOfMonth(
@@ -139,12 +133,6 @@ class _StatisticsFilterState extends ConsumerState<StatisticsFilter> {
             child: FormBuilderField<int>(
               name: 'year',
               initialValue: Jiffy().month,
-              decoration: const InputDecoration(
-                suffixIcon: Icon(
-                  Icons.arrow_drop_down_sharp,
-                  size: 30,
-                ),
-              ),
               builder: (field) {
                 return YearPickerDialog(
                   initialValue: filter.rangeType?.getFirstDayOfYear(
