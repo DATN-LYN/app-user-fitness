@@ -8,12 +8,15 @@ import 'package:built_value/standard_json_plugin.dart' show StandardJsonPlugin;
 import 'package:ferry_exec/ferry_exec.dart';
 import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
     show
+        GBODY_PART,
         GChangePasswordInputDto,
         GFILTER_OPERATOR,
         GFilterDto,
+        GGENDER,
         GLoginInputDto,
         GQueryFilterDto,
         GRegisterInputDto,
+        GSUPPORT_STATUS,
         GUpsertCategoryInputDto,
         GUpsertExerciseInputDto,
         GUpsertInboxInputDto,
@@ -22,7 +25,8 @@ import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart'
         GUpsertUserExerciseInputDto,
         GUpsertUserInputDto,
         GUpsertUserProgramInputDto,
-        GUpsertUserStatisticsInputDto;
+        GUpsertUserStatisticsInputDto,
+        GWORKOUT_LEVEL;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_change_password.data.gql.dart'
     show GChangePasswordData, GChangePasswordData_changePassword;
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_change_password.req.gql.dart'
@@ -284,6 +288,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   ..add(DateSerializer())
   ..addPlugin(StandardJsonPlugin());
 @SerializersFor([
+  GBODY_PART,
   GCategoryData,
   GCategoryReq,
   GCategoryVars,
@@ -298,6 +303,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GExerciseVars,
   GFILTER_OPERATOR,
   GFilterDto,
+  GGENDER,
   GGetCategoriesData,
   GGetCategoriesData_getCategories,
   GGetCategoriesData_getCategories_items,
@@ -409,6 +415,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GRegisterInputDto,
   GRegisterReq,
   GRegisterVars,
+  GSUPPORT_STATUS,
   GSupportData,
   GSupportData_user,
   GSupportReq,
@@ -457,5 +464,6 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GUserStatisticsReq,
   GUserStatisticsVars,
   GUserVars,
+  GWORKOUT_LEVEL,
 ])
 final Serializers serializers = _serializersBuilder.build();

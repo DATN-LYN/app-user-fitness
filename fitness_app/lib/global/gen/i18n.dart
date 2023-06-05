@@ -352,6 +352,8 @@ class I18n implements WidgetsLocalizations {
 	String get chart_Chart => "Chart";
 	/// ["column", "bar", "line", "stepline"]
 	List<String> get chart_ChartType => ["column", "bar", "line", "stepline"];
+	/// ["Male", "Female", "Others"]
+	List<String> get gender => ["Male", "Female", "Others"];
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
 	/// "Nhập tên thể loại"
@@ -836,6 +838,9 @@ class _I18n_vi_VN extends I18n {
 	/// ["cột", "thanh", "đường", "đường bậc thang"]
 	@override
 	List<String> get chart_ChartType => ["cột", "thanh", "đường", "đường bậc thang"];
+	/// ["Nam", "Nữ", "Khác"]
+	@override
+	List<String> get gender => ["Nam", "Nữ", "Khác"];
 }
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocalizations> {
   const GeneratedLocalizationsDelegate();

@@ -1,10 +1,10 @@
+import 'package:fitness_app/global/extensions/body_part_extension.dart';
+import 'package:fitness_app/global/extensions/workout_level_extension.dart';
 import 'package:fitness_app/global/utils/date_time_helper.dart';
 import 'package:fitness_app/global/widgets/shimmer_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../../../../../../../global/enums/workout_body_part.dart';
-import '../../../../../../../../global/enums/workout_level.dart';
 import '../../../../../../../../global/gen/i18n.dart';
 import '../../../../../../../../global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import '../../../../../../../../global/themes/app_colors.dart';
@@ -25,8 +25,6 @@ class ProgramOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
-    final level = WorkoutLevel.getLevel(program.level ?? 1);
-    final bodyPart = WorkoutBodyPart.getBodyPart(program.bodyPart ?? 1);
 
     return Column(
       children: [
@@ -36,7 +34,7 @@ class ProgramOverview extends StatelessWidget {
             Expanded(
               child: ProgramInfoTile(
                 icon: Ionicons.stats_chart,
-                label: level.label(i18n),
+                label: program.level!.label(i18n),
                 iconColor: AppColors.success,
                 backgroundColor: AppColors.successSoft,
               ),
@@ -62,7 +60,7 @@ class ProgramOverview extends StatelessWidget {
             Expanded(
               child: ProgramInfoTile(
                 icon: Ionicons.body,
-                label: bodyPart.label(i18n),
+                label: program.bodyPart!.label(i18n),
                 iconColor: AppColors.information,
                 backgroundColor: AppColors.informationSoft,
               ),
