@@ -234,5 +234,10 @@
       "line",
       "stepline"
     ]
-  }  
+  },
+  "gender":[
+    "Male",
+    "Female",
+    "Others"
+]  
 }

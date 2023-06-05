@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/extensions/support_status_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../global/enums/support_status.dart';
 import '../../../../../global/extensions/date_time_extension.dart';
 import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/graphql/__generated__/schema.schema.gql.dart';
@@ -24,7 +24,6 @@ class SupportTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final status = SupportStatus.getStatus(support.status ?? 1);
     final i18n = I18n.of(context)!;
 
     void markRead() async {
@@ -100,8 +99,8 @@ class SupportTile extends ConsumerWidget {
               ),
             ),
             Tag(
-              text: status.label(i18n),
-              color: status.color(),
+              text: support.status!.label(i18n),
+              color: support.status!.color(),
             )
           ],
         ),

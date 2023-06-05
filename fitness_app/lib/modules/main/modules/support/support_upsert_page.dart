@@ -1,6 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:fitness_app/global/extensions/support_status_extension.dart';
 import 'package:fitness_app/global/gen/assets.gen.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/support_fragment.data.gql.dart';
@@ -16,7 +17,6 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../../../global/enums/support_status.dart';
 import '../../../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../../../global/graphql/cache_handler/upsert_support_cache_handler.dart';
 import '../../../../global/graphql/client.dart';
@@ -85,7 +85,9 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
                   ..imgUrl = imageUrl ?? widget.support?.imgUrl
                   ..userId = user?.id
                   ..isRead = isCreateNew ? false : true
-                  ..status = isCancel ? 4 : 1,
+                  ..status = isCancel
+                      ? GSUPPORT_STATUS.Canceled
+                      : GSUPPORT_STATUS.Waiting,
               );
 
               final request = GUpsertSupportReq(
@@ -190,7 +192,6 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
     var user = ref.watch(meProvider)?.user;
-    final status = SupportStatus.getStatus(widget.support?.status ?? 1);
 
     return LoadingOverlay(
       loading: loading,
@@ -209,8 +210,8 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
                   right: 16,
                 ),
                 child: Tag(
-                  text: status.label(i18n),
-                  color: status.color(),
+                  text: widget.support!.status!.label(i18n),
+                  color: widget.support!.status!.color(),
                 ),
               ),
             Expanded(
