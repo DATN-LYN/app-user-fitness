@@ -16,7 +16,12 @@ import '../../../../../../../global/widgets/infinity_list.dart';
 import '../../../../../../../global/widgets/program/program_item_large.dart';
 
 class ProgramListPage extends ConsumerStatefulWidget {
-  const ProgramListPage({super.key});
+  const ProgramListPage({
+    super.key,
+    required this.isNewest,
+  });
+
+  final bool isNewest;
 
   @override
   ConsumerState<ProgramListPage> createState() => _ProgramListPageState();
@@ -32,7 +37,8 @@ class _ProgramListPageState extends ConsumerState<ProgramListPage> {
       ..fetchPolicy = FetchPolicy.CacheAndNetwork
       ..vars.queryParams.page = 1
       ..vars.queryParams.limit = Constants.defaultLimit
-      ..vars.queryParams.orderBy = 'Program.createdAt:DESC',
+      ..vars.queryParams.orderBy =
+          widget.isNewest ? 'Program.createdAt:DESC' : 'Program.view:DESC',
   );
 
   void refreshHanlder() {
@@ -68,7 +74,6 @@ class _ProgramListPageState extends ConsumerState<ProgramListPage> {
         child: Column(
           children: [
             ProgramSearchBar(
-              programFilterData: initialFilter,
               initialFilter: initialFilter,
               onChanged: (newReq) => handleFilterChange(newReq),
               request: GGetProgramsReq(

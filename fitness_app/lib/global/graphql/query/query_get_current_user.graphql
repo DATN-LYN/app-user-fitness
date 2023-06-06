@@ -1,24 +1,7 @@
-#import '../fragment/program_fragment.graphql'
-#import '../fragment/exercise_fragment.graphql'
+#import '../fragment/i_user_fragment.graphql'
 
 query GetCurrentUser {
   getCurrentUser {
-    id
-    email
-    fullName
-    avatar
-    age
-    userPrograms {
-      id
-      program {
-        ...Program
-      }
-    }
-    userExercises {
-      id
-      exercise {
-        ...Exercise
-      }
-    }
+    ...IUser
   }
 }

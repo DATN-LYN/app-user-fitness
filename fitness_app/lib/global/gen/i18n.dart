@@ -132,6 +132,8 @@ class I18n implements WidgetsLocalizations {
 	String get signup_RegisterSuccess => "You have registered successfully";
 	/// "Back to login"
 	String get signup_BackToLogin => "Back to login";
+	/// "Gender"
+	String get signup_Gender => "Gender";
 	/// "Forgot password"
 	String get forgotPassword_Title => "Forgot password";
 	/// "Please enter your email address to get login code"
@@ -244,8 +246,8 @@ class I18n implements WidgetsLocalizations {
 	String get programs_Programs => "Programs";
 	/// "Program Not Found"
 	String get programs_ProgramNotFound => "Program Not Found";
-	/// "Trending Programs"
-	String get programs_TrendingPrograms => "Trending Programs";
+	/// "Newest Programs"
+	String get programs_NewestPrograms => "Newest Programs";
 	/// "Most Viewed Programs"
 	String get programs_MostViewedPrograms => "Most Viewed Programs";
 	/// "Input program name"
@@ -517,6 +519,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Quay lại đăng nhập"
 	@override
 	String get signup_BackToLogin => "Quay lại đăng nhập";
+	/// "Giới tính"
+	@override
+	String get signup_Gender => "Giới tính";
 	/// "Quên mật khẩu"
 	@override
 	String get forgotPassword_Title => "Quên mật khẩu";
@@ -622,12 +627,12 @@ class _I18n_vi_VN extends I18n {
 	/// "Bạn đã cập nhật mật khẩu thành công"
 	@override
 	String get setting_ChangePasswordSuccess => "Bạn đã cập nhật mật khẩu thành công";
-	/// "Confirm quit"
+	/// "Dừng tập luyện"
 	@override
-	String get exerciseDetail_QuitWorkout => "Confirm quit";
-	/// "Are you sure you want to quit workout?"
+	String get exerciseDetail_QuitWorkout => "Dừng tập luyện";
+	/// "Bạn có chắc chắn rằng bạn muốn dừng tập luyện?"
 	@override
-	String get exerciseDetail_QuitWorkoutDes => "Are you sure you want to quit workout?";
+	String get exerciseDetail_QuitWorkoutDes => "Bạn có chắc chắn rằng bạn muốn dừng tập luyện?";
 	/// "Hooray!\n Bạn đã hoàn thành tất cả bài tập."
 	@override
 	String get finish_Hooray => "Hooray!\n Bạn đã hoàn thành tất cả bài tập.";
@@ -682,9 +687,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Không tìm thấy chương trình"
 	@override
 	String get programs_ProgramNotFound => "Không tìm thấy chương trình";
-	/// "Chương trình nổi bật"
+	/// "Chương trình mới nhất"
 	@override
-	String get programs_TrendingPrograms => "Chương trình nổi bật";
+	String get programs_NewestPrograms => "Chương trình mới nhất";
 	/// "Chương trình nhiều lượt xem"
 	@override
 	String get programs_MostViewedPrograms => "Chương trình nhiều lượt xem";

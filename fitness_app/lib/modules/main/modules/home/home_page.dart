@@ -5,7 +5,7 @@ import 'package:fitness_app/global/widgets/label.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/category_list.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/home_header.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/program_list_most_viewed.dart';
-import 'package:fitness_app/modules/main/modules/home/widgets/program_list_trending.dart';
+import 'package:fitness_app/modules/main/modules/home/widgets/program_list_newest.dart';
 import 'package:fitness_app/modules/main/modules/home/widgets/user_statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,12 +51,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                 else
                   const UnLoginUserStatistics(),
                 _listLabel(
-                  label: i18n.programs_TrendingPrograms,
-                  onPressed: () => context.pushRoute(const ProgramListRoute()),
+                  label: i18n.programs_NewestPrograms,
+                  onPressed: () =>
+                      context.pushRoute(ProgramListRoute(isNewest: true)),
                 ),
                 const SizedBox(
                   height: 170,
-                  child: ProgramListTrending(),
+                  child: ProgramListNewest(),
                 ),
                 _listLabel(
                   label: i18n.categories_Categories,
@@ -68,7 +69,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
                 _listLabel(
                   label: i18n.programs_MostViewedPrograms,
-                  onPressed: () => context.pushRoute(const ProgramListRoute()),
+                  onPressed: () =>
+                      context.pushRoute(ProgramListRoute(isNewest: false)),
                 ),
                 const SizedBox(
                   height: 170,
@@ -93,11 +95,19 @@ class _HomePageState extends ConsumerState<HomePage> {
       children: [
         Label(
           label,
-          padding: const EdgeInsets.only(top: 24, bottom: 8),
+          padding: const EdgeInsets.only(top: 24, bottom: 12),
         ),
-        TextButton(
-          onPressed: onPressed,
-          child: Text(i18n.home_ViewAll),
+        GestureDetector(
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 24, bottom: 12),
+            child: Text(
+              i18n.home_ViewAll,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
         ),
       ],
     );

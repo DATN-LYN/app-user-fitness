@@ -345,6 +345,7 @@ input RegisterInputDto {
   avatar: String
   age: Float!
   fullName: String!
+  gender: GENDER
 }
 
 type ResponseMessageBase {

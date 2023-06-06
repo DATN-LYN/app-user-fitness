@@ -75,6 +75,18 @@ import 'package:fitness_app/global/graphql/fragment/__generated__/i_support_frag
     show GISupportReq;
 import 'package:fitness_app/global/graphql/fragment/__generated__/i_support_fragment.var.gql.dart'
     show GISupportVars;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_user_fragment.data.gql.dart'
+    show
+        GIUserData,
+        GIUserData_userExercises,
+        GIUserData_userExercises_exercise,
+        GIUserData_userExercises_exercise_program,
+        GIUserData_userPrograms,
+        GIUserData_userPrograms_program;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_user_fragment.req.gql.dart'
+    show GIUserReq;
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_user_fragment.var.gql.dart'
+    show GIUserVars;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.data.gql.dart'
     show GInboxData, GInboxData_user;
 import 'package:fitness_app/global/graphql/fragment/__generated__/inbox_fragment.req.gql.dart'
@@ -385,6 +397,14 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GISupportData_user,
   GISupportReq,
   GISupportVars,
+  GIUserData,
+  GIUserData_userExercises,
+  GIUserData_userExercises_exercise,
+  GIUserData_userExercises_exercise_program,
+  GIUserData_userPrograms,
+  GIUserData_userPrograms_program,
+  GIUserReq,
+  GIUserVars,
   GInboxData,
   GInboxData_user,
   GInboxReq,

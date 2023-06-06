@@ -12,14 +12,14 @@ import '../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../global/widgets/fitness_error.dart';
 import 'program_item.dart';
 
-class ProgramListTrending extends ConsumerStatefulWidget {
-  const ProgramListTrending({super.key});
+class ProgramListNewest extends ConsumerStatefulWidget {
+  const ProgramListNewest({super.key});
 
   @override
-  ConsumerState<ProgramListTrending> createState() => _WorkoutProgramsState();
+  ConsumerState<ProgramListNewest> createState() => _WorkoutProgramsState();
 }
 
-class _WorkoutProgramsState extends ConsumerState<ProgramListTrending> {
+class _WorkoutProgramsState extends ConsumerState<ProgramListNewest> {
   var getProgramsReq = GGetProgramsReq(
     (b) => b
       ..vars.queryParams.limit = Constants.defaultLimit
@@ -99,7 +99,6 @@ class _WorkoutProgramsState extends ConsumerState<ProgramListTrending> {
 
         final data = response!.data!.getPrograms;
         final programs = data.items?.toList();
-        programs?.sort((a, b) => (a.view ?? 0).compareTo(b.view ?? 0));
 
         if (programs?.isEmpty == true) {
           return FitnessEmpty(

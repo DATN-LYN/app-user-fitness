@@ -1,0 +1,23 @@
+#import './program_fragment.graphql'
+#import './exercise_fragment.graphql'
+
+fragment IUser on IUser{
+    id
+    email
+    fullName
+    avatar
+    age
+    userPrograms {
+      id
+      program {
+        ...Program
+      }
+    }
+    userExercises {
+      id
+      exercise {
+        ...Exercise
+      }
+    }
+    gender
+}
