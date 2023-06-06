@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../global/graphql/query/__generated__/query_get_my_stats.data.gql.dart';
 import '../../../../../global/themes/app_colors.dart';
+import '../../../../../global/utils/date_time_helper.dart';
 import '../../../../../global/widgets/stats/user_statistic_item.dart';
 
 class StatisticsOverview extends ConsumerWidget {
@@ -24,15 +25,18 @@ class StatisticsOverview extends ConsumerWidget {
         ? data!.map((e) => e.caloCount).reduce((a, b) => a! + b!).toString()
         : '0';
     final duration = hasData
-        ? data!.map((e) => e.durationCount).reduce((a, b) => a! + b!).toString()
-        : '0';
+        ? data!.map((e) => e.durationCount).reduce((a, b) => a! + b!)
+        : 0;
+    final durationString = DateTimeHelper.totalDurationFormat(
+      Duration(seconds: duration?.toInt() ?? 0),
+    );
 
     return Column(
       children: [
         Row(
           children: [
             UserStatisticItem(
-              title: duration,
+              title: durationString,
               subtitle: i18n.common_Minutes,
               icon: const Icon(
                 Icons.timelapse,

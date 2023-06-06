@@ -1,4 +1,6 @@
+import 'package:adaptive_selector/adaptive_selector.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/extensions/gender_extension.dart';
 import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +34,14 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   GRegisterInputDto get formData {
     final formValue = formKey.currentState!.value;
-    return GRegisterInputDto((b) => b
-      ..age = double.parse(formValue['age'])
-      ..fullName = formValue['fullName']
-      ..email = formValue['email']
-      ..password = formValue['password']);
+    return GRegisterInputDto(
+      (b) => b
+        ..age = double.parse(formValue['age'])
+        ..fullName = formValue['fullName']
+        ..email = formValue['email']
+        ..password = formValue['password']
+        ..gender = formValue['gender'],
+    );
   }
 
   void signUp() async {
@@ -100,45 +105,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              Text(
-                i18n.signup_CreateNewAccount,
-                style: theme.textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-              Label(i18n.signup_FullName),
-              FormBuilderTextField(
-                name: 'fullName',
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  filled: true,
-                  hintText: i18n.signup_EnterYourFullName,
-                ),
-                validator: FormBuilderValidators.required(
-                  errorText: i18n.signup_FullNameIsRequired,
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.visiblePassword,
-              ),
-              Label(i18n.signup_Age),
-              FormBuilderTextField(
-                name: 'age',
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  filled: true,
-                  hintText: i18n.signup_EnterYourAge,
-                ),
-                validator: FormBuilderValidators.required(
-                  errorText: i18n.signup_AgeIsRequired,
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-              ),
               Label(i18n.login_Email),
               FormBuilderTextField(
                 name: 'email',
@@ -162,6 +128,66 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 autocorrect: false,
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.emailAddress,
+              ),
+              Text(
+                i18n.signup_CreateNewAccount,
+                style: theme.textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              Label(i18n.signup_FullName),
+              FormBuilderTextField(
+                name: 'fullName',
+                enabled: !isLoading,
+                decoration: InputDecoration(
+                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
+                  filled: true,
+                  hintText: i18n.signup_EnterYourFullName,
+                ),
+                validator: FormBuilderValidators.required(
+                  errorText: i18n.signup_FullNameIsRequired,
+                ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autocorrect: false,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.visiblePassword,
+              ),
+              Label(i18n.signup_Gender),
+              FormBuilderField<GGENDER>(
+                name: 'gender',
+                enabled: !isLoading,
+                decoration: InputDecoration(
+                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
+                  filled: true,
+                ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                builder: (field) {
+                  final options = GGENDER.values
+                      .map((e) => AdaptiveSelectorOption(
+                          label: e.label(i18n), value: e))
+                      .toList();
+                  return AdaptiveSelector(
+                    options: options,
+                    initialOption: options.first,
+                    allowClear: false,
+                  );
+                },
+              ),
+              Label(i18n.signup_Age),
+              FormBuilderTextField(
+                name: 'age',
+                enabled: !isLoading,
+                decoration: InputDecoration(
+                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
+                  filled: true,
+                  hintText: i18n.signup_EnterYourAge,
+                ),
+                validator: FormBuilderValidators.required(
+                  errorText: i18n.signup_AgeIsRequired,
+                ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autocorrect: false,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
               ),
               Label(i18n.login_Password),
               FormBuilderTextField(

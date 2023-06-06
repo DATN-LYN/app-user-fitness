@@ -192,7 +192,9 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
-    var user = ref.watch(meProvider)?.user;
+    final user = ref.watch(meProvider)?.user;
+    final enabled = widget.support?.status == GSUPPORT_STATUS.Waiting ||
+        widget.support?.status == null;
 
     return LoadingOverlay(
       loading: loading,
@@ -260,6 +262,7 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
                     FormBuilderTextField(
                       name: 'content',
                       maxLines: 7,
+                      enabled: enabled,
                       initialValue: widget.support?.content,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: FormBuilderValidators.required(
@@ -267,38 +270,42 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
                       ),
                       maxLength: 255,
                     ),
-                    const Label('Image'),
-                    GestureDetector(
-                      onTap: pickImage,
-                      child: DottedBorder(
-                        strokeCap: StrokeCap.round,
-                        dashPattern: const [8],
-                        color: AppColors.information,
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(12),
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: AppColors.information.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.upload,
-                                  size: 40,
-                                  color: AppColors.information,
-                                ),
-                                const SizedBox(height: 4),
-                                Text(i18n.support_PickImage),
-                              ],
+                    if (!enabled && widget.support?.imgUrl == null)
+                      const SizedBox()
+                    else
+                      const Label('Image'),
+                    if (enabled)
+                      GestureDetector(
+                        onTap: pickImage,
+                        child: DottedBorder(
+                          strokeCap: StrokeCap.round,
+                          dashPattern: const [8],
+                          color: AppColors.information,
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(12),
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.information.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.upload,
+                                    size: 40,
+                                    color: AppColors.information,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(i18n.support_PickImage),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
                     const SizedBox(height: 16),
                     if (widget.support?.imgUrl != null && image == null)
                       ShimmerImage(imageUrl: widget.support?.imgUrl ?? '_'),
@@ -310,8 +317,7 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
                 ),
               ),
             ),
-            if (widget.support?.status == GSUPPORT_STATUS.Waiting ||
-                widget.support?.status == null)
+            if (enabled)
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 26),

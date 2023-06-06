@@ -122,9 +122,13 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     ProgramListRoute.name: (routeData) {
+      final args = routeData.argsAs<ProgramListRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const ProgramListPage(),
+        child: ProgramListPage(
+          key: args.key,
+          isNewest: args.isNewest,
+        ),
       );
     },
     EditProfileRoute.name: (routeData) {
@@ -570,14 +574,36 @@ class CategoryListRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProgramListPage]
-class ProgramListRoute extends PageRouteInfo<void> {
-  const ProgramListRoute()
-      : super(
+class ProgramListRoute extends PageRouteInfo<ProgramListRouteArgs> {
+  ProgramListRoute({
+    Key? key,
+    required bool isNewest,
+  }) : super(
           ProgramListRoute.name,
           path: '/program-list-page',
+          args: ProgramListRouteArgs(
+            key: key,
+            isNewest: isNewest,
+          ),
         );
 
   static const String name = 'ProgramListRoute';
+}
+
+class ProgramListRouteArgs {
+  const ProgramListRouteArgs({
+    this.key,
+    required this.isNewest,
+  });
+
+  final Key? key;
+
+  final bool isNewest;
+
+  @override
+  String toString() {
+    return 'ProgramListRouteArgs{key: $key, isNewest: $isNewest}';
+  }
 }
 
 /// generated route for

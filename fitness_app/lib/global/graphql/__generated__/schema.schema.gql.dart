@@ -165,6 +165,7 @@ abstract class GRegisterInputDto
   String? get avatar;
   double get age;
   String get fullName;
+  GGENDER? get gender;
   static Serializer<GRegisterInputDto> get serializer =>
       _$gRegisterInputDtoSerializer;
   Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(

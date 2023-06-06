@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
+import 'package:fitness_app/global/extensions/workout_level_extension.dart';
+import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../global/enums/workout_level.dart';
 import '../../../../../../../../global/gen/i18n.dart';
 import '../../../../../../../../global/themes/app_colors.dart';
 import '../../../../../../../../global/widgets/filter/filter_sheet_wrapper.dart';
@@ -52,21 +53,19 @@ class _ProgramFilterSheetState extends State<ProgramFilterSheet> {
           ),
         ),
         const SizedBox(height: 10),
-        ...WorkoutLevel.values.map(
+        ...GWORKOUT_LEVEL.values.map(
           (e) => CheckboxListTile(
-            value: filter.levels.contains(e.value),
+            value: filter.levels.contains(e),
             title: Text(e.label(i18n)),
             onChanged: (value) {
               setState(
                 () {
                   if (value == true) {
-                    filter =
-                        filter.copyWith(levels: [...filter.levels, e.value]);
+                    filter = filter.copyWith(levels: [...filter.levels, e]);
                   } else {
                     filter = filter.copyWith(
-                      levels: filter.levels
-                          .whereNot((item) => item == e.value)
-                          .toList(),
+                      levels:
+                          filter.levels.whereNot((item) => item == e).toList(),
                     );
                   }
                 },

@@ -19,7 +19,6 @@ class ProgramSearchBar extends StatefulWidget {
     required this.onChanged,
     required this.request,
     required this.initialFilter,
-    required ProgramFilterData programFilterData,
   });
 
   final ValueChanged<GGetProgramsReq> onChanged;
@@ -44,7 +43,7 @@ class _ProgramSearchBarState extends State<ProgramSearchBar> {
         GFilterDto((b) => b
           ..field = 'Program.level'
           ..operator = GFILTER_OPERATOR.Gin
-          ..data = filterData.levels.map((e) => e.toInt()).join(',')),
+          ..data = filterData.levels.map((e) => e).join(',')),
       );
     }
 

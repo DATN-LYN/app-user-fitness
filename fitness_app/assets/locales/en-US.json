@@ -66,7 +66,8 @@
       "ageIsRequired": "Age is required",
       "enterYourAge": "Enter your age",
       "registerSuccess": "You have registered successfully",
-      "backToLogin": "Back to login"
+      "backToLogin": "Back to login",
+      "gender": "Gender"
     },
     "forgotPassword_": {
       "title": "Forgot password",
@@ -148,7 +149,7 @@
     "programs_":{
       "programs": "Programs",
       "programNotFound": "Program Not Found",
-      "trendingPrograms": "Trending Programs",
+      "newestPrograms": "Newest Programs",
       "mostViewedPrograms": "Most Viewed Programs",
       "searchHint": "Input program name",
       "description": "Description"

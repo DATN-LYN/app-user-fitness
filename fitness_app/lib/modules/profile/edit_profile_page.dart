@@ -1,7 +1,11 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:adaptive_selector/adaptive_selector.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/extensions/gender_extension.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
+import 'package:fitness_app/global/graphql/fragment/__generated__/i_user_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_user.req.gql.dart';
+import 'package:fitness_app/global/graphql/query/__generated__/query_get_current_user.req.gql.dart';
 import 'package:fitness_app/global/models/hive/user.dart';
 import 'package:fitness_app/global/providers/auth_provider.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
@@ -12,6 +16,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 
+import '../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../global/graphql/client.dart';
 import '../../global/providers/me_provider.dart';
 import '../../global/themes/app_colors.dart';
@@ -31,9 +36,40 @@ class EditProfilePage extends ConsumerStatefulWidget {
 }
 
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
-  bool loading = false;
+  bool loading = true;
   var formKey = GlobalKey<FormBuilderState>();
   XFile? image;
+  late GIUser user;
+
+  void initUserData() async {
+    final client = ref.watch(appClientProvider);
+
+    var req = GGetCurrentUserReq();
+
+    final response = await client.request(req).first;
+    if (response.hasErrors) {
+      if (mounted) {
+        DialogUtils.showError(context: context, response: response);
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          user = response.data!.getCurrentUser;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      initUserData();
+      if (mounted) {
+        setState(() => loading = false);
+      }
+    });
+    super.initState();
+  }
 
   void handleSubmit() {
     final i18n = I18n.of(context)!;
@@ -60,12 +96,14 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                 imageUrl = me?.user?.avatar;
               }
 
-              final request = GUpsertUserReq((b) => b
-                ..vars.input.email = formValue['email']
-                ..vars.input.age = double.parse(formValue['age'])
-                ..vars.input.fullName = formValue['fullName']
-                ..vars.input.id = me?.user?.id
-                ..vars.input.avatar = imageUrl);
+              final request = GUpsertUserReq(
+                (b) => b
+                  ..vars.input.email = formValue['email']
+                  ..vars.input.age = double.parse(formValue['age'])
+                  ..vars.input.fullName = formValue['fullName']
+                  ..vars.input.id = me?.user?.id
+                  ..vars.input.avatar = imageUrl,
+              );
 
               final response = await client.request(request).first;
 
@@ -115,9 +153,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.read(meProvider)?.user;
     final errorAvatar = Avatar(
-      name: user?.fullName,
+      name: user.fullName,
       size: 100,
     );
     final i18n = I18n.of(context)!;
@@ -150,9 +187,9 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                         child: Stack(
                           alignment: Alignment.bottomRight,
                           children: [
-                            user?.avatar != null && image == null
+                            user.avatar != null && image == null
                                 ? ShimmerImage(
-                                    imageUrl: user?.avatar ?? '_',
+                                    imageUrl: user.avatar ?? '_',
                                     width: 100,
                                     height: 100,
                                     borderRadius: BorderRadius.circular(100),
@@ -190,7 +227,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     Label(i18n.login_Email),
                     FormBuilderTextField(
                       name: 'email',
-                      initialValue: user!.email,
+                      initialValue: user.email,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: FormBuilderValidators.required(
                         errorText: i18n.login_EmailIsRequired,
@@ -211,10 +248,35 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                         hintText: i18n.signup_EnterYourFullName,
                       ),
                     ),
+                    Label(i18n.signup_Gender),
+                    FormBuilderField<GGENDER>(
+                      name: 'gender',
+                      decoration: const InputDecoration(
+                        fillColor: AppColors.white,
+                        filled: true,
+                      ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      builder: (field) {
+                        final options = GGENDER.values
+                            .map(
+                              (e) => AdaptiveSelectorOption(
+                                  label: e.label(i18n), value: e),
+                            )
+                            .toList();
+                        return AdaptiveSelector(
+                          options: options,
+                          initialOption: AdaptiveSelectorOption(
+                            label: user.gender!.label(i18n),
+                            value: user.gender,
+                          ),
+                          allowClear: false,
+                        );
+                      },
+                    ),
                     Label(i18n.signup_Age),
                     FormBuilderTextField(
                       name: 'age',
-                      initialValue: user.age.round().toString(),
+                      initialValue: user.age!.round().toString(),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: FormBuilderValidators.required(
                         errorText: i18n.signup_AgeIsRequired,

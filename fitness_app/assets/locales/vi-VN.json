@@ -64,7 +64,8 @@
       "ageIsRequired": "Bạn chưa nhập tuổi",
       "enterYourAge": "Nhập tuổi của bạn",
       "registerSuccess": "Bạn đã đăng ký thành công",
-      "backToLogin": "Quay lại đăng nhập"
+      "backToLogin": "Quay lại đăng nhập",
+      "gender": "Giới tính"
     },
     "forgotPassword_": {
       "title": "Quên mật khẩu",
@@ -109,8 +110,8 @@
       "changePasswordSuccess": "Bạn đã cập nhật mật khẩu thành công"
     },
     "exerciseDetail_":{
-      "quitWorkout":"Confirm quit",
-      "quitWorkoutDes":"Are you sure you want to quit workout?"
+      "quitWorkout":"Dừng tập luyện",
+      "quitWorkoutDes":"Bạn có chắc chắn rằng bạn muốn dừng tập luyện?"
     },
     "finish_":{
       "hooray": "Hooray!\n Bạn đã hoàn thành tất cả bài tập.",
@@ -148,7 +149,7 @@
     "programs_":{
       "programs": "Chương trình",
       "programNotFound": "Không tìm thấy chương trình",
-      "trendingPrograms": "Chương trình nổi bật",
+      "newestPrograms": "Chương trình mới nhất",
       "mostViewedPrograms": "Chương trình nhiều lượt xem",
       "searchHint": "Nhập tên chương trình"
 
