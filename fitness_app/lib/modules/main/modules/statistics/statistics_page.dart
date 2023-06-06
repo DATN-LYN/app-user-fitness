@@ -16,7 +16,7 @@ import '../../../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../../../global/graphql/client.dart';
 import 'widgets/statistics_chart.dart';
 import 'widgets/statistics_overview.dart';
-import 'widgets/un_log_in_statistics.dart';
+import 'widgets/not_log_in_statistics.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
@@ -81,15 +81,15 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
       appBar: AppBar(
         title: Text(i18n.main_Statistics),
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          setState(() {
-            scaffoldKey = GlobalKey();
-          });
-        },
-        child: !isLogedIn
-            ? const UnLoginStatistics()
-            : Operation(
+      body: !isLogedIn
+          ? const NotLoginStatistics()
+          : RefreshIndicator(
+              onRefresh: () async {
+                setState(() {
+                  scaffoldKey = GlobalKey();
+                });
+              },
+              child: Operation(
                 client: client,
                 operationRequest: getMyStatsReq,
                 builder: (context, response, error) {
@@ -138,7 +138,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   );
                 },
               ),
-      ),
+            ),
     );
   }
 }

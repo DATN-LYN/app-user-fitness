@@ -162,7 +162,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  isLogedIn ? user?.fullName ?? '_' : 'Guest User',
+                  isLogedIn ? user?.fullName ?? '_' : i18n.home_User,
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 20,
@@ -172,7 +172,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               const SizedBox(height: 6),
               Center(
                 child: Text(
-                  isLogedIn ? user?.email ?? '_' : 'Guest User',
+                  isLogedIn ? user?.email ?? '_' : '',
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
@@ -298,21 +298,22 @@ class _SettingPageState extends ConsumerState<SettingPage> {
             ],
           ),
         ),
-        DraggableWidget(
-          horizontalSpace: 8,
-          verticalSpace: 8,
-          normalShadow: const BoxShadow(),
-          topMargin: padding.top,
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              AutoRouter.of(context).push(SupportUpsertRoute());
-            },
-            child: Assets.images.operator.image(
-              width: min(60, width * 0.25),
+        if (isLogedIn)
+          DraggableWidget(
+            horizontalSpace: 8,
+            verticalSpace: 8,
+            normalShadow: const BoxShadow(),
+            topMargin: padding.top,
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                AutoRouter.of(context).push(SupportUpsertRoute());
+              },
+              child: Assets.images.operator.image(
+                width: min(60, width * 0.25),
+              ),
             ),
           ),
-        ),
       ],
     );
   }

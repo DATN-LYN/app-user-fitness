@@ -44,7 +44,22 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
   double totalDuration = 0;
   double totalCalo = 0;
   bool? loading = false;
-  var getExercisesReq = GGetExercisesReq();
+  late var getExercisesReq = GGetExercisesReq(
+    (b) => b
+      ..requestId = '@getExercisesByProgramRequestId'
+      ..vars.queryParams.limit = Constants.defaultLimit
+      ..vars.queryParams.page = 1
+      ..vars.queryParams.filters = ListBuilder(
+        [
+          GFilterDto(
+            (b) => b
+              ..data = widget.program?.id
+              ..field = 'Exercise.programId'
+              ..operator = GFILTER_OPERATOR.eq,
+          ),
+        ],
+      ),
+  );
   List<GExercise> exerciseList = [];
   List<String>? userExercisesId;
   var getCurrentUserReq = GGetCurrentUserReq();
@@ -74,24 +89,11 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getUserExercises();
+      final isLogedIn = ref.watch(isSignedInProvider);
+      if (isLogedIn) {
+        getUserExercises();
+      }
     });
-    getExercisesReq = GGetExercisesReq(
-      (b) => b
-        ..requestId = '@getExercisesByProgramRequestId'
-        ..vars.queryParams.limit = Constants.defaultLimit
-        ..vars.queryParams.page = 1
-        ..vars.queryParams.filters = ListBuilder(
-          [
-            GFilterDto(
-              (b) => b
-                ..data = widget.program?.id
-                ..field = 'Exercise.programId'
-                ..operator = GFILTER_OPERATOR.eq,
-            ),
-          ],
-        ),
-    );
     super.initState();
   }
 

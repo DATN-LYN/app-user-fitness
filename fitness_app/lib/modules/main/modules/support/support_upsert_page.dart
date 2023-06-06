@@ -141,6 +141,7 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
   void handleReset() {
     setState(() {
       formKey = GlobalKey<FormBuilderState>();
+      image = null;
     });
   }
 
@@ -309,7 +310,8 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
                 ),
               ),
             ),
-            if (widget.support?.status == 1)
+            if (widget.support?.status == GSUPPORT_STATUS.Waiting ||
+                widget.support?.status == null)
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
