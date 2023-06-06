@@ -5,10 +5,11 @@ import '../../../../../global/enums/filter_range_type.dart';
 import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/themes/app_colors.dart';
 import '../../../../../global/widgets/fitness_empty.dart';
+import '../../../../../global/widgets/login_panel.dart';
 import 'statistics_overview.dart';
 
-class UnLoginStatistics extends StatelessWidget {
-  const UnLoginStatistics({
+class NotLoginStatistics extends StatelessWidget {
+  const NotLoginStatistics({
     super.key,
   });
 
@@ -16,27 +17,34 @@ class UnLoginStatistics extends StatelessWidget {
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
 
-    return ListView(
-      padding: const EdgeInsets.all(16),
+    return Column(
       children: [
-        const SizedBox(height: 16),
-        const UnLoginStatisticsFilter(),
-        const SizedBox(height: 16),
-        const StatisticsOverview(),
-        const SizedBox(height: 16),
-        const UnloginStatisticsChart(),
-        const SizedBox(height: 16),
-        Text(
-          i18n.statistics_RecentWorkout,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+        const LoginPanel(),
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            children: [
+              const SizedBox(height: 16),
+              const UnLoginStatisticsFilter(),
+              const SizedBox(height: 16),
+              const StatisticsOverview(),
+              const SizedBox(height: 16),
+              const UnloginStatisticsChart(),
+              const SizedBox(height: 16),
+              Text(
+                i18n.statistics_RecentWorkout,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 16),
+              FitnessEmpty(
+                title: i18n.common_Oops,
+                message: i18n.common_YouHaveToLogin,
+              ),
+            ],
           ),
-        ),
-        const SizedBox(height: 16),
-        FitnessEmpty(
-          title: i18n.common_Oops,
-          message: i18n.common_YouHaveToLogin,
         ),
       ],
     );

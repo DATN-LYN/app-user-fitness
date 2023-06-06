@@ -7,6 +7,7 @@ import 'package:fitness_app/global/graphql/query/__generated__/query_get_my_inbo
 import 'package:fitness_app/global/utils/auth_helper.dart';
 import 'package:fitness_app/modules/main/modules/chat/widgets/not_login_inbox.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
@@ -34,6 +35,7 @@ class ChatPage extends ConsumerStatefulWidget {
 class _ChatPageState extends ConsumerState<ChatPage> {
   final textController = TextEditingController();
   bool loading = false;
+  bool showButtonScroll = false;
   late var getMyInboxesReq = GGetMyInboxesReq(
     (b) => b
       ..requestId = '@getMyInboxesRequestId'
@@ -44,13 +46,14 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   final scrollController = ScrollController();
 
   void refreshHandler() {
-    setState(
-      () => getMyInboxesReq = getMyInboxesReq.rebuild(
-        (b) => b
-          ..vars.queryParams.page = 1
-          ..updateResult = ((previous, result) => result),
-      ),
+    final client = ref.read(appClientProvider);
+
+    getMyInboxesReq = getMyInboxesReq.rebuild(
+      (b) => b
+        ..vars.queryParams.page = 1
+        ..updateResult = ((previous, result) => result),
     );
+    client.requestController.add(getMyInboxesReq);
   }
 
   void chat() async {
@@ -101,9 +104,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             isSender: false,
           );
           refreshHandler();
-          setState(() {
-            loading = false;
-          });
+          setState(() => loading = false);
         }
       },
       onError: (err) {
@@ -142,9 +143,24 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     }
   }
 
-  // void _scrollDown() {
-  //   scrollController.jumpTo(scrollController.position.maxScrollExtent);
-  // }
+  void scrollDown() {
+    scrollController.animateTo(
+      scrollController.position.minScrollExtent,
+      duration: const Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
+  void handleShowButtonScroll(ScrollNotification scrollNoti) {
+    if (scrollNoti is ScrollStartNotification) {
+      if (!showButtonScroll) {
+        setState(() => showButtonScroll = true);
+      }
+    } else if (scrollController.position.pixels ==
+        scrollController.position.minScrollExtent) {
+      setState(() => showButtonScroll = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +174,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         title: Text(i18n.chat_Title),
         elevation: 0,
       ),
+      floatingActionButton: showButtonScroll
+          ? FloatingActionButton(
+              onPressed: scrollDown,
+              child: const Icon(Icons.arrow_downward),
+            )
+          : null,
       body: !isLogedIn
           ? const NotLoginInbox()
           : InfinityList(
@@ -220,48 +242,54 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
                 if (inboxes?.isEmpty == true) {
                   return FitnessEmpty(
-                    title: 'Empty',
-                    message: 'Inbox is empty',
-                    textButton: 'Refresh',
+                    title: i18n.common_Oops,
+                    message: i18n.common_EmptyData,
+                    textButton: i18n.button_TryAgain,
                     onPressed: refreshHandler,
                   );
                 }
 
-                return ListView.separated(
-                  itemCount: inboxes!.length + 1,
-                  reverse: true,
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  itemBuilder: (_, index) {
-                    if (index == 0) {
-                      if (loading) {
-                        return Consumer(
-                          builder: (context, ref, child) {
-                            return MessageWidget(
-                              item: GGetMyInboxesData_getMyInboxes_items(
-                                (b) => b
-                                  ..userId =
-                                      '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
-                                  ..isSender = false
-                                  ..message = ref
-                                      .watch(messageResponseProvider)
-                                      .join(''),
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    }
-
-                    final item = inboxes[index - 1];
-
-                    return MessageWidget(
-                      item: item,
-                    );
+                return NotificationListener<ScrollNotification>(
+                  onNotification: (scrollNoti) {
+                    handleShowButtonScroll(scrollNoti);
+                    return false;
                   },
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  controller: scrollController,
+                  child: ListView.separated(
+                    itemCount: inboxes!.length + 1,
+                    reverse: true,
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    itemBuilder: (_, index) {
+                      if (index == 0) {
+                        if (loading) {
+                          return Consumer(
+                            builder: (context, ref, child) {
+                              return MessageWidget(
+                                item: GGetMyInboxesData_getMyInboxes_items(
+                                  (b) => b
+                                    ..userId =
+                                        '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
+                                    ..isSender = false
+                                    ..message = ref
+                                        .watch(messageResponseProvider)
+                                        .join(''),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      }
+
+                      final item = inboxes[index - 1];
+
+                      return MessageWidget(
+                        item: item,
+                      );
+                    },
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    controller: scrollController,
+                  ),
                 );
               },
             ),
@@ -271,7 +299,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         child: Row(
           children: [
             Expanded(
-              child: TextFormField(
+              child: FormBuilderTextField(
+                name: 'message',
                 controller: textController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
