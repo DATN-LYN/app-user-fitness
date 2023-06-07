@@ -35,10 +35,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
-  /// File path: assets/images/logo_container.png
-  AssetGenImage get logoContainer =>
-      const AssetGenImage('assets/images/logo_container.png');
-
   /// File path: assets/images/operator.png
   AssetGenImage get operator =>
       const AssetGenImage('assets/images/operator.png');
@@ -69,7 +65,6 @@ class $AssetsImagesGen {
         intro3,
         loginIllu,
         logo,
-        logoContainer,
         operator,
         relax,
         running,

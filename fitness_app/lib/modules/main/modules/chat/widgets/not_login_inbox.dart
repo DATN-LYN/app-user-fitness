@@ -26,7 +26,7 @@ class NotLoginInbox extends ConsumerWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Assets.images.logoContainer.image(width: 40, height: 40),
+                  Assets.images.logo.image(width: 40, height: 40),
                   ShadowWrapper(
                     child: Text(
                       isVN
@@ -56,7 +56,7 @@ class NotLoginInbox extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Assets.images.logoContainer.image(width: 40, height: 40),
+                    Assets.images.logo.image(width: 40, height: 40),
                     Expanded(
                       child: ShadowWrapper(
                         child: Text(

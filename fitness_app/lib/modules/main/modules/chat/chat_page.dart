@@ -152,10 +152,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 
   void handleShowButtonScroll(ScrollNotification scrollNoti) {
-    if (scrollNoti is ScrollStartNotification) {
-      if (!showButtonScroll) {
-        setState(() => showButtonScroll = true);
-      }
+    if (scrollNoti is ScrollUpdateNotification) {
+      setState(() => showButtonScroll = true);
     } else if (scrollController.position.pixels ==
         scrollController.position.minScrollExtent) {
       setState(() => showButtonScroll = false);

@@ -169,6 +169,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     options: options,
                     initialOption: options.first,
                     allowClear: false,
+                    onChanged: (value) {
+                      if (value != null) field.didChange(value.value);
+                    },
                   );
                 },
               ),
