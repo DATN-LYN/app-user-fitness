@@ -393,6 +393,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Áp dụng"
 	@override
 	String get button_Apply => "Áp dụng";
+	/// "Đặt lại"
+	@override
+	String get button_Reset => "Đặt lại";
 	/// ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"]
 	@override
 	List<String> get onboard_Title => ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"];

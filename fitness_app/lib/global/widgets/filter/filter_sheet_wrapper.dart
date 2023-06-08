@@ -61,9 +61,25 @@ class FilterSheetWrapper extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: ElevatedButton(
-              onPressed: onApply,
-              child: Text(i18n.button_Ok),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: onClearAll,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.grey6,
+                    ),
+                    child: Text(i18n.button_Reset),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: onApply,
+                    child: Text(i18n.button_Apply),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

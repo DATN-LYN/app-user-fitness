@@ -255,7 +255,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   child: ListView.separated(
                     itemCount: inboxes!.length + 1,
                     reverse: true,
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    padding: const EdgeInsets.fromLTRB(4, 0, 4, 16),
                     itemBuilder: (_, index) {
                       if (index == 0) {
                         if (loading) {

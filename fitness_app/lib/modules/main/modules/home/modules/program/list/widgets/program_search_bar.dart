@@ -47,6 +47,32 @@ class _ProgramSearchBarState extends State<ProgramSearchBar> {
       );
     }
 
+    // filter by bodyPart
+    newFilters.removeWhere((e) => e.field == 'Program.bodyPart');
+    if (filterData.bodyParts.isNotEmpty) {
+      newFilters.add(
+        GFilterDto((b) => b
+          ..field = 'Program.bodyPart'
+          ..operator = GFILTER_OPERATOR.Gin
+          ..data = filterData.bodyParts.map((e) => e).join(',')),
+      );
+    }
+
+    // filter by categoryId
+    newFilters.removeWhere((e) => e.field == 'Program.categoryId');
+    if (filterData.category != null) {
+      newFilters.add(
+        GFilterDto(
+          (b) => b
+            ..field = 'Program.categoryId'
+            ..operator = GFILTER_OPERATOR.eq
+            ..data = filterData.category?.id,
+        ),
+      );
+    } else {
+      newFilters.clear();
+    }
+
     // filter by keyword
     newFilters.removeWhere((e) => e.field == 'Program.name');
     if (filterData.keyword?.isNotEmpty ?? false) {
@@ -99,21 +125,6 @@ class _ProgramSearchBarState extends State<ProgramSearchBar> {
                   400,
                 ),
               );
-
-              // * (Optional) show dialog on mobile
-              // await showDialog(
-              //   context: context,
-              //   builder: (context) => Padding(
-              //     padding: const EdgeInsets.all(16),
-              //     child: Material(
-              //       clipBehavior: Clip.hardEdge,
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(12),
-              //       ),
-              //       child: RemoteFilterSheet(initialFilters: filter),
-              //     ),
-              //   ),
-              // )
 
               if (newFilter is ProgramFilterData) {
                 handleFilter(newFilter);
