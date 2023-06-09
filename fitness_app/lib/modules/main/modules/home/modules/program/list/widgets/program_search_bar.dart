@@ -49,12 +49,14 @@ class _ProgramSearchBarState extends State<ProgramSearchBar> {
 
     // filter by bodyPart
     newFilters.removeWhere((e) => e.field == 'Program.bodyPart');
-    if (filterData.bodyParts.isNotEmpty) {
+    if (filterData.bodyPart != null) {
       newFilters.add(
-        GFilterDto((b) => b
-          ..field = 'Program.bodyPart'
-          ..operator = GFILTER_OPERATOR.Gin
-          ..data = filterData.bodyParts.map((e) => e).join(',')),
+        GFilterDto(
+          (b) => b
+            ..field = 'Program.bodyPart'
+            ..operator = GFILTER_OPERATOR.eq
+            ..data = filterData.bodyPart.toString(),
+        ),
       );
     }
 
