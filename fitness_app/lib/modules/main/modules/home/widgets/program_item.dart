@@ -72,11 +72,10 @@ class ProgramItem extends StatelessWidget {
                         const SizedBox(height: 3),
                         Text(
                           program.name ?? '',
-                          maxLines: 2,
                           style: const TextStyle(
                             color: AppColors.grey1,
                             fontSize: 16,
-                            overflow: TextOverflow.visible,
+                            overflow: TextOverflow.ellipsis,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
