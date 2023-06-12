@@ -178,6 +178,7 @@ type IUser {
   userPrograms: [UserProgram!]
   userExercises: [UserExercise!]
   gender: GENDER
+  userRole: ROLE
 }
 
 type IUserExercise {
@@ -346,6 +347,7 @@ input RegisterInputDto {
   age: Float!
   fullName: String!
   gender: GENDER
+  userRole: ROLE
 }
 
 type ResponseMessageBase {
@@ -356,6 +358,11 @@ type ResponseMessageBase {
 type Role {
   id: String!
   name: String!
+}
+
+enum ROLE {
+  Admin
+  User
 }
 
 type Support {
@@ -433,6 +440,7 @@ input UpsertUserInputDto {
   email: String!
   age: Float!
   gender: GENDER
+  userRole: ROLE
 }
 
 input UpsertUserProgramInputDto {
@@ -467,6 +475,7 @@ type User {
   userPrograms: [UserProgram!]
   userExercises: [UserExercise!]
   gender: GENDER
+  userRole: ROLE
 }
 
 type UserExercise {
