@@ -45,7 +45,7 @@ class ProgramItem extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 imageUrl: program.imgUrl ?? '',
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
                 width: double.infinity,
                 height: 90,
               ),

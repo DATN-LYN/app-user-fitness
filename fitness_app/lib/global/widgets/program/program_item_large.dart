@@ -40,7 +40,7 @@ class ProgramItemLarge extends StatelessWidget {
               imageUrl: program.imgUrl ?? '_',
               height: 150,
               width: double.infinity,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
