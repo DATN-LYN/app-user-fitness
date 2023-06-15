@@ -56,7 +56,8 @@ class _StatisticsRecentlyWorkoutState
       final result = res.data?.getCurrentUser.userPrograms;
       if (mounted) {
         setState(
-          () => programs = result?.map((e) => e.program as GProgram).toList(),
+          () => programs =
+              result?.map((e) => e.program as GProgram).toSet().toList(),
         );
       }
     }
