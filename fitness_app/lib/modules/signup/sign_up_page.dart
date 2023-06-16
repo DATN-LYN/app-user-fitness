@@ -41,6 +41,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         ..email = formValue['email']
         ..password = formValue['password']
         ..gender = formValue['gender']
+        ..isActive = true
         ..userRole = GROLE.User,
     );
   }

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -31,6 +32,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   bool isLoading = false;
 
   void login() async {
+    final i18n = I18n.of(context)!;
     final client = ref.read(appClientProvider);
     FocusManager.instance.primaryFocus?.unfocus();
 
@@ -50,7 +52,25 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           DialogUtils.showError(context: context, response: response);
         }
       } else {
-        handleLoginSuccess(response.data);
+        if (response.data?.login.user?.isActive == true) {
+          handleLoginSuccess(response.data);
+        } else {
+          if (mounted) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ConfirmationDialog(
+                  image: const Icon(
+                    Icons.error,
+                    color: AppColors.primaryBold,
+                  ),
+                  titleText: i18n.common_Oops,
+                  contentText: i18n.signup_InactiveAccount,
+                );
+              },
+            );
+          }
+        }
       }
     }
   }

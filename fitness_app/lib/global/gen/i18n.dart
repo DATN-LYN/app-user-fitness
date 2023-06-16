@@ -134,6 +134,8 @@ class I18n implements WidgetsLocalizations {
 	String get signup_BackToLogin => "Back to login";
 	/// "Gender"
 	String get signup_Gender => "Gender";
+	/// "You account is inactive. Please contact admin at admin_fitness@gmail.com for help."
+	String get signup_InactiveAccount => "You account is inactive. Please contact admin at admin_fitness@gmail.com for help.";
 	/// "Forgot password"
 	String get forgotPassword_Title => "Forgot password";
 	/// "Please enter your email address to get login code"

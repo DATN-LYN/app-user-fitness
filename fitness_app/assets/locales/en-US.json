@@ -67,7 +67,8 @@
       "enterYourAge": "Enter your age",
       "registerSuccess": "You have registered successfully",
       "backToLogin": "Back to login",
-      "gender": "Gender"
+      "gender": "Gender",
+      "inactiveAccount": "You account is inactive. Please contact admin at admin_fitness@gmail.com for help."
     },
     "forgotPassword_": {
       "title": "Forgot password",
