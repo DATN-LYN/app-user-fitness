@@ -27,10 +27,10 @@ class FilterSheetWrapper extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24, 16, 16, 4),
             child: Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Filter',
-                    style: TextStyle(
+                    i18n.programs_Filter,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),

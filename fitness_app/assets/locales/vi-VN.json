@@ -139,12 +139,13 @@
     ],
     "categories_":{
       "categories": "Thể Loại",
-      "categoryNotFound": "Không tìm thấy thể loại"
+      "categoryNotFound": "Không tìm thấy thể loại",
+      "searchHint": "Nhập tên thể loại"
+
     },
     "exercises_":{
       "exercises": "Bài Tập",
-      "exerciseNotFound": "Không tìm thấy bài tập",
-      "searchHint": "Nhập tên thể loại"
+      "exerciseNotFound": "Không tìm thấy bài tập"
 
     },
     "programs_":{
@@ -152,8 +153,8 @@
       "programNotFound": "Không tìm thấy chương trình",
       "newestPrograms": "Chương trình mới nhất",
       "mostViewedPrograms": "Chương trình nhiều lượt xem",
-      "searchHint": "Nhập tên chương trình"
-
+      "searchHint": "Nhập tên chương trình",
+      "filter": "Bộ lọc"
     },
     "inboxes_":{
       "inboxes":"Tin nhắn",

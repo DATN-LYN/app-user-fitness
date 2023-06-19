@@ -153,7 +153,8 @@
       "newestPrograms": "Newest Programs",
       "mostViewedPrograms": "Most Viewed Programs",
       "searchHint": "Input program name",
-      "description": "Description"
+      "description": "Description",
+      "filter": "Filter"
     },
     "inboxes_":{
       "inboxes":"Inboxes",

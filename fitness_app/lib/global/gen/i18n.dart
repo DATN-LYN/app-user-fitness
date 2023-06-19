@@ -256,6 +256,8 @@ class I18n implements WidgetsLocalizations {
 	String get programs_SearchHint => "Input program name";
 	/// "Description"
 	String get programs_Description => "Description";
+	/// "Filter"
+	String get programs_Filter => "Filter";
 	/// "Inboxes"
 	String get inboxes_Inboxes => "Inboxes";
 	/// "Inbox Not Found"
@@ -360,8 +362,6 @@ class I18n implements WidgetsLocalizations {
 	List<String> get gender => ["Male", "Female", "Others"];
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
-	/// "Nhập tên thể loại"
-	String get exercises_SearchHint => "Nhập tên thể loại";
 	/// "Mô Tả"
 	String get common_Description => "Mô Tả";
 	/// "Chọn một hình ảnh"
@@ -680,6 +680,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Không tìm thấy thể loại"
 	@override
 	String get categories_CategoryNotFound => "Không tìm thấy thể loại";
+	/// "Nhập tên thể loại"
+	@override
+	String get categories_SearchHint => "Nhập tên thể loại";
 	/// "Bài Tập"
 	@override
 	String get exercises_Exercises => "Bài Tập";
@@ -701,6 +704,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Nhập tên chương trình"
 	@override
 	String get programs_SearchHint => "Nhập tên chương trình";
+	/// "Bộ lọc"
+	@override
+	String get programs_Filter => "Bộ lọc";
 	/// "Tin nhắn"
 	@override
 	String get inboxes_Inboxes => "Tin nhắn";
