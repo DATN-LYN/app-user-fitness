@@ -95,7 +95,7 @@ class _ProgramFilterSheetState extends State<ProgramFilterSheet> {
             onChanged: (value) {
               setState(
                 () {
-                  filter.copyWith(bodyPart: e);
+                  filter = filter.copyWith(bodyPart: e);
                 },
               );
             },

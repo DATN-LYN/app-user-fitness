@@ -743,9 +743,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Độ khó"
 	@override
 	String get common_Level => "Độ khó";
-	/// "Vùng tập luyện"
+	/// "Vùng cơ thể"
 	@override
-	String get common_BodyPart => "Vùng tập luyện";
+	String get common_BodyPart => "Vùng cơ thể";
 	/// "Thành công"
 	@override
 	String get common_Success => "Thành công";

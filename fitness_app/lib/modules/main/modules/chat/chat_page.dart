@@ -169,7 +169,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     return Scaffold(
       backgroundColor: AppColors.grey6.withOpacity(0.1),
       appBar: AppBar(
-        title: Text(i18n.chat_Title),
+        title: Text(i18n.main_Chat),
         elevation: 0,
       ),
       floatingActionButton: showButtonScroll

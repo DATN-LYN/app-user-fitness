@@ -40,10 +40,12 @@ class _ProgramSearchBarState extends State<ProgramSearchBar> {
     newFilters.removeWhere((e) => e.field == 'Program.level');
     if (filterData.levels.isNotEmpty) {
       newFilters.add(
-        GFilterDto((b) => b
-          ..field = 'Program.level'
-          ..operator = GFILTER_OPERATOR.Gin
-          ..data = filterData.levels.map((e) => e).join(',')),
+        GFilterDto(
+          (b) => b
+            ..field = 'Program.level'
+            ..operator = GFILTER_OPERATOR.Gin
+            ..data = filterData.levels.map((e) => e).join(','),
+        ),
       );
     }
 
@@ -71,8 +73,6 @@ class _ProgramSearchBarState extends State<ProgramSearchBar> {
             ..data = filterData.category?.id,
         ),
       );
-    } else {
-      newFilters.clear();
     }
 
     // filter by keyword

@@ -21,6 +21,7 @@ class AuthHelper {
             Icons.warning,
             color: AppColors.primaryBold,
           ),
+          positiveButtonText: i18n.login_LogIn,
           showNegativeButton: false,
           onTapPositiveButton: () {
             context.popRoute();
