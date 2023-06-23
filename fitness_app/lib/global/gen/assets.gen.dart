@@ -53,9 +53,6 @@ class $AssetsImagesGen {
   AssetGenImage get supportCenter =>
       const AssetGenImage('assets/images/support_center.png');
 
-  /// File path: assets/images/weight.png
-  AssetGenImage get weight => const AssetGenImage('assets/images/weight.png');
-
   /// List of all assets
   List<AssetGenImage> get values => [
         emptyData,
@@ -69,8 +66,7 @@ class $AssetsImagesGen {
         relax,
         running,
         sadFace,
-        supportCenter,
-        weight
+        supportCenter
       ];
 }
 

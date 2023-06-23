@@ -105,6 +105,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
           return FitnessEmpty(
             title: i18n.categories_CategoryNotFound,
             message: i18n.common_PleasePullToTryAgain,
+            showImage: false,
           );
         }
 

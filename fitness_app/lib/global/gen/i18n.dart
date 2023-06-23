@@ -851,9 +851,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Biểu đồ"
 	@override
 	String get chart_Chart => "Biểu đồ";
-	/// ["cột", "thanh", "đường", "đường bậc thang"]
+	/// ["cột", "cột nằm ngang", "đường", "đường bậc thang"]
 	@override
-	List<String> get chart_ChartType => ["cột", "thanh", "đường", "đường bậc thang"];
+	List<String> get chart_ChartType => ["cột", "cột nằm ngang", "đường", "đường bậc thang"];
 	/// ["Nam", "Nữ", "Khác"]
 	@override
 	List<String> get gender => ["Nam", "Nữ", "Khác"];
