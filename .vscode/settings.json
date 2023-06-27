@@ -10,6 +10,7 @@
         "autocorrect",
         "Autovalidate",
         "calo",
+        "debouncer",
         "stepline",
         "unfocus",
         "Upsert"

@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/themes/app_colors.dart';
-import '../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../global/widgets/fitness_error.dart';
 import '../../../../../global/widgets/shimmer_wrapper.dart';
 
@@ -42,28 +41,25 @@ class UserStatistic extends ConsumerWidget {
         }
         final data = response!.data!;
         final stats = data.getMyStats.items;
+        int? calo;
+        double? duration;
+        double? programs;
 
-        if (stats?.isEmpty == true) {
-          return FitnessEmpty(
-            title: i18n.common_EmptyData,
-            message: i18n.common_PleasePullToTryAgain,
-            showImage: false,
-          );
+        if (stats?.isNotEmpty == true) {
+          calo =
+              stats?.map((e) => e.caloCount).reduce((a, b) => a! + b!)!.round();
+
+          duration =
+              stats?.map((e) => e.durationCount).reduce((a, b) => a! + b!);
+
+          programs =
+              stats?.map((e) => e.programCount).reduce((a, b) => a! + b!);
         }
-
-        final calo =
-            stats?.map((e) => e.caloCount).reduce((a, b) => a! + b!)!.round();
-
-        final duration =
-            stats?.map((e) => e.durationCount).reduce((a, b) => a! + b!);
-
-        final programs =
-            stats?.map((e) => e.programCount).reduce((a, b) => a! + b!);
 
         return Row(
           children: [
             UserStatisticItem(
-              title: calo.toString(),
+              title: '${calo ?? 0}',
               subtitle: i18n.common_Calories,
               icon: const Icon(
                 Icons.local_fire_department,
@@ -75,7 +71,7 @@ class UserStatistic extends ConsumerWidget {
             UserStatisticItem(
               title: DateTimeHelper.totalDurationFormat(
                 Duration(
-                  seconds: duration!.toInt(),
+                  seconds: duration?.toInt() ?? 0,
                 ),
               ),
               subtitle: i18n.common_Duration,
@@ -87,7 +83,7 @@ class UserStatistic extends ConsumerWidget {
               backgroundColor: AppColors.alertSoft,
             ),
             UserStatisticItem(
-              title: programs?.toInt().toString() ?? '_',
+              title: programs?.toInt().toString() ?? '0',
               subtitle: i18n.programs_Programs,
               icon: const Icon(
                 Icons.feed_rounded,

@@ -225,8 +225,9 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
           titleText: i18n.exerciseDetail_QuitWorkout,
           contentText: i18n.exerciseDetail_QuitWorkoutDes,
           onTapPositiveButton: () {
-            AutoRouter.of(context)
-                .popUntilRouteWithName(ProgramDetailRoute.name);
+            AutoRouter.of(context).popUntilRouteWithName(
+              ProgramDetailRoute.name,
+            );
             ref.read(currentStatsId.notifier).update((state) => null);
           },
           onTapNegativeButton: () {

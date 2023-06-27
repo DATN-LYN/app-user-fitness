@@ -10,6 +10,7 @@ class ShimmerExerciseList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerWrapper(
       child: ListView.separated(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         itemCount: 10,
         itemBuilder: (context, index) {
