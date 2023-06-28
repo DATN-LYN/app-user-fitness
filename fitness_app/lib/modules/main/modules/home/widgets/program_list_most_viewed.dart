@@ -115,6 +115,7 @@ class _WorkoutProgramsState extends ConsumerState<ProgramListMostViewed> {
             final item = programs[index];
             return ProgramItem(
               program: item,
+              showView: true,
             );
           },
           separatorBuilder: (_, __) => const SizedBox(width: 12),
