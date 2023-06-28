@@ -78,6 +78,11 @@ class ProgramItemLarge extends StatelessWidget {
                     label: '${i18n.common_Description}: ',
                     value: program.description ?? '_',
                   ),
+                  _infoTile(
+                    icon: Ionicons.eye,
+                    label: '${i18n.programs_View}: ',
+                    value: '${program.view?.toInt() ?? 0} ',
+                  ),
                 ],
               ),
             ),

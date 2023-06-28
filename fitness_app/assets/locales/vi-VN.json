@@ -154,7 +154,8 @@
       "newestPrograms": "Chương trình mới nhất",
       "mostViewedPrograms": "Chương trình nhiều lượt xem",
       "searchHint": "Nhập tên chương trình",
-      "filter": "Bộ lọc"
+      "filter": "Bộ lọc",
+      "view": "Lượt xem"
     },
     "inboxes_":{
       "inboxes":"Tin nhắn",

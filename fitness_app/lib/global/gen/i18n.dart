@@ -258,6 +258,8 @@ class I18n implements WidgetsLocalizations {
 	String get programs_Description => "Description";
 	/// "Filter"
 	String get programs_Filter => "Filter";
+	/// "Views"
+	String get programs_View => "Views";
 	/// "Inboxes"
 	String get inboxes_Inboxes => "Inboxes";
 	/// "Inbox Not Found"
@@ -290,6 +292,8 @@ class I18n implements WidgetsLocalizations {
 	String get common_Oops => "Oops!";
 	/// "Please log in to use this feature"
 	String get common_YouHaveToLogin => "Please log in to use this feature";
+	/// "Description"
+	String get common_Description => "Description";
 	/// "Hello"
 	String get home_Hello => "Hello";
 	/// "Have a nice day"
@@ -362,8 +366,6 @@ class I18n implements WidgetsLocalizations {
 	List<String> get gender => ["Male", "Female", "Others"];
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
-	/// "Mô Tả"
-	String get common_Description => "Mô Tả";
 	/// "Chọn một hình ảnh"
 	String get support_PickPhoto => "Chọn một hình ảnh";
 }
@@ -707,6 +709,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Bộ lọc"
 	@override
 	String get programs_Filter => "Bộ lọc";
+	/// "Lượt xem"
+	@override
+	String get programs_View => "Lượt xem";
 	/// "Tin nhắn"
 	@override
 	String get inboxes_Inboxes => "Tin nhắn";
@@ -728,6 +733,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Calo"
 	@override
 	String get common_Calories => "Calo";
+	/// "Mô Tả"
+	@override
+	String get common_Description => "Mô Tả";
 	/// "Thời gian"
 	@override
 	String get common_Duration => "Thời gian";

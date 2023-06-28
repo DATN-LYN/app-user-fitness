@@ -154,7 +154,8 @@
       "mostViewedPrograms": "Most Viewed Programs",
       "searchHint": "Input program name",
       "description": "Description",
-      "filter": "Filter"
+      "filter": "Filter",
+      "view": "Views"
     },
     "inboxes_":{
       "inboxes":"Inboxes",
@@ -174,7 +175,8 @@
       "bodyPart": "Body Part",
       "success":"Success",
       "oops": "Oops!",
-      "youHaveToLogin":"Please log in to use this feature"
+      "youHaveToLogin":"Please log in to use this feature",
+      "description": "Description"
     },
     "home_":{
       "Hello": "Hello",
