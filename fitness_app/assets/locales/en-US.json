@@ -155,7 +155,8 @@
       "searchHint": "Input program name",
       "description": "Description",
       "filter": "Filter",
-      "view": "Views"
+      "view": "Views",
+      "chooseCategory": "Choose a category"
     },
     "inboxes_":{
       "inboxes":"Inboxes",
