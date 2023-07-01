@@ -6,7 +6,8 @@
         "cancel": "Huỷ bỏ",
         "ok": "Đồng ý",
         "tryAgain": "Thử lại",
-        "apply": "Áp dụng"
+        "apply": "Áp dụng",
+        "reset": "Đặt lại"
     },
     "onboard_":{
       "title": [
@@ -138,12 +139,13 @@
     ],
     "categories_":{
       "categories": "Thể Loại",
-      "categoryNotFound": "Không tìm thấy thể loại"
+      "categoryNotFound": "Không tìm thấy thể loại",
+      "searchHint": "Nhập tên thể loại"
+
     },
     "exercises_":{
       "exercises": "Bài Tập",
-      "exerciseNotFound": "Không tìm thấy bài tập",
-      "searchHint": "Nhập tên thể loại"
+      "exerciseNotFound": "Không tìm thấy bài tập"
 
     },
     "programs_":{
@@ -151,8 +153,9 @@
       "programNotFound": "Không tìm thấy chương trình",
       "newestPrograms": "Chương trình mới nhất",
       "mostViewedPrograms": "Chương trình nhiều lượt xem",
-      "searchHint": "Nhập tên chương trình"
-
+      "searchHint": "Nhập tên chương trình",
+      "filter": "Bộ lọc",
+      "view": "Lượt xem"
     },
     "inboxes_":{
       "inboxes":"Tin nhắn",
@@ -170,7 +173,7 @@
       "monthly": "Tháng",
       "yearly": "Năm",
       "level": "Độ khó",
-      "bodyPart": "Vùng tập luyện",      
+      "bodyPart": "Vùng cơ thể",      
       "success":"Thành công",
       "oops": "Oops!",
       "youHaveToLogin":"Vui lòng đăng nhập để sử dụng tính năng này"
@@ -233,7 +236,7 @@
     "chart": "Biểu đồ",
     "chartType":[
       "cột",
-      "thanh",
+      "cột nằm ngang",
       "đường",
       "đường bậc thang"
     ]

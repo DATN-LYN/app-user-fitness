@@ -254,46 +254,46 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                       title: i18n.setting_Language,
                       onTap: changeLanguage,
                     ),
-                    const Divider(height: 12),
-                    SettingTile(
-                      icon: Ionicons.share_social,
-                      title: i18n.setting_ShareWithFriends,
-                      onTap: shareIntroUrl,
-                    ),
+                    // const Divider(height: 12),
+                    // SettingTile(
+                    //   icon: Ionicons.share_social,
+                    //   title: i18n.setting_ShareWithFriends,
+                    //   onTap: shareIntroUrl,
+                    // ),
                   ],
                 ),
               ),
               const SizedBox(height: 16),
-              ShadowWrapper(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      i18n.setting_Security,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    SettingTile(
-                      icon: Icons.privacy_tip_outlined,
-                      title: i18n.setting_PrivacyPolicy,
-                      onTap: openPrivacyPolicyUrl,
-                    ),
-                    const Divider(height: 12),
-                    SettingTile(
-                      icon: Icons.file_copy_outlined,
-                      title: i18n.setting_TermsAndConditions,
-                      onTap: openTermsAndConditionsUrl,
-                    ),
-                  ],
-                ),
-              ),
+              // ShadowWrapper(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 16,
+              //     vertical: 16,
+              //   ),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         i18n.setting_Security,
+              //         style: const TextStyle(
+              //           fontSize: 16,
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //       const SizedBox(height: 16),
+              //       SettingTile(
+              //         icon: Icons.privacy_tip_outlined,
+              //         title: i18n.setting_PrivacyPolicy,
+              //         onTap: openPrivacyPolicyUrl,
+              //       ),
+              //       const Divider(height: 12),
+              //       SettingTile(
+              //         icon: Icons.file_copy_outlined,
+              //         title: i18n.setting_TermsAndConditions,
+              //         onTap: openTermsAndConditionsUrl,
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(height: 16),
             ],
           ),

@@ -1,4 +1,3 @@
-
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/query/__generated__/query_get_programs.req.gql.dart';
 import 'package:fitness_app/global/themes/app_colors.dart';
@@ -116,6 +115,7 @@ class _WorkoutProgramsState extends ConsumerState<ProgramListMostViewed> {
             final item = programs[index];
             return ProgramItem(
               program: item,
+              showView: true,
             );
           },
           separatorBuilder: (_, __) => const SizedBox(width: 12),
@@ -147,7 +147,7 @@ class ShimmerProgramList extends StatelessWidget {
               ShimmerWrapper(
                 child: Container(
                   height: 100,
-                  width: 160,
+                  width: 180,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(12),

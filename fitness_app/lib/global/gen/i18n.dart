@@ -134,6 +134,8 @@ class I18n implements WidgetsLocalizations {
 	String get signup_BackToLogin => "Back to login";
 	/// "Gender"
 	String get signup_Gender => "Gender";
+	/// "You account is inactive. Please contact admin at admin_fitness@gmail.com for help."
+	String get signup_InactiveAccount => "You account is inactive. Please contact admin at admin_fitness@gmail.com for help.";
 	/// "Forgot password"
 	String get forgotPassword_Title => "Forgot password";
 	/// "Please enter your email address to get login code"
@@ -254,6 +256,10 @@ class I18n implements WidgetsLocalizations {
 	String get programs_SearchHint => "Input program name";
 	/// "Description"
 	String get programs_Description => "Description";
+	/// "Filter"
+	String get programs_Filter => "Filter";
+	/// "Views"
+	String get programs_View => "Views";
 	/// "Inboxes"
 	String get inboxes_Inboxes => "Inboxes";
 	/// "Inbox Not Found"
@@ -286,6 +292,8 @@ class I18n implements WidgetsLocalizations {
 	String get common_Oops => "Oops!";
 	/// "Please log in to use this feature"
 	String get common_YouHaveToLogin => "Please log in to use this feature";
+	/// "Description"
+	String get common_Description => "Description";
 	/// "Hello"
 	String get home_Hello => "Hello";
 	/// "Have a nice day"
@@ -358,10 +366,6 @@ class I18n implements WidgetsLocalizations {
 	List<String> get gender => ["Male", "Female", "Others"];
 	/// "Xác nhận thay đổi"
 	String get setting_ConfirmChange => "Xác nhận thay đổi";
-	/// "Nhập tên thể loại"
-	String get exercises_SearchHint => "Nhập tên thể loại";
-	/// "Mô Tả"
-	String get common_Description => "Mô Tả";
 	/// "Chọn một hình ảnh"
 	String get support_PickPhoto => "Chọn một hình ảnh";
 }
@@ -393,6 +397,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Áp dụng"
 	@override
 	String get button_Apply => "Áp dụng";
+	/// "Đặt lại"
+	@override
+	String get button_Reset => "Đặt lại";
 	/// ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"]
 	@override
 	List<String> get onboard_Title => ["Tham gia cùng chúng tôi", "Tập luyện hàng ngày", "Lập kế hoạch ăn kiêng"];
@@ -675,6 +682,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Không tìm thấy thể loại"
 	@override
 	String get categories_CategoryNotFound => "Không tìm thấy thể loại";
+	/// "Nhập tên thể loại"
+	@override
+	String get categories_SearchHint => "Nhập tên thể loại";
 	/// "Bài Tập"
 	@override
 	String get exercises_Exercises => "Bài Tập";
@@ -696,6 +706,12 @@ class _I18n_vi_VN extends I18n {
 	/// "Nhập tên chương trình"
 	@override
 	String get programs_SearchHint => "Nhập tên chương trình";
+	/// "Bộ lọc"
+	@override
+	String get programs_Filter => "Bộ lọc";
+	/// "Lượt xem"
+	@override
+	String get programs_View => "Lượt xem";
 	/// "Tin nhắn"
 	@override
 	String get inboxes_Inboxes => "Tin nhắn";
@@ -717,6 +733,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Calo"
 	@override
 	String get common_Calories => "Calo";
+	/// "Mô Tả"
+	@override
+	String get common_Description => "Mô Tả";
 	/// "Thời gian"
 	@override
 	String get common_Duration => "Thời gian";
@@ -732,9 +751,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Độ khó"
 	@override
 	String get common_Level => "Độ khó";
-	/// "Vùng tập luyện"
+	/// "Vùng cơ thể"
 	@override
-	String get common_BodyPart => "Vùng tập luyện";
+	String get common_BodyPart => "Vùng cơ thể";
 	/// "Thành công"
 	@override
 	String get common_Success => "Thành công";
@@ -840,9 +859,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Biểu đồ"
 	@override
 	String get chart_Chart => "Biểu đồ";
-	/// ["cột", "thanh", "đường", "đường bậc thang"]
+	/// ["cột", "cột nằm ngang", "đường", "đường bậc thang"]
 	@override
-	List<String> get chart_ChartType => ["cột", "thanh", "đường", "đường bậc thang"];
+	List<String> get chart_ChartType => ["cột", "cột nằm ngang", "đường", "đường bậc thang"];
 	/// ["Nam", "Nữ", "Khác"]
 	@override
 	List<String> get gender => ["Nam", "Nữ", "Khác"];

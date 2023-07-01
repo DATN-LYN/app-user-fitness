@@ -40,10 +40,38 @@ class _ProgramSearchBarState extends State<ProgramSearchBar> {
     newFilters.removeWhere((e) => e.field == 'Program.level');
     if (filterData.levels.isNotEmpty) {
       newFilters.add(
-        GFilterDto((b) => b
-          ..field = 'Program.level'
-          ..operator = GFILTER_OPERATOR.Gin
-          ..data = filterData.levels.map((e) => e).join(',')),
+        GFilterDto(
+          (b) => b
+            ..field = 'Program.level'
+            ..operator = GFILTER_OPERATOR.Gin
+            ..data = filterData.levels.map((e) => e).join(','),
+        ),
+      );
+    }
+
+    // filter by bodyPart
+    newFilters.removeWhere((e) => e.field == 'Program.bodyPart');
+    if (filterData.bodyPart != null) {
+      newFilters.add(
+        GFilterDto(
+          (b) => b
+            ..field = 'Program.bodyPart'
+            ..operator = GFILTER_OPERATOR.eq
+            ..data = filterData.bodyPart.toString(),
+        ),
+      );
+    }
+
+    // filter by categoryId
+    newFilters.removeWhere((e) => e.field == 'Program.categoryId');
+    if (filterData.category != null) {
+      newFilters.add(
+        GFilterDto(
+          (b) => b
+            ..field = 'Program.categoryId'
+            ..operator = GFILTER_OPERATOR.eq
+            ..data = filterData.category?.id,
+        ),
       );
     }
 
@@ -99,21 +127,6 @@ class _ProgramSearchBarState extends State<ProgramSearchBar> {
                   400,
                 ),
               );
-
-              // * (Optional) show dialog on mobile
-              // await showDialog(
-              //   context: context,
-              //   builder: (context) => Padding(
-              //     padding: const EdgeInsets.all(16),
-              //     child: Material(
-              //       clipBehavior: Clip.hardEdge,
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(12),
-              //       ),
-              //       child: RemoteFilterSheet(initialFilters: filter),
-              //     ),
-              //   ),
-              // )
 
               if (newFilter is ProgramFilterData) {
                 handleFilter(newFilter);

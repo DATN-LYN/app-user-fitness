@@ -152,10 +152,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 
   void handleShowButtonScroll(ScrollNotification scrollNoti) {
-    if (scrollNoti is ScrollStartNotification) {
-      if (!showButtonScroll) {
-        setState(() => showButtonScroll = true);
-      }
+    if (scrollNoti is ScrollUpdateNotification) {
+      setState(() => showButtonScroll = true);
     } else if (scrollController.position.pixels ==
         scrollController.position.minScrollExtent) {
       setState(() => showButtonScroll = false);
@@ -171,7 +169,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     return Scaffold(
       backgroundColor: AppColors.grey6.withOpacity(0.1),
       appBar: AppBar(
-        title: Text(i18n.chat_Title),
+        title: Text(i18n.main_Chat),
         elevation: 0,
       ),
       floatingActionButton: showButtonScroll
@@ -257,7 +255,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   child: ListView.separated(
                     itemCount: inboxes!.length + 1,
                     reverse: true,
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    padding: const EdgeInsets.fromLTRB(4, 0, 4, 16),
                     itemBuilder: (_, index) {
                       if (index == 0) {
                         if (loading) {

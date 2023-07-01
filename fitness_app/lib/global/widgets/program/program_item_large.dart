@@ -40,7 +40,7 @@ class ProgramItemLarge extends StatelessWidget {
               imageUrl: program.imgUrl ?? '_',
               height: 150,
               width: double.infinity,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
@@ -77,6 +77,11 @@ class ProgramItemLarge extends StatelessWidget {
                     icon: Ionicons.document_text,
                     label: '${i18n.common_Description}: ',
                     value: program.description ?? '_',
+                  ),
+                  _infoTile(
+                    icon: Ionicons.eye,
+                    label: '${i18n.programs_View}: ',
+                    value: '${program.view?.toInt() ?? 0} ',
                   ),
                 ],
               ),

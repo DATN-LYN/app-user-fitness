@@ -35,10 +35,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
-  /// File path: assets/images/logo_container.png
-  AssetGenImage get logoContainer =>
-      const AssetGenImage('assets/images/logo_container.png');
-
   /// File path: assets/images/operator.png
   AssetGenImage get operator =>
       const AssetGenImage('assets/images/operator.png');
@@ -57,9 +53,6 @@ class $AssetsImagesGen {
   AssetGenImage get supportCenter =>
       const AssetGenImage('assets/images/support_center.png');
 
-  /// File path: assets/images/weight.png
-  AssetGenImage get weight => const AssetGenImage('assets/images/weight.png');
-
   /// List of all assets
   List<AssetGenImage> get values => [
         emptyData,
@@ -69,13 +62,11 @@ class $AssetsImagesGen {
         intro3,
         loginIllu,
         logo,
-        logoContainer,
         operator,
         relax,
         running,
         sadFace,
-        supportCenter,
-        weight
+        supportCenter
       ];
 }
 

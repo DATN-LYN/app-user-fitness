@@ -40,7 +40,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         ..fullName = formValue['fullName']
         ..email = formValue['email']
         ..password = formValue['password']
-        ..gender = formValue['gender'],
+        ..gender = formValue['gender']
+        ..isActive = true
+        ..userRole = GROLE.User,
     );
   }
 
@@ -102,248 +104,234 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         key: formKey,
         child: GestureDetector(
           onTapDown: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-          child: ListView(
+          child: Padding(
             padding: const EdgeInsets.all(16),
-            children: [
-              Label(i18n.login_Email),
-              FormBuilderTextField(
-                name: 'email',
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  filled: true,
-                  hintText: i18n.login_EmailHint,
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: FormBuilderValidators.compose(
-                  [
-                    FormBuilderValidators.required(
-                      errorText: i18n.login_EmailIsRequired,
-                    ),
-                    FormBuilderValidators.email(
-                      errorText: i18n.login_EmailNotValid,
-                    ),
-                  ],
-                ),
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              Text(
-                i18n.signup_CreateNewAccount,
-                style: theme.textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-              Label(i18n.signup_FullName),
-              FormBuilderTextField(
-                name: 'fullName',
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  filled: true,
-                  hintText: i18n.signup_EnterYourFullName,
-                ),
-                validator: FormBuilderValidators.required(
-                  errorText: i18n.signup_FullNameIsRequired,
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.visiblePassword,
-              ),
-              Label(i18n.signup_Gender),
-              FormBuilderField<GGENDER>(
-                name: 'gender',
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  filled: true,
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                builder: (field) {
-                  final options = GGENDER.values
-                      .map((e) => AdaptiveSelectorOption(
-                          label: e.label(i18n), value: e))
-                      .toList();
-                  return AdaptiveSelector(
-                    options: options,
-                    initialOption: options.first,
-                    allowClear: false,
-                  );
-                },
-              ),
-              Label(i18n.signup_Age),
-              FormBuilderTextField(
-                name: 'age',
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  filled: true,
-                  hintText: i18n.signup_EnterYourAge,
-                ),
-                validator: FormBuilderValidators.required(
-                  errorText: i18n.signup_AgeIsRequired,
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-              ),
-              Label(i18n.login_Password),
-              FormBuilderTextField(
-                name: 'password',
-                enabled: !isLoading,
-                obscureText: passwordObscure,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  suffixIconConstraints: const BoxConstraints(),
-                  hintText: i18n.login_PasswordHint,
-                  suffixIcon: SizedBox.square(
-                    dimension: 40,
-                    child: IconButton(
-                      icon: Icon(
-                        passwordObscure
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: AppColors.grey2,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Text(
+                        i18n.signup_CreateNewAccount,
+                        style: theme.textTheme.titleLarge,
                       ),
-                      onPressed: () => setState(() {
-                        passwordObscure = !passwordObscure;
-                      }),
-                    ),
+                      const SizedBox(height: 16),
+                      Label(i18n.login_Email),
+                      FormBuilderTextField(
+                        name: 'email',
+                        enabled: !isLoading,
+                        decoration: InputDecoration(
+                          fillColor:
+                              isLoading ? AppColors.grey6 : AppColors.white,
+                          filled: true,
+                          hintText: i18n.login_EmailHint,
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: FormBuilderValidators.compose(
+                          [
+                            FormBuilderValidators.required(
+                              errorText: i18n.login_EmailIsRequired,
+                            ),
+                            FormBuilderValidators.email(
+                              errorText: i18n.login_EmailNotValid,
+                            ),
+                          ],
+                        ),
+                        autocorrect: false,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      const SizedBox(height: 8),
+                      Label(i18n.signup_FullName),
+                      FormBuilderTextField(
+                        name: 'fullName',
+                        enabled: !isLoading,
+                        decoration: InputDecoration(
+                          fillColor:
+                              isLoading ? AppColors.grey6 : AppColors.white,
+                          filled: true,
+                          hintText: i18n.signup_EnterYourFullName,
+                        ),
+                        validator: FormBuilderValidators.required(
+                          errorText: i18n.signup_FullNameIsRequired,
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autocorrect: false,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.visiblePassword,
+                      ),
+                      Label(i18n.signup_Gender),
+                      FormBuilderField<GGENDER>(
+                        name: 'gender',
+                        enabled: !isLoading,
+                        decoration: InputDecoration(
+                          fillColor:
+                              isLoading ? AppColors.grey6 : AppColors.white,
+                          filled: true,
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        builder: (field) {
+                          final options = GGENDER.values
+                              .map((e) => AdaptiveSelectorOption(
+                                  label: e.label(i18n), value: e))
+                              .toList();
+                          return AdaptiveSelector(
+                            options: options,
+                            initialOption: options.first,
+                            allowClear: false,
+                            onChanged: (value) {
+                              if (value != null) field.didChange(value.value);
+                            },
+                          );
+                        },
+                      ),
+                      Label(i18n.signup_Age),
+                      FormBuilderTextField(
+                        name: 'age',
+                        enabled: !isLoading,
+                        decoration: InputDecoration(
+                          fillColor:
+                              isLoading ? AppColors.grey6 : AppColors.white,
+                          filled: true,
+                          hintText: i18n.signup_EnterYourAge,
+                        ),
+                        validator: FormBuilderValidators.required(
+                          errorText: i18n.signup_AgeIsRequired,
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autocorrect: false,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.number,
+                      ),
+                      Label(i18n.login_Password),
+                      FormBuilderTextField(
+                        name: 'password',
+                        enabled: !isLoading,
+                        obscureText: passwordObscure,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor:
+                              isLoading ? AppColors.grey6 : AppColors.white,
+                          suffixIconConstraints: const BoxConstraints(),
+                          hintText: i18n.login_PasswordHint,
+                          suffixIcon: SizedBox.square(
+                            dimension: 40,
+                            child: IconButton(
+                              icon: Icon(
+                                passwordObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: AppColors.grey2,
+                              ),
+                              onPressed: () => setState(() {
+                                passwordObscure = !passwordObscure;
+                              }),
+                            ),
+                          ),
+                        ),
+                        validator: FormBuilderValidators.compose(
+                          [
+                            FormBuilderValidators.required(
+                              errorText: i18n.login_PasswordIsRequired,
+                            ),
+                            FormBuilderValidators.minLength(
+                              6,
+                              errorText:
+                                  i18n.login_PasswordMustBeAtLeastSixCharacters,
+                            ),
+                          ],
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autocorrect: false,
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (_) => FocusScope.of(context)
+                            .requestFocus(focusConfirmPasswordNode),
+                      ),
+                      Label(i18n.signup_ConfirmPassword),
+                      FormBuilderTextField(
+                        name: 'confirmPassword',
+                        enabled: !isLoading,
+                        focusNode: focusConfirmPasswordNode,
+                        obscureText: confirmPasswordObscure,
+                        decoration: InputDecoration(
+                          fillColor:
+                              isLoading ? AppColors.grey6 : AppColors.white,
+                          filled: true,
+                          suffixIconConstraints: const BoxConstraints(),
+                          hintText: i18n.signup_ConfirmYourPassword,
+                          suffixIcon: SizedBox.square(
+                            dimension: 40,
+                            child: IconButton(
+                              icon: Icon(
+                                confirmPasswordObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: AppColors.grey2,
+                              ),
+                              onPressed: () => setState(() {
+                                confirmPasswordObscure =
+                                    !confirmPasswordObscure;
+                              }),
+                            ),
+                          ),
+                        ),
+                        validator: FormBuilderValidators.compose(
+                          [
+                            FormBuilderValidators.required(
+                              errorText: i18n.signup_ConfirmPasswordIsRequired,
+                            ),
+                            FormBuilderValidators.minLength(
+                              6,
+                              errorText:
+                                  i18n.login_PasswordMustBeAtLeastSixCharacters,
+                            ),
+                            (value) {
+                              if (value !=
+                                  formKey.currentState?.fields['password']
+                                      ?.value) {
+                                return i18n.setting_PasswordNotMatch;
+                              } else {
+                                return null;
+                              }
+                            }
+                          ],
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autocorrect: false,
+                        textInputAction: TextInputAction.done,
+                      ),
+                      const SizedBox(height: 32),
+                    ],
                   ),
                 ),
-                validator: FormBuilderValidators.compose(
-                  [
-                    FormBuilderValidators.required(
-                      errorText: i18n.login_PasswordIsRequired,
-                    ),
-                    FormBuilderValidators.minLength(
-                      6,
-                      errorText: i18n.login_PasswordMustBeAtLeastSixCharacters,
-                    ),
-                  ],
+                ElevatedButtonOpacity(
+                  onTap: isLoading ? null : signUp,
+                  loading: isLoading,
+                  label: i18n.signup_Register,
                 ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                onSubmitted: (_) => FocusScope.of(context)
-                    .requestFocus(focusConfirmPasswordNode),
-              ),
-              Label(i18n.signup_ConfirmPassword),
-              FormBuilderTextField(
-                name: 'confirmPassword',
-                enabled: !isLoading,
-                focusNode: focusConfirmPasswordNode,
-                obscureText: confirmPasswordObscure,
-                decoration: InputDecoration(
-                  fillColor: isLoading ? AppColors.grey6 : AppColors.white,
-                  filled: true,
-                  suffixIconConstraints: const BoxConstraints(),
-                  hintText: i18n.signup_ConfirmYourPassword,
-                  suffixIcon: SizedBox.square(
-                    dimension: 40,
-                    child: IconButton(
-                      icon: Icon(
-                        confirmPasswordObscure
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: AppColors.grey2,
+                const SizedBox(height: 16),
+                Text.rich(
+                  TextSpan(
+                    text: '${i18n.signup_JoinUsBefore} ',
+                    children: [
+                      TextSpan(
+                        text: i18n.signup_LogIn,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = AutoRouter.of(context).pop,
                       ),
-                      onPressed: () => setState(() {
-                        confirmPasswordObscure = !confirmPasswordObscure;
-                      }),
-                    ),
+                    ],
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                validator: FormBuilderValidators.compose(
-                  [
-                    FormBuilderValidators.required(
-                      errorText: i18n.signup_ConfirmPasswordIsRequired,
-                    ),
-                    FormBuilderValidators.minLength(
-                      6,
-                      errorText: i18n.login_PasswordMustBeAtLeastSixCharacters,
-                    ),
-                    (value) {
-                      if (value !=
-                          formKey.currentState?.fields['password']?.value) {
-                        return i18n.setting_PasswordNotMatch;
-                      } else {
-                        return null;
-                      }
-                    }
-                  ],
-                ),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                autocorrect: false,
-                textInputAction: TextInputAction.done,
-              ),
-              const SizedBox(height: 16),
-              Text.rich(
-                overflow: TextOverflow.visible,
-                TextSpan(
-                  text: '${i18n.signup_BySigningUpYouAgreeTo} ',
-                  children: [
-                    TextSpan(
-                      text: i18n.signup_TermsAndConditions,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () async {
-                          // if (await canLaunchUrlString(termsAndConditionsUrl)) {
-                          //   await launchUrlString(termsAndConditionsUrl);
-                          // }
-                        },
-                    ),
-                    TextSpan(
-                      text: ' ${i18n.signup_And} ',
-                      style: const TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    TextSpan(
-                      text: i18n.signup_PrivacyPolicy,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () async {
-                          // if (await canLaunchUrlString(privacyPolicyUrl)) {
-                          //   await launchUrlString(privacyPolicyUrl);
-                          // }
-                        },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 32),
-              ElevatedButtonOpacity(
-                onTap: isLoading ? null : signUp,
-                loading: isLoading,
-                label: i18n.signup_Register,
-              ),
-              const SizedBox(height: 16),
-              Text.rich(
-                TextSpan(
-                  text: '${i18n.signup_JoinUsBefore} ',
-                  children: [
-                    TextSpan(
-                      text: i18n.signup_LogIn,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = AutoRouter.of(context).pop,
-                    ),
-                  ],
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
+                const SizedBox(
+                  height: 16,
+                )
+              ],
+            ),
           ),
         ),
       ),

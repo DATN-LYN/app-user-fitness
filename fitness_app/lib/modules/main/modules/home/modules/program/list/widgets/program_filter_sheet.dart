@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
+import 'package:fitness_app/global/extensions/body_part_extension.dart';
 import 'package:fitness_app/global/extensions/workout_level_extension.dart';
 import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../../../global/gen/i18n.dart';
 import '../../../../../../../../global/themes/app_colors.dart';
 import '../../../../../../../../global/widgets/filter/filter_sheet_wrapper.dart';
+import '../../../../../../../../global/widgets/selectors/category_selector.dart';
 import '../models/program_filter_data.dart';
 
 class ProgramFilterSheet extends StatefulWidget {
@@ -23,9 +25,11 @@ class ProgramFilterSheet extends StatefulWidget {
 
 class _ProgramFilterSheetState extends State<ProgramFilterSheet> {
   late ProgramFilterData filter = widget.programFilterData;
+  var formKey = GlobalKey();
 
   void handleClearFilter() {
     setState(() {
+      formKey = GlobalKey();
       filter = const ProgramFilterData();
     });
   }
@@ -41,6 +45,7 @@ class _ProgramFilterSheetState extends State<ProgramFilterSheet> {
     final i18n = I18n.of(context)!;
 
     return FilterSheetWrapper(
+      key: formKey,
       onApply: () => context.popRoute(filter),
       onClearAll: handleClearFilter,
       children: [
@@ -48,7 +53,7 @@ class _ProgramFilterSheetState extends State<ProgramFilterSheet> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
-            'Level',
+            i18n.common_Level,
             style: titleStyle,
           ),
         ),
@@ -72,7 +77,50 @@ class _ProgramFilterSheetState extends State<ProgramFilterSheet> {
               );
             },
           ),
-        )
+        ),
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            i18n.common_BodyPart,
+            style: titleStyle,
+          ),
+        ),
+        const SizedBox(height: 10),
+        ...GBODY_PART.values.map(
+          (e) => RadioListTile(
+            value: e,
+            groupValue: filter.bodyPart,
+            title: Text(e.label(i18n)),
+            onChanged: (value) {
+              setState(
+                () {
+                  filter = filter.copyWith(bodyPart: e);
+                },
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            i18n.categories_Categories,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        CategorySelector(
+          initial: filter.category != null ? [filter.category!] : [],
+          onChanged: (options) {
+            setState(() {
+              filter = filter.copyWith(category: options.first.value);
+            });
+          },
+        ),
       ],
     );
   }

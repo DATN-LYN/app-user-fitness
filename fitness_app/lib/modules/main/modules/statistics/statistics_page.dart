@@ -14,9 +14,9 @@ import 'package:jiffy/jiffy.dart';
 
 import '../../../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../../../global/graphql/client.dart';
+import 'widgets/not_log_in_statistics.dart';
 import 'widgets/statistics_chart.dart';
 import 'widgets/statistics_overview.dart';
-import 'widgets/not_log_in_statistics.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
@@ -94,7 +94,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                 operationRequest: getMyStatsReq,
                 builder: (context, response, error) {
                   if (response?.loading == true) {
-                    return const SizedBox();
+                    return const Center(child: CircularProgressIndicator());
                   }
 
                   if (response?.hasErrors == true) {
@@ -123,17 +123,18 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                         filter: filterData,
                       ),
                       const SizedBox(height: 32),
-                      Text(
-                        i18n.statistics_RecentWorkout,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                      if (stats.isNotEmpty == true) ...[
+                        Text(
+                          i18n.statistics_RecentWorkout,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      if (stats.isNotEmpty == true)
+                        const SizedBox(height: 16),
                         const StatisticsRecentlyWorkout(),
-                      const SizedBox(height: 16),
+                        const SizedBox(height: 16),
+                      ]
                     ],
                   );
                 },

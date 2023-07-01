@@ -58,8 +58,10 @@ class ConfirmationDialog extends StatelessWidget {
                         borderRadius: BorderRadius.circular(1000),
                         color: AppColors.primary.withOpacity(0.7),
                       ),
-                      child:
-                          image ?? const Icon(Icons.question_answer_outlined),
+                      child: image ??
+                          const Icon(
+                            Icons.question_answer_outlined,
+                          ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -68,6 +70,7 @@ class ConfirmationDialog extends StatelessWidget {
                       titleText!,
                       style: const TextStyle(
                         fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
                     )

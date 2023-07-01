@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fitness_app/global/extensions/workout_level_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../../../../global/gen/i18n.dart';
 import '../../../../../global/graphql/query/__generated__/query_get_programs.data.gql.dart';
@@ -12,9 +13,11 @@ class ProgramItem extends StatelessWidget {
   const ProgramItem({
     super.key,
     required this.program,
+    this.showView = true,
   });
 
   final GGetProgramsData_getPrograms_items program;
+  final bool showView;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +46,48 @@ class ProgramItem extends StatelessWidget {
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
-              child: CachedNetworkImage(
-                imageUrl: program.imgUrl ?? '',
-                fit: BoxFit.fill,
-                width: double.infinity,
-                height: 90,
+              child: Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: program.imgUrl ?? '',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: 90,
+                  ),
+                  if (showView)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 4,
+                      ),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(10),
+                        ),
+                        color: AppColors.information,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Ionicons.eye_sharp,
+                            color: AppColors.white,
+                            size: 11,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${program.view?.toInt() ?? 0}',
+                            style: const TextStyle(
+                              color: AppColors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                ],
               ),
             ),
             Padding(
@@ -72,11 +112,10 @@ class ProgramItem extends StatelessWidget {
                         const SizedBox(height: 3),
                         Text(
                           program.name ?? '',
-                          maxLines: 2,
                           style: const TextStyle(
                             color: AppColors.grey1,
                             fontSize: 16,
-                            overflow: TextOverflow.visible,
+                            overflow: TextOverflow.ellipsis,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

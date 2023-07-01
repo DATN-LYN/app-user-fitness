@@ -31,7 +31,7 @@ class MessageWidget extends StatelessWidget {
           children: [
             if (!isSender) ...[
               const SizedBox(width: 8),
-              Assets.images.logoContainer.image(width: 40, height: 40),
+              Assets.images.logo.image(width: 40, height: 40),
             ],
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: width * 0.75),

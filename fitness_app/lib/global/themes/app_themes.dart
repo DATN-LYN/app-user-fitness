@@ -49,6 +49,8 @@ class AppThemes {
       ),
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
+        filled: true,
+        fillColor: AppColors.white,
         constraints: const BoxConstraints(
           minHeight: 40,
         ),
@@ -117,7 +119,7 @@ class AppThemes {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryBold;
           }
           return null;
         }),

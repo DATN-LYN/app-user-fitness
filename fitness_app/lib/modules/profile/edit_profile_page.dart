@@ -39,7 +39,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   bool loading = true;
   var formKey = GlobalKey<FormBuilderState>();
   XFile? image;
-  late GIUser user;
+  GIUser? user;
 
   void initUserData() async {
     final client = ref.watch(appClientProvider);
@@ -55,6 +55,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       if (mounted) {
         setState(() {
           user = response.data!.getCurrentUser;
+          loading = false;
         });
       }
     }
@@ -64,9 +65,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       initUserData();
-      if (mounted) {
-        setState(() => loading = false);
-      }
     });
     super.initState();
   }
@@ -96,11 +94,14 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                 imageUrl = me?.user?.avatar;
               }
 
+              print(formValue['gender']);
+
               final request = GUpsertUserReq(
                 (b) => b
                   ..vars.input.email = formValue['email']
                   ..vars.input.age = double.parse(formValue['age'])
                   ..vars.input.fullName = formValue['fullName']
+                  ..vars.input.gender = formValue['gender']
                   ..vars.input.id = me?.user?.id
                   ..vars.input.avatar = imageUrl,
               );
@@ -154,7 +155,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     final errorAvatar = Avatar(
-      name: user.fullName,
+      name: user?.fullName,
       size: 100,
     );
     final i18n = I18n.of(context)!;
@@ -187,9 +188,9 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                         child: Stack(
                           alignment: Alignment.bottomRight,
                           children: [
-                            user.avatar != null && image == null
+                            user?.avatar != null && image == null
                                 ? ShimmerImage(
-                                    imageUrl: user.avatar ?? '_',
+                                    imageUrl: user?.avatar ?? '_',
                                     width: 100,
                                     height: 100,
                                     borderRadius: BorderRadius.circular(100),
@@ -227,7 +228,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     Label(i18n.login_Email),
                     FormBuilderTextField(
                       name: 'email',
-                      initialValue: user.email,
+                      initialValue: user!.email,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: FormBuilderValidators.required(
                         errorText: i18n.login_EmailIsRequired,
@@ -239,7 +240,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     Label(i18n.signup_FullName),
                     FormBuilderTextField(
                       name: 'fullName',
-                      initialValue: user.fullName,
+                      initialValue: user!.fullName,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: FormBuilderValidators.required(
                         errorText: i18n.signup_FullNameIsRequired,
@@ -260,23 +261,30 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                         final options = GGENDER.values
                             .map(
                               (e) => AdaptiveSelectorOption(
-                                  label: e.label(i18n), value: e),
+                                label: e.label(i18n),
+                                value: e,
+                              ),
                             )
                             .toList();
                         return AdaptiveSelector(
                           options: options,
                           initialOption: AdaptiveSelectorOption(
-                            label: user.gender!.label(i18n),
-                            value: user.gender,
+                            label: user!.gender!.label(i18n),
+                            value: user!.gender,
                           ),
                           allowClear: false,
+                          onChanged: (value) {
+                            if (value != null) {
+                              field.didChange(value.value);
+                            }
+                          },
                         );
                       },
                     ),
                     Label(i18n.signup_Age),
                     FormBuilderTextField(
                       name: 'age',
-                      initialValue: user.age!.round().toString(),
+                      initialValue: user!.age!.round().toString(),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: FormBuilderValidators.required(
                         errorText: i18n.signup_AgeIsRequired,
