@@ -101,8 +101,8 @@ class _CategorySelectorState extends ConsumerState<CategorySelector> {
           return DialogSelector<GCategory>(
             initial: selectedOptions,
             isMultiple: false,
-            decoration: const InputDecoration(
-              hintText: 'Search Hint',
+            decoration: InputDecoration(
+              hintText: i18n.categories_SearchHint,
             ),
             response: response as OperationResponse,
             hasMoreData: hasMoreData,
@@ -157,7 +157,7 @@ class _CategorySelectorState extends ConsumerState<CategorySelector> {
         ),
         child: selectedOptions.isEmpty
             ? Text(
-                i18n.categories_SearchHint,
+                i18n.programs_ChooseCategory,
                 style:
                     Theme.of(context).inputDecorationTheme.hintStyle?.copyWith(
                           height: 1.35,
