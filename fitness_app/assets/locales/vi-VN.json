@@ -1,7 +1,13 @@
 {
     "appName": "App thể thao",
     "button_":{
-        "next": "Tiếp tục"
+        "next": "Tiếp tục",
+        "done": "Xong",
+        "cancel": "Huỷ bỏ",
+        "ok": "Đồng ý",
+        "tryAgain": "Thử lại",
+        "apply": "Áp dụng",
+        "reset": "Đặt lại"
     },
     "onboard_":{
       "title": [
@@ -15,6 +21,14 @@
         "Trước khi bạn bắt đầu thiết kế kế hoạch ăn kiêng của riêng mình, hãy tự kiểm điểm bản thân"
       ]
     },
+    "language": ["English (US)", "Tiếng Việt"],
+    "workoutLevel": ["Dễ", "Trung bình", "Khó"],
+    "main_":{
+      "chat":"Tư vấn",
+      "home":"Trang chủ",
+      "setting":"Cài đặt",
+      "statistics":"Thống kê"
+    },
     "login_": {
       "email": "Email",
       "password": "Mật khẩu",
@@ -26,9 +40,9 @@
       "registerNow": "Đăng ký",
       "logIn": "Đăng Nhập",
       "emailNotValid": "Email không hợp lệ",
-      "emailIsRequired": "Email bắt buộc",
+      "emailIsRequired": "Bạn chưa nhập email",
       "passwordMustBeAtLeastSixCharacters": "Mật khẩu phải dài tối thiểu 6 ký tự",
-      "passwordIsRequired": "Mật khẩu bắt buộc"
+      "passwordIsRequired": "Bạn chưa nhập mật khẩu"
     },
     "signup_": {
       "createNewAccount": "Tạo tài khoản mới",
@@ -44,8 +58,192 @@
       "and": "và",
       "termsAndConditions": "Điều Khoản & Dịch Vụ",
       "fullName": "Họ và tên",
-      "fullNameIsRequired": "Họ và tên bắt buộc",
-      "confirmPasswordIsRequired": "Xác nhận mật khẩu bắt buộc",
-      "passwordNotMatch": "Mật khẩu không khớp"
-    }
+      "fullNameIsRequired": "Bạn chưa nhập họ và tên",
+      "confirmPasswordIsRequired": "Bạn chưa xác nhận mật khẩu",
+      "passwordNotMatch": "Mật khẩu không khớp",
+      "age": "Tuổi",
+      "ageIsRequired": "Bạn chưa nhập tuổi",
+      "enterYourAge": "Nhập tuổi của bạn",
+      "registerSuccess": "Bạn đã đăng ký thành công",
+      "backToLogin": "Quay lại đăng nhập",
+      "gender": "Giới tính"
+    },
+    "forgotPassword_": {
+      "title": "Quên mật khẩu",
+      "description": "Vui lòng nhập địa chỉ email của bạn để nhận mã đăng nhập",
+      "getCode": "Lấy Mã Xác Nhận"
+    },
+    "countdown_":{
+      "readyToGo":"Sẵn sàng tập luyện",
+      "startNow":"Bắt Đầu",
+      "breakTime":"Giải lao",
+      "youHaveFinishCountEx":"Bạn đã hoàn thành {count} bài tập. Hãy tiếp tục!",
+      "doNotForgetToDrinkWater":"Đừng quên uống nước nhé.",
+      "walkAround":"Hãy di chuyển nhẹ nhàng"
+    },
+    "setting_":{
+      "title":"Cài đặt",
+      "editProfile": "Cập nhật thông tin",
+      "language":"Ngôn ngữ",
+      "shareWithFriends":"Chia sẻ với bạn bè",
+      "privacyPolicy":"Chính sách bảo mật",
+      "termsAndConditions":"Điều khoản và điều kiện",
+      "changePassword":"Thay đổi mật khẩu",
+      "logout":"Đăng xuất",
+      "account":"Tài khoản",
+      "security": "Bảo mật",
+      "aboutApp":"Về ứng dụng",
+      "changePasswordDes": "Vui lòng nhập mật khẩu cũ của bạn, sau đó nhập mật khẩu mới để tiến hành thay đổi mật khẩu",
+      "oldPassword": "Mật khẩu cũ",
+      "oldPasswordHint": "Nhập mật khẩu cũ của bạn",
+      "oldPasswordRequired": "Mật khẩu cũ bắt buộc",
+      "newPassword": "Mật khẩu mới",
+      "newPasswordHint": "Nhập mật khẩu mới của bạn",
+      "newPasswordRequired": "Mật khẩu mới bắt buộc",
+      "confirmNewPassword": "Xác nhận mật khẩu mới",
+      "confirmNewPasswordHint": "Nhập xác nhận mật khẩu mới",
+      "confirmNewPasswordRequired": "Xác nhận mật khẩu mới bắt buộc",
+      "passwordNotMatch": "Mật khẩu không khớp",
+      "confirmChange": "Xác nhận thay đổi",
+      "confirmLogout": "Xác nhận đăng xuất",
+      "confirmLogoutDes": "Bạn cần xác nhận để đăng xuất khỏi ứng dụng",
+      "changePasswordConfirm": "Bạn có chắc chắn muốn thay đổi mật khẩu",
+      "changePasswordSuccess": "Bạn đã cập nhật mật khẩu thành công"
+    },
+    "exerciseDetail_":{
+      "quitWorkout":"Dừng tập luyện",
+      "quitWorkoutDes":"Bạn có chắc chắn rằng bạn muốn dừng tập luyện?"
+    },
+    "finish_":{
+      "hooray": "Hooray!\n Bạn đã hoàn thành tất cả bài tập.",
+      "goBackToHome": "Trở về trang chủ"
+    },
+    "chat_":{
+      "title":"Tư Vấn Sức Khoẻ"
+    },
+    "statistics_":{
+      "recentWorkout": "Chương trình tập gần đây",
+      "youHaveBurnt":"Bạn đã đốt",
+      "thisWeek": "tuần này",
+      "thisMonth": "tháng này",
+      "calories": "calories",
+      "whatAGreatValue":"Thật tuyệt vời!",
+      "bodyCountHistory":"Lịch sử chỉ số cơ thể",
+      "selectMonth": "Chọn tháng"
+    },
+    "workoutBodyPart": [
+      "Thân trên", 
+      "Thân dưới", 
+      "Bụng", 
+      "Toàn thân"
+    ],
+    "categories_":{
+      "categories": "Thể Loại",
+      "categoryNotFound": "Không tìm thấy thể loại",
+      "searchHint": "Nhập tên thể loại"
+
+    },
+    "exercises_":{
+      "exercises": "Bài Tập",
+      "exerciseNotFound": "Không tìm thấy bài tập"
+
+    },
+    "programs_":{
+      "programs": "Chương trình",
+      "programNotFound": "Không tìm thấy chương trình",
+      "newestPrograms": "Chương trình mới nhất",
+      "mostViewedPrograms": "Chương trình nhiều lượt xem",
+      "searchHint": "Nhập tên chương trình",
+      "filter": "Bộ lọc",
+      "view": "Lượt xem"
+    },
+    "inboxes_":{
+      "inboxes":"Tin nhắn",
+      "inboxNotFound": "Không tìm thấy tin nhắn"
+    },
+    "common_":{
+      "emptyData": "Không có dữ liệu",
+      "pleasePullToTryAgain": "Hãy kéo xuống để làm mới dữ liệu",
+      "search": "Tìm kiếm",
+      "minutes": "Phút",
+      "calories": "Calo",
+      "description": "Mô Tả",
+      "duration": "Thời gian",
+      "weekly": "Tuần",
+      "monthly": "Tháng",
+      "yearly": "Năm",
+      "level": "Độ khó",
+      "bodyPart": "Vùng cơ thể",      
+      "success":"Thành công",
+      "oops": "Oops!",
+      "youHaveToLogin":"Vui lòng đăng nhập để sử dụng tính năng này"
+    },
+    "home_":{
+      "Hello": "Xin chào",
+      "haveANiceDay": "Chúc bạn một ngày vui vẻ",
+      "viewAll": "Xem tất cả",
+      "user":"Người dùng"
+    },
+    "search_":{
+      "recentSearches": "Tìm kiếm gần đây",
+      "clearAll": "Xoá hết"
+    },
+    "editProfile_":{
+      "title": "Cập nhật thông tin",
+      "editDes": "Bạn có chắc chắn muốn cập nhật thông tin cá nhân?",
+      "updateSuccess": "Thông tin của bạn đã được cập nhật thành công"
+
+    },
+    "weekDays_":[
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "CN"
+    ],
+    "support_":{
+      "content": "Nội dung",
+      "status": "Trạng thái",
+      "supportStatus":[
+          "Đang chờ",
+          "Đang xử lý",
+          "Hoàn thành",
+          "Đã huỷ"
+      ],
+      "supportDetails": "Chi tiết yêu cầu hỗ trợ",
+      "title": "Hỗ trợ",
+      "description": "Hãy cho chúng tôi biết vấn đề của bạn",
+      "contentHint": "Nhập câu hỏi,vấn đề,...",
+      "contentRequired": "Bạn chưa nhập nội dung",
+      "uploadPhoto": "Tải lên hình ảnh",
+      "takePhoto": "Chụp ảnh",
+      "chooseFormGallery": "Chọn từ thư viện",
+      "pickPhoto": "Chọn một hình ảnh",
+      "image": "Hình ảnh",
+      "createTitle": "Tạo yêu cầu hỗ trợ",
+      "createDes": "Bạn có chắc chắn muốn tạo yêu cầu hỗ trợ?",
+      "createSuccess": "Bạn đã tạo yêu cầu thành công",
+      "cancelTitle": "Huỷ yêu cầu hỗ trợ",
+      "cancelDes": "Bạn có chắc chắn muốn huỷ yêu cầu hỗ trợ?",
+      "cancelSuccess": "Bạn đã huỷ yêu cầu thành công",
+      "updateTitle": "Cập nhật yêu cầu hỗ trợ",
+      "updateDes": "Bạn có chắc chắn muốn cập nhật yêu cầu hỗ trợ?",
+      "updateSuccess": "Bạn đã cập nhật yêu cầu thành công"
+  },
+  "chart_":{
+    "chart": "Biểu đồ",
+    "chartType":[
+      "cột",
+      "cột nằm ngang",
+      "đường",
+      "đường bậc thang"
+    ]
+  },
+  "gender":[
+    "Nam",
+    "Nữ",
+    "Khác"
+]
 }

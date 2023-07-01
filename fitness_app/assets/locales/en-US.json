@@ -1,7 +1,14 @@
 {
     "appName": "Fitness App",
     "button_":{
-        "next": "Next"
+        "next": "Next",
+        "done": "Done",
+        "cancel": "Cancel",
+        "ok": "OK",
+        "tryAgain": "Try Again",
+        "apply": "Apply",
+        "send": "Send",
+        "reset":"Reset"
     },
     "onboard_": {
         "title": [
@@ -14,6 +21,14 @@
           "Workout plans designed to  help you achieve your everyday fitness goals and plan",
           "Before you begin designing your own diet plan, some self-reflection is in order"
         ]
+    },
+    "language": ["English (US)", "Tiếng Việt"],
+    "workoutLevel": ["Beginner", "Intermediate", "Advanced"],
+    "main_":{
+      "chat":"Chat",
+      "home":"Home",
+      "setting":"Setting",
+      "statistics":"Statistics"
     },
     "login_": {
       "email": "Email",
@@ -46,6 +61,188 @@
       "fullName": "Full name",
       "fullNameIsRequired": "Full name is required",
       "confirmPasswordIsRequired": "Confirm password is required",
-      "passwordNotMatch": "Password not match"
-    }
+      "passwordNotMatch": "Password not match",
+      "age": "Age",
+      "ageIsRequired": "Age is required",
+      "enterYourAge": "Enter your age",
+      "registerSuccess": "You have registered successfully",
+      "backToLogin": "Back to login",
+      "gender": "Gender",
+      "inactiveAccount": "You account is inactive. Please contact admin at admin_fitness@gmail.com for help."
+    },
+    "forgotPassword_": {
+      "title": "Forgot password",
+      "description": "Please enter your email address to get login code",
+      "getCode": "Get Code"
+    },
+    "countdown_":{
+      "readyToGo":"Ready to go",
+      "startNow":"Start Now",
+      "breakTime":"Break time",
+      "youHaveFinishCountEx":"You have finished {count} exercises. Keep continue!",
+      "doNotForgetToDrinkWater":"Do not forget to drink water.",
+      "walkAround":"Walk around"
+    },
+    "setting_":{
+      "title":"Setting",
+      "editProfile": "Edit Profile",
+      "language":"Language",
+      "shareWithFriends":"Share with friends",
+      "privacyPolicy":"Privacy policy",
+      "termsAndConditions":"Terms and conditions",
+      "changePassword":"Change password",
+      "logout":"Log out",
+      "account":"Account",
+      "security": "Security",
+      "aboutApp":"About app",
+      "changePasswordDes": "Please enter your old password, then enter the new password to proceed with the password change",
+      "oldPassword": "Old password",
+      "oldPasswordHint": "Enter your old password",
+      "oldPasswordRequired": "Old password is required",
+      "newPassword": "New password",
+      "newPasswordHint": "Enter your new password",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPassword": "Confirm new password",
+      "confirmNewPasswordHint": "Enter your confirm new password",
+      "confirmNewPasswordRequired": "Confirm new password is required",
+      "passwordNotMatch": "Password not match",
+      "confirmLogout": "Confirm logout",
+      "confirmLogoutDes": "You need confirm to logout from this app",
+      "changePasswordConfirm": "Are you sure you want to change your password?",
+      "changePasswordSuccess": "Your password has been updated successfully."
+    },
+    "exerciseDetail_":{
+      "quitWorkout":"Confirm quit",
+      "quitWorkoutDes":"Are you sure you want to quit workout?"
+    },
+    "finish_":{
+      "hooray": "Hooray!\n You have finished your workout.",
+      "goBackToHome": "Go back to home"
+    },
+    "chat_":{
+      "title":"Health Care Chat"
+    },
+    "statistics_":{
+      "recentWorkout": "Recent Workout",
+      "youHaveBurnt":"You have burnt",
+      "thisWeek": "this week",
+      "thisMonth": "this month",
+      "calories": "calories",
+      "whatAGreatValue":"What a great value!",
+      "bodyCountHistory":"Body Count History",
+      "selectMonth": "Select month"
+    },
+    "workoutBodyPart": [
+      "Upper", 
+      "Downer", 
+      "Abs", 
+      "Full Body"
+    ],
+    "categories_":{
+      "categories": "Categories",
+      "categoryNotFound": "Category Not Found",
+      "searchHint": "Input category name"
+    },
+    "exercises_":{
+      "exercises": "Exercise",
+      "exerciseNotFound": "Exercise Not Found"
+    },
+    "programs_":{
+      "programs": "Programs",
+      "programNotFound": "Program Not Found",
+      "newestPrograms": "Newest Programs",
+      "mostViewedPrograms": "Most Viewed Programs",
+      "searchHint": "Input program name",
+      "description": "Description",
+      "filter": "Filter",
+      "view": "Views"
+    },
+    "inboxes_":{
+      "inboxes":"Inboxes",
+      "inboxNotFound": "Inbox Not Found"
+    },
+    "common_":{
+      "emptyData": "Empty Data",
+      "pleasePullToTryAgain": "Please pull to refresh data",
+      "search": "Search",
+      "minutes": "Minutes",
+      "calories": "Calories",
+      "duration": "Duration",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "level": "Level",
+      "bodyPart": "Body Part",
+      "success":"Success",
+      "oops": "Oops!",
+      "youHaveToLogin":"Please log in to use this feature",
+      "description": "Description"
+    },
+    "home_":{
+      "Hello": "Hello",
+      "haveANiceDay": "Have a nice day",
+      "viewAll": "View all",
+      "user":"User"
+    },
+    "search_":{
+      "recentSearches": "Recent Searches",
+      "clearAll": "Clear All"
+    },
+    "editProfile_":{
+      "title": "Update Profile",
+      "editDes": "Are you sure you want to update your profile?",
+      "updateSuccess": "Your profile has been updated successfully."
+    },
+    "weekDays_":[
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ],
+    "support_":{
+      "content": "Content",
+      "status": "Status",
+      "supportStatus":[
+          "Waiting",
+          "Solving",
+          "Done",
+          "Cancelled"
+      ],
+      "supportDetails": "Support Request Details",
+      "title": "Support",
+      "description": "Tell us your problem",
+      "contentHint": "Enter your question,problem,...",
+      "contentRequired": "Content is required",
+      "uploadPhoto": "Upload Photo",
+      "takePhoto": "Take Photo",
+      "chooseFormGallery": "Choose From Gallery",
+      "pickImage": "Pick a image",
+      "image": "Image",
+      "createTitle": "Create support request",
+      "createDes": "Are you sure you want to create a new support request?",
+      "createSuccess": "You have created a support request successfully",
+      "cancelTitle": "Cancel support request",
+      "cancelDes": "Are you sure you want to cancel your support request?",
+      "cancelSuccess": "You have cancelled a support request successfully",
+      "updateTitle": "Update support request",
+      "updateDes": "Are you sure you want to update your support request?",
+      "updateSuccess": "You have updated a support request successfully"
+  },
+  "chart_":{
+    "chart": "Chart",
+    "chartType":[
+      "column",
+      "bar",
+      "line",
+      "stepline"
+    ]
+  },
+  "gender":[
+    "Male",
+    "Female",
+    "Others"
+]  
 }

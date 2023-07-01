@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/gen/assets.gen.dart';
+import 'package:fitness_app/global/providers/app_settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../global/gen/i18n.dart';
@@ -8,15 +10,16 @@ import '../../global/routers/app_router.dart';
 import '../../global/themes/app_colors.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 
-class OnBoardPage extends StatefulWidget {
+class OnBoardPage extends ConsumerStatefulWidget {
   const OnBoardPage({super.key});
 
   @override
-  State<OnBoardPage> createState() => _OnBoardPageState();
+  ConsumerState<OnBoardPage> createState() => _OnBoardPageState();
 }
 
-class _OnBoardPageState extends State<OnBoardPage> {
+class _OnBoardPageState extends ConsumerState<OnBoardPage> {
   final pageController = PageController();
+  String btnText = '';
 
   List<AssetGenImage> onboardImages = [
     Assets.images.intro1,
@@ -27,7 +30,8 @@ class _OnBoardPageState extends State<OnBoardPage> {
   @override
   Widget build(BuildContext context) {
     final i18n = I18n.of(context)!;
-
+    btnText = i18n.button_Next;
+    final appSettings = ref.watch(appSettingProvider.notifier);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -57,17 +61,23 @@ class _OnBoardPageState extends State<OnBoardPage> {
                     ),
                   ),
                   ElevatedButtonOpacity(
-                    label: i18n.button_Next,
+                    label: btnText,
                     color: AppColors.neutral20,
                     height: 50,
                     radius: 30,
                     fontSize: 16,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    onTap: () {
+                    onTap: () async {
                       if (pageController.page! >= onboardImages.length - 1) {
-                        AutoRouter.of(context).replaceAll(
-                          [const LoginRoute()],
-                        );
+                        setState(() {
+                          btnText = i18n.button_Done;
+                        });
+                        appSettings.saveFirstLaunch();
+                        if (mounted) {
+                          AutoRouter.of(context).replaceAll(
+                            [const MainRoute()],
+                          );
+                        }
                       } else {
                         pageController.nextPage(
                           duration: const Duration(milliseconds: 300),
@@ -88,15 +98,12 @@ class _OnBoardPageState extends State<OnBoardPage> {
   Widget page(I18n i18n, int index) {
     return Column(
       children: [
-        const SizedBox(height: 16),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: onboardImages[index].image(
-            fit: BoxFit.contain,
-            height: 600,
-          ),
+        const Spacer(),
+        onboardImages[index].image(
+          fit: BoxFit.contain,
+          width: MediaQuery.of(context).size.width * 0.8,
         ),
-        const SizedBox(height: 20),
+        const Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 50,
@@ -110,7 +117,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
             ),
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36),
           child: Text(
@@ -124,6 +131,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
             overflow: TextOverflow.visible,
           ),
         ),
+        const Spacer(),
       ],
     );
   }

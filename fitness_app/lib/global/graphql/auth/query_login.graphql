@@ -1,0 +1,14 @@
+query Login($input: LoginInputDto!) {
+  login(input: $input) {
+    id
+    user {
+      email
+      fullName
+      avatar
+      age
+      isActive
+    }
+    accessToken
+    refreshToken
+  }
+}

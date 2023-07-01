@@ -31,9 +31,9 @@ enum AppLocale {
     }
   }
 
-  // String getLabel(I18n i18n) {
-  //   return toLocale().languageCode.contains('en')
-  //       ? i18n.language[0]
-  //       : i18n.language[1];
-  // }
+  String getLabel(I18n i18n) {
+    return toLocale().languageCode.contains('en')
+        ? i18n.language[0]
+        : i18n.language[1];
+  }
 }

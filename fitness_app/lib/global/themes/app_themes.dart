@@ -7,7 +7,7 @@ class AppThemes {
     return getThemeData(
       Brightness.light,
       const ColorScheme.light(
-        primary: AppColors.primary,
+        primary: AppColors.primaryBold,
         secondary: AppColors.primary,
         background: AppColors.background,
         onBackground: AppColors.grey1,
@@ -49,6 +49,8 @@ class AppThemes {
       ),
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
+        filled: true,
+        fillColor: AppColors.white,
         constraints: const BoxConstraints(
           minHeight: 40,
         ),
@@ -117,7 +119,7 @@ class AppThemes {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryBold;
           }
           return null;
         }),
@@ -129,7 +131,7 @@ class AppThemes {
             return null;
           }
           if (states.contains(MaterialState.selected)) {
-            return AppColors.primary;
+            return AppColors.primaryBold;
           }
           return null;
         }),
@@ -138,9 +140,36 @@ class AppThemes {
         style: TextButton.styleFrom(
           foregroundColor: AppColors.grey1,
           textStyle: const TextStyle(
-            color: Colors.red,
             fontWeight: FontWeight.w600,
-            decoration: TextDecoration.underline,
+          ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          minimumSize: const Size(40, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          foregroundColor: AppColors.grey1,
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: AppColors.grey1,
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          minimumSize: const Size(40, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: const BorderSide(color: AppColors.grey2),
+          foregroundColor: AppColors.grey2,
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.w700,
+            color: AppColors.grey1,
           ),
         ),
       ),

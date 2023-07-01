@@ -1,45 +1,66 @@
-import 'package:fitness_app/global/models/hive/app_settings.dart';
-import 'package:fitness_app/global/services/hive_service.dart';
-import 'package:fitness_app/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/models/app_settings.dart';
+import '../data/repositories/app_settings_repository.dart';
 import '../enums/app_locale.dart';
 import '../enums/app_theme.dart';
 import '../gen/i18n.dart';
 
-class AppSettingsProvider extends ChangeNotifier {
-  final _hiveService = locator.get<HiveService>();
+final appSettingProvider =
+    StateNotifierProvider<AppSettingsProvider, AppSettings>(
+  (ref) => AppSettingsProvider(
+    ref.watch(appSettingsRepositoryProvider),
+  ),
+);
 
-  late AppSettings appSettings;
+class AppSettingsProvider extends StateNotifier<AppSettings> {
+  AppSettingsProvider(this._hiveService)
+      : super(
+          _hiveService.getAppSettings().fold(
+                (l) => const AppSettings(),
+                (r) => r,
+              ),
+        );
 
-  AppSettingsProvider() {
-    appSettings = _hiveService.getAppSettings();
-  }
+  final AppSettingsRepository _hiveService;
 
-  ThemeData get themeData => appSettings.theme.toThemeData();
-
-  Locale get localeData => appSettings.locale.toLocale();
+  ThemeData get themeData => state.theme.toThemeData();
 
   void changeTheme(AppTheme theme) async {
-    await _hiveService.saveTheme(theme);
-    appSettings = _hiveService.getAppSettings();
-    notifyListeners();
+    _hiveService.saveTheme(theme).then(
+          (either) => either.fold(
+            (l) => null,
+            (r) => state = r,
+          ),
+        );
   }
 
   void changeLocale(AppLocale locale) async {
-    await _hiveService.saveLocale(locale);
-    appSettings = _hiveService.getAppSettings();
+    await _hiveService.saveLocale(locale).then(
+          (either) => either.fold(
+            (l) => null,
+            (r) => state = r,
+          ),
+        );
     I18n.locale = locale.toLocale();
-    notifyListeners();
   }
 
   void reset() async {
-    appSettings = await _hiveService.resetAppSettings();
-    notifyListeners();
+    await _hiveService.resetAppSettings().then(
+          (either) => either.fold(
+            (l) => null,
+            (r) => state = r,
+          ),
+        );
   }
 
-  void fetch() async {
-    appSettings = _hiveService.getAppSettings();
-    notifyListeners();
+  void saveFirstLaunch() {
+    _hiveService.saveFirstLaunch().then(
+          (either) => either.fold(
+            (l) => null,
+            (r) => state = r,
+          ),
+        );
   }
 }

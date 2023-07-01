@@ -1,0 +1,12 @@
+fragment Program on Program {
+  id
+  name
+  level
+  bodyPart
+  description
+  imgUrl
+  view
+  createdAt
+  updatedAt
+  categoryId
+}

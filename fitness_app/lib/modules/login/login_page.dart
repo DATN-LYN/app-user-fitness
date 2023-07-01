@@ -1,29 +1,85 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fitness_app/global/graphql/__generated__/schema.schema.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
+import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../global/gen/assets.gen.dart';
 import '../../global/gen/i18n.dart';
+import '../../global/graphql/auth/__generated__/query_login.data.gql.dart';
+import '../../global/graphql/auth/__generated__/query_login.req.gql.dart';
+import '../../global/graphql/client.dart';
+import '../../global/providers/auth_provider.dart';
 import '../../global/themes/app_colors.dart';
+import '../../global/utils/dialogs.dart';
 import '../../global/widgets/elevated_button_opacity.dart';
 import '../../global/widgets/label.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final formKey = GlobalKey<FormBuilderState>();
   bool passwordObscure = true;
   bool isLoading = false;
 
-  void login() {}
+  void login() async {
+    final i18n = I18n.of(context)!;
+    final client = ref.read(appClientProvider);
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    if (formKey.currentState!.saveAndValidate()) {
+      final loginReq = GLoginReq(
+        (b) => b.vars.input.replace(
+          GLoginInputDto.fromJson(formKey.currentState!.value)!,
+        ),
+      );
+
+      setState(() => isLoading = true);
+      final response = await client.request(loginReq).first;
+      setState(() => isLoading = false);
+
+      if (response.hasErrors) {
+        if (mounted) {
+          DialogUtils.showError(context: context, response: response);
+        }
+      } else {
+        if (response.data?.login.user?.isActive == true) {
+          handleLoginSuccess(response.data);
+        } else {
+          if (mounted) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ConfirmationDialog(
+                  image: const Icon(
+                    Icons.error,
+                    color: AppColors.primaryBold,
+                  ),
+                  titleText: i18n.common_Oops,
+                  contentText: i18n.signup_InactiveAccount,
+                );
+              },
+            );
+          }
+        }
+      }
+    }
+  }
+
+  void handleLoginSuccess(GLoginData? response) async {
+    ref.watch(authProvider.notifier).logIn(response!);
+
+    AutoRouter.of(context).replaceAll([const MainRoute()]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +92,17 @@ class _LoginPageState extends State<LoginPage> {
         child: GestureDetector(
           onTapDown: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           child: ListView(padding: const EdgeInsets.all(16), children: [
-            Assets.images.running.image(width: 120, height: 120),
+            Assets.images.loginIllu.image(height: 250),
+            const SizedBox(height: 18),
+
+            Text(
+              i18n.login_LogIn,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+              ),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 18),
             Label(i18n.login_Email),
             FormBuilderTextField(

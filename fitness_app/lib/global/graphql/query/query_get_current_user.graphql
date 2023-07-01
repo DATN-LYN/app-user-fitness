@@ -1,0 +1,7 @@
+#import '../fragment/i_user_fragment.graphql'
+
+query GetCurrentUser {
+  getCurrentUser {
+    ...IUser
+  }
+}
