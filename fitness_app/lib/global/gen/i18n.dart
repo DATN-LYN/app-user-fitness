@@ -260,6 +260,8 @@ class I18n implements WidgetsLocalizations {
 	String get programs_Filter => "Filter";
 	/// "Views"
 	String get programs_View => "Views";
+	/// "Choose a category"
+	String get programs_ChooseCategory => "Choose a category";
 	/// "Inboxes"
 	String get inboxes_Inboxes => "Inboxes";
 	/// "Inbox Not Found"
@@ -712,6 +714,9 @@ class _I18n_vi_VN extends I18n {
 	/// "Lượt xem"
 	@override
 	String get programs_View => "Lượt xem";
+	/// "Chọn thể loại"
+	@override
+	String get programs_ChooseCategory => "Chọn thể loại";
 	/// "Tin nhắn"
 	@override
 	String get inboxes_Inboxes => "Tin nhắn";
