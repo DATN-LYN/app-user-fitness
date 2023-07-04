@@ -49,7 +49,8 @@ class StatisticsOverview extends ConsumerWidget {
               title: hasData
                   ? data!
                       .map((e) => e.programCount)
-                      .reduce((a, b) => a! + b!)
+                      .reduce((a, b) => a! + b!)!
+                      .toInt()
                       .toString()
                   : '0',
               subtitle: i18n.programs_Programs,
