@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:chewie/chewie.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_program.req.gql.dart';
@@ -263,107 +264,111 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
     return LoadingOverlay(
       loading: loading,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.exercises[index].name ?? '_'),
-          centerTitle: false,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_sharp),
-            onPressed: showDialogConfirmQuit,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {},
-              style: theme.textButtonTheme.style?.copyWith(
-                textStyle: const MaterialStatePropertyAll(
-                  TextStyle(
-                    color: AppColors.grey1,
-                    fontWeight: FontWeight.w600,
-                  ),
+        appBar: isPortrait
+            ? AppBar(
+                title: Text(widget.exercises[index].name ?? '_'),
+                centerTitle: false,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new_sharp),
+                  onPressed: showDialogConfirmQuit,
                 ),
-              ),
-              child: Text('${index + 1} / ${urls.length}'),
-            ),
-          ],
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: !isPortrait
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          videoPlayer(),
-                          remainDurationContainer(),
-                        ],
-                      )
-                    : Center(child: videoPlayer()),
-              ),
-              if (isPortrait) ...[
-                const SizedBox(height: 16),
-                remainDurationContainer(),
-              ],
-              const SizedBox(height: 16),
-              SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  trackHeight: 5,
-                  activeTickMarkColor: Colors.transparent,
-                  inactiveTickMarkColor: Colors.transparent,
-                  overlayShape: SliderComponentShape.noThumb,
-                ),
-                child: Slider(
-                  max: max(maxValue.toDouble(), value.toDouble()),
-                  value: value.toDouble() > 0 ? value.toDouble() : 0,
-                  divisions: maxValue.toInt() > 0 ? maxValue.toInt() : 1,
-                  onChanged: handlerSliderChanged,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: previousVideo,
-                    icon: const Icon(
-                      Icons.skip_previous_rounded,
-                      color: AppColors.grey1,
+                actions: [
+                  TextButton(
+                    onPressed: () {},
+                    style: theme.textButtonTheme.style?.copyWith(
+                      textStyle: const MaterialStatePropertyAll(
+                        TextStyle(
+                          color: AppColors.grey1,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                    iconSize: 30,
-                  ),
-                  const SizedBox(width: 16),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    width: 48,
-                    height: 48,
-                    child: IconButton(
-                      onPressed: onPlayPauseVideo,
-                      icon: playerState == PlayerState.playing
-                          ? const Icon(Icons.pause)
-                          : const Icon(Icons.play_arrow),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  IconButton(
-                    onPressed: () {
-                      if (index == urls.length - 1) {
-                        goToFinishPage();
-                      } else {
-                        nextVideo();
-                      }
-                    },
-                    icon: const Icon(
-                      Icons.skip_next_rounded,
-                      color: AppColors.grey1,
-                    ),
-                    iconSize: 30,
+                    child: Text('${index + 1} / ${urls.length}'),
                   ),
                 ],
               )
-            ],
-          ),
+            : null,
+        body: SafeArea(
+          child: !isPortrait
+              ? Center(
+                  child: Stack(
+                    children: [
+                      Chewie(
+                        controller: ChewieController(
+                          videoPlayerController: controller(index),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: Center(child: videoPlayer()),
+                    ),
+                    const SizedBox(height: 16),
+                    remainDurationContainer(),
+                    const SizedBox(height: 16),
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        trackHeight: 5,
+                        activeTickMarkColor: Colors.transparent,
+                        inactiveTickMarkColor: Colors.transparent,
+                        overlayShape: SliderComponentShape.noThumb,
+                      ),
+                      child: Slider(
+                        max: max(maxValue.toDouble(), value.toDouble()),
+                        value: value.toDouble() > 0 ? value.toDouble() : 0,
+                        divisions: maxValue.toInt() > 0 ? maxValue.toInt() : 1,
+                        onChanged: handlerSliderChanged,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: previousVideo,
+                          icon: const Icon(
+                            Icons.skip_previous_rounded,
+                            color: AppColors.grey1,
+                          ),
+                          iconSize: 30,
+                        ),
+                        const SizedBox(width: 16),
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.primary,
+                            shape: BoxShape.circle,
+                          ),
+                          width: 48,
+                          height: 48,
+                          child: IconButton(
+                            onPressed: onPlayPauseVideo,
+                            icon: playerState == PlayerState.playing
+                                ? const Icon(Icons.pause)
+                                : const Icon(Icons.play_arrow),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        IconButton(
+                          onPressed: () {
+                            if (index == urls.length - 1) {
+                              goToFinishPage();
+                            } else {
+                              nextVideo();
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.skip_next_rounded,
+                            color: AppColors.grey1,
+                          ),
+                          iconSize: 30,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
         ),
       ),
     );

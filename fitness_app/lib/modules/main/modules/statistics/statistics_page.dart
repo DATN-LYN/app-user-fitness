@@ -94,7 +94,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                 operationRequest: getMyStatsReq,
                 builder: (context, response, error) {
                   if (response?.loading == true) {
-                    return const SizedBox();
+                    return const Center(child: CircularProgressIndicator());
                   }
 
                   if (response?.hasErrors == true) {
