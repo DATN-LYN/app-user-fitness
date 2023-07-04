@@ -155,7 +155,8 @@
       "mostViewedPrograms": "Chương trình nhiều lượt xem",
       "searchHint": "Nhập tên chương trình",
       "filter": "Bộ lọc",
-      "view": "Lượt xem"
+      "view": "Lượt xem",
+      "chooseCategory": "Chọn thể loại"
     },
     "inboxes_":{
       "inboxes":"Tin nhắn",
