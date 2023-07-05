@@ -110,7 +110,7 @@ class _FinishPage extends ConsumerState<FinishPage> {
                   color: AppColors.success,
                 ),
                 StatisticItem(
-                  title: calo.toString(),
+                  title: calo.toInt().toString(),
                   subtitle: i18n.common_Calories,
                   icon: const Icon(
                     Icons.local_fire_department,

@@ -20,9 +20,13 @@ class StatisticsOverview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final i18n = I18n.of(context)!;
     final isLogedIn = ref.watch(isSignedInProvider);
-    final hasData = data != null && data?.isNotEmpty == true;
+    final hasData = data?.isNotEmpty == true;
     final calo = hasData
-        ? data!.map((e) => e.caloCount).reduce((a, b) => a! + b!).toString()
+        ? data!
+            .map((e) => e.caloCount)
+            .reduce((a, b) => a! + b!)!
+            .toInt()
+            .toString()
         : '0';
     final duration = hasData
         ? data!.map((e) => e.durationCount).reduce((a, b) => a! + b!)
@@ -37,7 +41,7 @@ class StatisticsOverview extends ConsumerWidget {
           children: [
             UserStatisticItem(
               title: durationString,
-              subtitle: i18n.common_Minutes,
+              subtitle: i18n.common_Duration,
               icon: const Icon(
                 Icons.timelapse,
                 size: 30,
