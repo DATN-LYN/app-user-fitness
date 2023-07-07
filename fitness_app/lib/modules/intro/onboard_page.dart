@@ -89,6 +89,7 @@ class _OnBoardPageState extends ConsumerState<OnBoardPage> {
                 ],
               ),
             ),
+            const SizedBox(height: 16)
           ],
         ),
       ),
