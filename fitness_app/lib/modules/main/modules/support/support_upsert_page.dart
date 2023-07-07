@@ -22,7 +22,6 @@ import '../../../../global/graphql/cache_handler/upsert_support_cache_handler.da
 import '../../../../global/graphql/client.dart';
 import '../../../../global/graphql/mutation/__generated__/mutation_upsert_support.req.gql.dart';
 import '../../../../global/providers/me_provider.dart';
-import '../../../../global/utils/dialogs.dart';
 import '../../../../global/utils/file_helper.dart';
 import '../../../../global/widgets/dialogs/confirmation_dialog.dart';
 import '../../../../global/widgets/tag.dart';
@@ -104,7 +103,7 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
               setState(() => loading = false);
               if (response.hasErrors) {
                 if (mounted) {
-                  DialogUtils.showError(context: context, response: response);
+                  // DialogUtils.showError(context: context, response: response);
                 }
               } else {
                 if (mounted) {
