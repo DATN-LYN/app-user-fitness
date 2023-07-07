@@ -52,7 +52,7 @@ class ProgramOverview extends StatelessWidget {
             Expanded(
               child: ProgramInfoTile(
                 icon: Ionicons.fitness,
-                label: totalCalo.toString(),
+                label: totalCalo.toInt().toString(),
                 iconColor: AppColors.error,
                 backgroundColor: AppColors.errorSoft,
               ),

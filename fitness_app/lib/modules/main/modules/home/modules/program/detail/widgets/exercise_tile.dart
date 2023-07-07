@@ -53,7 +53,7 @@ class ExerciseTile extends StatelessWidget {
                       color: AppColors.grey5,
                     ),
                     const SizedBox(width: 4),
-                    Text(' ${exercise.calo ?? 0} calories'),
+                    Text(' ${exercise.calo?.toInt() ?? 0} calories'),
                   ],
                 ),
                 const SizedBox(height: 8),
