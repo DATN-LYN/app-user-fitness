@@ -65,14 +65,14 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
-      await initData();
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      initData();
     });
     startTimer();
     super.initState();
   }
 
-  Future initData() async {
+  void initData() async {
     if (widget.isBreak) {
       upsertStats();
       upsertUserExercise();
@@ -175,7 +175,7 @@ class _CountdownTimerPageState extends ConsumerState<CountdownTimerPage> {
                 Center(
                   child: Text(
                     i18n.countdown_YouHaveFinishCountEx(
-                      '${widget.index ?? 0 + 1} / ${widget.exercises.length}',
+                      '${(widget.index ?? 0) + 1} / ${widget.exercises.length}',
                     ),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
