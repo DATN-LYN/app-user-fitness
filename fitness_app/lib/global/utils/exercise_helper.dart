@@ -8,7 +8,6 @@ import '../graphql/mutation/__generated__/mutation_upsert_user_exercise.req.gql.
 import '../graphql/mutation/__generated__/mutation_upsert_user_program.req.gql.dart';
 import '../providers/current_stats_id.provider.dart';
 import '../providers/me_provider.dart';
-import 'dialogs.dart';
 
 class ExerciseHelper {
   ExerciseHelper._();
@@ -38,7 +37,7 @@ class ExerciseHelper {
     final response = await client.request(req).first;
     if (response.hasErrors) {
       if (context.mounted) {
-        DialogUtils.showError(context: context, response: response);
+        // DialogUtils.showError(context: context, response: response);
       }
     }
   }
@@ -58,7 +57,7 @@ class ExerciseHelper {
     final response = await client.request(req).first;
     if (response.hasErrors) {
       if (context.mounted) {
-        DialogUtils.showError(context: context, response: response);
+        // DialogUtils.showError(context: context, response: response);
       }
     }
   }
@@ -85,7 +84,7 @@ class ExerciseHelper {
     final response = await client.request(req).first;
     if (response.hasErrors) {
       if (context.mounted) {
-        DialogUtils.showError(context: context, response: response);
+        // DialogUtils.showError(context: context, response: response);
       }
     } else {
       ref

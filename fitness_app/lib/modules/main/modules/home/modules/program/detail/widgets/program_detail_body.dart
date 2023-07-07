@@ -18,7 +18,6 @@ import '../../../../../../../../global/graphql/query/__generated__/query_get_cur
 import '../../../../../../../../global/providers/me_provider.dart';
 import '../../../../../../../../global/routers/app_router.dart';
 import '../../../../../../../../global/utils/constants.dart';
-import '../../../../../../../../global/utils/dialogs.dart';
 import '../../../../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../../../../global/widgets/fitness_error.dart';
 import '../../../../../../../../global/widgets/infinity_list.dart';
@@ -74,7 +73,7 @@ class _ExerciseListState extends ConsumerState<ProgramDetailBody> {
 
     if (res.hasErrors) {
       if (mounted) {
-        DialogUtils.showError(context: context, response: res);
+        // DialogUtils.showError(context: context, response: res);
       }
     } else {
       final result = res.data?.getCurrentUser.userExercises;
