@@ -20,10 +20,10 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    FormBuilderLocalizations.delegate.load(const Locale('en', 'US'));
+    FormBuilderLocalizations.delegate.load(const Locale('vi', 'VN'));
 
     return MaterialApp.router(
-      title: 'My App',
+      title: 'Fitness App',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         I18n.delegate,
@@ -34,7 +34,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
       supportedLocales: I18n.delegate.supportedLocales,
       locale: ref.watch(appSettingProvider).locale.toLocale(),
       localeResolutionCallback: I18n.delegate.resolution(
-        fallback: const Locale('en', 'US'),
+        fallback: const Locale('vi', 'VN'),
       ),
       theme: AppThemes.light(),
       routerDelegate: _appRouter.delegate(),

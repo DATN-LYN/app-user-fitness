@@ -15,7 +15,7 @@ enum AppLocale {
   static AppLocale fromValue(String? value) {
     return AppLocale.values.firstWhere(
       (e) => e.value.contains(value ?? ''),
-      orElse: () => auto,
+      orElse: () => viVN,
     );
   }
 
