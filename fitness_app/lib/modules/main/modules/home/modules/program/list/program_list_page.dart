@@ -133,10 +133,8 @@ class _ProgramListPageState extends ConsumerState<ProgramListPage> {
                   if (response?.loading ?? false || response?.data == null) {
                     const ShimmerProgramLargeList();
                   }
-                  final data = response!.data!.getPrograms;
-                  final hasMoreData = data.meta!.currentPage!.toDouble() <
-                      data.meta!.totalPages!.toDouble();
-                  final programs = data.items;
+                  final data = response!.data?.getPrograms;
+                  final programs = data?.items;
 
                   if (programs?.isEmpty == true) {
                     return FitnessEmpty(

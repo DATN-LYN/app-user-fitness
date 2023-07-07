@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:chewie/chewie.dart';
 import 'package:fitness_app/global/gen/i18n.dart';
 import 'package:fitness_app/global/graphql/fragment/__generated__/exercise_fragment.data.gql.dart';
 import 'package:fitness_app/global/graphql/mutation/__generated__/mutation_upsert_program.req.gql.dart';
@@ -10,6 +11,7 @@ import 'package:fitness_app/global/routers/app_router.dart';
 import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:fitness_app/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
@@ -48,7 +50,7 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
 
   @override
   void dispose() {
-    controller(index).dispose();
+    controller(index)!.dispose();
     controllers.clear();
     listeners.clear();
     super.dispose();
@@ -113,8 +115,8 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
 
   VoidCallback checkEndVideo(index) {
     return () {
-      int dur = controller(index).value.duration.inMilliseconds;
-      int pos = controller(index).value.position.inMilliseconds;
+      int dur = controller(index)!.value.duration.inMilliseconds;
+      int pos = controller(index)!.value.position.inMilliseconds;
 
       setState(() {
         maxValue = dur;
@@ -139,7 +141,8 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
     );
   }
 
-  VideoPlayerController controller(int index) {
+  VideoPlayerController? controller(int index) {
+    if (urls.isEmpty) return null;
     return controllers[urls.elementAt(index)]!;
   }
 
@@ -150,17 +153,17 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
   }
 
   void stopController(int index) {
-    controller(index).removeListener(listeners[index]!);
-    controller(index).pause();
-    controller(index).seekTo(const Duration(milliseconds: 0));
+    controller(index)?.removeListener(listeners[index]!);
+    controller(index)?.pause();
+    controller(index)?.seekTo(const Duration(milliseconds: 0));
   }
 
   void playController(int index) {
     if (!listeners.keys.contains(index)) {
       listeners[index] = checkEndVideo(index);
     }
-    controller(index).addListener(listeners[index]!);
-    controller(index).play();
+    controller(index)?.addListener(listeners[index]!);
+    controller(index)?.play();
   }
 
   void previousVideo() {
@@ -207,14 +210,14 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
   }
 
   void handlerSliderChanged(double milliseconds) async {
-    await controller(index).seekTo(
+    await controller(index)?.seekTo(
       Duration(milliseconds: milliseconds.toInt()),
     );
   }
 
   void showDialogConfirmQuit() {
     final i18n = I18n.of(context)!;
-    controller(index).pause();
+    controller(index)?.pause();
     setState(() => playerState = PlayerState.paused);
 
     showDialog(
@@ -232,7 +235,7 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
           },
           onTapNegativeButton: () {
             context.popRoute();
-            controller(index).play();
+            controller(index)?.play();
             setState(() => playerState = PlayerState.playing);
           },
         );
@@ -245,12 +248,12 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
       setState(() {
         playerState = PlayerState.paused;
       });
-      await controller(index).pause();
+      await controller(index)?.pause();
     } else {
       setState(() {
         playerState = PlayerState.playing;
       });
-      await controller(index).play();
+      await controller(index)?.play();
     }
   }
 
@@ -263,122 +266,162 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
     return LoadingOverlay(
       loading: loading,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.exercises[index].name ?? '_'),
-          centerTitle: false,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_sharp),
-            onPressed: showDialogConfirmQuit,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {},
-              style: theme.textButtonTheme.style?.copyWith(
-                textStyle: const MaterialStatePropertyAll(
-                  TextStyle(
-                    color: AppColors.grey1,
-                    fontWeight: FontWeight.w600,
-                  ),
+        appBar: isPortrait
+            ? AppBar(
+                title: Text(widget.exercises[index].name ?? '_'),
+                centerTitle: false,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new_sharp),
+                  onPressed: showDialogConfirmQuit,
                 ),
-              ),
-              child: Text('${index + 1} / ${urls.length}'),
-            ),
-          ],
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: !isPortrait
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          videoPlayer(),
-                          remainDurationContainer(),
-                        ],
-                      )
-                    : Center(child: videoPlayer()),
-              ),
-              if (isPortrait) ...[
-                const SizedBox(height: 16),
-                remainDurationContainer(),
-              ],
-              const SizedBox(height: 16),
-              SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  trackHeight: 5,
-                  activeTickMarkColor: Colors.transparent,
-                  inactiveTickMarkColor: Colors.transparent,
-                  overlayShape: SliderComponentShape.noThumb,
-                ),
-                child: Slider(
-                  max: max(maxValue.toDouble(), value.toDouble()),
-                  value: value.toDouble() > 0 ? value.toDouble() : 0,
-                  divisions: maxValue.toInt() > 0 ? maxValue.toInt() : 1,
-                  onChanged: handlerSliderChanged,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: previousVideo,
-                    icon: const Icon(
-                      Icons.skip_previous_rounded,
-                      color: AppColors.grey1,
-                    ),
-                    iconSize: 30,
-                  ),
-                  const SizedBox(width: 16),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    width: 48,
-                    height: 48,
-                    child: IconButton(
-                      onPressed: onPlayPauseVideo,
-                      icon: playerState == PlayerState.playing
-                          ? const Icon(Icons.pause)
-                          : const Icon(Icons.play_arrow),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
+                actions: [
                   IconButton(
                     onPressed: () {
-                      if (index == urls.length - 1) {
-                        goToFinishPage();
-                      } else {
-                        nextVideo();
-                      }
+                      SystemChrome.setPreferredOrientations([
+                        DeviceOrientation.landscapeLeft,
+                        DeviceOrientation.landscapeRight,
+                      ]);
                     },
-                    icon: const Icon(
-                      Icons.skip_next_rounded,
-                      color: AppColors.grey1,
+                    icon: const Icon(Icons.fullscreen),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    style: theme.textButtonTheme.style?.copyWith(
+                      textStyle: const MaterialStatePropertyAll(
+                        TextStyle(
+                          color: AppColors.grey1,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                    iconSize: 30,
+                    child: Text('${index + 1} / ${urls.length}'),
                   ),
                 ],
               )
-            ],
-          ),
+            : null,
+        body: SafeArea(
+          child: !isPortrait && controller(index) != null
+              ? landscapeVideoPlayer()
+              : portraitVideoPlayer(context),
         ),
       ),
     );
   }
 
-  AspectRatio videoPlayer() {
-    return AspectRatio(
-      aspectRatio: controller(index).value.aspectRatio,
-      child: Center(
-        child: VideoPlayer(controller(index)),
-      ),
+  Widget portraitVideoPlayer(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: Center(child: videoPlayer()),
+        ),
+        const SizedBox(height: 16),
+        remainDurationContainer(),
+        const SizedBox(height: 16),
+        SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            trackHeight: 5,
+            activeTickMarkColor: Colors.transparent,
+            inactiveTickMarkColor: Colors.transparent,
+            overlayShape: SliderComponentShape.noThumb,
+          ),
+          child: Slider(
+            max: max(maxValue.toDouble(), value.toDouble()),
+            value: value.toDouble() > 0 ? value.toDouble() : 0,
+            divisions: maxValue.toInt() > 0 ? maxValue.toInt() : 1,
+            onChanged: handlerSliderChanged,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: previousVideo,
+              icon: const Icon(
+                Icons.skip_previous_rounded,
+                color: AppColors.grey1,
+              ),
+              iconSize: 30,
+            ),
+            const SizedBox(width: 16),
+            Container(
+              decoration: const BoxDecoration(
+                color: AppColors.primary,
+                shape: BoxShape.circle,
+              ),
+              width: 48,
+              height: 48,
+              child: IconButton(
+                onPressed: onPlayPauseVideo,
+                icon: playerState == PlayerState.playing
+                    ? const Icon(Icons.pause)
+                    : const Icon(Icons.play_arrow),
+              ),
+            ),
+            const SizedBox(width: 16),
+            IconButton(
+              onPressed: () {
+                if (index == urls.length - 1) {
+                  goToFinishPage();
+                } else {
+                  nextVideo();
+                }
+              },
+              icon: const Icon(
+                Icons.skip_next_rounded,
+                color: AppColors.grey1,
+              ),
+              iconSize: 30,
+            ),
+          ],
+        )
+      ],
     );
   }
 
-  Container remainDurationContainer() {
+  Widget landscapeVideoPlayer() {
+    return Stack(
+      alignment: Alignment.centerLeft,
+      children: [
+        Chewie(
+          controller: ChewieController(
+            videoPlayerController: controller(index)!,
+            autoInitialize: true,
+          ),
+        ),
+        CircleAvatar(
+          backgroundColor: AppColors.grey6,
+          child: IconButton(
+            onPressed: () {
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.portraitUp,
+                DeviceOrientation.portraitDown,
+                // DeviceOrientation.landscapeLeft,
+                // DeviceOrientation.landscapeRight,
+              ]);
+            },
+            icon: const Icon(
+              Icons.fullscreen_exit,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget? videoPlayer() {
+    if (controller(index) != null) {
+      return AspectRatio(
+        aspectRatio: controller(index)!.value.aspectRatio,
+        child: Center(
+          child: VideoPlayer(controller(index)!),
+        ),
+      );
+    }
+    return null;
+  }
+
+  Widget remainDurationContainer() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
@@ -387,7 +430,8 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
       ),
       child: Text(
         DateTimeHelper.totalDurationFormat(
-          controller(index).value.duration - controller(index).value.position,
+          (controller(index)?.value.duration ?? const Duration()) -
+              (controller(index)?.value.position ?? const Duration()),
         ),
         style: const TextStyle(
           fontSize: 41,
