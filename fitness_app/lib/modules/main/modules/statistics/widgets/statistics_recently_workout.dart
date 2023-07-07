@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../global/graphql/client.dart';
 import '../../../../../global/graphql/query/__generated__/query_get_current_user.req.gql.dart';
-import '../../../../../global/utils/dialogs.dart';
 import '../../../../../global/widgets/fitness_empty.dart';
 import '../../../../../global/widgets/program/program_item_large.dart';
 import '../../../../../global/widgets/program/shimmer_program_large_list.dart';
@@ -50,7 +49,7 @@ class _StatisticsRecentlyWorkoutState
 
     if (res.hasErrors) {
       if (mounted) {
-        DialogUtils.showError(context: context, response: res);
+        // DialogUtils.showError(context: context, response: res);
       }
     } else {
       final result = res.data?.getCurrentUser.userPrograms;

@@ -20,7 +20,6 @@ import '../../global/graphql/__generated__/schema.schema.gql.dart';
 import '../../global/graphql/client.dart';
 import '../../global/providers/me_provider.dart';
 import '../../global/themes/app_colors.dart';
-import '../../global/utils/dialogs.dart';
 import '../../global/utils/file_helper.dart';
 import '../../global/widgets/avatar.dart';
 import '../../global/widgets/dialogs/confirmation_dialog.dart';
@@ -49,7 +48,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     final response = await client.request(req).first;
     if (response.hasErrors) {
       if (mounted) {
-        DialogUtils.showError(context: context, response: response);
+        // DialogUtils.showError(context: context, response: response);
       }
     } else {
       if (mounted) {
@@ -111,7 +110,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
               setState(() => loading = false);
               if (response.hasErrors) {
                 if (mounted) {
-                  DialogUtils.showError(context: context, response: response);
+                  // DialogUtils.showError(context: context, response: response);
                 }
               } else {
                 ref.read(authProvider.notifier).editProfile(

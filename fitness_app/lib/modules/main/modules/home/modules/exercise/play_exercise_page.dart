@@ -19,7 +19,6 @@ import '../../../../../../global/graphql/client.dart';
 import '../../../../../../global/graphql/fragment/__generated__/program_fragment.data.gql.dart';
 import '../../../../../../global/themes/app_colors.dart';
 import '../../../../../../global/utils/date_time_helper.dart';
-import '../../../../../../global/utils/dialogs.dart';
 
 enum PlayerState { playing, paused }
 
@@ -108,7 +107,7 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
     final response = await client.request(req).first;
     if (response.hasErrors) {
       if (context.mounted) {
-        DialogUtils.showError(context: context, response: response);
+        // DialogUtils.showError(context: context, response: response);
       }
     }
   }
@@ -194,7 +193,7 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
     await context.pushRoute(
       CountdownTimerRoute(
         isBreak: true,
-        initialDuration: const Duration(seconds: 20),
+        initialDuration: const Duration(seconds: 10),
         index: index,
         exercises: widget.exercises,
       ),
@@ -374,7 +373,8 @@ class _PlayExercisePageState extends ConsumerState<PlayExercisePage> {
               iconSize: 30,
             ),
           ],
-        )
+        ),
+        const SizedBox(height: 16)
       ],
     );
   }

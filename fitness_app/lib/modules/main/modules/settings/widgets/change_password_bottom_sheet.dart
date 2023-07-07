@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:fitness_app/global/graphql/auth/__generated__/mutation_change_password.req.gql.dart';
 import 'package:fitness_app/global/routers/app_router.dart';
-import 'package:fitness_app/global/utils/dialogs.dart';
 import 'package:fitness_app/global/widgets/dialogs/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -54,7 +53,7 @@ class _ChangePasswordBottomSheetState
 
               if (res.hasErrors) {
                 if (mounted) {
-                  DialogUtils.showError(context: context, response: res);
+                  // DialogUtils.showError(context: context, response: res);
                 }
               } else {
                 if (mounted) {
