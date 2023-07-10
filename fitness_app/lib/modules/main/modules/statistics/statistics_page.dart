@@ -43,13 +43,13 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
         [
           GFilterDto(
             (b) => b
-              ..data = filterData.rangeType!.startDate().toString()
+              ..data = filterData.rangeType?.startDate().toString()
               ..field = 'UserStatistics.updatedAt'
               ..operator = GFILTER_OPERATOR.gt,
           ),
           GFilterDto(
             (b) => b
-              ..data = filterData.rangeType!.endDate().toString()
+              ..data = filterData.rangeType?.endDate().toString()
               ..field = 'UserStatistics.updatedAt'
               ..operator = GFILTER_OPERATOR.lt,
           ),
@@ -98,7 +98,9 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage> {
                   }
 
                   if (response?.hasErrors == true) {
-                    return FitnessError(response: response);
+                    // return FitnessError(response: response);
+                    print(response?.linkException);
+                    return const FitnessError();
                   }
 
                   final data = response?.data;

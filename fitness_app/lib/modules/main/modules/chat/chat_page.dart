@@ -45,31 +45,32 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   );
   final scrollController = ScrollController();
 
-  void refreshHandler() {
-    final client = ref.read(appClientProvider);
+  Future refreshHandler() async {
+    // final client = ref.read(appClientProvider);
+    setState(() {
+      getMyInboxesReq = getMyInboxesReq.rebuild(
+        (b) => b
+          ..vars.queryParams.page = 1
+          ..updateResult = ((previous, result) => result),
+      );
+    });
 
-    getMyInboxesReq = getMyInboxesReq.rebuild(
-      (b) => b
-        ..vars.queryParams.page = 1
-        ..updateResult = ((previous, result) => result),
-    );
-    client.requestController.add(getMyInboxesReq);
+    // client.requestController.add(getMyInboxesReq);
   }
 
   void chat() async {
     final message = textController.text.trim();
     if (message.isNotEmpty) {
-      ref.read(messageResponseProvider.notifier).update((state) => []);
-      await upsertChat(
-        message: message,
-        isSender: true,
-      );
       textController.clear();
-      onCallOpenAI(message);
+      await upsertChat(message: message, isSender: true);
+      refreshHandler();
+      Future.delayed(const Duration(seconds: 1), () {
+        onCallOpenAI(message);
+      });
     }
   }
 
-  Future onCallOpenAI(String message) async {
+  void onCallOpenAI(String message) {
     late StreamSubscription<OpenAIStreamChatCompletionModel> subscription;
     final stream = OpenAI.instance.chat.createStream(
       model: "gpt-3.5-turbo",
@@ -81,6 +82,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       ],
     );
     setState(() => loading = true);
+    ref.read(messageResponseProvider.notifier).update((state) => []);
 
     subscription = stream.listen(
       (event) {
@@ -122,8 +124,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final client = ref.read(appClientProvider);
     final user = ref.read(meProvider);
 
-    setState(() => loading = true);
-
     var req = GUpsertInboxReq(
       (b) => b
         ..fetchPolicy = FetchPolicy.CacheAndNetwork
@@ -137,9 +137,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       if (mounted) {
         DialogUtils.showError(context: context, response: response);
       }
-    } else {
-      refreshHandler();
-      setState(() => loading = false);
     }
   }
 
@@ -165,6 +162,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final i18n = I18n.of(context)!;
     final client = ref.watch(appClientProvider);
     final isLogedIn = ref.watch(isSignedInProvider);
+    final user = ref.read(meProvider);
 
     return Scaffold(
       backgroundColor: AppColors.grey6.withOpacity(0.1),
@@ -230,7 +228,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 }
 
                 if (response?.hasErrors == true || response?.data == null) {
-                  return FitnessError(response: response);
+                  return const FitnessError();
                 }
 
                 final data = response!.data!.getMyInboxes;
@@ -264,8 +262,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                               return MessageWidget(
                                 item: GGetMyInboxesData_getMyInboxes_items(
                                   (b) => b
-                                    ..userId =
-                                        '4b216e9d-9af8-4e13-bde7-df1b8cef02b5'
+                                    ..userId = user?.id
                                     ..isSender = false
                                     ..message = ref
                                         .watch(messageResponseProvider)

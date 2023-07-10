@@ -91,8 +91,8 @@ class _CategoryListState extends ConsumerState<CategoryList> {
         }
 
         if (response?.hasErrors == true || response?.data == null) {
-          return FitnessError(
-            response: response,
+          return const FitnessError(
+            // response: response,
             showImage: false,
           );
         }

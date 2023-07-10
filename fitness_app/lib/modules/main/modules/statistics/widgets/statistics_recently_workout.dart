@@ -81,7 +81,7 @@ class _StatisticsRecentlyWorkoutState
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: programs!.length > 10 ? 10 : programs!.length,
+      itemCount: (programs?.length ?? 0) > 10 ? 10 : programs!.length,
       itemBuilder: (context, index) {
         final item = programs![index];
         return ProgramItemLarge(program: item);

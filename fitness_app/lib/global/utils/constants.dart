@@ -7,7 +7,7 @@ class Constants {
   static const String hiveUserCredentialsKey = '@hive_user_credentials_key';
   static const String hiveSearchKey = '@hive_file_search_key';
   static const String graphQLEndpoint =
-      'https://server-fitness-production.up.railway.app/graphql';
+      'https://datn-nhi-production.up.railway.app/graphql';
   static const String privacyPolicyUrl = 'https://www.google.com/';
   static const String termsAndConditionsUrl = 'https://www.google.com/';
   static const String introductionUrl = 'https://www.google.com/';
