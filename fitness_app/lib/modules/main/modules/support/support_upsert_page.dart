@@ -257,7 +257,7 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
-                    const Label('Content'),
+                    Label(i18n.support_Content),
                     FormBuilderTextField(
                       name: 'content',
                       maxLines: 7,
@@ -265,14 +265,17 @@ class _SupportPageState extends ConsumerState<SupportUpsertPage> {
                       initialValue: widget.support?.content,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: FormBuilderValidators.required(
-                        errorText: i18n.login_EmailIsRequired,
+                        errorText: i18n.support_ContentRequired,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: i18n.support_ContentHint,
                       ),
                       maxLength: 255,
                     ),
                     if (!enabled && widget.support?.imgUrl == null)
                       const SizedBox()
                     else
-                      const Label('Image'),
+                      Label(i18n.support_Image),
                     if (enabled)
                       GestureDetector(
                         onTap: pickImage,
